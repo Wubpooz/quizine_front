@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2F80ED;
+  --color-primary-dark: #1366D6;
+  --color-primary-darker: #0C4CB5;
+  --color-primary-light: #63A4F4;
+  --color-primary-lighter: #B3D5FD;
+  --color-primary-lint: #EAF3FE;
+  --color-primary-border: rgba(47, 128, 237, 0.3);
+  --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
+
+  
+  --font-body: 'Poppins', sans-serif; /*  --font-body: Inter, sans-serif; */
+    /* font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol"; */
+}
