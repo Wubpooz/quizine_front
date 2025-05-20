@@ -1,0 +1,45 @@
+<div class="min-h-screen bg-primary-lighter flex flex-col">
+  <!-- Main content -->
+  <div class="flex-1 flex items-center justify-center w-full h-full">
+    <div class="bg-white rounded shadow-lg lg:w-10/12 w-full max-w-7xl lg:h-10/12 h-[85svh] max-h-4xl p-10 relative">
+      <div class="absolute top-6 left-6 text-sm text-gray-600"> {{ quizName }} </div>
+      <!-- Timer -->
+      <div class="absolute top-6 right-6 text-2xl font-bold text-black">
+        Temps restant : <span>{{ formatTimer(timer) }}</span>
+      </div>
+      <!-- Question -->
+      <div class="flex flex-col items-center pt-16 h-full justify-between">
+        <div>
+          <div class="align-left w-full">
+            <div class="text-2xl font-semibold mt-2 mb-4 align-left">
+              Question {{ questionIndex + 1 }}/{{ totalQuestions }}
+            </div>
+            <div class="text-xl text-center mb-8 max-w-2xl">
+              {{ question.questionText }}
+            </div>
+          </div>
+  
+          <!-- Answers -->
+          <div class="flex flex-col gap-4 w-full max-w-2xl">
+            <button
+            *ngFor="let answer of question.options; let i = index"
+            (click)="selectAnswer(i)"
+            [ngClass]="{
+              'bg-primary text-white shadow-md border-primary': selectedAnswer === i,
+              'bg-white text-gray-700 hover:bg-primary-light hover:text-white hover:border-primary-light transition': selectedAnswer !== i
+              }" 
+              class="border border-gray-200 rounded-lg px-6 py-4 text-left text-base font-medium shadow-sm drop-shadow-[5px_7px_8px_rgba(179,213,235,1)] focus:outline-none transition-all duration-150"
+              >
+              {{ i + 1 }}.  {{ answer.optionText }}
+            </button>
+          </div>
+        </div>
+        <!--TODO Progress bar -->
+        <!-- Progress -->
+        <div class="mt-10 text-right w-full text-gray-500 text-sm">
+          {{ questionIndex + 1 }}/{{ totalQuestions }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
