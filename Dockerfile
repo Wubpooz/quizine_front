@@ -7,7 +7,7 @@ WORKDIR /app
 # Copier les fichiers de dépendances et installer les dépendances
 COPY quizine/package.json quizine/package-lock.json ./quizine/
 WORKDIR /app/quizine
-RUN npm install
+RUN npm install --force
 
 # Copier le reste du code source de l'application
 COPY quizine/ ./
