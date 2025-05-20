@@ -1,4 +1,15 @@
-<h1 class="text-2xl">Découvrir</h1>
-@for (quiz of quizList; track quiz) {
-    <app-quiz-card></app-quiz-card>
-}
+<div class="px-96">
+    <h1 class="text-2xl">Découvrir</h1>
+    <div class="flex flex-wrap gap-4">
+        @for (quiz of quizList; track quiz) {
+            <app-quiz-card
+            [title]="quiz.title"
+            [tags]="quiz.tags"
+            [nbQuestions]="quiz.nbQuestions"
+            [createdBy]="quiz.createdBy"
+            [createdAt]="quiz.createdAt"
+            [link]="quiz.link"
+            ></app-quiz-card>
+        }
+    </div>
+</div>

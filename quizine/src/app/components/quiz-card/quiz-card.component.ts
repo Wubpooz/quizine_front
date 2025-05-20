@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-quiz-card',
@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './quiz-card.component.css'
 })
 export class QuizCardComponent {
-
+  @Input() title: string = '';
+  @Input() tags: string[] = [];
+  @Input() nbQuestions: number = 0;
+  @Input() createdBy: string = '';
+  @Input() createdAt: string = '';
+  @Input() link: string = '';
 }

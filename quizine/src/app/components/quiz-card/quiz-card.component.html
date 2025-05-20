@@ -1,1 +1,16 @@
-<p>quiz-card works!</p>
+<div class="border-3 border-gray-200 rounded-md w-80 h-48 p-4 relative">
+    <div class="text-lg">{{ title }}</div>
+    <div class="flex gap-2 mt-2">
+        @for (tag of tags.slice(0,5); track tag) {
+            <span class="rounded-full w-fit px-2 py-0.5 bg-primary-tint text-xs text-primary-dark">{{ tag }}</span>
+        }
+    </div>
+    <div class="text-base mt-2">{{ nbQuestions }} questions</div>
+    <div class="flex absolute bottom-4 justify-between left-0 right-0 px-4 items-center">
+        <div class="flex items-center gap-2">
+            <span class="rounded-full w-6 h-6 bg-primary"></span>
+            <span class="text-sm">{{ createdBy }}</span>
+        </div>
+        <span class="text-gray-400 text-sm">{{ createdAt }}</span>
+    </div>
+</div>

@@ -15,15 +15,15 @@ export class ExploreComponent {
       title: "Quiz d'histoire",
       tags: ["histoire", "france", "europe"],
       nbQuestions: 16,
-      createdBy: "John Doe",
-      createdAt: "23/03/2025",
+      createdBy: "johndoe123",
+      createdAt: "07/11/2023",
       link: '/quiz/1'
     },
     {
       title: "Quiz de géographie",
       tags: ["géographie", "france", "europe"],
       nbQuestions: 10,
-      createdBy: "Jane Smith",
+      createdBy: "janesmith456",
       createdAt: "23/03/2025",
       link: '/quiz/2'
     },
@@ -31,16 +31,16 @@ export class ExploreComponent {
       title: "Quiz de mathématiques",
       tags: ["mathématiques", "france", "europe"],
       nbQuestions: 8,
-      createdBy: "Alice Johnson",
-      createdAt: "23/03/2025",
+      createdBy: "alicejohnson",
+      createdAt: "22/03/2024",
       link: '/quiz/3'
     },
     {
       title: "Quiz de physique",
       tags: ["physique", "france", "europe"],
       nbQuestions: 12,
-      createdBy: "Bob Brown",
-      createdAt: "23/03/2025",
+      createdBy: "bobbrown1998",
+      createdAt: "13/07/2021",
       link: '/quiz/4'
     }
   ];
