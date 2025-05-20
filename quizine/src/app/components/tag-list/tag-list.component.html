@@ -1,0 +1,5 @@
+<div class="flex gap-2 {{ class }}">
+    @for (tag of tags.slice(0,5); track tag) {
+        <span class="rounded-full w-fit px-2 py-0.5 bg-primary-tint text-primary-dark">{{ tag }}</span>
+    }
+</div>

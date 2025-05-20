@@ -1,10 +1,6 @@
 <div class="border-3 border-gray-200 rounded-md w-80 h-48 p-4 relative">
     <div class="text-lg">{{ title }}</div>
-    <div class="flex gap-2 mt-2">
-        @for (tag of tags.slice(0,5); track tag) {
-            <span class="rounded-full w-fit px-2 py-0.5 bg-primary-tint text-xs text-primary-dark">{{ tag }}</span>
-        }
-    </div>
+    <app-tag-list [tags]="tags" [class]="'text-xs mt-2'"></app-tag-list>
     <div class="text-base mt-2">{{ nbQuestions }} questions</div>
     <div class="flex absolute bottom-4 justify-between left-0 right-0 px-4 items-center">
         <div class="flex items-center gap-2">

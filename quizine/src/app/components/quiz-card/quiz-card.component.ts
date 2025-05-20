@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { TagListComponent } from '../tag-list/tag-list.component';
 
 @Component({
   selector: 'app-quiz-card',
   standalone: true,
-  imports: [],
+  imports: [TagListComponent],
   templateUrl: './quiz-card.component.html',
   styleUrl: './quiz-card.component.css'
 })
