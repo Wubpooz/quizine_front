@@ -7,7 +7,7 @@ WORKDIR /app
 # Copier les fichiers de dépendances et installer les dépendances
 COPY quizine/package.json quizine/package-lock.json ./quizine/
 WORKDIR /app/quizine
-RUN npm install --force
+RUN npm install
 
 # Copier le reste du code source de l'application
 COPY quizine/ ./
@@ -19,7 +19,7 @@ RUN npm run build -- --configuration production
 FROM nginx:alpine
 
 # Copier le build Angular dans le dossier de distribution NGINX
-COPY --from=build /app/quizine/dist/quizine /usr/share/nginx/html
+COPY --from=build /app/quizine/dist/quizine/browser /usr/share/nginx/html
 
 # Copier la configuration NGINX personnalisée si besoin (optionnel)
 # COPY nginx.conf /etc/nginx/nginx.conf
