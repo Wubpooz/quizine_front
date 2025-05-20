@@ -6,7 +6,9 @@
     <app-tag-list [tags]="tags" [class]="'mt-3 text-sm'"></app-tag-list>
     <div class="text-lg mt-6">{{ nbQuestions }} questions</div>
     <app-button
-            [label]="'Démarrer'"
+            [label]="'Démarrer'",
+            [color]="'primary'",
+            [size]="'medium'",
             [class]="'mt-6'"
     ></app-button>
     <p class="text-base text-wrap mt-8">{{ description }}</p>

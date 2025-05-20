@@ -9,10 +9,10 @@ import { TagListComponent } from '../tag-list/tag-list.component';
   styleUrl: './quiz-card.component.css'
 })
 export class QuizCardComponent {
-  @Input() title: string = '';
+  @Input() title: string = "";
   @Input() tags: string[] = [];
   @Input() nbQuestions: number = 0;
-  @Input() createdBy: string = '';
-  @Input() createdAt: string = '';
-  @Input() link: string = '';
+  @Input() createdBy: string = "";
+  @Input() createdAt: string = "";
+  @Input() link: string = "";
 }

@@ -3,12 +3,12 @@
     <div class="flex flex-wrap gap-4">
         @for (quiz of quizList; track quiz) {
             <app-quiz-card
-            [title]="quiz.title"
-            [tags]="quiz.tags"
-            [nbQuestions]="quiz.nbQuestions"
-            [createdBy]="quiz.createdBy"
-            [createdAt]="quiz.createdAt"
-            [link]="quiz.link"
+                [title]="quiz.title"
+                [tags]="quiz.tags"
+                [nbQuestions]="quiz.nbQuestions"
+                [createdBy]="quiz.createdBy"
+                [createdAt]="quiz.createdAt"
+                [link]="quiz.link"
             ></app-quiz-card>
         }
     </div>

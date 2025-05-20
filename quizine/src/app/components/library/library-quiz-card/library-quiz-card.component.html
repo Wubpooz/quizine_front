@@ -1,0 +1,22 @@
+<div class="border-3 border-gray-200 rounded-md w-2xl h-32 p-4 relative">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <span class="text-lg">{{ title }}</span>
+            <span class="text-gray-400 text-sm">{{ visibility }}</span>
+        </div>
+        <span class="text-base text-primary">{{ createdAt }}</span>
+    </div>
+    <span class="text-base text-primary mt-2">{{ nbQuestions }} questions</span>
+    <div class="flex gap-2 mt-3">
+        <app-button
+            [label]="'Consulter'"
+            [color]="'secondary'"
+            [size]="'small'"
+        ></app-button>
+        <app-button
+            [label]="'Éditer'"
+            [color]="'secondary'"
+            [size]="'small'"
+        ></app-button>
+    </div>
+</div>

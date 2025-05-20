@@ -1,1 +1,11 @@
-<button class="bg-primary-dark text-white px-4 py-2 w-fit rounded-lg text-base {{ class }} ">{{ label }}</button>
+<button 
+    [ngClass]="{
+        'bg-primary-dark text-white': color === 'primary',
+        'bg-primary-tint text-primary-darker': color === 'secondary',
+        'px-6 py-3 text-lg': size === 'large',
+        'px-4 py-2 text-base': size === 'medium',
+        'px-2 py-1 text-sm': size === 'small'
+    }"
+    class="w-fit rounded-lg {{ class }} ">
+    {{ label }}
+</button>
