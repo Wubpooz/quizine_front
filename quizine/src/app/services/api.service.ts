@@ -12,4 +12,8 @@ export class APIService {
     }
 
     getFriends() {}
+
+    getQuizzes() {}
+    getQuiz(id: number) {
+    }
 }
