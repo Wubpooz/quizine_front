@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { User } from '../../models/userModel';
 import {FriendsStore} from '../../stores/friends.store';
 
-
 @Component({
   selector: 'user-invite',
   standalone: true,
