@@ -1,12 +1,19 @@
 <div class="px-132">
-    <input type="text" placeholder="Rechercher parmi mes quiz" class="w-md rounded-lg p-2 bg-gray-100 placeholder-gray-500"/>
-    <div class="flex flex-col gap-4 mt-6">
-        @for (quiz of quizList; track quiz) {
-            <app-library-quiz-card
-                [title]="quiz.title"
-                [nbQuestions]="quiz.nbQuestions"
-                [createdAt]="quiz.createdAt"
-            ></app-library-quiz-card>
-        }
+    <h1 class="text-2xl">Mes quiz</h1>
+    <div *ngIf="quizList.length > 0">
+        <input type="text" placeholder="Rechercher parmi mes quiz" class="w-md rounded-lg p-2 bg-gray-100 placeholder-gray-500 mt-4"/>
+        <div class="flex flex-col gap-4 mt-6">
+            @for (quiz of quizList; track quiz) {
+                <app-library-quiz-card
+                    [title]="quiz.title"
+                    [nbQuestions]="quiz.nbQuestions"
+                    [createdAt]="quiz.createdAt"
+                ></app-library-quiz-card>
+            }
+        </div>
+    </div>
+    <div *ngIf="quizList.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
+        <span class="text-lg text-gray-500 text-center">Vous n'avez encore créé aucun quiz.</span>
+        <a href="#" class="text-base text-primary text-center hover:underline">Créer mon premier quiz</a>
     </div>
 </div>

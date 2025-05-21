@@ -1,6 +1,6 @@
 <div class="px-96">
     <h1 class="text-2xl">Découvrir</h1>
-    <div class="flex flex-wrap gap-4">
+    <div *ngIf="quizList.length > 0" class="flex flex-wrap gap-4">
         @for (quiz of quizList; track quiz) {
             <app-quiz-card
                 [title]="quiz.title"
@@ -11,5 +11,8 @@
                 [link]="quiz.link"
             ></app-quiz-card>
         }
+    </div>
+    <div *ngIf="quizList.length === 0" class="text-lg text-gray-500 w-64 text-wrap text-center mx-auto mt-48">
+        Aucun résultat ne correspond à votre recherche.
     </div>
 </div>

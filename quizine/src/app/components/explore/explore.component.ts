@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { Quiz } from '../../models/quizModel';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [QuizCardComponent],
+  imports: [QuizCardComponent, CommonModule],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })
