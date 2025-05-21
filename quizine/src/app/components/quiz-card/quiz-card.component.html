@@ -1,0 +1,12 @@
+<div class="border-3 border-gray-200 rounded-md w-80 h-48 p-4 relative">
+    <div class="text-lg">{{ title }}</div>
+    <app-tag-list [tags]="tags" [class]="'text-xs mt-2'"></app-tag-list>
+    <div class="text-base mt-2">{{ nbQuestions }} questions</div>
+    <div class="flex absolute bottom-4 justify-between left-0 right-0 px-4 items-center">
+        <div class="flex items-center gap-2">
+            <span class="rounded-full w-6 h-6 bg-primary"></span>
+            <span class="text-sm">{{ createdBy }}</span>
+        </div>
+        <span class="text-gray-400 text-sm">{{ createdAt }}</span>
+    </div>
+</div>

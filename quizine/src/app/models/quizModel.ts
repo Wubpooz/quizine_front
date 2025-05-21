@@ -1,10 +1,13 @@
+import { User } from './userModel';
 export interface Quiz {
-    id: number;
-    name: string;
-    description: string;
-    createdAt: Date;
-    updatedAt: Date;
-    questions: Question[];
+  id: number;
+  title: string;
+  tags: string[];
+  createdBy: string;
+  createdAt: string;
+  description: string;
+  questions: Question[];
+  private: boolean;
 }
 
 export interface Question {

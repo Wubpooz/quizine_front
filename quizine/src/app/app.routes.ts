@@ -1,8 +1,16 @@
 import { Routes } from '@angular/router';
+import { ExploreComponent } from './components/explore/explore.component';
+import { QuizDescriptionComponent } from './components/quiz-description/quiz-description.component';
+import { LibraryComponent } from './components/library/library.component';
+import { EditQuizComponent } from './components/edit-quiz/edit-quiz.component';
 import { WaitingPageComponent } from './components/waiting-page/waiting-page.component';
 import { UserInviteComponent } from './components/user-invite/user-invite.component';
 
 export const routes: Routes = [
-    { path: 'waiting', loadComponent: () => WaitingPageComponent },
-    { path: 'invite', loadComponent: () => UserInviteComponent }
+    {path: "explore", component: ExploreComponent},
+    {path: "quizdescription", component: QuizDescriptionComponent},
+    {path: "library", component: LibraryComponent},
+    {path: "editquiz", component: EditQuizComponent},
+    { path: 'waiting', component: WaitingPageComponent },
+    { path: 'invite', component: UserInviteComponent }
 ];
