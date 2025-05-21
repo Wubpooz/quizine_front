@@ -49,7 +49,7 @@ export class QuizService {
     }
   }
 
-  selectAnswer(question: Question, answer: Option): void {
-    this.gameSessionStore.answerList.getValue().set(question, answer);
+  selectAnswer(questionId: number, answer: Option): void {
+    this.gameSessionStore.answerList.getValue().set(questionId, answer);
   }
 }
