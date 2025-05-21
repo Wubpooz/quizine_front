@@ -3,7 +3,6 @@ export interface Quiz {
   id: number;
   title: string;
   tags: string[];
-  nbQuestions: number;
   createdBy: string;
   createdAt: string;
   description: string;
@@ -12,17 +11,15 @@ export interface Quiz {
 }
 
 export interface Question {
-  id: number;
-  quizId: number;
-  questionText: string;
-  options: Option[];
-  correctAnswer: Option;
-  timer: number;
+    id: number;
+    quizId: number;
+    questionText: string;
+    options: Option[];
+    correctAnswer: Option;
+    timer: number;
 }
 
 export interface Option {
-  id: number;
-  questionId: number;
-  optionText: string;
-  isCorrect: boolean;
+    id: number;
+    optionText: string;
 }

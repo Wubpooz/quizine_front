@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { User } from '../../models/userModel';
 import {FriendsStore} from '../../stores/friends.store';
 
-
 @Component({
   selector: 'user-invite',
   standalone: true,
@@ -13,13 +12,13 @@ import {FriendsStore} from '../../stores/friends.store';
   styleUrl: './user-invite.component.css'
 })
 export class UserInviteComponent {
-  // ViewChild
+  //? ViewChild
   inviteForm: FormGroup;
 
-  friends: User[] = [];
+  friends!: User[];
   users: User[];
-
-  friendListSubscription: any;
+  selectedFriends: number[] = [];
+  selectedUsers: number[] = [];
 
 
   constructor(private fb: FormBuilder,
@@ -31,7 +30,7 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.friendsStore.friendList$.subscribe((friends: User[]) => {
+    this.friendsStore.friends.subscribe((friends: User[]) => {
       this.friends = friends;
     });
   }
@@ -43,29 +42,27 @@ export class UserInviteComponent {
     });
   }
 
-  onCheckboxChange(event: any) {
-    const checkboxes = event.target.parentElement.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach((checkbox: HTMLInputElement) => {
-      if (checkbox !== event.target) {
-        checkbox.checked = false;
-      }
-    });
+  onCheckboxChange(event: any, id: number) {
+    if (event.target.checked) {
+      this.selectedFriends.push(id);
+    } else {
+      this.selectedFriends = this.selectedFriends.filter(fid => fid !== id);
+    }
   }
 
   onSubmit() {
-    if (this.inviteForm.valid) {
-      // Handle form submission
-      console.log(this.inviteForm.value);
+    if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
+      console.log('Inviting:', this.selectedFriends);
+      let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
+      //api call idsToInvite
     }
   }
 
   onSkip() {
-    // Handle skip action
     console.log('Skip action triggered');
   }
 
   onClose() {
-    // Handle close action
     console.log('Close action triggered');
   }
 }
