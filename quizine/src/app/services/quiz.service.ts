@@ -21,8 +21,8 @@ export class QuizService {
     });
   }
 
-  getName(): string {
-    return this.quiz.name;
+  getTitle(): string {
+    return this.quiz.title;
   }
 
   getCurrentQuestion(): Question {

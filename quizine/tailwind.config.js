@@ -11,7 +11,7 @@ module.exports = {
         'primary-darker': 'var(--color-primary-darker)',
         'primary-light': 'var(--color-primary-light)',
         'primary-lighter': 'var(--color-primary-lighter)',
-        'primary-lint': 'var(--color-primary-lint)',
+        'primary-tint': 'var(--color-primary-tint)',
       },
       borderColor: {
         primary: 'var(--color-primary-border)',

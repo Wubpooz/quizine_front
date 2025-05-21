@@ -4,7 +4,7 @@
             <span class="text-lg">{{ quiz.title }}</span>
             <span class="text-gray-400 text-sm">{{ quiz.private ? "privé" : "public" }}</span>
         </div>
-        <span class="text-base text-primary">{{ quiz.createdAt }}</span>
+        <span class="text-base text-primary">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span>
     </div>
     <span class="text-base text-primary mt-2">{{ quiz.questions.length }} questions</span>
     <div class="flex gap-2 mt-3">

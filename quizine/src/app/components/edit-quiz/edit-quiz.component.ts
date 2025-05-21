@@ -16,10 +16,9 @@ export class EditQuizComponent {
     id: 1,
     title: "Quiz de géographie",
     tags: ["histoire", "france", "europe"],
-    nbQuestions: 2,
     description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     createdBy: 'johndoe123',
-    createdAt: '23/03/2025',
+    createdAt: new Date('2025-03-23'),
     private: false,
     questions: [
       {
@@ -27,12 +26,12 @@ export class EditQuizComponent {
         quizId: 1,
         questionText: "Quelle est la capitale de la France ?",
         options: [
-          { id: 1, questionId: 1, optionText: "Paris", isCorrect: true },
-          { id: 2, questionId: 1, optionText: "Londres", isCorrect: false },
-          { id: 3, questionId: 1, optionText: "Berlin", isCorrect: false },
-          { id: 4, questionId: 1, optionText: "Madrid", isCorrect: false }
+          { id: 1, optionText: "Paris"},
+          { id: 2, optionText: "Londres"},
+          { id: 3, optionText: "Berlin"},
+          { id: 4, optionText: "Madrid"}
         ],
-        correctAnswer: { id: 1, questionId: 1, optionText: "Paris", isCorrect: true },
+        correctAnswer: { id: 1, optionText: "Paris"},
         timer: 30
       },
       {
@@ -40,12 +39,12 @@ export class EditQuizComponent {
         quizId: 1,
         questionText: "Quel est le plus grand océan du monde ?",
         options: [
-          { id: 5, questionId: 2, optionText: "Atlantique", isCorrect: false },
-          { id: 6, questionId: 2, optionText: "Indien", isCorrect: false },
-          { id: 7, questionId: 2, optionText: "Arctique", isCorrect: false },
-          { id: 8, questionId: 2, optionText: "Pacifique", isCorrect: true }
+          { id: 5, optionText: "Atlantique"},
+          { id: 6, optionText: "Indien"},
+          { id: 7, optionText: "Arctique"},
+          { id: 8, optionText: "Pacifique"}
         ],
-        correctAnswer: { id: 8, questionId: 2, optionText: "Pacifique", isCorrect: true },
+        correctAnswer: { id: 8, optionText: "Pacifique"},
         timer: 30
       }
     ]
