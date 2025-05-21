@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Question } from '../../models/quizModel';
+import { Question, Option } from '../../models/quizModel';
 import { QuizService } from '../../services/quiz.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class QuizQuestionComponent {
   private intervalId: any;
 
   constructor(public quizService: QuizService) {
+    //TODO redo this
     this.question = this.quizService.getCurrentQuestion();
     this.questionIndex = this.quizService.getQuestionIndex();
     this.totalQuestions = this.quizService.getTotalQuestions();
@@ -51,9 +52,8 @@ export class QuizQuestionComponent {
     }, 1000);
   }
 
-  selectAnswer(index: number) {
-    this.selectedAnswer = index;
-    this.quizService.selectAnswer(this.questionIndex, index);
+  selectAnswer(answer: Option) {
+    this.quizService.selectAnswer(this.question.id, answer);
   }
 
     nextQuestion() {

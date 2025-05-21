@@ -1,1 +1,62 @@
-<p>quiz-score works!</p>
+<div class="min-h-screen bg-primary-lighter flex flex-col">
+  <!-- Main content -->
+  <div class="flex-1 flex items-center justify-center w-full h-full">
+    <div class="bg-white rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
+
+      <div class="flex w-full h-full flex-col items-center justify-between gap-4">
+          <div class="flex w-full items-start justify-center gap-8">
+            <div class="w-fit h-fit">
+              <img src="assets/images/confettis.svg" alt="Confettis" class="size-10 object-cover">
+            </div>
+            <div class="w-fit h-fit">
+              <img src="assets/images/podium.svg" alt="Podium" class="size-40 object-cover">
+            </div>
+            <div class="w-fit h-fit">
+              <img src="assets/images/confettis.svg" alt="Confettis" class="size-10 object-cover">
+            </div>
+          </div>
+
+        <div class="flex flex-col items-center gap-2 w-full">
+          <ng-container *ngIf="topThree?.length">
+            <div *ngFor="let entry of sortedScores; let i = index"
+              (click)="selectUser(entry.user.id)"
+              [ngClass]="
+                i === 0 && entry.user.id === currentUser.id ? 'bg-yellow-300 scale-105 shadow-lg font-bold text-primary hover:bg-primary-light hover:text-white hover:border-primary-light transition' :
+                i === 0 ? 'bg-yellow-300 scale-105 shadow-lg font-bold' :
+                i === 1 && entry.user.id === currentUser.id ? 'bg-gray-200 font-semibold text-primary hover:bg-primary-light hover:text-white hover:border-primary-light transition' :
+                i === 1 ? 'bg-gray-200 font-semibold' :
+                i === 2 && entry.user.id === currentUser.id ? 'bg-orange-200 font-semibold text-primary hover:bg-primary-light hover:text-white hover:border-primary-light transition' :
+                i === 2 ? 'bg-orange-200 font-semibold' :
+                i > 2 && entry.user.id === currentUser.id ? 'bg-white text-primary font-bold hover:bg-primary-light hover:text-white hover:border-primary-light transition' :
+                'bg-white font-semibold hover:bg-primary-light hover:text-white hover:border-primary-light transition'
+              "
+              class="w-4/6 max-w-4xl text-black border rounded-lg px-2 py-2 text-left text-base focus:outline-none transition-all duration-150 break-words whitespace-pre-line mb-1"
+            >
+              <span class="flex justify-between items-center pr-2">
+                <span>
+                  <span *ngIf="i === 0">🥇</span>
+                  <span *ngIf="i === 1">🥈</span>
+                  <span *ngIf="i === 2">🥉</span>
+                  <span *ngIf="i > 2">{{ i + 1 }}. </span>
+                  <span>{{ entry.user.name }}</span>
+              </span>
+              <span>
+                {{ entry.score }}
+              </span>
+              </span>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- suivant -->
+        <div class="w-full flex justify-center pb-6">
+          <button
+            (click)="next()"
+            class="bg-primary text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark transition duration-300"
+          >
+            Suivant
+          </button>
+
+    </div>
+  </div>
+</div>
