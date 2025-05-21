@@ -8,15 +8,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
-  animations:[
-    trigger('slideInOut',[
-      state('in',style({transform: 'translateX(0)'})),
-      state('out',style({transform: 'translateX(-100)'})),
-      transition('in=>out', animate('300ms ease-in')),
-      transition('out=>in', animate('300ms ease-out'))
-
-    ])
-  ]
 })
 export class HomePageComponent {
   isSideBarOpen=true;
