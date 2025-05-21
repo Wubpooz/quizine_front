@@ -8,7 +8,7 @@ import { UserInviteComponent } from './components/user-invite/user-invite.compon
 
 export const routes: Routes = [
     {path: "explore", component: ExploreComponent},
-    {path: "quizdescription", component: QuizDescriptionComponent},
+    {path: "quiz-preview/:id", component: QuizDescriptionComponent},
     {path: "library", component: LibraryComponent},
     {path: "editquiz", component: EditQuizComponent},
     { path: 'waiting', component: WaitingPageComponent },

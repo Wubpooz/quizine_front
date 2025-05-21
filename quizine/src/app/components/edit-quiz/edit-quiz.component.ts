@@ -3,11 +3,12 @@ import { Quiz } from '../../models/quizModel';
 import { TagListComponent } from '../tag-list/tag-list.component';
 import { EditQuizQuestionComponent } from "./edit-quiz-question/edit-quiz-question.component";
 import { ButtonComponent } from "../button/button.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-quiz',
   standalone: true,
-  imports: [TagListComponent, EditQuizQuestionComponent, ButtonComponent],
+  imports: [TagListComponent, EditQuizQuestionComponent, ButtonComponent, CommonModule],
   templateUrl: './edit-quiz.component.html',
   styleUrl: './edit-quiz.component.css'
 })
