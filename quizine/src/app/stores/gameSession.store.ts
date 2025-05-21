@@ -12,10 +12,12 @@ export class gameSessionStore {
     public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
         [
-            [ { id: 1, name: "John Doe", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1300 ],
+            [ { id: 1, name: "John Doe", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1450 ],
             [ { id: 2, name: "Jane Smith", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1500 ],
             [ { id: 3, name: "Alice Johnson", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1200 ],
-            [ { id: 4, name: "Bob Brown", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1400 ]
+            [ { id: 4, name: "Bob Brown", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1400 ],
+            [ { id: 5, name: "Boby own", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1100 ],
+            [ { id: 6, name: "Johfb Bn", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 600 ]
     ])); //temp
     public answerList: BehaviorSubject<Map<number, number>> = new BehaviorSubject<Map<number, number>>(new Map());
 

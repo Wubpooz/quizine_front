@@ -58,8 +58,6 @@ export class APIService {
         });
     }
 
-
-    // =============== Methods not updating stores ===============
     getUserData() : Observable<User> {
         return new Observable<User>((observer) => {
             const user: User = {
