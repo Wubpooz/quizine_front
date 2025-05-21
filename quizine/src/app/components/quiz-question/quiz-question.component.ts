@@ -53,7 +53,7 @@ export class QuizQuestionComponent {
   }
 
   selectAnswer(answer: Option) {
-    this.quizService.selectAnswer(this.question, answer);
+    this.quizService.selectAnswer(this.question.id, answer);
   }
 
     nextQuestion() {

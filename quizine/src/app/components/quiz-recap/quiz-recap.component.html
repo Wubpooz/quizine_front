@@ -1,1 +1,56 @@
-<p>quiz-recap works!</p>
+<div class="min-h-screen bg-primary-lighter flex flex-col">
+  <div class="flex-1 flex items-center justify-center w-full h-full">
+    <div class="bg-white rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
+
+      <div class="flex h-full flex-col">
+        <h1 class="text-3xl font-bold text-left mb-8">Récapitulatif</h1>
+  
+        <div class="mb-10 overflow-y-auto h-full">
+          <ng-container *ngFor="let question of quiz.questions; let i = index" class="flex items-center gap-4">
+            <div class="flex flex-col mb-8 pr-4">
+              <div class="flex flex-col mb-4">
+                <span class="text-2xl font-bold text-primary">Question {{ i + 1 }}/{{ quiz.questions.length }}</span>
+                <span>{{ question.questionText }}</span>
+              </div>
+              
+              <div  class="flex flex-col gap-2">
+                <ng-container *ngFor="let answer of question.options; let j = index">
+                  <div class="flex items-center w-full gap-2">
+                    <span *ngIf="question.correctAnswer.id === answer.id" class="text-green-500 text-2xl font-bold">✔</span>
+                    <span *ngIf="answer.id === answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="text-red-500 text-2xl font-bold">✗</span>
+                    <span *ngIf="answer.id !== answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="text-2xl font-bold inline-block w-[1em]">&nbsp;</span>
+                    <ng-container *ngIf="question.correctAnswer.id === answer.id">
+                      <div class="w-full bg-green-500 border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
+                        <div class="text-white">{{ j + 1 }}. {{ answer.optionText }}</div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="answer.id === answers.get(question.id)?.id && question.correctAnswer.id !== answer.id">
+                          <div class="w-full bg-red-500 border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
+                            <div class="text-white">{{ j + 1 }}. {{ answer.optionText }}</div>
+                          </div>
+                        </ng-container>
+                        <ng-container *ngIf="answer.id !== answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="flex">
+                          <div class="w-full bg-white border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
+                            <div>{{ j + 1 }}. {{ answer.optionText }}</div>
+                          </div>
+                        </ng-container>
+                      </div>
+                  </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+  
+      </div>
+
+      <div class="absolute left-0 right-0 bottom-0 z-10 flex justify-center items-center w-full h-20 pointer-events-none">
+        <div class="backdrop-blur-md bg-primary-lighter/70 w-full max-w-4xl mx-auto rounded-b-lg flex justify-center items-center pointer-events-auto">
+          <button class="bg-primary text-white font-bold py-2 px-8 rounded-lg shadow-md hover:bg-primary-dark transition duration-300">
+            Terminer
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
