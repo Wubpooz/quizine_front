@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TagListComponent } from '../tag-list/tag-list.component';
+import { Quiz } from '../../models/quizModel';
 
 @Component({
   selector: 'app-quiz-card',
@@ -10,10 +11,5 @@ import { TagListComponent } from '../tag-list/tag-list.component';
   styleUrl: './quiz-card.component.css'
 })
 export class QuizCardComponent {
-  @Input() title: string = "";
-  @Input() tags: string[] = [];
-  @Input() nbQuestions: number = 0;
-  @Input() createdBy: string = "";
-  @Input() createdAt: Date = new Date();
-  @Input() link: string = "";
+  @Input() quiz!: Quiz;
 }
