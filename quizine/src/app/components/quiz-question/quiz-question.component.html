@@ -25,7 +25,7 @@
           <div class="flex flex-col items-center gap-4 w-full">
             <button
               *ngFor="let answer of question.options; let i = index"
-              (click)="selectAnswer(i)"
+              (click)="selectAnswer(answer)"
               [ngClass]="{
                 'bg-primary text-white shadow-md border-primary': selectedAnswer === i,
                 'bg-white text-gray-700 hover:bg-primary-light hover:text-white hover:border-primary-light transition': selectedAnswer !== i

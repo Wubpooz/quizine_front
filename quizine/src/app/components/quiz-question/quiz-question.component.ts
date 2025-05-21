@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Question } from '../../models/quizModel';
+import { Question, Option } from '../../models/quizModel';
 import { QuizService } from '../../services/quiz.service';
 
 @Component({
@@ -52,9 +52,8 @@ export class QuizQuestionComponent {
     }, 1000);
   }
 
-  selectAnswer(index: number) {
-    this.selectedAnswer = index;
-    this.quizService.selectAnswer(this.questionIndex, index);
+  selectAnswer(answer: Option) {
+    this.quizService.selectAnswer(this.question, answer);
   }
 
     nextQuestion() {
