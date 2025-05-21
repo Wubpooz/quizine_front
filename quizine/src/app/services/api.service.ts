@@ -131,6 +131,20 @@ export class APIService {
         return [];
     }
 
+    login(username: string, password: string): Observable<User> {
+        return new Observable<User>((observer) => {
+            const user: User = {
+                id: 1,
+                name: "Joh Doe",
+                email: "",
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            observer.next(user);
+            observer.complete();
+        });
+    }
+
     getScoreboard() {
         return [];
     }

@@ -2,6 +2,10 @@
 
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { User } from '../../models/userModel';
+import { AppStore } from '../../stores/app.store';
+import { Router } from '@angular/router';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'login',
@@ -12,17 +16,24 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
   showPassword = false;
-  username = '';   // <-- bound to input
-  password = '';   // <-- bound to input
+  private username = '';
+  private password = '';
+
+  constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-
-    // You can now send these values to backend via HTTP request
+    this.apiService.login(this.username, this.password).subscribe((user:User) => {
+      if (user) {
+        this.appStore.updateUser(user);
+        this.router.navigate(['/home']);
+      } else {
+        // Handle login error
+        console.error('Login failed');
+      }
+    });
   }
 }

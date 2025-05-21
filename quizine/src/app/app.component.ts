@@ -18,4 +18,9 @@ import { QuizQuestionComponent } from './components/quiz-question/quiz-question.
 })
 export class AppComponent {
   title = 'quizine';
+
+  ngOnInit(): void {
+    //TODO init app
+
+  }
 }
