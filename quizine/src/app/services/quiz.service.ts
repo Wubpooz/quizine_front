@@ -52,4 +52,13 @@ export class QuizService {
   selectAnswer(questionId: number, answer: Option): void {
     this.gameSessionStore.answerList.getValue().set(questionId, answer);
   }
+
+  getQuizById(quizId: number): Promise<Quiz> {
+    return this.apiService.getQuizById(quizId).toPromise().then((quiz) => {
+      if (!quiz) {
+        throw new Error('Quiz not found');
+      }
+      return quiz;
+    });
+  }
 }
