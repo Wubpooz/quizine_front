@@ -1,6 +1,8 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
+:root {
   --color-primary: #2F80ED;
   --color-primary-dark: #1366D6;
   --color-primary-darker: #0C4CB5;
@@ -9,10 +11,7 @@
   --color-primary-lint: #EAF3FE;
   --color-primary-border: rgba(47, 128, 237, 0.3);
   --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
-
-  
-  --font-body: 'Poppins', sans-serif; /*  --font-body: Inter, sans-serif; */
-    /* font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol"; */
+  --font-body: 'Poppins', sans-serif;
 }
+
+/* Custom styles can be added below */

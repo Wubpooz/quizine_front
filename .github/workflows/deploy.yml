@@ -1,0 +1,30 @@
+name: Deploy to production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Permet le déclenchement manuel depuis l'interface GitHub
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH Configuration
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_GENERAL_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H kerboul.me >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+      
+      - name: Deploy to Production
+        run: |
+          echo "Exécution du script de déploiement via SSH..."
+          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && ./deploy.sh'"
+          
+          echo "Déploiement terminé avec succès!"
+          
+      - name: Cleanup SSH keys
+        if: always() # S'exécute même en cas d'échec des étapes précédentes
+        run: |
+          rm -f ~/.ssh/id_rsa
