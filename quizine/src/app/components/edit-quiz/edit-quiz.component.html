@@ -1,0 +1,30 @@
+<div class="px-96">
+    <div class="flex justify-between w-148 items-center">
+        <div class="flex items-center gap-2">
+            <h1 class="text-2xl">{{ quiz.title }}</h1>
+            <span class="text-gray-400 text-sm">{{ quiz.private ? "privé" : "public" }}</span>
+        </div>
+        <span class="text-gray-400 text-base">{{ quiz.createdAt }}</span>
+    </div>
+    <app-tag-list [tags]="quiz.tags" [class]="'mt-3 text-sm'"></app-tag-list>
+    
+    <h2 class="text-xl font-semibold mt-6">Description</h2>
+    <p class="text-base mt-2 w-148 text-wrap">{{ quiz.description }}</p>
+    
+    <h2 class="text-xl font-semibold mt-6">Questions dans ce quiz ({{ quiz.questions.length }})</h2>
+    <div class="flex flex-col gap-8">
+        @for (question of quiz.questions; let i = $index; track question) {
+            <app-edit-quiz-question
+                [question]="question"
+                [index]="i"
+            ></app-edit-quiz-question>
+        }
+    </div>
+
+    <app-button
+        [label]="'Ajouter une question'"
+        [color]="'secondary'"
+        [size]="'medium'"
+        [class]="'mt-9'"
+    ></app-button>
+</div>

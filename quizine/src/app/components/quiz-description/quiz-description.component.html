@@ -1,14 +1,14 @@
 <div class="px-136">
-    <div class="flex justify-between">
+    <div class="flex justify-between items-center">
         <h1 class="text-2xl">{{ title }}</h1>
         <span class="text-gray-400 text-base">{{ createdAt }}</span>
     </div>
     <app-tag-list [tags]="tags" [class]="'mt-3 text-sm'"></app-tag-list>
     <div class="text-lg mt-6">{{ nbQuestions }} questions</div>
     <app-button
-            [label]="'Démarrer'",
-            [color]="'primary'",
-            [size]="'medium'",
+            [label]="'Démarrer'"
+            [color]="'primary'"
+            [size]="'medium'"
             [class]="'mt-6'"
     ></app-button>
     <p class="text-base text-wrap mt-8">{{ description }}</p>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ButtonComponent } from "../../button/button.component";
+import { Quiz } from '../../../models/quizModel';
 
 @Component({
   selector: 'app-library-quiz-card',
@@ -9,8 +10,5 @@ import { ButtonComponent } from "../../button/button.component";
   styleUrl: './library-quiz-card.component.css'
 })
 export class LibraryQuizCardComponent {
-  @Input() title: string = "";
-  @Input() nbQuestions: number = 0;
-  @Input() createdAt: string = "";
-  @Input() visibility: string = "public"
+  @Input() quiz!: Quiz;
 }
