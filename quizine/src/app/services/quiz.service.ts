@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { Quiz, Question, Option } from '../models/quizModel';
 import { gameSessionStore } from '../stores/gameSession.store';
 import { APIService } from './api.service';
+import { Router } from '@angular/router';
+import { AppStore } from '../stores/app.store';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,9 @@ export class QuizService {
   currentQuestionIndex$ = this.currentQuestionIndexSubject.asObservable();
 
   constructor(private gameSessionStore: gameSessionStore,
-            private apiService: APIService
+            private appStore: AppStore,
+            private apiService: APIService,
+            private router: Router
             ) {
     this.gameSessionStore.quiz.subscribe((quiz) => {
       this.quiz = quiz;
@@ -40,6 +44,10 @@ export class QuizService {
   goToNextQuestion(): void {
     if (this.currentQuestionIndexSubject.value < this.quiz.questions.length - 1) {
       this.currentQuestionIndexSubject.next(this.currentQuestionIndexSubject.value + 1);
+    } else if (this.currentQuestionIndexSubject.value === this.quiz.questions.length - 1) {
+      this.gameSessionStore.updateScore(this.appStore.currentUser.value, this.gameSessionStore.score); //TODO
+      this.gameSessionStore.updateQuiz(this.quiz.id);
+      this.router.navigate(['/quiz-score']);
     }
   }
 

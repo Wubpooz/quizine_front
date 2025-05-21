@@ -3,7 +3,7 @@ import { TagListComponent } from "../tag-list/tag-list.component";
 import { ButtonComponent } from "../button/button.component";
 import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { QuizService } from '../../services/quiz.service';
 export class QuizDescriptionComponent {
   quiz!: Quiz;
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService) {}
+  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router) {}
 
   ngOnInit(): void {
     let quizId = Number(this.route.snapshot.paramMap.get('id'));
@@ -25,5 +25,10 @@ export class QuizDescriptionComponent {
         this.quiz = data;
       });
     }
+  }
+
+  startQuiz(): void {
+    //TODO start quiz
+    this.router.navigate(['/invite']); //TODO
   }
 }

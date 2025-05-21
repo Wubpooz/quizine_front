@@ -53,12 +53,8 @@ export class QuizQuestionComponent {
   }
 
   selectAnswer(answer: Option) {
+    this.selectedAnswer = answer.id;
     this.quizService.selectAnswer(this.question.id, answer);
-  }
-
-    nextQuestion() {
-    this.quizService.goToNextQuestion();
-    this.selectedAnswer = null;
   }
 
   formatTimer(seconds: number): string {
