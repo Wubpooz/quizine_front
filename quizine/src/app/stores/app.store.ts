@@ -7,11 +7,16 @@ import { APIService } from "../services/api.service";
     providedIn: 'root'
 })
 export class AppStore {
-    public user: User;
+    public currentUser!: BehaviorSubject<User>;
 
-    constructor(
-        apiService: APIService
-    ) {
+    constructor(apiService: APIService) {
+        apiService.getUserData().subscribe((user: User) => {
+            if(!this.currentUser){
+                this.currentUser = new BehaviorSubject<User>(user);
+            } else {
+                this.currentUser.next(user);
+            }
+        });
     }
 
 } 

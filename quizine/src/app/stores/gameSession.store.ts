@@ -2,53 +2,47 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../models/userModel";
 import { Quiz } from "../models/quizModel";
+import { APIService } from "../services/api.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class gameSessionStore {
-    public quiz: BehaviorSubject<Quiz> = new BehaviorSubject<Quiz>({
-            id: 1,
-            name: "Sample Quiz",
-            description: "This is a sample quiz.",
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            questions: [
-                {
-                    id: 1,
-                    quizId: 1,
-                    questionText: "What is the capital of France?",
-                    options: [
-                        { id: 1, questionId: 1, optionText: "Paris", isCorrect: true },
-                        { id: 2, questionId: 1, optionText: "London", isCorrect: false },
-                        { id: 3, questionId: 1, optionText: "Berlin", isCorrect: false },
-                        { id: 4, questionId: 1, optionText: "Madrid", isCorrect: false }
-                    ],
-                    correctAnswer: { id: 1, questionId: 1, optionText: "Paris", isCorrect: true },
-                    timer: 10
-                },
-                {
-                    id: 2,
-                    quizId: 1,
-                    questionText: "What is the largest planet in our solar system?",
-                    options: [
-                        { id: 5, questionId: 2, optionText: "Earth", isCorrect: false },
-                        { id: 6, questionId: 2, optionText: "Jupiter", isCorrect: true },
-                        { id: 7, questionId: 2, optionText: "Mars", isCorrect: false },
-                        { id: 8, questionId: 2, optionText: "Saturn", isCorrect: false }
-                    ],
-                    correctAnswer: { id: 6, questionId: 2, optionText: "Jupiter", isCorrect: true },
-                    timer: 10
-                }
-            ]
-        });
-
-    // public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map());
-    // public scoreList$ = this.scores.asObservable();
-    public answerList: BehaviorSubject<Map<number, number>> = new BehaviorSubject<Map<number, number>>(new Map());
-    public answerList$ = this.answerList.asObservable();
+    public quiz!: BehaviorSubject<Quiz>;
     public score: number = 0;
+    public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
+        [
+            [ { id: 1, name: "John Doe", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1300 ],
+            [ { id: 2, name: "Jane Smith", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1500 ],
+            [ { id: 3, name: "Alice Johnson", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1200 ],
+            [ { id: 4, name: "Bob Brown", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1400 ]
+    ])); //temp
+    public answerList: BehaviorSubject<Map<number, number>> = new BehaviorSubject<Map<number, number>>(new Map());
 
-    constructor() {}
+
+    constructor(private apiService: APIService) {
+        this.updateQuiz(1); //temp
+    }
+
+    updateScore(user: User, score: number) {
+        const currentScores = this.scores.getValue();
+        currentScores.set(user, score);
+        this.scores.next(currentScores);
+    }
+    addAnswer(questionId: number, answerId: number) {
+        const currentAnswers = this.answerList.getValue();
+        currentAnswers.set(questionId, answerId);
+        this.answerList.next(currentAnswers);
+    }
+
+    updateQuiz(quizId: number) {
+        this.apiService.getQuiz(quizId).subscribe((quiz: Quiz) => {
+            if (!this.quiz) {
+                this.quiz = new BehaviorSubject<Quiz>(quiz);
+            } else {
+                this.quiz.next(quiz);
+            }
+        });
+    }
 
 }

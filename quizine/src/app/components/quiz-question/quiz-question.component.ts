@@ -20,6 +20,7 @@ export class QuizQuestionComponent {
   private intervalId: any;
 
   constructor(public quizService: QuizService) {
+    //TODO redo this
     this.question = this.quizService.getCurrentQuestion();
     this.questionIndex = this.quizService.getQuestionIndex();
     this.totalQuestions = this.quizService.getTotalQuestions();

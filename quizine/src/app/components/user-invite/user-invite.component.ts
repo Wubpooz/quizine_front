@@ -12,13 +12,11 @@ import {FriendsStore} from '../../stores/friends.store';
   styleUrl: './user-invite.component.css'
 })
 export class UserInviteComponent {
-  // ViewChild
+  //? ViewChild
   inviteForm: FormGroup;
 
-  friends: User[] = [];
+  friends!: User[];
   users: User[];
-
-  friendListSubscription: any;
 
 
   constructor(private fb: FormBuilder,
@@ -30,7 +28,7 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.friendsStore.friendList$.subscribe((friends: User[]) => {
+    this.friendsStore.friends.subscribe((friends: User[]) => {
       this.friends = friends;
     });
   }
