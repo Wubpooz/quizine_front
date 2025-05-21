@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { User } from "../models/userModel";
-import { Quiz } from "../models/quizModel";
+import { Question, Quiz, Option } from "../models/quizModel";
 import { APIService } from "../services/api.service";
 
 @Injectable({
@@ -19,7 +19,7 @@ export class gameSessionStore {
             [ { id: 5, name: "Boby own", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1100 ],
             [ { id: 6, name: "Johfb Bn", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 600 ]
     ])); //temp
-    public answerList: BehaviorSubject<Map<number, number>> = new BehaviorSubject<Map<number, number>>(new Map());
+    public answerList: BehaviorSubject<Map<Question, Option>> = new BehaviorSubject<Map<Question, Option>>(new Map());
 
 
     constructor(private apiService: APIService) {
@@ -33,7 +33,11 @@ export class gameSessionStore {
     }
     addAnswer(questionId: number, answerId: number) {
         const currentAnswers = this.answerList.getValue();
-        currentAnswers.set(questionId, answerId);
+        const question = this.quiz.getValue().questions.find(q => q.id === questionId);
+        const answer = question?.options.find(o => o.id === answerId);
+        if (question && answer) {
+            currentAnswers.set(question, answer);
+        }
         this.answerList.next(currentAnswers);
     }
 

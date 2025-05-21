@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Quiz, Question } from '../models/quizModel';
+import { Quiz, Question, Option } from '../models/quizModel';
 import { gameSessionStore } from '../stores/gameSession.store';
 import { APIService } from './api.service';
 
@@ -49,7 +49,7 @@ export class QuizService {
     }
   }
 
-  selectAnswer(questionIndex: number, answerIndex: number): void {
-    this.gameSessionStore.answerList.getValue().set(questionIndex, answerIndex);
+  selectAnswer(question: Question, answer: Option): void {
+    this.gameSessionStore.answerList.getValue().set(question, answer);
   }
 }
