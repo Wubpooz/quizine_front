@@ -16,8 +16,8 @@ import { APIService } from '../../services/api.service';
 })
 export class LoginComponent {
   showPassword = false;
-  private username = '';
-  private password = '';
+  public username = '';
+  public password = '';
 
   constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
 
