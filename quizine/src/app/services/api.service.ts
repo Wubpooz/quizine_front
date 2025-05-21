@@ -127,6 +127,14 @@ export class APIService {
         return of(quiz);
     }
 
+    getQuizList(userId: number): Observable<Quiz[]> {
+        return new Observable<Quiz[]>((observer) => {
+            const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
+            observer.next(quizzes);
+            observer.complete();
+        });
+    }
+
     search() {
         return [];
     }
