@@ -14,6 +14,7 @@ export class APIService {
     private endpoint = "/api";
     constructor(private http: HttpClient) {}
 
+    //TODO error handling
     private handleError(error: HttpErrorResponse) {
         if (error.status === 0) {
             console.error('An error occurred:', error.error);
@@ -125,10 +126,16 @@ export class APIService {
                 return response.friends ? Object.values(response.friends) as User[] : [];
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError((error: HttpErrorResponse) => {
+                if (error.status === 404) {
+                    // Return empty array if not found
+                    return of([]);
+                }
+                return this.handleError(error);
+            })
         );
     }
-    //TODO handle 404
+    
 
     //========================= Game =========================
     requestGame(session: number, players: number[]): Observable<GameRequest[]> {
@@ -137,14 +144,10 @@ export class APIService {
                     return response ? Object.values(response) as GameRequest[] : [];
                 }),
                 catchError(this.handleError)
-                // 200	
-                // Users invited successfully, you received a game request
-                // 400	
-                // No game requests created
-                // 404	
-                // Error creating some game requests
-                // 500	
-                // Error creating game request
+                // 200	Users invited successfully, you received a game request
+                // 400	No game requests created
+                // 404	Error creating some game requests
+                // 500	Error creating game request
             );
     }
 
@@ -154,12 +157,9 @@ export class APIService {
                     return response ? Object.values(response) as Session[] : [];
                 }),
                 catchError(this.handleError)
-            // 400	
-            // Invalid request Missing required fields
-            // 500	
-            // Error creating game session
-            // 501	
-            // Failed to create participation
+            // 400	Invalid request Missing required fields
+            // 500	Error creating game session
+            // 501	Failed to create participation
             );
     }
 
@@ -174,15 +174,6 @@ export class APIService {
             retry(1),
             catchError(this.handleError)
         );
-        // const quizzes: Quiz[] = [{
-        //     id: 1,
-        //     nom: "Sample Quiz",
-        //     picture:null,
-        //     createdBy: "John Doe",
-        //     questions: [],
-        //     tags: [],
-        //     private: false
-        // }]
     }
 
 
