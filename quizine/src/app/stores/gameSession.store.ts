@@ -51,4 +51,25 @@ export class gameSessionStore {
         });
     }
 
+    calculateScore(): number {
+        const quiz = this.quiz.getValue();
+        const answers = this.answerList.getValue();
+        if (!quiz) return 0;
+      
+        let score = 0;
+      
+        for (const question of quiz.questions) {
+          const selectedOption = answers.get(question.id);
+          const correctOption = question.choices.find((choice) => choice.id === question.id_answer);
+      
+          if (selectedOption && correctOption && selectedOption.id === correctOption.id) {
+            score += 100; // You can adjust the score per correct answer here
+          }
+        }
+      
+        this.score = score;
+        return score;
+      }
+      
+
 }

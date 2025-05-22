@@ -27,7 +27,7 @@ export class QuizService {
       this.currentQuestionIndexSubject.next(0);
     });
   }
-//TODO calcul du score
+
   getTitle(): string {
     return this.quiz.nom;
   }
@@ -48,11 +48,11 @@ export class QuizService {
     if (this.currentQuestionIndexSubject.value < this.quiz.questions.length - 1) {
       this.currentQuestionIndexSubject.next(this.currentQuestionIndexSubject.value + 1);
     } else if (this.currentQuestionIndexSubject.value === this.quiz.questions.length - 1) {
-      if(this.appStore.currentUser.value === undefined){
-        return
-      }
-      this.gameSessionStore.updateScore(this.appStore.currentUser.value, this.gameSessionStore.score); //TODO
-      this.gameSessionStore.updateQuiz(this.quiz.id);
+      const user = this.appStore.currentUser.value;
+      if (!user) return;
+    
+      const finalScore = this.gameSessionStore.calculateScore();
+      this.gameSessionStore.updateScore(user, finalScore);
       this.router.navigate(['/quiz-score']);
     }
   }
@@ -74,5 +74,25 @@ export class QuizService {
       }
       return quiz;
     });
+  }
+
+  calculateScore(): number {
+    let score = 0;
+    const answerList = this.gameSessionStore.answerList.getValue();
+    const quiz = this.gameSessionStore.quiz.getValue();
+
+    if (!quiz) {
+      console.debug("No quiz.");
+      return score;
+    }
+
+    quiz.questions.forEach((question) => {
+      const userAnswer = answerList.get(question.id);
+      if (userAnswer && userAnswer.id === question.id_answer) {
+        score++;
+      }
+    });
+
+    return score;
   }
 }
