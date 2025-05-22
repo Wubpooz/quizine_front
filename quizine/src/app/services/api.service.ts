@@ -14,6 +14,12 @@ export class APIService {
     
     private quizList: Quiz[] = [];
 
+
+    getAllUsers(): Observable<User[]> {
+        return from(this.http.get<any>("/api/users", {})
+                    .toPromise().then((payload)=>Object.values(payload))) as Observable<User[]>
+    }
+
     getQuizById(id: number): Observable<any> {
         return this.getQuiz(id);
     }
