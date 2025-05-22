@@ -1,4 +1,4 @@
-<div class="flex h-screen">
+<div [ngClass]="{ 'blur-sm pointer-events-none select-none': isInviteShowing }" class="flex h-screen">
     <app-sidebar></app-sidebar>
     <div class="flex-1 w-full">
         <!-- Header -->
@@ -34,3 +34,5 @@
         </div>
     </div>
 </div>
+
+<user-invite *ngIf="isInviteShowing" (close)="isInviteShowing = false"></user-invite>

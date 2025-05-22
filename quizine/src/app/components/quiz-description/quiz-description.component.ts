@@ -7,16 +7,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { NavbarComponent } from "../navbar/navbar.component";
+import { UserInviteComponent } from "../user-invite/user-invite.component";
 
 @Component({
   selector: 'app-quiz-description',
   standalone: true,
-  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent, NavbarComponent],
+  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent, NavbarComponent, UserInviteComponent],
   templateUrl: './quiz-description.component.html',
   styleUrl: './quiz-description.component.css'
 })
 export class QuizDescriptionComponent {
   quiz!: Quiz;
+  isInviteShowing = false;
 
   constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router) {}
 
@@ -30,7 +32,6 @@ export class QuizDescriptionComponent {
   }
 
   startQuiz(): void {
-    //TODO start quiz
-    this.router.navigate(['/invite']); //TODO
+    this.isInviteShowing = true;
   }
 }

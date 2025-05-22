@@ -34,7 +34,5 @@ export const routes: Routes = [
     {path: "quiz-recap", component: QuizRecapComponent},
     {path: "quiz-score", component: QuizScoreComponent},
 
-    { path: 'waiting-room', component: WaitingPageComponent },
-
-    { path: 'invite', component: UserInviteComponent }
+    { path: 'waiting-room', component: WaitingPageComponent }
 ];

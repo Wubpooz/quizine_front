@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
@@ -13,6 +13,7 @@ import { AppStore } from '../../stores/app.store';
   styleUrl: './user-invite.component.css'
 })
 export class UserInviteComponent {
+  @Output() close = new EventEmitter<void>();
   //? ViewChild
   inviteForm: FormGroup;
 
@@ -66,6 +67,6 @@ export class UserInviteComponent {
   }
 
   onClose() {
-    console.log('Close action triggered');
+    this.close.emit();
   }
 }
