@@ -1,9 +1,9 @@
 <div class="flex h-screen">
     <app-sidebar></app-sidebar>
-    <div class="flex-1 w-full">
+    <div class="flex-1 w-full h-screen overflow-y-auto">
         <!-- Header -->
         <app-navbar></app-navbar>
-        <div class="mx-40 h-[calc(100vh-8rem)] overflow-hidden">
+        <div class="mx-40">
             <h1 class="text-2xl">Découvrir</h1>
             <div *ngIf="quizList.length > 0">
             <input 
