@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {trigger,state,style, animate, transition} from '@angular/animations'
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'home-page',
@@ -16,6 +16,8 @@ export class HomePageComponent {
     // Add more quizzes...
   ];
 
+  constructor(private router: Router) {}
+
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
   }
@@ -23,9 +25,19 @@ export class HomePageComponent {
   toggleSideBar() {
     this.isSideBarOpen=!this.isSideBarOpen;
   }
-  onCreateQuiz() {
-    console.log('Create Quiz button clicked');
-    // Navigate to quiz creation page
+
+
+  gotoHome() {
+    this.router.navigate(['/home']);
+  }
+  gotoLibrary() {
+    this.router.navigate(['/library']);
+  }
+  gotoExplore() {
+    this.router.navigate(['/explore']);
+  }
+  gotoCreateQuiz() {
+    this.router.navigate(['/create-quiz']);
   }
   
 }
