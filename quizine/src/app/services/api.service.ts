@@ -203,7 +203,6 @@ export class APIService {
     getUserData() : Observable<User> {
         return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {}).pipe(
             map((response: any) => {
-                console.log("response dans get user data : ", response)
                 return response.User;
             }),
             retry(1),

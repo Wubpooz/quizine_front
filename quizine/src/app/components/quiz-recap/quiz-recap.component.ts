@@ -37,6 +37,6 @@ export class QuizRecapComponent {
     } else {
       this.router.navigate(['/quiz-preview', this.quiz.id]);
     }
-    //TODO ?
+    //! TODO 
   }
 }
