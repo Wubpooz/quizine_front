@@ -1,5 +1,11 @@
 <!-- Header -->
-<div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-[1000]">
+<div class="flex justify-between items-center sticky top-0 bg-white z-[1000] w-screen">
+    <div class="flex p-4 z-[100] gap-4">
+      <button (click)="toggleSideBar()">
+          <img src="assets/images/SideBar.png" alt="Quiz Blocks" class="w-10 h-12 object-contain hover:bg-primary-tint rounded" />
+      </button>
+      <span class="text-xl font-bold mb-4 text-primary translate-y-2">Quizine</span>
+  </div>
   <div class="flex md:w-1/2">
     <input
       type="text"

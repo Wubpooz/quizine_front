@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,15 +13,13 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   isSideBarOpen = true;
 
+  constructor(private router: Router, private sidebarService: SidebarService) {
+    this.sidebarService.isOpen$.subscribe(open => this.isSideBarOpen = open);
+  }
+
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
   }
-
-  toggleSideBar() {
-    this.isSideBarOpen=!this.isSideBarOpen;
-  }
-
-  constructor(private router: Router) {}
   
   goToHomepage() {
     this.router.navigate(['/home']);
