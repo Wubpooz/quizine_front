@@ -163,7 +163,7 @@ export class CreateQuizComponent {
   onSubmit() {
     //TODO
     //! send JSON {Quiz details, questionList:{question:{question, options:{bonneOption, autresoptions...}}}}
-    let quiz = {
+    const quiz = {
       nom: this.quizTitle,
       picture: null,
       private : this.quizVisibility,
