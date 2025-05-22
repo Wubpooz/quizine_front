@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'create-quiz',
   standalone: true,
-  imports: [SidebarComponent, TopbarComponent, CommonModule, FormsModule, TagListComponent],
+  imports: [SidebarComponent, CommonModule, FormsModule, NavbarComponent, TagListComponent],
   templateUrl: './create-quiz.component.html',
   styleUrl: './create-quiz.component.css'
 })

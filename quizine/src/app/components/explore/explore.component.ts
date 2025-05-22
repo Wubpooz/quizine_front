@@ -4,11 +4,12 @@ import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { AppStore } from '../../stores/app.store';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [QuizCardComponent, CommonModule, SidebarComponent],
+  imports: [QuizCardComponent, CommonModule, SidebarComponent, NavbarComponent],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })

@@ -1,16 +1,20 @@
 <div class="flex h-screen">
     <app-sidebar></app-sidebar>
-    <div class="px-96">
-        <h1 class="text-2xl">Découvrir</h1>
-        <div *ngIf="quizList.length > 0" class="flex flex-wrap gap-4 mt-6">
-            @for (quiz of quizList; track quiz) {
-                <app-quiz-card
-                    [quiz]="quiz"
-                ></app-quiz-card>
-            }
-        </div>
-        <div *ngIf="quizList.length === 0" class="text-lg text-gray-500 w-64 text-wrap text-center mx-auto mt-48">
-            Aucun résultat ne correspond à votre recherche.
+    <div class="flex-1 w-full">
+        <!-- Header -->
+        <app-navbar></app-navbar>
+        <div class="mx-40">
+            <h1 class="text-2xl">Découvrir</h1>
+            <div *ngIf="quizList.length > 0" class="flex flex-wrap gap-4 mt-6">
+                @for (quiz of quizList; track quiz) {
+                    <app-quiz-card
+                        [quiz]="quiz"
+                    ></app-quiz-card>
+                }
+            </div>
+            <div *ngIf="quizList.length === 0" class="text-lg text-gray-500 w-64 text-wrap text-center mx-auto mt-48">
+                Aucun résultat ne correspond à votre recherche.
+            </div>
         </div>
     </div>
 </div>
