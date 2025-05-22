@@ -11,26 +11,38 @@ export class AppStore {
     public currentUser!: BehaviorSubject<User>;
     public friends!: BehaviorSubject<User[]>;
     public quizList!: BehaviorSubject<Quiz[]>;
-
+    private inited = false;
     constructor(private apiService: APIService) {
         //TODO remove - update User is called in login component
-        apiService.getUserData().subscribe((user: User) => {
+        //peut pas faire l'initialisation ici, parce que sinon on fait des trucs
+        //qui peuvent pas être calculés pour qq pas connecté
+    }
+
+    init(){
+        if(this.inited){
+            this.inited = true
+            return
+        }
+        this.apiService.getUserData().subscribe((user: User) => {
             if(!this.currentUser){
                 this.currentUser = new BehaviorSubject<User>(user);
             } else {
-                this.currentUser.next(user);
+                this.currentUser = new BehaviorSubject<User>(user);
+                //this.currentUser.next(user);
             }
+            this.apiService.getQuizList(user.id).subscribe((quizzes: Quiz[]) => {
+                if(!this.quizList){
+                    this.quizList = new BehaviorSubject<Quiz[]>(quizzes);
+                } else {
+                    this.quizList = new BehaviorSubject<Quiz[]>(quizzes);
+                }
+            });
         });
         this.apiService.getFriends().subscribe((friends: User[]) => {
-            this.friends.next(friends);
+            this.friends = new BehaviorSubject<User[]>(friends);
+            //this.friends.next(friends);
         });
-        this.apiService.getQuizList(this.currentUser.value.id).subscribe((quizzes: Quiz[]) => {
-            if(!this.quizList){
-                this.quizList = new BehaviorSubject<Quiz[]>(quizzes);
-            } else {
-                this.quizList.next(quizzes);
-            }
-        });
+        
     }
 
     updateUser(user: User) {
@@ -54,10 +66,12 @@ export class AppStore {
     }
 
     updateFriends(friends: User[]) {
-        this.friends.next(friends);
+        this.friends = new BehaviorSubject<User[]>(friends);
+        //this.friends.next(friends);
     }
 
     updateQuizList(quizList: Quiz[]) {
-        this.quizList.next(quizList);
+        this.quizList = new BehaviorSubject<Quiz[]>(quizList);
+        //this.quizList.next(quizList);
     }
 } 

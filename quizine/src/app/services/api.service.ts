@@ -1,15 +1,17 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { inject, Injectable } from "@angular/core";
+import { from, map, Observable, of } from "rxjs";
 import { User } from "../models/userModel";
 import { Quiz } from "../models/quizModel";
+import { HttpClient } from "@angular/common/http";
+import { Participation } from "../models/participationModel";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class APIService {
-    constructor() {}
-
+    constructor(private http: HttpClient) {}
+    
     private quizList: Quiz[] = [
         {
           id: 1,
@@ -128,11 +130,16 @@ export class APIService {
     }
 
     getQuizList(userId: number): Observable<Quiz[]> {
-        return new Observable<Quiz[]>((observer) => {
-            const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
-            observer.next(quizzes);
-            observer.complete();
-        });
+      const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
+
+      return from(this.http.get<Quiz[]>("/api/quiz", {})
+            .toPromise().then((payload)=>payload||quizzes))
+
+        // return new Observable<Quiz[]>((observer) => {
+        //     const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
+        //     observer.next(quizzes);
+        //     observer.complete();
+        // });
     }
 
     search() {
@@ -140,17 +147,16 @@ export class APIService {
     }
 
     login(username: string, password: string): Observable<User> {
-        return new Observable<User>((observer) => {
-            const user: User = {
-                id: 1,
-                name: "Joh Doe",
-                email: "",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            };
-            observer.next(user);
-            observer.complete();
-        });
+      const user: User = {
+          id: 1,
+          name: "Joh Doe",
+          email: "",
+          createdAt: new Date(),
+          updatedAt: new Date()
+      };
+      
+      return from(this.http.post<{message:string, user:User}>("/api/login", {username, password}, {})
+            .toPromise().then((payload)=>payload?.user||user))
     }
 
     getScoreboard() {
@@ -206,17 +212,27 @@ export class APIService {
     }
 
     getUserData() : Observable<User> {
-        return new Observable<User>((observer) => {
-            const user: User = {
-                id: 1,
-                name: "John Doe",
-                email: "",
-                createdAt: new Date(),
-                updatedAt: new Date()
-            };
-            observer.next(user);
-            observer.complete();
-        });
+        // return new Observable<User>((observer) => {
+        //     const user: User = {
+        //         id: 1,
+        //         name: "John Doe",
+        //         email: "",
+        //         createdAt: new Date(),
+        //         updatedAt: new Date()
+        //     };
+        //     observer.next(user);
+        //     observer.complete();
+        // });
+        const user: User = {
+          id: 1,
+          name: "Joh Doe",
+          email: "",
+          createdAt: new Date(),
+          updatedAt: new Date()
+      };
+      
+      return from(this.http.get<{historique:Participation[], User:User}>("/api/profile", {})
+            .toPromise().then((payload)=>payload?.User||user))
     }
 
     getFriends() : Observable<User[]> {
