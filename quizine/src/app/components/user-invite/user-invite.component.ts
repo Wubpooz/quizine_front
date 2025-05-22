@@ -79,7 +79,7 @@ export class UserInviteComponent {
     }
     this.submit.emit(this.sessionId);
   }
-
+  //commit important
   onSkip() {
     this.submit.emit(this.sessionId);
     //this.router.navigate(['/waiting-room']);
