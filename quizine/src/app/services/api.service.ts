@@ -230,7 +230,6 @@ export class APIService {
             }),
             catchError(this.handleError)
         );
-        //{ success: true, quizId: 1 }
     }
 
     getRecentQuizzes(): Observable<Quiz[]> {
