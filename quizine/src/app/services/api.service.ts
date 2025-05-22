@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
-import { from, map, Observable, of } from "rxjs";
+import { catchError, from, map, Observable, of, retry, throwError } from "rxjs";
 import { User } from "../models/userModel";
 import { Quiz } from "../models/quizModel";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Participation } from "../models/participationModel";
 
 
@@ -11,13 +11,65 @@ import { Participation } from "../models/participationModel";
 })
 export class APIService {
     constructor(private http: HttpClient) {}
-    
-    private quizList: Quiz[] = [];
 
+    private handleError(error: HttpErrorResponse) {
+        if (error.status === 0) {
+            console.error('An error occurred:', error.error);
+        } else {
+            console.error(`Backend returned code ${error.status}, body was: `, error.error);
+        }
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+    }
+
+
+    //========================= Register =========================
+    login(username: string, password: string): Observable<User> {
+      const user: User = {
+          id: 1,
+          username: "Joh Doe",
+          picture: "",
+      };
+      
+      return from(this.http.post<{message:string, user:User}>("/api/login", {username, password}, {})
+            .toPromise().then((payload)=>payload?.user||user))
+    }
+
+    signup(username: string, password: string): Observable<User> {
+      const user: User = {
+          id: 1,
+          username: "Joh Doe",
+          picture: ""
+      };
+      
+      return from(this.http.post<{message:string, user:User}>("/api/signup", {username, password}, {})
+            .toPromise().then((payload)=>payload?.user||user))
+    }
+
+    logout(): void {
+    }
+
+
+    //========================= Create =========================
+
+    //========================= Explore =========================
+    //========================= Friends =========================
+    //========================= Game =========================
+    //========================= History =========================
+    //========================= Labels =========================
+    //========================= Profile =========================
+    //========================= Quiz =========================
+    //========================= Rate =========================
+    //========================= Recent =========================
+    //========================= Search =========================
 
     getAllUsers(): Observable<User[]> {
-        return from(this.http.get<any>("/api/users", {})
-                    .toPromise().then((payload)=>Object.values(payload))) as Observable<User[]>
+        return this.http.get<any>("/api/users", {}).pipe(
+                    map((response: any) => {
+                        return response ? Object.values(response) as User[] : [];
+                    }),
+                    retry(2),
+                    catchError(this.handleError)
+        );
     }
 
     getQuizById(id: number): Observable<any> {
@@ -25,10 +77,9 @@ export class APIService {
     }
 
     getQuizList(userId: number): Observable<Quiz[]> {
-      const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.id_creator === userId);
 
       return from(this.http.get<any>("/api/quiz", {})
-            .toPromise().then((payload)=>Object.values(payload)||quizzes)) as Observable<Quiz[]>
+            .toPromise().then((payload)=>Object.values(payload)||[])) as Observable<Quiz[]>
 
         // return new Observable<Quiz[]>((observer) => {
         //     const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
@@ -52,7 +103,7 @@ export class APIService {
             observer.complete();
         });
         return from(this.http.get<any>("/api/recent", {})
-            .toPromise().then((payload)=>Object.values(payload)||this.quizList)) as Observable<Quiz[]>
+            .toPromise().then((payload)=>Object.values(payload)||[])) as Observable<Quiz[]>
     }
 
     createQuiz(quizData: any): Promise<any> {
@@ -68,27 +119,7 @@ export class APIService {
         return [];
     }
 
-    login(username: string, password: string): Observable<User> {
-      const user: User = {
-          id: 1,
-          username: "Joh Doe",
-          picture: "",
-      };
-      
-      return from(this.http.post<{message:string, user:User}>("/api/login", {username, password}, {})
-            .toPromise().then((payload)=>payload?.user||user))
-    }
 
-    signup(username: string, password: string): Observable<User> {
-      const user: User = {
-          id: 1,
-          username: "Joh Doe",
-          picture: ""
-      };
-      
-      return from(this.http.post<{message:string, user:User}>("/api/signup", {username, password}, {})
-            .toPromise().then((payload)=>payload?.user||user))
-    }
 
     getScoreboard() {
         return [];
