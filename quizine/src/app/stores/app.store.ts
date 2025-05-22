@@ -50,7 +50,7 @@ export class AppStore {
                 }
             });
         });
-        this.apiService.getFriends().subscribe((friends: User[]) => {
+        this.apiService.getAllUsers().subscribe((friends: User[]) => {
             //this.friends = new BehaviorSubject<User[]>(friends);
             //this.friends.next(friends);
             if(!this.friends){
