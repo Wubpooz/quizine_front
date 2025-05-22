@@ -35,4 +35,4 @@
     </div>
 </div>
 
-<user-invite *ngIf="isInviteShowing" (close)="isInviteShowing = false"></user-invite>
+<user-invite [quizId]="quiz.id" *ngIf="isInviteShowing" (close)="isInviteShowing = false"></user-invite>

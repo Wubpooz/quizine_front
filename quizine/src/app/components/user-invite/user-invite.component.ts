@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
 import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'user-invite',
@@ -13,6 +14,7 @@ import { AppStore } from '../../stores/app.store';
   styleUrl: './user-invite.component.css'
 })
 export class UserInviteComponent {
+  @Input() quizId!: number;
   @Output() close = new EventEmitter<void>();
   //? ViewChild
   inviteForm: FormGroup;
@@ -21,11 +23,12 @@ export class UserInviteComponent {
   users: User[];
   selectedFriends: number[] = [];
   selectedUsers: number[] = [];
-
+  sessionId!: number;
 
   constructor(private fb: FormBuilder,
       private appStore: AppStore,
-      private router: Router
+      private router: Router,
+      private http: HttpClient
       ) {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
@@ -35,6 +38,14 @@ export class UserInviteComponent {
 
     this.appStore.friends.subscribe((friends: User[] | undefined) => {
       this.friends = friends||[];
+    });
+  }
+
+  ngOnInit(): void {
+    let response = this.http.post<any>(`/api/game/create/session/${this.quizId}`, {}, {});
+    response.subscribe((payload) => {
+      this.sessionId = payload.sessionId;
+      console.log("Session ID:", this.sessionId);
     });
   }
 
