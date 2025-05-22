@@ -8,7 +8,6 @@ import { WaitingPageComponent } from "./components/waiting-page/waiting-page.com
 import { QuizScoreComponent } from './components/quiz-score/quiz-score.component';
 import { QuizRecapComponent } from './components/quiz-recap/quiz-recap.component';
 import { QuizQuestionComponent } from './components/quiz-question/quiz-question.component';
-import { SignupComponent } from './components/signup/signup.component'
 import { AppStore } from './stores/app.store';
 import { User } from './models/userModel';
 import { APIService } from './services/api.service';
@@ -16,7 +15,7 @@ import { APIService } from './services/api.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent,SignupComponent],
+  imports: [RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
