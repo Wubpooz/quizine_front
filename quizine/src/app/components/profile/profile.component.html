@@ -2,7 +2,7 @@
   <!-- Banner and Edit Button -->
   <div class="relative bg-blue-700 h-40 flex items-center justify-center rounded-b-xl">
     <img
-      src="assets/images/profile-avatar.png"
+      src="assets/images/ProfileLofo.png"
       alt="Profile"
       class="w-32 h-32 rounded-full border-4 border-white absolute left-1/2 top-24 transform -translate-x-1/2 -translate-y-1/2 bg-white object-cover"
     />
@@ -19,38 +19,55 @@
 
   <!-- Profile Info -->
   <div class="pt-20 pb-8 px-8">
-    <h2 class="text-2xl font-bold mb-2">Mathieu</h2>
+    <h2 class="text-2xl font-bold mb-2">{{user.name}}</h2>
     <a
       class="text-blue-500 font-semibold cursor-pointer hover:underline"
       (click)="showFriends = true"
     >
-      43 abonnements
+      {{friends.length}} amis
     </a>
 
     <hr class="my-6" />
     <h3 class="text-xl font-bold mb-2">Historique</h3>
-    <!-- Add history content here -->
-    <div class="text-gray-500">Aucun historique pour le moment.</div>
-  </div>
 
-  <!-- Friend List Pop-up -->
-  <div
-    *ngIf="showFriends"
-    class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
-  >
-    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-      <button
-        class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold"
-        (click)="showFriends = false"
-        aria-label="Fermer"
-      >
-        &times;
-      </button>
-      <h4 class="text-lg font-bold mb-4">Liste d'amis</h4>
-      <!-- Replace with your friend list -->
-      <ul class="space-y-2">
-        <li *ngFor="let friend of friends" class="text-gray-700">{{ friend.name }}</li>
+    <div *ngIf="history.length <= 0" class="text-gray-500">Aucun historique pour le moment.</div>
+    <div *ngIf="history.length > 0" class="text-gray-500">
+      <p class="text-sm">Voici votre historique de quiz :</p>
+      <ul class="space-y-4">
+        <li *ngFor="let session of history" class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <img
+              src="assets/images/quiz-icon.png"
+              alt="Quiz Icon"
+              class="w-10 h-10 rounded-full bg-gray-200 object-cover"
+            />
+            <div>
+              <h4 class="text-lg font-semibold">{{ session.nom }}</h4>
+            </div>
+          </div>
+        </li>
       </ul>
+    </div>
+
+    <!-- Friend List Pop-up -->
+    <div
+      *ngIf="showFriends"
+      class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+        <button
+          class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+          (click)="showFriends = false"
+          aria-label="Fermer"
+        >
+          &times;
+        </button>
+        <h4 class="text-lg font-bold mb-4">Liste d'amis</h4>
+
+        <ul class="space-y-2">
+          <li *ngFor="let friend of friends" class="text-gray-700">{{ friend.name }}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
