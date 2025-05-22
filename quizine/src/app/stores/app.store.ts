@@ -44,7 +44,9 @@ export class AppStore {
                 }
             });
         });
-        this.apiService.getFriends().subscribe((friends: User[]) => {
+        this.apiService.getAllUsers().subscribe((friends: User[]) => {
+
+            
             if(!this.friends){
                 this.friends = new BehaviorSubject<User[]|undefined>(friends);
             }

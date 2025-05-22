@@ -4,6 +4,7 @@ import { LibraryQuizCardComponent } from "./library-quiz-card/library-quiz-card.
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { NavbarComponent } from "../navbar/navbar.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-library',
@@ -13,6 +14,11 @@ import { NavbarComponent } from "../navbar/navbar.component";
   styleUrl: './library.component.css'
 })
 export class LibraryComponent {
+  constructor(private router: Router) {}
+
+  goToCreateQuiz() {
+    this.router.navigate(['/create']);
+  }
   quizList: Quiz[] = [
     // {
     //   id: 1,
