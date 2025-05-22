@@ -33,4 +33,7 @@ export class SidebarComponent {
   goToExplore() {
     this.router.navigate(['/explore']);
   }
+  goToNotifications() {
+    this.router.navigate(['/notifications']);
+  }
 }

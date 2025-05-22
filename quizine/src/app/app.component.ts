@@ -11,11 +11,12 @@ import { QuizQuestionComponent } from './components/quiz-question/quiz-question.
 import { AppStore } from './stores/app.store';
 import { User } from './models/userModel';
 import { APIService } from './services/api.service';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent],
+  imports: [RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent,NotificationsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -14,6 +14,7 @@ import { QuizScoreComponent } from './components/quiz-score/quiz-score.component
 import { QuizQuestionComponent } from './components/quiz-question/quiz-question.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CreateQuizComponent } from './components/create-quiz/create-quiz.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 export const routes: Routes = [
     {path: "", redirectTo: "landing", pathMatch: "full"},
@@ -36,5 +37,7 @@ export const routes: Routes = [
 
     { path: 'waiting-room', component: WaitingPageComponent },
 
-    { path: 'invite', component: UserInviteComponent }
+    { path: 'invite', component: UserInviteComponent },
+    
+    { path: 'notifications', component: NotificationsComponent }
 ];
