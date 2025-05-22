@@ -4,6 +4,7 @@ import { AppStore } from '../../stores/app.store';
 import { User } from '../../models/userModel';
 import { Quiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,21 +20,20 @@ export class ProfileComponent {
   showFriends = false;
 
   constructor(private appStore: AppStore,
+            private apiService: APIService,
             private router: Router) {
     this.appStore.currentUser.subscribe((user) => {
       if (user) {
         this.user = user;
       }
     });
-    this.appStore.friends.subscribe((friends) => {
-      if (friends) {
-        this.friends = friends;
-      }
+    this.apiService.getFriends().subscribe((friends: User[] | undefined) => {
+      this.friends = friends||[];
+      this.appStore.friends.next(friends);
     });
-    this.appStore.recentHistory.subscribe((history) => {
-      if (history) {
-        this.history = history;
-      }
+    this.appStore.recentHistory.subscribe((history: Quiz[] | undefined) => {
+        this.history = history||[];
+        this.appStore.recentHistory.next(history);
     });
   }
 
