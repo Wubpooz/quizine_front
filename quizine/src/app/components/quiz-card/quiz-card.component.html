@@ -1,12 +1,12 @@
 <div (click)="goToQuizPreview(quiz.id)" class="border-2 border-gray-200 rounded-md w-80 h-48 p-4 relative hover:border-primary-dark hover:cursor-pointer">
-    <div class="text-lg">{{ quiz.title }}</div>
-    <app-tag-list [tags]="quiz.tags" [class]="'text-xs mt-2'"></app-tag-list>
+    <div class="text-lg">{{ quiz.nom }}</div>
+    <app-tag-list [tags]="quiz.tags||[]" [class]="'text-xs mt-2'"></app-tag-list>
     <div class="text-base mt-4">{{ quiz.questions.length }} {{ quiz.questions.length > 1 ? "questions" : "question" }}</div>
     <div class="flex absolute bottom-4 justify-between left-0 right-0 px-4 items-center">
         <div class="flex items-center gap-2">
             <span class="rounded-full w-6 h-6 bg-primary"></span>
             <span class="text-sm">{{ quiz.createdBy }}</span>
         </div>
-        <span class="text-gray-400 text-sm">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span>
+        <!-- <span class="text-gray-400 text-sm">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
     </div>
 </div>

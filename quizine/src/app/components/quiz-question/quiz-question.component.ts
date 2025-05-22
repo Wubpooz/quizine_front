@@ -25,13 +25,13 @@ export class QuizQuestionComponent {
     this.questionIndex = this.quizService.getQuestionIndex();
     this.totalQuestions = this.quizService.getTotalQuestions();
     this.quizName = this.quizService.getTitle();
-    this.timer = this.question.timer;
+    this.timer = this.question.duration;
     this.startTimer();
 
     this.quizService.currentQuestionIndex$.subscribe(() => {
       this.question = this.quizService.getCurrentQuestion();
       this.questionIndex = this.quizService.getQuestionIndex();
-      this.timer = this.question.timer;
+      this.timer = this.question.duration;
       this.selectedAnswer = null;
       this.startTimer();
     });

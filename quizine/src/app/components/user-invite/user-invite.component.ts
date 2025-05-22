@@ -32,8 +32,8 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.appStore.friends.subscribe((friends: User[]) => {
-      this.friends = friends;
+    this.appStore.friends.subscribe((friends: User[] | undefined) => {
+      this.friends = friends||[];
     });
   }
 

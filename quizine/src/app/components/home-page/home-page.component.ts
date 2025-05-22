@@ -18,8 +18,9 @@ export class HomePageComponent {
   constructor(private router: Router,
     private appStore: AppStore,
   ) {
+    appStore.init()
     this.appStore.recentHistory.subscribe((quizzes) => {
-      this.quizzes = quizzes;
+      this.quizzes = quizzes||[];
     });
   }
 

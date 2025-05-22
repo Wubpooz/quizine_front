@@ -26,7 +26,7 @@ export class QuizService {
   }
 
   getTitle(): string {
-    return this.quiz.title;
+    return this.quiz.nom;
   }
 
   getCurrentQuestion(): Question {
@@ -45,6 +45,9 @@ export class QuizService {
     if (this.currentQuestionIndexSubject.value < this.quiz.questions.length - 1) {
       this.currentQuestionIndexSubject.next(this.currentQuestionIndexSubject.value + 1);
     } else if (this.currentQuestionIndexSubject.value === this.quiz.questions.length - 1) {
+      if(this.appStore.currentUser.value === undefined){
+        return
+      }
       this.gameSessionStore.updateScore(this.appStore.currentUser.value, this.gameSessionStore.score); //TODO
       this.gameSessionStore.updateQuiz(this.quiz.id);
       this.router.navigate(['/quiz-score']);

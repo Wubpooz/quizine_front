@@ -29,6 +29,7 @@ export class LoginComponent {
     this.apiService.login(this.username, this.password).subscribe((user:User) => {
       if (user) {
         this.appStore.init();
+        console.log(user)
         this.appStore.updateUser(user);
         this.router.navigate(['/home']);
       } else {

@@ -23,6 +23,9 @@ export class QuizScoreComponent {
               private router: Router
         ) { 
     this.appStore.currentUser.subscribe((user) => {
+      if(user === undefined){
+        return
+      }
       this.currentUser = user;
     });
     this.gameSessionStore.scores.subscribe((scores) => {
