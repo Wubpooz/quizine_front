@@ -6,11 +6,12 @@ import { ButtonComponent } from "../button/button.component";
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-edit-quiz',
   standalone: true,
-  imports: [TagListComponent, EditQuizQuestionComponent, ButtonComponent, CommonModule],
+  imports: [TagListComponent, EditQuizQuestionComponent, ButtonComponent, CommonModule, SidebarComponent],
   templateUrl: './edit-quiz.component.html',
   styleUrl: './edit-quiz.component.css'
 })

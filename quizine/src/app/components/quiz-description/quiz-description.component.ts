@@ -5,11 +5,12 @@ import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-quiz-description',
   standalone: true,
-  imports: [TagListComponent, ButtonComponent, CommonModule],
+  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent],
   templateUrl: './quiz-description.component.html',
   styleUrl: './quiz-description.component.css'
 })
