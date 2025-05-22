@@ -234,7 +234,7 @@ export class APIService {
         });
     }
 
-    getUserData() : Observable<User> {
+    getUserData(userId: string) : Observable<User> {
         // return new Observable<User>((observer) => {
         //     const user: User = {
         //         id: 1,

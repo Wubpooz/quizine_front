@@ -8,6 +8,9 @@ import { WaitingPageComponent } from "./components/waiting-page/waiting-page.com
 import { QuizScoreComponent } from './components/quiz-score/quiz-score.component';
 import { QuizRecapComponent } from './components/quiz-recap/quiz-recap.component';
 import { QuizQuestionComponent } from './components/quiz-question/quiz-question.component';
+import { AppStore } from './stores/app.store';
+import { User } from './models/userModel';
+import { APIService } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +22,22 @@ import { QuizQuestionComponent } from './components/quiz-question/quiz-question.
 export class AppComponent {
   title = 'quizine';
 
+  constructor(private appStore: AppStore, private apiService: APIService) {}
+
   ngOnInit(): void {
     //TODO init app
-
+    if (localStorage.getItem('userId') === null) {
+      localStorage.setItem('userId', "");
+    } else {
+      const userId = localStorage.getItem('userId');
+      if (userId !== null) {
+        this.apiService.getUserData(userId).subscribe((user: User) => {
+          if (user !== null) {
+            this.appStore.updateUser(user);
+            localStorage.setItem('userId', userId);
+          }
+        });
+      }
+    }
   }
 }
