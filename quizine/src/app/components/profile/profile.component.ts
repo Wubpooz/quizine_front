@@ -14,13 +14,7 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent {
   user!: User;
-  friends: User[] = [
-    { id: 1, username: "Alice", picture: "" },
-    { id: 2, username: "Bob", picture: "" },
-    { id: 3, username: "Charlie", picture: "" },
-    { id: 4, username: "Diana", picture: "" },
-    { id: 5, username: "Eve", picture: "" }
-  ];
+  friends: User[] = [];
   history: Quiz[] = [];
   showFriends = false;
 
