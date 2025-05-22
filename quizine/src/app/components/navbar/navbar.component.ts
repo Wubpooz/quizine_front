@@ -10,7 +10,12 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   constructor(private router: Router) {}
+
   gotoCreateQuiz() {
     this.router.navigate(['/create']);
+  }
+
+  gotoProfile() {
+    this.router.navigate(['/profile']);
   }
 }
