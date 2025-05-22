@@ -20,7 +20,7 @@ jobs:
       - name: Deploy to Production
         run: |
           echo "Exécution du script de déploiement via SSH..."
-          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server \"cd ~/build-deploy && sed 's/docker compose up -d --build/& --no-cache/' ./deploy.sh\""
+          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server \"cd ~/build-deploy && sed -i 's/docker compose up -d --build/& --no-cache/' ./deploy.sh\""
           echo "prout prout"
           ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && ./deploy.sh'"
           
