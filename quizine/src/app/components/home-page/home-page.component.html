@@ -1,44 +1,28 @@
 <div class="flex h-screen bg-gray-100">
   <!-- Sidebar -->
-    <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
   <!-- Main Content -->
-  <div class="flex-1">
+  <div class="flex-1 w-full">
     <!-- Header -->
-    <div class="h-20 bg-primary-tint flex justify-between items-center mb-6">
-        
-        <button *ngIf="!isSideBarOpen" (click)="toggleSideBar()" class="translate-x-5">
-            <img src="assets/images/SideBar.png" alt="Quiz Blocks" class="w-10 h-12 object-contain hover:bg-primary-tint rounded" />
-        </button>
-      <div class="flex w-full md:w-1/2">
-        <input
-          type="text"
-          placeholder="Recherche"
-          class="bg-gray-200 translate-x-40 w-full rounded-2xl p-2 focus:outline-none focus:border-blue-500"
-        />
-      </div>
-      <div class="flex items-center">
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-3xl mr-2" (click)="gotoCreateQuiz()">
-          + Créer un quiz
-        </button>
-        <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-      </div>
-    </div>
+    <app-navbar></app-navbar>
   
     <!-- Recent Quizzes -->
-    <h2 class="translate-x-4 text-lg font-bold mb-4">Récents</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
-      <ng-container *ngFor="let quiz of quizzes">
-        <button class="bg-white p-4 rounded shadow hover:bg-primary-tint" (click)="gotoQuiz(quiz.id)">
-          <div class="flex items-center">
-            <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-            <div>
-              <h3 class="text-sm font-bold">{{quiz.nom}}</h3>
-              <p class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}}</p>
+    <div class="mx-40">
+      <h2 class="text-lg font-bold mb-4">Récents</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <ng-container *ngFor="let quiz of quizzes">
+          <button class="bg-white p-4 rounded shadow hover:bg-primary-tint" (click)="gotoQuiz(quiz.id)">
+            <div class="flex items-center items-start">
+              <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
+              <div class="flex flex-col items-start gap-2">
+                <span class="text-sm font-bold">{{quiz.nom}}</span>
+                <!-- <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}} | {{quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
+                <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}}</span>
+              </div>
             </div>
-          </div>
-        </button>
-        </ng-container>
-  
+          </button>
+          </ng-container>
+      </div>
     </div>
   </div>
 </div>
