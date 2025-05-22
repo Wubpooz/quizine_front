@@ -76,7 +76,14 @@ export class NotificationsComponent {
   }
   refuser(notif:GameRequest){
     this.isrefus = true;
+    this.isWaitingPageShowing[notif.id_session] = true;
+
     //this.isWaitingPageShowing[notif.id_session] = undefined;
+    
+  }
+
+  onWaitClose(notif:GameRequest){
+    this.isWaitingPageShowing[notif.id_session] = false
     console.log("notification suprimée")
     let i = this.notifications.findIndex((gr)=>gr.datetime === notif.datetime 
                               && gr.id_session === notif.id_session

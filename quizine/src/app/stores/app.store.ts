@@ -81,13 +81,13 @@ export class AppStore {
     }
 
     updateFriends(friends: User[]) {
-        this.friends = new BehaviorSubject<User[]|undefined>(friends);
-        if(!this.friends) {
-            this.friends = new BehaviorSubject<User[]|undefined>(friends);
-        }
-        else {
-            this.friends.next(friends);
-        }
+        // this.friends = new BehaviorSubject<User[]|undefined>(friends);
+        // if(!this.friends) {
+        //     this.friends = new BehaviorSubject<User[]|undefined>(friends);
+        // }
+        // else {
+        //     this.friends.next(friends);
+        // }
     }
 
     updateQuizList(quizList: Quiz[]) {

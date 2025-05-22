@@ -45,8 +45,9 @@ export class WaitingPageComponent {
       })
       this.socketService.emitJoin(this.isCreator, this.sessionId, me?.id || 10);
     }else{
+    
       if(me)
-        this.socketService.emitLeaveRoom(this.sessionId, me.id)
+        this.socketService.emitRefuse(this.sessionId, me.id)
       this.close.emit()
     }
   }

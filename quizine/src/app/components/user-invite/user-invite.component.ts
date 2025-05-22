@@ -5,6 +5,7 @@ import { User } from '../../models/userModel';
 import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { HttpClient } from "@angular/common/http";
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'user-invite',
@@ -29,7 +30,8 @@ export class UserInviteComponent {
   constructor(private fb: FormBuilder,
       private appStore: AppStore,
       private router: Router,
-      private http: HttpClient
+      private http: HttpClient,
+      private apiservice: APIService
       ) {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
@@ -37,7 +39,8 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.appStore.friends.subscribe((friends: User[] | undefined) => {
+    this.apiservice.getAllUsers().subscribe((friends: User[] | undefined) => {
+      console.log(friends)
       this.friends = friends||[];
     });
   }
