@@ -30,6 +30,7 @@ export class CreateQuizComponent {
     private: boolean;
     tags: string[];
     choices: { id: number; content: string }[];
+    validAnswer: number;
   }[] = [
     {
       name: 'Question 1',
@@ -44,7 +45,8 @@ export class CreateQuizComponent {
         {id: -1 ,content: 'Option 2'},
         {id: -1 ,content: 'Option 3'},
         {id: -1 ,content: 'Option 4'}
-      ]
+      ],
+      validAnswer: -1
     }
   ];
   
@@ -102,7 +104,8 @@ export class CreateQuizComponent {
         {id: -1 ,content: 'Option 2'},
         {id: -1 ,content: 'Option 3'},
         {id: -1 ,content: 'Option 4'}
-      ]
+      ],
+      validAnswer : -1
     });
     this.updateOptionStates();
   }
@@ -137,9 +140,7 @@ export class CreateQuizComponent {
   }
 
   setCorrectOption(questionIdx: number, optionIdx: number) {
-    const choices = this.questions[questionIdx].choices;
-    const [correctOption] = choices.splice(optionIdx, 1);
-    choices.unshift(correctOption);
+    this.questions[questionIdx].validAnswer = optionIdx;
   }
 
   addTag(tag: string) {
@@ -161,23 +162,35 @@ export class CreateQuizComponent {
   }
 
   onSubmit() {
-    //TODO
-    //! send JSON {Quiz details, questionList:{question:{question, options:{bonneOption, autresoptions...}}}}
+    //Order so that first option in question is the valid one
+    const orderedQuestions = this.questions.map(
+      (q) => {
+      const newChoices = [...q.choices];
+      let newValidAnswer = q.validAnswer;
+      if (q.validAnswer > 0 && q.validAnswer < newChoices.length) {
+        const [valid] = newChoices.splice(q.validAnswer, 1);
+        newChoices.unshift(valid);
+        newValidAnswer = 0;
+      }
+      return {
+        ...q,
+        choices: newChoices,
+        validAnswer: newValidAnswer
+      };
+      }
+    );
     const quiz = {
       nom: this.quizTitle,
       picture: null,
       private : this.quizVisibility,
       tags: this.tags,
-      questions : this.questions,
+      questions : orderedQuestions,
     }
-    console.log('Form submitted', {
-      quizVisibility: this.quizVisibility,
-      questions: this.questions
-    });
+    console.log(quiz);
 
     this.apiService.createQuiz(quiz).subscribe((quiz) => {
       console.log('Quiz created successfully', quiz);
-        this.router.navigate(['/quiz-preview', quiz.id]);
+      this.router.navigate(['/quiz-preview', quiz.id]);
     });
   }
 }
