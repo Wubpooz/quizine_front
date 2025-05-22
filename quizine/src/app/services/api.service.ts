@@ -224,7 +224,7 @@ export class APIService {
     }
 
     createQuiz(quizData: any): Observable<Quiz> {
-        return this.http.post<any>(this.endpoint+"/quiz/new",{quizData}, {}).pipe(
+        return this.http.post<any>(this.endpoint+"/quiz/new",quizData, {}).pipe(
             map((response: any) => {
                 return response as Quiz;
             }),

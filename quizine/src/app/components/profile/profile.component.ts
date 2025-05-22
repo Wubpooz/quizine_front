@@ -5,11 +5,13 @@ import { User } from '../../models/userModel';
 import { HistoryQuiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent, SidebarComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
