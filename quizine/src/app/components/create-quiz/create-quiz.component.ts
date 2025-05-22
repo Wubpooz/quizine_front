@@ -32,7 +32,7 @@ export class CreateQuizComponent {
     validAnswer: number;
   }[] = [
     {
-      name: 'Question 1',
+      name: '',
       grade: 0,
       duration: 30,
       picture: null,
@@ -40,10 +40,10 @@ export class CreateQuizComponent {
       private: false,
       tags: [],
       choices: [
-        {id: -1 ,content: 'Option 1'},
-        {id: -1 ,content: 'Option 2'},
-        {id: -1 ,content: 'Option 3'},
-        {id: -1 ,content: 'Option 4'}
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''}
       ],
       validAnswer: -1
     }
@@ -91,7 +91,7 @@ export class CreateQuizComponent {
   addQuestion() {
     const nextNumber = this.questions.length + 1;
     this.questions.push({
-      name: `Question ${nextNumber}`,
+      name: '',
       duration: 30,
       grade: 0,
       picture: null,
@@ -99,10 +99,10 @@ export class CreateQuizComponent {
       private: false,
       tags: [],
       choices: [
-        {id: -1 ,content: 'Option 1'},
-        {id: -1 ,content: 'Option 2'},
-        {id: -1 ,content: 'Option 3'},
-        {id: -1 ,content: 'Option 4'}
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''},
+        {id: -1 ,content: ''}
       ],
       validAnswer : -1
     });

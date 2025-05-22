@@ -53,7 +53,7 @@ export class UserInviteComponent {
     });
 
     this.appStore.friends.subscribe((friends: User[] | undefined) => {
-      this.friends = friends||[];
+      this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     });
   }
 
