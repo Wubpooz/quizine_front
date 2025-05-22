@@ -31,14 +31,8 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.apiService.login(this.username, this.password).subscribe((user:User) => {
-      if (user) {
-        this.appStore.updateUser(user);
-        this.router.navigate(['/home']);
-      } else {
-        // Handle login error
-        console.error('Login failed');
-      }
+    this.apiService.signup(this.username, this.password).subscribe((data:any) => {
+        this.router.navigate(['/login']);
     });
   }
 

@@ -20,7 +20,10 @@ export class QuizRecapComponent {
       private appStore: AppStore,
       private router: Router
       ) {
-    this.gameSessionStore.quiz.subscribe((quiz: Quiz) => {
+    this.gameSessionStore.quiz.subscribe((quiz: Quiz | undefined) => {
+      if(quiz === undefined){
+        return
+      }
       this.quiz = quiz;
     });
     this.gameSessionStore.answerList.subscribe((answers: Map<number, Option>) => {
