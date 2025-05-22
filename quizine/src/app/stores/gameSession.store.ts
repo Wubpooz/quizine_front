@@ -8,7 +8,7 @@ import { APIService } from "../services/api.service";
     providedIn: 'root'
 })
 export class gameSessionStore {
-    public quiz!: BehaviorSubject<Quiz>;
+    public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
     public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
         [
@@ -26,7 +26,7 @@ public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Ma
 
 
     constructor(private apiService: APIService) {
-        this.updateQuiz(1); //temp
+        this.updateQuiz(7); //temp
     }
 
     updateScore(user: User, score: number) {
@@ -36,7 +36,7 @@ public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Ma
     }
     addAnswer(questionId: number, answerId: number) {
         const currentAnswers = this.answerList.getValue();
-        const question = this.quiz.getValue().questions.find((q: Question) => q.id === questionId);
+        const question = this.quiz.getValue()?.questions.find((q: Question) => q.id === questionId);
         const answer = question?.choices.find((o: Option) => o.id === answerId);
         if (question && answer) {
             currentAnswers.set(questionId, answer);
@@ -47,7 +47,7 @@ public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Ma
     updateQuiz(quizId: number) {
         this.apiService.getQuiz(quizId).subscribe((quiz: Quiz) => {
             if (!this.quiz) {
-                this.quiz = new BehaviorSubject<Quiz>(quiz);
+                this.quiz = new BehaviorSubject<Quiz|undefined>(quiz);
             } else {
                 this.quiz.next(quiz);
             }
