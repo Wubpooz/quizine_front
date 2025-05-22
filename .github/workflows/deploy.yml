@@ -12,6 +12,7 @@ jobs:
       - name: Setup SSH Configuration
         run: |
           mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_GENERAL_KEY }}"
           echo "${{ secrets.SSH_GENERAL_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H kerboul.me >> ~/.ssh/known_hosts
