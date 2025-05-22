@@ -197,7 +197,7 @@ export class APIService {
 
     //========================= Quiz =========================
     getQuiz(quizId: number): Observable<Quiz> {
-        return this.http.get<any>(this.endpoint+"/quiz"+quizId, {}).pipe(
+        return this.http.get<any>(this.endpoint+"/quiz/"+quizId, {}).pipe(
             map((response: any) => {
                 return response as Quiz;
             }),
