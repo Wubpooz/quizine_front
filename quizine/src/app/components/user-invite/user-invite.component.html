@@ -28,7 +28,7 @@
                 <ul class="mb-4"> 
                     <li *ngFor="let user of users">
                         <input type="checkbox" [value]="user.id" (change)="onCheckboxChange($event, user.id)" />
-                        <!--TODO {{user.profilePicture}} -->
+                        <!--TODO {{user.picture}} -->
                         {{  user.username }}
                     </li>
                 </ul>
@@ -38,7 +38,7 @@
                     <ul *ngIf="friends.length > 0">
                         <li *ngFor="let friend of friends">
                             <input type="checkbox" [value]="friend.id" (change)="onCheckboxChange($event, friend.id)" />
-                            <!--TODO {{friend.profilePicture}} -->
+                            <!--TODO {{friend.picture}} -->
                             {{ friend.username }}
                         </li>
                     </ul>

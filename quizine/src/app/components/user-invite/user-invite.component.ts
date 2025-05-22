@@ -56,7 +56,7 @@ export class UserInviteComponent {
     if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
       console.log('Inviting:', this.selectedFriends);
       let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
-      //api call idsToInvite
+      //TODO api call idsToInvite
     }
     this.router.navigate(['/waiting-room']);
   }
