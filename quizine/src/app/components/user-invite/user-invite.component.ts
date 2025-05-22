@@ -48,6 +48,10 @@ export class UserInviteComponent {
       this.sessionId = payload.sessionId;
       console.log("Session ID:", this.sessionId);
     });
+
+    this.appStore.friends.subscribe((friends: User[] | undefined) => {
+      this.friends = friends||[];
+    });
   }
 
   onSearch(event: any) {

@@ -1,14 +1,13 @@
 <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-    <div class="relative bg-primary-tint p-4 rounded-lg shadow-md w-fit max-w-md sm:h-96 md:h-96 flex flex-col overflow-y-scroll">
+    <div class="relative bg-primary-tint p-8 rounded-xl shadow-lg w-[60svh] max-w-2xl h-[36rem] flex flex-col">
         <button type="button" (click)="onClose()" class="text-gray-500 hover:text-gray-700 absolute top-2 right-2 cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
         <h1 class="text-2xl text-black font-bold mt-2 mb-4">Invite users</h1>
-    
-        <!--TODO  correct colors-->
-        <div class="max-w-md mx-auto">   
+
+        <div class="w-full mx-auto">   
             <label for="user-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
             <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -23,8 +22,7 @@
         
         
         <form [formGroup]="inviteForm" (ngSubmit)="onSubmit()" class="flex flex-col h-full">
-            <div class="h-full">
-                <!--TODO add overflow -->
+            <div class="h-full overflow-y-auto">
                 <ul class="mb-4"> 
                     <li *ngFor="let user of users">
                         <input type="checkbox" [value]="user.id" (change)="onCheckboxChange($event, user.id)" />
