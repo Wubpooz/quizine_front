@@ -26,6 +26,9 @@ export class AppComponent {
 
   ngOnInit(): void {
     //TODO init app
+
+    //use cookie : connect.sid to know if I'm logged out and delete it when session ends
+
     if (localStorage.getItem('userId') === null) {
       localStorage.setItem('userId', "");
     } else {
