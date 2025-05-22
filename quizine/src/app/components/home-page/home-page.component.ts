@@ -12,8 +12,14 @@ import { CommonModule } from '@angular/common';
 export class HomePageComponent {
   isSideBarOpen=true;
   quizzes = [
-    { title: 'Quiz d\'histoire', questions: 16, author: 'johndoe', date: '23.23.3/2025' },
-    // Add more quizzes...
+    {id: 1, title: 'Quiz d\'histoire', tags:['aaaa','bbb'],createdBy: 'johndoe',description:'description quiz histoire', questions: [], private: true },
+    {id: 2, title: 'Quiz de geo', tags:['aaaa','bbb'],createdBy: 'patate',description:'description quiz geo', questions: [], private: false },
+    {id: 3, title: 'Quiz de maths', tags:['aaaa','bbb'],createdBy: 'shrek',description:'description quiz maths', questions: [], private: true },
+    {id: 4, title: 'Quiz d\'Harry Potter', tags:['aaaa','bbb'],createdBy: 'snape',description:'avada kedavra', questions: [], private: false },
+    {id: 1, title: 'Quiz d\'histoire', tags:['aaaa','bbb'],createdBy: 'johndoe',description:'description quiz histoire', questions: [], private: true },
+    {id: 2, title: 'Quiz de geo', tags:['aaaa','bbb'],createdBy: 'patate',description:'description quiz geo', questions: [], private: false },
+    {id: 3, title: 'Quiz de maths', tags:['aaaa','bbb'],createdBy: 'shrek',description:'description quiz maths', questions: [], private: true },
+    {id: 4, title: 'Quiz d\'Harry Potter', tags:['aaaa','bbb'],createdBy: 'snape',description:'avada kedavra', questions: [], private: false },
   ];
 
   get sideBarState(){
