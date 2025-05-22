@@ -21,6 +21,7 @@ export class QuizDescriptionComponent {
   quiz!: Quiz;
   isInviteShowing = false;
   isWaitingPageShowing = false;
+  sessionId!: number;
 
   constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router) {}
 
@@ -36,4 +37,11 @@ export class QuizDescriptionComponent {
   startQuiz(): void {
     this.isInviteShowing = true;
   }
+
+  handleInviteSubmit(sessionId: number): void {
+    this.isWaitingPageShowing = true;
+    this.isInviteShowing = false;
+    this.sessionId = sessionId;
+  }
+
 }

@@ -16,7 +16,7 @@ import { HttpClient } from "@angular/common/http";
 export class UserInviteComponent {
   @Input() quizId!: number;
   @Output() close = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<number>();
   //? ViewChild
   inviteForm: FormGroup;
 
@@ -74,7 +74,8 @@ export class UserInviteComponent {
         console.log("Invitation:", payload);
       });
     }
-    this.submit.emit();
+    this.submit.emit(this.sessionId);
+
     //this.router.navigate(['/waiting-room']);
   }
 
@@ -84,5 +85,8 @@ export class UserInviteComponent {
 
   onClose() {
     this.close.emit();
+    this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
+      console.log("Deleted participation:", payload);
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'waiting-page',
@@ -10,12 +11,12 @@ import { Router } from '@angular/router';
 })
 export class WaitingPageComponent {
   @Input() isCreator!: boolean;
+  @Input() sessionId!: number;
   @Output() close = new EventEmitter<void>();
   timer: number;
   private intervalId: any;
 
-
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     this.timer = 60;
   }
 
@@ -48,5 +49,8 @@ export class WaitingPageComponent {
   onClose() {
     //this.router.navigate(['/quiz/id']); //TODO
     this.close.emit();
+    this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
+      console.log("Deleted participation:", payload);
+    });
   }
 }
