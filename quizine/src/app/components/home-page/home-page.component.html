@@ -1,35 +1,4 @@
 <div class="flex h-screen bg-gray-100">
-  <!-- Sidebar -->
-  <div class="w-64 bg-white shadow p-4 fixed sm:relative h-full transition-transform duration-300 ease-in-out z-50 "
-  [ngClass]="{
-    'translate-x-0': isSideBarOpen,
-    '-translate-x-full': !isSideBarOpen
-  }"   >
-    <div class="flex">
-        <button (click)="toggleSideBar()">
-            <img src="assets/images/SideBar.png" alt="Quiz Blocks" class="w-10 h-12 object-contain hover:bg-primary-tint rounded" />
-        </button>
-        <h1 class="text-xl font-bold mb-4 text-blue-500 translate-y-2 ">Quizine</h1>
-    </div>
-    <ul>
-      <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoHome()">
-          Accueil
-        </button>
-      </li>
-      <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoLibrary()">
-          Mes quiz
-        </button>
-      </li>
-      <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoExplore()">
-          Découvrir
-        </button>
-      </li>
-    </ul>
-  </div>
-
   <!-- Main Content -->
   <div class="flex-1">
     <!-- Header -->
@@ -52,7 +21,7 @@
         <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
       </div>
     </div>
-
+  
     <!-- Recent Quizzes -->
     <h2 class="translate-x-4 text-lg font-bold mb-4">Récents</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
