@@ -3,6 +3,8 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 import { TopbarComponent } from "../topbar/topbar.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'create-quiz',
@@ -22,11 +24,13 @@ export class CreateQuizComponent {
   quizTitle: string = '';
   quizTags: string[] = [];
 
-  showOptionTooltip: boolean[][] = [];
+  showTitleTooltip: boolean = false;
+  titleMaxLengthReached: boolean = false;
+  showDescriptionTooltip: boolean = false;
+  descriptionMaxLengthReached: boolean = false;
   showQuestionTooltip: boolean[] = [];
   questionMaxLengthReached: boolean[] = [];
-  showDescriptionTooltip: boolean = false;
-  showTitleTooltip: boolean = false;
+  showOptionTooltip: boolean[][] = [];
   optionMaxLengthReached: boolean[][] = [];
 
   questions: {
@@ -43,6 +47,8 @@ export class CreateQuizComponent {
       ]
     }
   ];
+
+  constructor(private apiService: APIService, private router: Router) {}
 
 
   ngOnInit() {
@@ -78,16 +84,23 @@ export class CreateQuizComponent {
 
   onTitleInput(event: Event) {
     const input = event.target as HTMLInputElement;
+    if (!this.titleMaxLengthReached) this.titleMaxLengthReached = false;
+    this.titleMaxLengthReached = (input.value?.length ?? 0) >= this.maxLengthTitle;
     this.showTitleTooltip = (input.value?.length ?? 0) >= this.maxLengthTitle;
   }
 
   onDescriptionInput(event: Event) {
     const input = event.target as HTMLInputElement;
+    if (!this.descriptionMaxLengthReached) this.descriptionMaxLengthReached = false;
+    this.descriptionMaxLengthReached = (input.value?.length ?? 0) >= this.maxLengthDescription;
     this.showDescriptionTooltip = (input.value?.length ?? 0) >= this.maxLengthDescription;
   }
 
   onQuestionInput(event: Event, i: number) {
     const input = event.target as HTMLInputElement;
+    if (!this.questionMaxLengthReached) this.questionMaxLengthReached = [];
+    if (!this.questionMaxLengthReached[i]) this.questionMaxLengthReached[i] = false;
+    this.questionMaxLengthReached[i] = (input.value?.length ?? 0) >= this.maxLengthQuestion;
     this.showQuestionTooltip[i] = (input.value?.length ?? 0) >= this.maxLengthQuestion;
   }
 
@@ -116,7 +129,7 @@ export class CreateQuizComponent {
   }
 
   onSubmit() {
-    // Handle form submission logic here
+    //TODO
     let quiz = {
       title: 'New Quiz',
       tags: ['tag1', 'tag2'],
@@ -127,6 +140,14 @@ export class CreateQuizComponent {
     console.log('Form submitted', {
       quizVisibility: this.quizVisibility,
       questions: this.questions
+    });
+
+    this.apiService.createQuiz(quiz).then((response) => {
+      console.log('Quiz created successfully', response);
+      // Handle success response
+      if (response.success) {
+        this.router.navigate(['/quiz-preview', response.quizId]);
+      }
     });
   }
 }
