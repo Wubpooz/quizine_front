@@ -18,4 +18,5 @@ EXPOSE 4200
 
 # Commande pour démarrer l'application en mode développement
 # L'option --host 0.0.0.0 permet d'accéder à l'application depuis l'extérieur du conteneur
+# La configuration des hôtes autorisés est gérée dans angular.json via allowedHosts
 CMD ["npm", "run", "start", "--", "--host", "0.0.0.0"]

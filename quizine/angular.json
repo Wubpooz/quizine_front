@@ -67,7 +67,6 @@
           "defaultConfiguration": "development",
           "options": {
             "allowedHosts": ["localhost", "quiz.kerboul.me"],
-            "disableHostCheck": true,
             "liveReload": true
           }
         },
