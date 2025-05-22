@@ -48,6 +48,10 @@ export class UserInviteComponent {
       this.sessionId = payload.sessionId;
       console.log("Session ID:", this.sessionId);
     });
+
+    this.appStore.friends.subscribe((friends: User[] | undefined) => {
+      this.friends = friends||[];
+    });
   }
 
   onSearch(event: any) {
@@ -69,18 +73,16 @@ export class UserInviteComponent {
     if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
       console.log('Inviting:', this.selectedFriends);
       let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
-      //TODO api call idsToInvite
       this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: this.selectedFriends}, {}).subscribe((payload) => {
         console.log("Invitation:", payload);
       });
     }
     this.submit.emit(this.sessionId);
-
-    //this.router.navigate(['/waiting-room']);
   }
 
   onSkip() {
-    this.router.navigate(['/waiting-room']);
+    //TODO call for solo room
+    this.submit.emit(this.sessionId);
   }
 
   onClose() {

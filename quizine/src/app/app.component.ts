@@ -9,7 +9,6 @@ import { QuizScoreComponent } from './components/quiz-score/quiz-score.component
 import { QuizRecapComponent } from './components/quiz-recap/quiz-recap.component';
 import { QuizQuestionComponent } from './components/quiz-question/quiz-question.component';
 import { AppStore } from './stores/app.store';
-import { User } from './models/userModel';
 import { APIService } from './services/api.service';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { DOCUMENT } from '@angular/common';
@@ -33,6 +32,7 @@ export class AppComponent {
   ngOnInit(): void {
     // Check if connect.sid cookie exists
     const connectSid = this.getCookie('connect.sid');
+    this.appStore.init();
     // if (!connectSid) {
     //   this.appStore.updateUser(undefined as any);
     //   localStorage.removeItem('userId');

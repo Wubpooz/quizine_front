@@ -17,21 +17,38 @@ export class QuizScoreComponent {
   scores!: Map<User, number>;
   sortedScores: { user: User, score: number }[] = [];
   topThree: { user: User, score: number }[] = [];
+  userScore: number = 0;
 
-  constructor(private gameSessionStore: gameSessionStore,
-              private appStore: AppStore,
-              private router: Router
-        ) { 
+  constructor(
+    private gameSessionStore: gameSessionStore,
+    private appStore: AppStore,
+    private router: Router
+  ) {
+    // Wait for current user
     this.appStore.currentUser.subscribe((user) => {
-      if(user === undefined){
-        return
-      }
+      if (!user) return;
       this.currentUser = user;
-    });
-    this.gameSessionStore.scores.subscribe((scores) => {
-      this.scores = scores;
-      this.sortedScores = Array.from(this.scores.entries()).map(([user, score]) => ({ user, score })).sort((a, b) => b.score - a.score);
-      this.topThree = this.sortedScores.slice(0, 3);
+
+      // Wait for scores
+      this.gameSessionStore.scores.subscribe((scores) => {
+        this.scores = scores;
+
+        // Convert and sort
+        this.sortedScores = Array.from(scores.entries())
+          .map(([user, score]) => ({ user, score }))
+          .sort((a, b) => b.score - a.score);
+
+        this.topThree = this.sortedScores.slice(0, 3);
+
+        // Get this user's score
+        for (let [u, score] of scores.entries()) {
+          if (u.id === this.currentUser.id) {
+            this.userScore = score;
+            console.log('userScore', this.userScore);
+            break;
+          }
+        }
+      });
     });
   }
 

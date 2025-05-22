@@ -1,10 +1,12 @@
 <!-- Header -->
-<div class="flex justify-between items-center mb-6">
+<div class="flex justify-between items-center mb-6 sticky top-0 bg-white z-[1000]">
   <div class="flex md:w-1/2">
     <input
       type="text"
       placeholder="Recherche"
       class="bg-gray-200 translate-x-40 w-[36rem] rounded-lg p-2 focus:outline-none focus:border-blue-500"
+      [value]="searchTerm"
+      (input)="onSearchChange($event)"
     />
   </div>
   <div class="flex items-center">
@@ -15,4 +17,27 @@
       <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
     </button>
   </div>
+
+  <div
+    *ngIf="searchTerm"
+    class="absolute left-40 mt-2 w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
+    style="top:2.75rem"
+  >
+    <ul>
+      <li
+        *ngIf="filteredQuizList.length === 0"
+        class="px-4 py-2 text-gray-400 cursor-default"
+      >
+        Aucun quiz trouvé
+      </li>
+      <li
+        *ngFor="let quiz of filteredQuizList"
+        (click)="gotoQuiz(quiz.id)"
+        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+      >
+        {{ quiz.nom }}
+      </li>
+    </ul>
+  </div>
+
 </div>

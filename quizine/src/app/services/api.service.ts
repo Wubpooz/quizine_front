@@ -128,7 +128,6 @@ export class APIService {
             retry(1),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 404) {
-                    // Return empty array if not found
                     return of([]);
                 }
                 return this.handleError(error);
@@ -164,7 +163,7 @@ export class APIService {
     }
 
     getNotifications() : Observable<GameRequest[]> {
-        return this.http.post<GameRequest[]>(this.endpoint+"/game/myGameRequest", {}).pipe(
+        return this.http.get<GameRequest[]>(this.endpoint+"/game/myGameRequest", {}).pipe(
             map((response: any) => {
                 return response ? Object.values(response) as GameRequest[] : [];
             }),
@@ -230,7 +229,6 @@ export class APIService {
             }),
             catchError(this.handleError)
         );
-        //{ success: true, quizId: 1 }
     }
 
     getRecentQuizzes(): Observable<Quiz[]> {
