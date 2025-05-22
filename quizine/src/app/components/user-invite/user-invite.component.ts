@@ -71,9 +71,9 @@ export class UserInviteComponent {
 
   onSubmit() {
     if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
-      console.log('Inviting:', this.selectedFriends);
-      let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
-      this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: this.selectedFriends}, {}).subscribe((payload) => {
+      const idsToInvite = this.selectedFriends.concat(this.selectedUsers);
+      console.log('Inviting:', idsToInvite);
+      this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: idsToInvite}, {}).subscribe((payload) => {
         console.log("Invitation:", payload);
       });
     }
