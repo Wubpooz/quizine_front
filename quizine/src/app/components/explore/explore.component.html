@@ -1,13 +1,13 @@
 <div class="flex h-screen">
     <app-sidebar></app-sidebar>
-    <div class="flex-1 w-full">
+    <div class="flex-1 w-full h-screen overflow-y-auto">
         <!-- Header -->
         <app-navbar></app-navbar>
-        <div class="mx-40 h-[calc(100vh-8rem)] overflow-hidden">
+        <div class="mx-40">
             <h1 class="text-2xl">Découvrir</h1>
             <div *ngIf="quizList.length > 0">
-            <input type="text" placeholder="Rechercher parmi mes quiz" class="w-full rounded-lg p-2 bg-gray-100 placeholder-gray-500 mt-4"/>
-            <div class="flex flex-wrap gap-4 mt-6 overflow-y-auto h-[calc(100vh-16rem)]">
+            <!-- <input type="text" placeholder="Rechercher parmi mes quiz" class="w-full rounded-lg p-2 bg-gray-100 placeholder-gray-500 mt-4"/> -->
+            <div class="flex flex-wrap gap-4 mt-6">
                 @for (quiz of quizList; track quiz) {
                 <app-quiz-card
                     [quiz]="quiz"
