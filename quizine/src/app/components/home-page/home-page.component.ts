@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AppStore } from '../../stores/app.store';
+import { Quiz } from '../../models/quizModel';
 
 @Component({
   selector: 'home-page',
@@ -11,12 +13,16 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent {
   isSideBarOpen=true;
-  quizzes = [
-    { title: 'Quiz d\'histoire', questions: 16, author: 'johndoe', date: '23.23.3/2025' },
-    // Add more quizzes...
-  ];
+  quizzes: Quiz[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private appStore: AppStore,
+  ) {
+    this.appStore.recentHistory.subscribe((quizzes) => {
+      this.quizzes = quizzes;
+      console.log("quizzes", quizzes);
+    });
+  }
 
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
@@ -39,5 +45,10 @@ export class HomePageComponent {
   gotoCreateQuiz() {
     this.router.navigate(['/create-quiz']);
   }
-  
+  gotoProfile() {
+    this.router.navigate(['/profile']);
+  }
+  gotoQuiz(quizId: number) {
+    this.router.navigate(['/quiz-preview', quizId]);
+  }
 }
