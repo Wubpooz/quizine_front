@@ -36,8 +36,6 @@ export const routes: Routes = [
     {path: "quiz-score", component: QuizScoreComponent},
 
     { path: 'waiting-room', component: WaitingPageComponent },
-
-    { path: 'invite', component: UserInviteComponent },
     
     { path: 'notifications', component: NotificationsComponent }
 ];

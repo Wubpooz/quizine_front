@@ -68,7 +68,7 @@ export class QuizService {
   }
 
   getQuizById(quizId: number): Promise<Quiz> {
-    return this.apiService.getQuizById(quizId).toPromise().then((quiz) => {
+    return this.apiService.getQuiz(quizId).toPromise().then((quiz) => {
       if (!quiz) {
         throw new Error('Quiz not found');
       }

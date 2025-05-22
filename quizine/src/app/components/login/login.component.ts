@@ -35,6 +35,7 @@ export class LoginComponent {
         this.appStore.init();
         console.log(user)
         this.appStore.updateUser(user);
+        console.log(this.appStore.currentUser.value)
         this.router.navigate(['/home']);
       } else {
         // Handle login error

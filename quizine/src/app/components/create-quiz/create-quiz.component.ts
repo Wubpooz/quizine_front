@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
 import { NavbarComponent } from "../navbar/navbar.component";
+import { Quiz } from '../../models/quizModel';
 
 @Component({
   selector: 'create-quiz',
@@ -21,16 +22,28 @@ export class CreateQuizComponent {
   quizVisibility: string = 'private';
   tags: string[] = [];
   questions: {
-    text: string;
-    options: { text: string; isCorrect: boolean }[];
+    name: string;
+    grade: number;
+    duration: number;
+    picture: null;
+    id_creator: number;
+    private: boolean;
+    tags: string[];
+    choices: { id: number; content: string }[];
   }[] = [
     {
-      text: 'Question 1',
-      options: [
-        { text: 'Option 1', isCorrect: false },
-        { text: 'Option 2', isCorrect: false },
-        { text: 'Option 3', isCorrect: false },
-        { text: 'Option 4', isCorrect: false }
+      name: 'Question 1',
+      grade: 0,
+      duration: 30,
+      picture: null,
+      id_creator: -1,
+      private: false,
+      tags: [],
+      choices: [
+        {id: -1 ,content: 'Option 1'},
+        {id: -1 ,content: 'Option 2'},
+        {id: -1 ,content: 'Option 3'},
+        {id: -1 ,content: 'Option 4'}
       ]
     }
   ];
@@ -63,10 +76,10 @@ export class CreateQuizComponent {
 
   initializeOptionStates() {
     this.showOptionTooltip = this.questions.map(q =>
-      q.options.map(() => false)
+      q.choices.map(() => false)
     );
     this.optionMaxLengthReached = this.questions.map(q =>
-      q.options.map(() => false)
+      q.choices.map(() => false)
     );
   }
 
@@ -77,12 +90,18 @@ export class CreateQuizComponent {
   addQuestion() {
     const nextNumber = this.questions.length + 1;
     this.questions.push({
-      text: `Question ${nextNumber}`,
-      options: [
-        { text: `Option 1`, isCorrect: false },
-        { text: `Option 2`, isCorrect: false },
-        { text: `Option 3`, isCorrect: false },
-        { text: `Option 4`, isCorrect: false }
+      name: `Question ${nextNumber}`,
+      duration: 30,
+      grade: 0,
+      picture: null,
+      id_creator: -1,
+      private: false,
+      tags: [],
+      choices: [
+        {id: -1 ,content: 'Option 1'},
+        {id: -1 ,content: 'Option 2'},
+        {id: -1 ,content: 'Option 3'},
+        {id: -1 ,content: 'Option 4'}
       ]
     });
     this.updateOptionStates();
@@ -118,9 +137,9 @@ export class CreateQuizComponent {
   }
 
   setCorrectOption(questionIdx: number, optionIdx: number) {
-    this.questions[questionIdx].options.forEach((opt, idx) => {
-      opt.isCorrect = idx === optionIdx;
-    });
+    const choices = this.questions[questionIdx].choices;
+    const [correctOption] = choices.splice(optionIdx, 1);
+    choices.unshift(correctOption);
   }
 
   addTag(tag: string) {
@@ -131,13 +150,13 @@ export class CreateQuizComponent {
   }
 
   addOption(questionIdx: number) {
-    this.questions[questionIdx].options.push({ text: '', isCorrect: false });
+    this.questions[questionIdx].choices.push({ content: '', id: -1 });
     this.updateOptionStates();
   }
 
   removeOption(questionIdx: number, optionIdx: number) {
-    if (this.questions[questionIdx].options.length > 2) {
-      this.questions[questionIdx].options.splice(optionIdx, 1);
+    if (this.questions[questionIdx].choices.length > 2) {
+      this.questions[questionIdx].choices.splice(optionIdx, 1);
     }
   }
 
@@ -145,23 +164,20 @@ export class CreateQuizComponent {
     //TODO
     //! send JSON {Quiz details, questionList:{question:{question, options:{bonneOption, autresoptions...}}}}
     let quiz = {
-      title: 'New Quiz',
-      tags: ['tag1', 'tag2'],
-      description: 'This is a new quiz',
+      nom: this.quizTitle,
+      picture: null,
+      private : this.quizVisibility,
+      tags: this.tags,
       questions : this.questions,
-      quizVisibility : this.quizVisibility,
     }
     console.log('Form submitted', {
       quizVisibility: this.quizVisibility,
       questions: this.questions
     });
 
-    this.apiService.createQuiz(quiz).then((response) => {
-      console.log('Quiz created successfully', response);
-      // Handle success response
-      if (response.success) {
-        this.router.navigate(['/quiz-preview', response.quizId]);
-      }
+    this.apiService.createQuiz(quiz).subscribe((quiz) => {
+      console.log('Quiz created successfully', quiz);
+        this.router.navigate(['/quiz-preview', quiz.id]);
     });
   }
 }

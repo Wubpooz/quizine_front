@@ -1,12 +1,15 @@
-export interface OldQuiz {
+export interface EmptyQuiz {
+  nom: string;
+  picture: Uint8Array | null;
+  isPrivate: boolean;
+}
+
+export interface HistoryQuiz {
   id: number;
-  title: string;
-  //tags: string[];
-  createdBy: string;
-  //createdAt: Date;
-  description: string;
-  questions: Question[];
+  nom: string;
+  picture: Uint8Array | null;
   private: boolean;
+  id_creator?: number;
 }
 
 export interface Quiz {
@@ -20,15 +23,6 @@ export interface Quiz {
   createdBy:string
 }
 
-export interface OldQuestion {
-    id: number;
-    quizId: number;
-    questionText: string;
-    options: Option[];
-    correctAnswer: Option;
-    timer: number;
-}
-
 export interface Question {
   id:number;
   name: string;
@@ -39,11 +33,6 @@ export interface Question {
   id_creator?: number;
   private: boolean;
   choices: Option[]
-}
-
-export interface OldOption {
-    id: number;
-    optionText: string;
 }
 
 export interface Option {

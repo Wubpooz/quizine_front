@@ -17,7 +17,7 @@
             </div>
             <div *ngIf="quizList.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
                 <span class="text-lg text-gray-500 text-center">Vous n'avez encore créé aucun quiz.</span>
-                <a href="#" class="text-base text-primary text-center hover:underline">Créer mon premier quiz</a>
+                <button (click)="goToCreateQuiz()" class="text-base text-primary text-center hover:underline">Créer mon premier quiz</button>
             </div>
         </div>
     </div>
