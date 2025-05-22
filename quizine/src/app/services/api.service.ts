@@ -152,6 +152,18 @@ export class APIService {
             .toPromise().then((payload)=>Object.values(payload)||this.quizList)) as Observable<Quiz[]>
     }
 
+    createQuiz(quizData: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            // Simulate an API call to create a quiz
+            setTimeout(() => {
+                // Here you would typically send the quiz data to your backend API
+                // For this example, we'll just resolve the promise with a success message
+                resolve({ success: true, quizId: 1 });
+            }, 1000);
+        });
+    }
+        
+
     search() {
         return [];
     }

@@ -5,9 +5,28 @@
   </div>
 
   <!-- Right side form -->
-  <div class="w-1/2 flex items-center justify-center">
+  <div class="w-1/2 flex items-center justify-center relative">
+        <button
+      type="button"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
+      (click)="onClose()"
+      aria-label="Fermer"
+    >
+      &times;
+    </button>
     <form class="w-96 space-y-6" (ngSubmit)="onSubmit()">
       <h2 class="text-center text-2xl font-bold text-blue-600">S'inscrire</h2>
+
+      <div class="flex items-center justify-between">
+        <label for="profile" class="block text-gray-700">Photo de profil</label>
+        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+            />
+          </svg>
+        </div>
+      </div>
 
       <div class="space-y-2">
         <label for="username" class="block text-gray-700">Nom d'utilisateur</label>
@@ -20,16 +39,6 @@
         />
       </div>
 
-      <div class="flex items-center justify-between">
-        <label for="profile" class="block text-gray-700">Photo de profil</label>
-        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path
-              d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-            />
-          </svg>
-        </div>
-      </div>
 
       <div class="relative">
         <label for="password" class="block text-gray-700">Mot de passe</label>

@@ -3,11 +3,12 @@ import { QuizCardComponent } from '../quiz-card/quiz-card.component';
 import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { AppStore } from '../../stores/app.store';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-explore',
   standalone: true,
-  imports: [QuizCardComponent, CommonModule],
+  imports: [QuizCardComponent, CommonModule, SidebarComponent],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })

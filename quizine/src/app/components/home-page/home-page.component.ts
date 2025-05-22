@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
@@ -50,5 +51,10 @@ export class HomePageComponent {
   }
   gotoQuiz(quizId: number) {
     this.router.navigate(['/quiz-preview', quizId]);
+  }
+
+  onCreateQuiz() {
+    console.log('Create Quiz button clicked');
+    // Navigate to quiz creation page
   }
 }

@@ -60,12 +60,15 @@
               "buildTarget": "quizine:build:production"
             },
             "development": {
-              "buildTarget": "quizine:build:development"
+              "buildTarget": "quizine:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development",
           "options": {
-              "proxyConfig": "proxy.conf.json"
+              "proxyConfig": "proxy.conf.json",
+              "allowedHosts": ["localhost", "quiz.kerboul.me"],
+              "liveReload": true
             }
         },
         "extract-i18n": {

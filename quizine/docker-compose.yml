@@ -11,4 +11,5 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+      - ALLOWED_HOSTS=quiz.kerboul.me
     restart: unless-stopped
