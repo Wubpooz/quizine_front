@@ -5,34 +5,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
+import { TagListComponent } from "../tag-list/tag-list.component";
 
 @Component({
   selector: 'create-quiz',
   standalone: true,
-  imports: [SidebarComponent, TopbarComponent, CommonModule, FormsModule],
+  imports: [SidebarComponent, TopbarComponent, CommonModule, FormsModule, TagListComponent],
   templateUrl: './create-quiz.component.html',
   styleUrl: './create-quiz.component.css'
 })
 export class CreateQuizComponent {
-  maxLengthOption: number = 500;
-  maxLengthQuestion: number = 500;
-  maxLengthDescription: number = 500;
-  maxLengthTitle: number = 100;
-  showDropdown: boolean = false;
-  quizVisibility: string = 'private';
-  quizDescription: string = '';
   quizTitle: string = '';
-  quizTags: string[] = [];
-
-  showTitleTooltip: boolean = false;
-  titleMaxLengthReached: boolean = false;
-  showDescriptionTooltip: boolean = false;
-  descriptionMaxLengthReached: boolean = false;
-  showQuestionTooltip: boolean[] = [];
-  questionMaxLengthReached: boolean[] = [];
-  showOptionTooltip: boolean[][] = [];
-  optionMaxLengthReached: boolean[][] = [];
-
+  quizDescription: string = '';
+  quizVisibility: string = 'private';
+  tags: string[] = ['tag1', 'tag2'];
   questions: {
     text: string;
     options: { text: string; isCorrect: boolean }[];
@@ -47,6 +33,22 @@ export class CreateQuizComponent {
       ]
     }
   ];
+  
+  maxLengthTitle: number = 100;
+  maxLengthDescription: number = 500;
+  maxLengthQuestion: number = 500;
+  maxLengthOption: number = 500;
+
+  showDropdown: boolean = false;
+  showTitleTooltip: boolean = false;
+  titleMaxLengthReached: boolean = false;
+  showDescriptionTooltip: boolean = false;
+  descriptionMaxLengthReached: boolean = false;
+  showQuestionTooltip: boolean[] = [];
+  questionMaxLengthReached: boolean[] = [];
+  showOptionTooltip: boolean[][] = [];
+  optionMaxLengthReached: boolean[][] = [];
+
 
   constructor(private apiService: APIService, private router: Router) {}
 
@@ -130,6 +132,7 @@ export class CreateQuizComponent {
 
   onSubmit() {
     //TODO
+    //! send JSON {Quiz details, questionList:{question:{question, options:{bonneOption, autresoptions...}}}}
     let quiz = {
       title: 'New Quiz',
       tags: ['tag1', 'tag2'],
