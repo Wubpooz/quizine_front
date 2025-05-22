@@ -18,7 +18,7 @@ export class CreateQuizComponent {
   quizTitle: string = '';
   quizDescription: string = '';
   quizVisibility: string = 'private';
-  tags: string[] = ['tag1', 'tag2'];
+  tags: string[] = [];
   questions: {
     text: string;
     options: { text: string; isCorrect: boolean }[];
@@ -39,6 +39,7 @@ export class CreateQuizComponent {
   maxLengthQuestion: number = 500;
   maxLengthOption: number = 500;
 
+  showTagInput: boolean = false;
   showDropdown: boolean = false;
   showTitleTooltip: boolean = false;
   titleMaxLengthReached: boolean = false;
@@ -48,6 +49,8 @@ export class CreateQuizComponent {
   questionMaxLengthReached: boolean[] = [];
   showOptionTooltip: boolean[][] = [];
   optionMaxLengthReached: boolean[][] = [];
+
+  tagInput: string = '';
 
 
   constructor(private apiService: APIService, private router: Router) {}
@@ -117,6 +120,13 @@ export class CreateQuizComponent {
     this.questions[questionIdx].options.forEach((opt, idx) => {
       opt.isCorrect = idx === optionIdx;
     });
+  }
+
+  addTag(tag: string) {
+    if (tag && !this.tags.includes(tag)) {
+      this.tags.push(tag);
+      this.showTagInput = false;
+    }
   }
 
   addOption(questionIdx: number) {

@@ -12,10 +12,37 @@
         <div class="w-full max-w-5xl">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold">Créer un nouveau quiz</h1>
-                <div>
-                    <app-tag-list
-                        [tags]="tags"
-                        [class]="'-translate-x-1/2 translate-y-1/2'"></app-tag-list>
+                <div class="flex items-center gap-4">
+                    <app-tag-list [tags]="tags"></app-tag-list>
+                    <!-- add tags -->
+                    <button
+                        type="button"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold text-base flex items-center gap-2 focus:outline-none"
+                        (click)="showTagInput = !showTagInput"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Ajouter un tag
+                    </button>
+                    <div *ngIf="showTagInput" class="relative">
+                        <input
+                            #tagInput
+                            type="text"
+                            placeholder="Ajouter un tag"
+                            class="border border-blue-200 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                            (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
+                        />
+                        <button
+                            type="button"
+                            class="absolute right-0 top-0 mt-2 mr-2 text-red-500"
+                            (click)="showTagInput = false"
+                        >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
                     <div class="relative">
                         <button
                             class="bg-blue-500 text-white px-6 py-1 rounded-lg font-semibold text-base flex items-center gap-2 focus:outline-none"
