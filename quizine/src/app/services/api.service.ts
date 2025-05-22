@@ -128,7 +128,6 @@ export class APIService {
             retry(1),
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 404) {
-                    // Return empty array if not found
                     return of([]);
                 }
                 return this.handleError(error);

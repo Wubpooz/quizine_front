@@ -18,9 +18,9 @@ export class AppStore {
 
     init() {
         if(this.inited){
-            this.inited = true
             return
         }
+        this.inited = true;
         this.apiService.getUserData().subscribe((user: User) => {
             if(!this.currentUser){
                 this.currentUser = new BehaviorSubject<User|undefined>(user);

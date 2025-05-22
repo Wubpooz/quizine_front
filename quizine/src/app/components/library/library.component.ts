@@ -16,6 +16,8 @@ import { APIService } from '../../services/api.service';
 })
 export class LibraryComponent {
   quizList: Quiz[] = [];
+  filteredQuizList: Quiz[] = [];
+  searchTerm: string = '';
 
   constructor(private router: Router,
     private apiService: APIService
@@ -23,8 +25,19 @@ export class LibraryComponent {
       this.apiService.getQuizList().subscribe((quizList: Quiz[]) => {
         if(quizList) {
           this.quizList = quizList;
+          this.filteredQuizList = quizList;
         }
       });
+  }
+
+  onSearchChange(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    const term = target ? target.value : '';
+    this.searchTerm = term;
+    const lower = term.toLowerCase();
+    this.filteredQuizList = this.quizList.filter(q =>
+      q.nom.toLowerCase().includes(lower)
+    );
   }
 
   goToCreateQuiz() {

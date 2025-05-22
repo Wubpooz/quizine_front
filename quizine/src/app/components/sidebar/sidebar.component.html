@@ -5,8 +5,9 @@
         <button (click)="toggleSideBar()">
             <img src="assets/images/SideBar.png" alt="Quiz Blocks" class="w-10 h-12 object-contain hover:bg-primary-tint rounded" />
         </button>
-        <span *ngIf="isSideBarOpen" class="text-xl font-bold mb-4 text-blue-500 translate-y-2">Quizine</span>
+        <span *ngIf="isSideBarOpen" class="text-xl font-bold mb-4 text-primary translate-y-2">Quizine</span>
     </div>
+    <div class="flex absolute left-4 z-[90] w-96 h-16 bg-white"></div>
     <div class="w-64 bg-white pt-[80px] p-4 fixed sm:relative h-full transition-transform duration-300 ease-in-out z-50"
     [ngClass]="{
       'translate-x-0': isSideBarOpen,
