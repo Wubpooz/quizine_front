@@ -33,11 +33,19 @@ export class APIService {
     }
 
     getRecentHistory(userId: number): Observable<Quiz[]> {
-        // return new Observable<Quiz[]>((observer) => {
-        //     const quizzes: Quiz[] = this.quizList;
-        //     observer.next(quizzes);
-        //     observer.complete();
-        // });
+        return new Observable<Quiz[]>((observer) => {
+            const quizzes: Quiz[] = [{
+                id: 1,
+                nom: "Sample Quiz",
+                picture:null,
+                createdBy: "John Doe",
+                questions: [],
+                tags: [],
+                private: false
+            }]
+            observer.next(quizzes);
+            observer.complete();
+        });
         return from(this.http.get<any>("/api/recent", {})
             .toPromise().then((payload)=>Object.values(payload)||this.quizList)) as Observable<Quiz[]>
     }
