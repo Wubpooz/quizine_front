@@ -125,8 +125,7 @@ export class APIService {
     ];
 
     getQuizById(id: number): Observable<any> {
-        const quiz = this.quizList.find(q => q.id === id);
-        return of(quiz);
+        return this.getQuiz(id);
     }
 
     getQuizList(userId: number): Observable<Quiz[]> {
@@ -181,6 +180,19 @@ export class APIService {
             .toPromise().then((payload)=>payload?.user||user))
     }
 
+    signup(username: string, password: string): Observable<User> {
+      const user: User = {
+          id: 1,
+          name: "Joh Doe",
+          email: "",
+          createdAt: new Date(),
+          updatedAt: new Date()
+      };
+      
+      return from(this.http.post<{message:string, user:User}>("/api/signup", {username, password}, {})
+            .toPromise().then((payload)=>payload?.user||user))
+    }
+
     getScoreboard() {
         return [];
     }
@@ -190,7 +202,7 @@ export class APIService {
 
     getQuizzes() {}
     getQuiz(id: number): Observable<Quiz> {
-        return new Observable<Quiz>((observer) => {
+        
             let quiz: Quiz = {
                 id: 1,
                 nom: "Sample Quiz",
@@ -229,9 +241,9 @@ export class APIService {
                 tags: [],
                 private: false
             };
-            observer.next(quiz);
-            observer.complete();
-        });
+            
+        return from(this.http.get<any>("/api/quiz/"+id.toString(), {})
+            .toPromise().then((payload)=>payload||quiz)) as Observable<Quiz>
     }
 
     getUserData() : Observable<User> {

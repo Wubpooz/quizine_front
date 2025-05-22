@@ -20,6 +20,9 @@ export class QuizService {
             private router: Router
             ) {
     this.gameSessionStore.quiz.subscribe((quiz) => {
+      if(quiz === undefined){
+        return
+      }
       this.quiz = quiz;
       this.currentQuestionIndexSubject.next(0);
     });
