@@ -68,10 +68,8 @@ export class APIService {
     signup(username: string, password: string): Observable<User> {
       const user: User = {
           id: 1,
-          name: "Joh Doe",
-          email: "",
-          createdAt: new Date(),
-          updatedAt: new Date()
+          username: "Joh Doe",
+          picture: ""
       };
       
       return from(this.http.post<{message:string, user:User}>("/api/signup", {username, password}, {})
