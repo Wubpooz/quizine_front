@@ -1,0 +1,18 @@
+<!-- Header -->
+<div class="flex justify-between items-center mb-6">
+  <div class="flex md:w-1/2">
+    <input
+      type="text"
+      placeholder="Recherche"
+      class="bg-gray-200 translate-x-40 w-[36rem] rounded-lg p-2 focus:outline-none focus:border-blue-500"
+    />
+  </div>
+  <div class="flex items-center">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2" (click)="gotoCreateQuiz()">
+      + Créer un quiz
+    </button>
+    <button (click)="gotoProfile()">
+      <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
+    </button>
+  </div>
+</div>

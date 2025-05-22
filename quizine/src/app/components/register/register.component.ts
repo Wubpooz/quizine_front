@@ -4,11 +4,13 @@ import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -16,6 +18,7 @@ export class RegisterComponent {
   showPassword = false;
   public username = '';
   public password = '';
+  profileImage: string | ArrayBuffer | null = null;
 
   constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
 
@@ -31,5 +34,19 @@ export class RegisterComponent {
     this.apiService.signup(this.username, this.password).subscribe((data:any) => {
         this.router.navigate(['/login']);
     });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+
+      // Optional: validate that it's an image
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.profileImage = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 }

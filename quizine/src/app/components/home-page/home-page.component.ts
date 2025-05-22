@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule, SidebarComponent],
+  imports: [CommonModule, SidebarComponent, NavbarComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
@@ -42,9 +43,6 @@ export class HomePageComponent {
   }
   gotoExplore() {
     this.router.navigate(['/explore']);
-  }
-  gotoCreateQuiz() {
-    this.router.navigate(['/create']);
   }
   gotoProfile() {
     this.router.navigate(['/profile']);

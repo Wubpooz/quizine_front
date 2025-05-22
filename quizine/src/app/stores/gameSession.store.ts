@@ -12,12 +12,12 @@ export class gameSessionStore {
     public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
         [
-            [ { id: 1, name: "John Doe", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1450 ],
-            [ { id: 2, name: "Jane Smith", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1500 ],
-            [ { id: 3, name: "Alice Johnson", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1200 ],
-            [ { id: 4, name: "Bob Brown", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1400 ],
-            [ { id: 5, name: "Boby own", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 1100 ],
-            [ { id: 6, name: "Johfb Bn", email: "mm @mm.com", createdAt: new Date(), updatedAt: new Date() }, 600 ]
+            [ { id: 1, username: "John Doe", picture: "" }, 1450 ],
+            [ { id: 2, username: "Jane Smith", picture: "" }, 1500 ],
+            [ { id: 3, username: "Alice Johnson", picture: "" }, 1200 ],
+            [ { id: 4, username: "Bob Brown", picture: "" }, 1400 ],
+            [ { id: 5, username: "Boby own", picture: "" }, 1100 ],
+            [ { id: 6, username: "Johfb Bn", picture: "" }, 600 ]
     ])); //temp
 public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([
     // [1, { id: 1, optionText: "ParisAute ex ut excepteur ipsum non consectetur reprehenderit ex elit deserunt minim. Aliquip amet anim et incididunt labore id duis anim. Tempor ad ipsum et eu qui officia occaecat pariatur adipisicing exercitation mollit exercitation incididunt." }],

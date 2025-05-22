@@ -32,7 +32,7 @@ export class QuizRecapComponent {
   }
 
   finish(): void {
-    if(this.quiz.private || this.appStore.currentUser.value === undefined || this.quiz.createdBy !== this.appStore.currentUser.value.name) {
+    if(this.quiz.private || this.appStore.currentUser.value === undefined || this.quiz.createdBy !== this.appStore.currentUser.value.username) {
       this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/quiz-preview', this.quiz.id]);
