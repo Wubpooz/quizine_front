@@ -108,7 +108,7 @@ export class APIService {
             .toPromise().then((payload)=>Object.values(payload)||[])) as Observable<Quiz[]>
     }
 
-    createQuiz(quizData: any): Promise<any> {
+    createQuiz(quizData: any): Promise<any>{
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve({ success: true, quizId: 1 });

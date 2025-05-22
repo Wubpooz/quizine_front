@@ -179,7 +179,7 @@ export class CreateQuizComponent {
       console.log('Quiz created successfully', response);
       // Handle success response
       if (response.success) {
-        this.router.navigate(['/quiz-preview', response.quizId]);
+        this.router.navigate(['/explore']);
       }
     });
   }
