@@ -1,5 +1,5 @@
-# Node.js avec Alpine comme image de base (plus légère)
-FROM node:23-alpine
+# Étape de build
+FROM node:23-alpine AS build
 
 # Définition du répertoire de travail
 WORKDIR /app
@@ -13,9 +13,19 @@ RUN npm install
 # Copie du reste des fichiers du projet
 COPY . .
 
-# Exposition du port utilisé par Angular (par défaut 4200)
-EXPOSE 4200
+# Build de l'application Angular
+RUN npm run build
 
-# Commande pour démarrer l'application en mode développement
-# L'option --host 0.0.0.0 permet d'accéder à l'application depuis l'extérieur du conteneur
-CMD ["npm", "run", "start", "--", "--host", "0.0.0.0"]
+# Étape finale avec Nginx
+FROM nginx:alpine
+
+# Copie des fichiers de l'application construite depuis l'étape de build
+COPY --from=build /app/dist/quizine/browser /usr/share/nginx/html
+
+# Copie de la configuration Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Exposition du port 80
+EXPOSE 80
+
+# La commande par défaut de l'image Nginx démarre automatiquement le serveur

@@ -1,14 +1,9 @@
 services:
-  app:
+  quizine:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: quizine-app
+    container_name: quizine
     ports:
-      - "4200:4200"
-    volumes:
-      - ./:/app
-      - /app/node_modules
-    environment:
-      - NODE_ENV=development
+      - "4200:80"
     restart: unless-stopped
