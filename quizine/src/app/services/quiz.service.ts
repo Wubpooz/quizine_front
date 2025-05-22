@@ -75,4 +75,23 @@ export class QuizService {
       return quiz;
     });
   }
+
+  calculateScore(): number {
+    let score = 0;
+    const answerList = this.gameSessionStore.answerList.getValue();
+    const quiz = this.gameSessionStore.quiz.getValue();
+
+    if (!quiz) {
+      return score;
+    }
+
+    quiz.questions.forEach((question) => {
+      const userAnswer = answerList.get(question.id);
+      if (userAnswer && userAnswer.id === question.correctAnswerId) {
+        score++;
+      }
+    });
+
+    return score;
+  }
 }
