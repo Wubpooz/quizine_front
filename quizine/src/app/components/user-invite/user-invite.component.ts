@@ -69,6 +69,9 @@ export class UserInviteComponent {
       console.log('Inviting:', this.selectedFriends);
       let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
       //TODO api call idsToInvite
+      this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: this.selectedFriends}, {}).subscribe((payload) => {
+        console.log("Invitation:", payload);
+      });
     }
     this.router.navigate(['/waiting-room']);
   }
