@@ -54,6 +54,13 @@ export class QuizService {
       this.gameSessionStore.updateScore(this.appStore.currentUser.value, this.gameSessionStore.score); //TODO
       this.gameSessionStore.updateQuiz(this.quiz.id);
       this.router.navigate(['/quiz-score']);
+    } else if (this.currentQuestionIndexSubject.value === this.quiz.questions.length - 1) {
+      const user = this.appStore.currentUser.value;
+      if (!user) return;
+    
+      const finalScore = this.gameSessionStore.calculateScore();
+      this.gameSessionStore.updateScore(user, finalScore);
+      this.router.navigate(['/quiz-score']);
     }
   }
 
