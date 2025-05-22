@@ -15,10 +15,10 @@
       &times;
     </button>
     <form class="w-96 space-y-6" (ngSubmit)="onSubmit()">
-      <h2 class="text-center text-2xl font-bold text-blue-600">S'inscrire</h2>
+      <h2 class="text-center text-2xl font-bold text-primary-darker">S'inscrire</h2>
 
       <div class="flex flex-col space-y-2">
-        <label class="block text-gray-700">Photo de profil</label>
+        <label class="block text-primary-dark">Photo de profil</label>
 
         <!-- Hidden file input -->
         <input
@@ -55,25 +55,25 @@
       </div>
 
       <div class="space-y-2">
-        <label for="username" class="block text-gray-700">Nom d'utilisateur</label>
+        <label for="username" class="block text-primary-dark">Nom d'utilisateur</label>
         <input
           id="username"
           type="text"
           [(ngModel)]="username"
           name="username"
-          class="w-full px-4 py-2 rounded-md bg-blue-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          class="w-full px-4 py-2 rounded-md bg-primary-tint focus:outline-none focus:ring-2 focus:ring-primary-focus-ring"
         />
       </div>
 
 
       <div class="relative">
-        <label for="password" class="block text-gray-700">Mot de passe</label>
+        <label for="password" class="block text-primary-dark">Mot de passe</label>
         <input
           id="password"
           [type]="showPassword ? 'text' : 'password'"
           [(ngModel)]="password"
           name="password"
-          class="w-full px-4 py-2 rounded-md bg-blue-50 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          class="w-full px-4 py-2 rounded-md bg-primary-tint focus:outline-none focus:ring-2 focus:ring-primary-focus-ring"
         />
         <button
           type="button"
@@ -86,7 +86,7 @@
 
       <button
         type="submit"
-        class="w-full py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white font-semibold"
+        class="w-full py-2 rounded-md bg-primary hover:bg-primary-dark text-white font-semibold"
       >
         s'inscrire
       </button>
