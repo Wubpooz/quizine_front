@@ -32,6 +32,7 @@ export class AppComponent {
   ngOnInit(): void {
     // Check if connect.sid cookie exists
     const connectSid = this.getCookie('connect.sid');
+    this.appStore.init();
     // if (!connectSid) {
     //   this.appStore.updateUser(undefined as any);
     //   localStorage.removeItem('userId');

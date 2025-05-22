@@ -24,7 +24,6 @@ export class ProfileComponent {
   constructor(private appStore: AppStore,
             private apiService: APIService,
             private router: Router) {
-    console.log(this.appStore.currentUser.value);
     this.appStore.currentUser.subscribe((user) => {
       if (user) {
         this.user = user;
