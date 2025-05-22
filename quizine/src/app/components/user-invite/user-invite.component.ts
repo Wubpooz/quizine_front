@@ -40,7 +40,7 @@ export class UserInviteComponent {
   onSearch(event: any) {
     const searchTerm = event.target.value.toLowerCase();
     this.friends = this.friends.filter((friend: User) => {
-      return friend.name.toLowerCase().includes(searchTerm) || friend.email.toLowerCase().includes(searchTerm);
+      return friend.username.toLowerCase().includes(searchTerm);
     });
   }
 

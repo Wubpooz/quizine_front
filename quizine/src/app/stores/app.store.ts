@@ -25,7 +25,7 @@ export class AppStore {
             this.inited = true
             return
         }
-        this.apiService.getUserData().subscribe((user: User) => {
+        this.apiService.getUserData("raphaffou").subscribe((user: User) => {
             if(!this.currentUser){
                 this.currentUser = new BehaviorSubject<User|undefined>(user);
             } else {
@@ -73,7 +73,7 @@ export class AppStore {
         if (this.currentUser) {
             this.currentUser.next(user);
         } else {
-            this.currentUser = new BehaviorSubject<User |undefined>(user);
+            this.currentUser = new BehaviorSubject<User|undefined>(user);
         }
 
         this.apiService.getFriends().subscribe((friends: User[]) => {
