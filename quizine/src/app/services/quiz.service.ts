@@ -24,7 +24,7 @@ export class QuizService {
       this.currentQuestionIndexSubject.next(0);
     });
   }
-
+//TODO calcul du score
   getTitle(): string {
     return this.quiz.nom;
   }

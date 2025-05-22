@@ -65,9 +65,7 @@
           },
           "defaultConfiguration": "development",
           "options": {
-              "proxyConfig": "proxy.conf.json",
-              "allowedHosts": ["localhost", "quiz.kerboul.me"],
-              "liveReload": true
+              "proxyConfig": "proxy.conf.json"
             }
         },
         "extract-i18n": {
