@@ -182,7 +182,7 @@ export class CreateQuizComponent {
     const quiz = {
       nom: this.quizTitle,
       picture: null,
-      private : this.quizVisibility,
+      private : this.quizVisibility === 'private' ? true : false,
       tags: this.tags,
       questions : orderedQuestions,
     }
