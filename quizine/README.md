@@ -6,6 +6,7 @@
 - [ ] profile/quiz pictures
 
 ### P2
+- [ ] mobile friendliness
 - [ ] quiz descriptions
 - [ ] quiz editing ?
 - [ ] Rating system
