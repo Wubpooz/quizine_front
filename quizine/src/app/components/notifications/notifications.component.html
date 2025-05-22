@@ -7,7 +7,7 @@
             <div class="bg-white rounded-md shadow-md p-4">
                 <h2 class="text-xl font-bold mb-4">Notifications</h2>  
                     <ng-container *ngFor="let notification of notifications">
-                        <waiting-page [refus]="isrefus" [isCreator]="false" *ngIf="isWaitingPageShowing[notification.id_session]" (close)="isWaitingPageShowing[notification.id_session] = false" [sessionId]="notification.id_session"></waiting-page>
+                        <waiting-page [refus]="isrefus" [isCreator]="false" *ngIf="isWaitingPageShowing[notification.id_session]" (close)="onWaitClose(notification)" [sessionId]="notification.id_session"></waiting-page>
     
                         <div class="bg-white p-4 w-full rounded shadow " >
                             <div class="flex items-center items-start">
