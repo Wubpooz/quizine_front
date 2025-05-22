@@ -16,7 +16,7 @@ export class APIService {
 
 
     getAllUsers(): Observable<User[]> {
-        return from(this.http.get<any>("/api/users", {})
+        return from(this.http.get<any>("/api/search/users", {})
                     .toPromise().then((payload)=>Object.values(payload))) as Observable<User[]>
     }
 

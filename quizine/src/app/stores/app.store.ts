@@ -53,6 +53,7 @@ export class AppStore {
         this.apiService.getAllUsers().subscribe((friends: User[]) => {
             //this.friends = new BehaviorSubject<User[]>(friends);
             //this.friends.next(friends);
+            
             if(!this.friends){
                 this.friends = new BehaviorSubject<User[]|undefined>(friends);
             }
