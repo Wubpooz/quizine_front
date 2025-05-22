@@ -13,17 +13,17 @@
     </div>
     <ul>
       <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded">
+        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoHome()">
           Accueil
         </button>
       </li>
       <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded">
+        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoLibrary()">
           Mes quiz
         </button>
       </li>
       <li class="mb-2">
-        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded">
+        <button href="#" class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded" (click)="gotoExplore()">
           Découvrir
         </button>
       </li>
@@ -46,7 +46,7 @@
         />
       </div>
       <div class="flex items-center">
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-3xl mr-2">
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-3xl mr-2" (click)="gotoCreateQuiz()">
           + Créer un quiz
         </button>
         <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
@@ -56,42 +56,18 @@
     <!-- Recent Quizzes -->
     <h2 class="translate-x-4 text-lg font-bold mb-4">Récents</h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-6">
-      <button class="bg-white p-4 rounded shadow hover:bg-primary-tint">
-        <div class="flex items-center">
-          <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-          <div>
-            <h3 class="text-sm font-bold">Quiz d'histoire</h3>
-            <p class="text-xs text-gray-500">16 Questions · johndoe | 23.23.3/2025</p>
+      <ng-container *ngFor="let quiz of quizzes">
+        <button class="bg-white p-4 rounded shadow hover:bg-primary-tint" (click)="gotoQuiz(quiz.id)">
+          <div class="flex items-center">
+            <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
+            <div>
+              <h3 class="text-sm font-bold">{{quiz.title}}</h3>
+              <p class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}} | {{quiz.createdAt | date:'dd/MM/yyyy' }}</p>
+            </div>
           </div>
-        </div>
-      </button>
-      <button class="bg-white p-4 rounded shadow hover:bg-primary-tint">
-        <div class="flex items-center">
-          <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-          <div>
-            <h3 class="text-sm font-bold">Quiz d'histoire</h3>
-            <p class="text-xs text-gray-500">16 Questions · johndoe | 23.23.3/2025</p>
-          </div>
-        </div>
-      </button>
-      <button class="bg-white p-4 rounded shadow hover:bg-primary-tint">
-        <div class="flex items-center">
-          <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-          <div>
-            <h3 class="text-sm font-bold">Quiz d'histoire</h3>
-            <p class="text-xs text-gray-500">16 Questions · johndoe | 23.23.3/2025</p>
-          </div>
-        </div>
-      </button>
-      <button class="bg-white p-4 rounded shadow hover:bg-primary-tint">
-        <div class="flex items-center">
-          <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-          <div>
-            <h3 class="text-sm font-bold">Quiz d'histoire</h3>
-            <p class="text-xs text-gray-500">16 Questions · johndoe | 23.23.3/2025</p>
-          </div>
-        </div>
-      </button>
+        </button>
+        </ng-container>
+  
     </div>
   </div>
 </div>

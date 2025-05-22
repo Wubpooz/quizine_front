@@ -142,6 +142,14 @@ export class APIService {
         // });
     }
 
+    getRecentHistory(userId: number) {
+        return new Observable<Quiz[]>((observer) => {
+            const quizzes: Quiz[] = this.quizList;
+            observer.next(quizzes);
+            observer.complete();
+        });
+    }
+
     search() {
         return [];
     }

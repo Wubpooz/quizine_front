@@ -1,0 +1,60 @@
+<div class="flex min-h-screen bg-gray-50">
+  <!-- Sidebar -->
+  <sidebar class="w-64 flex-shrink-0"></sidebar>
+
+  <!-- Main content area -->
+  <div class="flex-1 flex flex-col">
+    <!-- Topbar -->
+    <topbar></topbar>
+
+    <!-- Page content -->
+    <div class="flex-1 flex flex-col items-center px-4 py-8">
+      <div class="w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold">Créer un nouveau quiz</h1>
+          <button class="bg-blue-500 text-white px-6 py-1 rounded-lg font-semibold text-base">Privé &lt;</button>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Ajouter un titre"
+          class="w-full border border-blue-200 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        />
+        <input
+          type="text"
+          placeholder="Ajouter une description"
+          class="w-full border border-blue-200 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        />
+
+        <div class="bg-blue-50 rounded-lg px-4 py-2 mb-4 font-semibold">Question 1</div>
+
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="flex items-center gap-2">
+            <span class="text-lg">○ Option 1</span>
+            <span class="text-2xl text-gray-400">✔</span>
+            <span class="text-2xl text-black">✖</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg">○ Option 2</span>
+            <span class="text-2xl text-gray-400">✔</span>
+            <span class="text-2xl text-black">✖</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg">○ Option 3</span>
+            <span class="text-2xl text-gray-400">✔</span>
+            <span class="text-2xl text-black">✖</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg">○ Option 4</span>
+            <span class="text-2xl text-gray-400">✔</span>
+            <span class="text-2xl text-black">✖</span>
+          </div>
+        </div>
+
+        <button class="bg-blue-500 hover:bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xl">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
