@@ -24,23 +24,19 @@ export class QuizScoreComponent {
     private appStore: AppStore,
     private router: Router
   ) {
-    // Wait for current user
     this.appStore.currentUser.subscribe((user) => {
       if (!user) return;
       this.currentUser = user;
 
-      // Wait for scores
       this.gameSessionStore.scores.subscribe((scores) => {
         this.scores = scores;
 
-        // Convert and sort
         this.sortedScores = Array.from(scores.entries())
           .map(([user, score]) => ({ user, score }))
           .sort((a, b) => b.score - a.score);
 
         this.topThree = this.sortedScores.slice(0, 3);
 
-        // Get this user's score
         for (let [u, score] of scores.entries()) {
           if (u.id === this.currentUser.id) {
             this.userScore = score;
