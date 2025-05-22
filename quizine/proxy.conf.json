@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://quiz.kerboul.me",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
