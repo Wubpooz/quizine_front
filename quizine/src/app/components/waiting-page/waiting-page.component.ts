@@ -23,7 +23,6 @@ export class WaitingPageComponent {
       this.timer -= 1;
       if (this.timer <= 0) {
         clearInterval(this.intervalId);
-        // Implement logic to handle when the timer reaches zero
         this.playQuiz();
       }
     }, 1000);
@@ -34,8 +33,9 @@ export class WaitingPageComponent {
   }
 
   playQuiz() {
-    // Implement logic to start the quiz
-    console.log('Starting quiz...');
+    //TODO send api call
+    // this.router.navigate(['/quiz']);
+    this.router.navigate(['/quiz-question']);
   }
 
   formatTimer(seconds: number): string {

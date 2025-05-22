@@ -1,5 +1,3 @@
-// login.component.ts
-
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
@@ -8,13 +6,13 @@ import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 
 @Component({
-  selector: 'login',
+  selector: 'app-register',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
 })
-export class LoginComponent {
+export class RegisterComponent {
   showPassword = false;
   public username = '';
   public password = '';

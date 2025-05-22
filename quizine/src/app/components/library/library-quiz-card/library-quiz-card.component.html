@@ -1,4 +1,4 @@
-<div class="border-4 border-gray-200 rounded-md w-[42rem] h-32 p-4 relative">
+<div class="border-2 border-gray-200 rounded-md w-[42rem] h-32 p-4 relative">
     <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
             <span class="text-lg">{{ quiz.title }}</span>
@@ -6,14 +6,16 @@
         </div>
         <span class="text-base text-primary">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span>
     </div>
-    <span class="text-base text-primary mt-2">{{ quiz.questions.length }} questions</span>
+    <span class="text-base text-primary mt-2">{{ quiz.questions.length }} {{ quiz.questions.length > 1 ? "questions" : "question" }}</span>
     <div class="flex gap-2 mt-3">
         <app-button
+            (click)="goToQuizPreview(quiz.id)"
             [label]="'Consulter'"
             [color]="'secondary'"
             [size]="'small'"
         ></app-button>
         <app-button
+            (click)="goToEditQuiz(quiz.id)"
             [label]="'Éditer'"
             [color]="'secondary'"
             [size]="'small'"

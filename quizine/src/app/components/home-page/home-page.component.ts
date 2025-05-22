@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
-import {trigger,state,style, animate, transition} from '@angular/animations'
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AppStore } from '../../stores/app.store';
+import { Quiz } from '../../models/quizModel';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SidebarComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
 export class HomePageComponent {
   isSideBarOpen=true;
-  quizzes = [
-    {id: 1, title: 'Quiz d\'histoire', tags:['aaaa','bbb'],createdBy: 'johndoe',description:'description quiz histoire', questions: [], private: true },
-    {id: 2, title: 'Quiz de geo', tags:['aaaa','bbb'],createdBy: 'patate',description:'description quiz geo', questions: [], private: false },
-    {id: 3, title: 'Quiz de maths', tags:['aaaa','bbb'],createdBy: 'shrek',description:'description quiz maths', questions: [], private: true },
-    {id: 4, title: 'Quiz d\'Harry Potter', tags:['aaaa','bbb'],createdBy: 'snape',description:'avada kedavra', questions: [], private: false },
-    {id: 1, title: 'Quiz d\'histoire', tags:['aaaa','bbb'],createdBy: 'johndoe',description:'description quiz histoire', questions: [], private: true },
-    {id: 2, title: 'Quiz de geo', tags:['aaaa','bbb'],createdBy: 'patate',description:'description quiz geo', questions: [], private: false },
-    {id: 3, title: 'Quiz de maths', tags:['aaaa','bbb'],createdBy: 'shrek',description:'description quiz maths', questions: [], private: true },
-    {id: 4, title: 'Quiz d\'Harry Potter', tags:['aaaa','bbb'],createdBy: 'snape',description:'avada kedavra', questions: [], private: false },
-  ];
+  quizzes: Quiz[] = [];
+
+  constructor(private router: Router,
+    private appStore: AppStore,
+  ) {
+    this.appStore.recentHistory.subscribe((quizzes) => {
+      this.quizzes = quizzes;
+    });
+  }
 
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
@@ -29,9 +31,29 @@ export class HomePageComponent {
   toggleSideBar() {
     this.isSideBarOpen=!this.isSideBarOpen;
   }
+
+
+  gotoHome() {
+    this.router.navigate(['/home']);
+  }
+  gotoLibrary() {
+    this.router.navigate(['/library']);
+  }
+  gotoExplore() {
+    this.router.navigate(['/explore']);
+  }
+  gotoCreateQuiz() {
+    this.router.navigate(['/create']);
+  }
+  gotoProfile() {
+    this.router.navigate(['/profile']);
+  }
+  gotoQuiz(quizId: number) {
+    this.router.navigate(['/quiz-preview', quizId]);
+  }
+
   onCreateQuiz() {
     console.log('Create Quiz button clicked');
     // Navigate to quiz creation page
   }
-  
 }

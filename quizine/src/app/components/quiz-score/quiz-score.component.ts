@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../models/userModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'quiz-score',
@@ -18,7 +19,8 @@ export class QuizScoreComponent {
   topThree: { user: User, score: number }[] = [];
 
   constructor(private gameSessionStore: gameSessionStore,
-              private appStore: AppStore
+              private appStore: AppStore,
+              private router: Router
         ) { 
     this.appStore.currentUser.subscribe((user) => {
       this.currentUser = user;
@@ -35,6 +37,6 @@ export class QuizScoreComponent {
   }
 
   next(): void {
-    //TODO goto quiz récap
+    this.router.navigate(['quiz-recap']);
   }
 }

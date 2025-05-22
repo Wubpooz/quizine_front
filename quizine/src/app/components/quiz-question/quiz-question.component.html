@@ -27,8 +27,8 @@
               *ngFor="let answer of question.options; let i = index"
               (click)="selectAnswer(answer)"
               [ngClass]="{
-                'bg-primary text-white shadow-md border-primary': selectedAnswer === i,
-                'bg-white text-gray-700 hover:bg-primary-light hover:text-white hover:border-primary-light transition': selectedAnswer !== i
+                'bg-primary text-white shadow-md border-primary': selectedAnswer === answer.id,
+                'bg-white text-gray-700 hover:bg-primary-light hover:text-white hover:border-primary-light transition': selectedAnswer !== answer.id
               }"
               class="w-5/6 max-w-6xl border border-gray-200 rounded-lg px-6 py-4 text-left text-base font-medium shadow-sm drop-shadow-[5px_7px_8px_rgba(179,213,235,1)] focus:outline-none transition-all duration-150 break-words whitespace-pre-line"
             >

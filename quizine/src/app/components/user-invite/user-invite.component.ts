@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
-import {FriendsStore} from '../../stores/friends.store';
+import { Router } from '@angular/router';
+import { AppStore } from '../../stores/app.store';
 
 @Component({
   selector: 'user-invite',
@@ -22,7 +23,8 @@ export class UserInviteComponent {
 
 
   constructor(private fb: FormBuilder,
-      private friendsStore: FriendsStore
+      private appStore: AppStore,
+      private router: Router
       ) {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
@@ -30,7 +32,7 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.friendsStore.friends.subscribe((friends: User[]) => {
+    this.appStore.friends.subscribe((friends: User[]) => {
       this.friends = friends;
     });
   }
@@ -56,10 +58,11 @@ export class UserInviteComponent {
       let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
       //api call idsToInvite
     }
+    this.router.navigate(['/waiting-room']);
   }
 
   onSkip() {
-    console.log('Skip action triggered');
+    this.router.navigate(['/waiting-room']);
   }
 
   onClose() {

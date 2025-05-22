@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Quiz } from '../../models/quizModel';
 import { LibraryQuizCardComponent } from "./library-quiz-card/library-quiz-card.component";
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from "../sidebar/sidebar.component";
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [LibraryQuizCardComponent, CommonModule],
+  imports: [LibraryQuizCardComponent, CommonModule, SidebarComponent],
   templateUrl: './library.component.html',
   styleUrl: './library.component.css'
 })

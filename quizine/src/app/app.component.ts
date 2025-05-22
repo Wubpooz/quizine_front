@@ -19,4 +19,9 @@ import { SignupComponent } from './components/signup/signup.component'
 })
 export class AppComponent {
   title = 'quizine';
+
+  ngOnInit(): void {
+    //TODO init app
+
+  }
 }

@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Question, Quiz, Option } from '../../models/quizModel';
+import { Quiz, Option } from '../../models/quizModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
+import { AppStore } from '../../stores/app.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'quiz-recap',
@@ -14,7 +16,10 @@ export class QuizRecapComponent {
   quiz!: Quiz;
   answers!: Map<number, Option>;
 
-  constructor(private gameSessionStore: gameSessionStore) {
+  constructor(private gameSessionStore: gameSessionStore,
+      private appStore: AppStore,
+      private router: Router
+      ) {
     this.gameSessionStore.quiz.subscribe((quiz: Quiz) => {
       this.quiz = quiz;
     });
@@ -23,7 +28,12 @@ export class QuizRecapComponent {
     });
   }
 
-  next(): void {
-    //TODO goto quiz si createur du quiz, to home sinon
+  finish(): void {
+    if(this.quiz.private || this.quiz.createdBy !== this.appStore.currentUser.value.name) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/quiz-preview', this.quiz.id]);
+    }
+    //TODO ?
   }
 }
