@@ -4,6 +4,7 @@
 ### P1
 - [ ] User notification handling (room joining)
 - [ ] profile/quiz pictures
+- [ ] handle friends correctly
 
 ### P2
 - [ ] mobile friendliness
