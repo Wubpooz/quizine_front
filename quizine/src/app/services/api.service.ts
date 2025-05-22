@@ -1,5 +1,5 @@
-import { inject, Injectable } from "@angular/core";
-import { catchError, from, map, Observable, of, retry, throwError } from "rxjs";
+import { Injectable } from "@angular/core";
+import { catchError, map, Observable, of, retry, throwError } from "rxjs";
 import { User } from "../models/userModel";
 import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";

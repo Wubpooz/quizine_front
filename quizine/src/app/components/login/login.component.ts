@@ -33,12 +33,9 @@ export class LoginComponent {
     this.apiService.login(this.username, this.password).subscribe((user:User) => {
       if (user) {
         this.appStore.init();
-        console.log(user)
         this.appStore.updateUser(user);
-        console.log(this.appStore.currentUser.value)
         this.router.navigate(['/home']);
       } else {
-        // Handle login error
         console.error('Login failed');
       }
     });

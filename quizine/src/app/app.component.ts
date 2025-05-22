@@ -11,7 +11,8 @@ import { QuizQuestionComponent } from './components/quiz-question/quiz-question.
 import { AppStore } from './stores/app.store';
 import { User } from './models/userModel';
 import { APIService } from './services/api.service';
-
+import { DOCUMENT } from '@angular/common';
+import { Inject } from '@angular/core';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -20,27 +21,47 @@ import { APIService } from './services/api.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'quizine';
+  title = 'Quizine';
 
-  constructor(private appStore: AppStore, private apiService: APIService) {}
+  constructor(
+    private appStore: AppStore,
+    private apiService: APIService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit(): void {
-    //TODO init app
+    // Check if connect.sid cookie exists
+    const connectSid = this.getCookie('connect.sid');
+    // if (!connectSid) {
+    //   this.appStore.updateUser(undefined as any);
+    //   localStorage.removeItem('userId');
+    //   console.log("Not logged in, clear user data.");
+    // } else {
+    //   console.log("Cookie exists, try to restore user.");
+    //   const userId = localStorage.getItem('userId');
+    //   if (userId) {
+    //     this.apiService.getUserData().subscribe((user: User) => {
+    //       if (user) {
+    //         console.log("User retrieved.");
+    //         this.appStore.updateUser(user);
+    //         localStorage.setItem('userId', userId);
+    //       } else {
+    //         console.log("Session expired, clear cookie and user data.")
+    //         this.deleteCookie('connect.sid');
+    //         this.appStore.updateUser(undefined as any);
+    //         localStorage.removeItem('userId');
+    //       }
+    //     });
+    //   }
+    // }
+  }
 
-    //use cookie : connect.sid to know if I'm logged out and delete it when session ends
+  getCookie(name: string): string | null {
+    const match = this.document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? match[2] : null;
+  }
 
-    if (localStorage.getItem('userId') === null) {
-      localStorage.setItem('userId', "");
-    } else {
-      const userId = localStorage.getItem('userId');
-      if (userId !== null) {
-        this.apiService.getUserData().subscribe((user: User) => {
-          if (user !== null) {
-            this.appStore.updateUser(user);
-            localStorage.setItem('userId', userId);
-          }
-        });
-      }
-    }
+  deleteCookie(name: string) {
+    this.document.cookie = `${name}=; Max-Age=0; path=/;`;
   }
 }

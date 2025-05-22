@@ -16,7 +16,7 @@ export class AppStore {
 
     constructor(private apiService: APIService) {}
 
-    init(){
+    init() {
         if(this.inited){
             this.inited = true
             return
@@ -27,7 +27,6 @@ export class AppStore {
             } else {
                 this.currentUser.next(user);
             }
-            console.log("INIT FINI", this.currentUser.value, user)
             this.apiService.getQuizList().subscribe((quizzes: Quiz[]) => {
                 if(!this.quizList){
                     this.quizList = new BehaviorSubject<Quiz[] |undefined>(quizzes);
@@ -45,8 +44,6 @@ export class AppStore {
             });
         });
         this.apiService.getAllUsers().subscribe((friends: User[]) => {
-
-            
             if(!this.friends){
                 this.friends = new BehaviorSubject<User[]|undefined>(friends);
             }
