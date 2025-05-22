@@ -60,10 +60,15 @@
               "buildTarget": "quizine:build:production"
             },
             "development": {
-              "buildTarget": "quizine:build:development"
+              "buildTarget": "quizine:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "allowedHosts": ["localhost", "quiz.kerboul.me"],
+            "liveReload": true
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
