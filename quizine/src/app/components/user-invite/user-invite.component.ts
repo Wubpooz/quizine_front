@@ -16,6 +16,7 @@ import { HttpClient } from "@angular/common/http";
 export class UserInviteComponent {
   @Input() quizId!: number;
   @Output() close = new EventEmitter<void>();
+  @Output() submit = new EventEmitter<void>();
   //? ViewChild
   inviteForm: FormGroup;
 
@@ -73,7 +74,8 @@ export class UserInviteComponent {
         console.log("Invitation:", payload);
       });
     }
-    this.router.navigate(['/waiting-room']);
+    this.submit.emit();
+    //this.router.navigate(['/waiting-room']);
   }
 
   onSkip() {

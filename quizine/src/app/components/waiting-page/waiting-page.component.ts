@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
   styleUrl: './waiting-page.component.css'
 })
 export class WaitingPageComponent {
-
+  @Input() isCreator!: boolean;
+  @Output() close = new EventEmitter<void>();
   timer: number;
   private intervalId: any;
 
@@ -45,6 +46,7 @@ export class WaitingPageComponent {
   }
 
   onClose() {
-    this.router.navigate(['/quiz/id']); //TODO
+    //this.router.navigate(['/quiz/id']); //TODO
+    this.close.emit();
   }
 }

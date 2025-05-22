@@ -35,4 +35,5 @@
     </div>
 </div>
 
-<user-invite [quizId]="quiz.id" *ngIf="isInviteShowing" (close)="isInviteShowing = false"></user-invite>
+<user-invite [quizId]="quiz.id" *ngIf="isInviteShowing" (close)="isInviteShowing = false" (submit)="isWaitingPageShowing = true; isInviteShowing = false"></user-invite>
+<waiting-page *ngIf="isWaitingPageShowing" (close)="isWaitingPageShowing = false"></waiting-page>

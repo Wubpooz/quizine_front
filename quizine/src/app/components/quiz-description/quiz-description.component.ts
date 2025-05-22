@@ -8,17 +8,19 @@ import { QuizService } from '../../services/quiz.service';
 import { SidebarComponent } from "../sidebar/sidebar.component";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { UserInviteComponent } from "../user-invite/user-invite.component";
+import { WaitingPageComponent } from "../waiting-page/waiting-page.component";
 
 @Component({
   selector: 'app-quiz-description',
   standalone: true,
-  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent, NavbarComponent, UserInviteComponent],
+  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent, NavbarComponent, UserInviteComponent, WaitingPageComponent],
   templateUrl: './quiz-description.component.html',
   styleUrl: './quiz-description.component.css'
 })
 export class QuizDescriptionComponent {
   quiz!: Quiz;
   isInviteShowing = false;
+  isWaitingPageShowing = false;
 
   constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router) {}
 
