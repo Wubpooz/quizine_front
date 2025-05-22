@@ -28,6 +28,7 @@ export class WaitingPageComponent {
         this.playQuiz();
       }
     }, 1000);
+    console.log("isCreator = " + this.isCreator);
   }
 
   ngOnDestroy() {
