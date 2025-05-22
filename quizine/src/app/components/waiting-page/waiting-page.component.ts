@@ -48,7 +48,6 @@ export class WaitingPageComponent {
   }
 
   onClose() {
-    //this.router.navigate(['/quiz/id']); //TODO
     this.close.emit();
     this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
       console.log("Deleted participation:", payload);
