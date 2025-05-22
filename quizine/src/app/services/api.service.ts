@@ -163,6 +163,15 @@ export class APIService {
             );
     }
 
+    getNotifications() : Observable<GameRequest[]> {
+        return this.http.post<GameRequest[]>(this.endpoint+"/game/myGameRequest", {}).pipe(
+            map((response: any) => {
+                return response ? Object.values(response) as GameRequest[] : [];
+            }),
+            catchError(this.handleError)
+        );
+    }
+
 
     //========================= History =========================
     getHistory(): Observable<HistoryQuiz[]> {
