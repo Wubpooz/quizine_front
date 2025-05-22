@@ -23,6 +23,10 @@ export class RegisterComponent {
     this.showPassword = !this.showPassword;
   }
 
+  onClose() {
+    this.router.navigate(['/']);
+  }
+
   onSubmit() {
     this.apiService.login(this.username, this.password).subscribe((user:User) => {
       if (user) {

@@ -5,7 +5,15 @@
   </div>
 
   <!-- Right side form -->
-  <div class="w-1/2 flex items-center justify-center">
+  <div class="w-1/2 flex items-center justify-center relative">
+        <button
+      type="button"
+      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
+      (click)="onClose()"
+      aria-label="Fermer"
+    >
+      &times;
+    </button>
     <form class="w-96 space-y-6" (ngSubmit)="onSubmit()">
       <h2 class="text-center text-2xl font-bold text-blue-600">S'inscrire</h2>
 
