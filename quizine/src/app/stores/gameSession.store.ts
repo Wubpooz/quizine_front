@@ -8,6 +8,7 @@ import { APIService } from "../services/api.service";
     providedIn: 'root'
 })
 export class gameSessionStore {
+    private scorePerAnswer: number = 100; // You can adjust the score per correct answer here
     public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
     public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
@@ -18,12 +19,12 @@ export class gameSessionStore {
             [ { id: 4, username: "Bob Brown", picture: "" }, 1400 ],
             [ { id: 5, username: "Boby own", picture: "" }, 1100 ],
             [ { id: 6, username: "Johfb Bn", picture: "" }, 600 ]
-    ])); //temp
-    public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([])); //temp
+    ])); //TODO temp
+    public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([]));
 
 
     constructor(private apiService: APIService) {
-        this.updateQuiz(7); //temp
+        this.updateQuiz(7); //TODO temp
     }
 
     updateScore(user: User, score: number) {
@@ -63,7 +64,7 @@ export class gameSessionStore {
           const correctOption = question.choices.find((choice) => choice.id === question.id_answer);
       
           if (selectedOption && correctOption && selectedOption.id === correctOption.id) {
-            score += 100; // You can adjust the score per correct answer here
+            score += this.scorePerAnswer;
           }
         }
       

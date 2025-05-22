@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +17,7 @@ export class NavbarComponent {
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
   
-  constructor(private router: Router, private appStore: AppStore) {
+  constructor(private router: Router, private appStore: AppStore, private sidebarService: SidebarService) {
       this.appStore.init()
       this.appStore.quizList.subscribe((quizzes) => {
         this.quizList = quizzes||[];
@@ -32,6 +33,10 @@ export class NavbarComponent {
     this.filteredQuizList = this.quizList.filter(q =>
       q.nom.toLowerCase().includes(lower)
     );
+  }
+
+  toggleSideBar() {
+    this.sidebarService.toggle();
   }
 
   gotoCreateQuiz() {
