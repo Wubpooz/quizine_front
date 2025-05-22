@@ -60,8 +60,7 @@
               "buildTarget": "quizine:build:production"
             },
             "development": {
-              "buildTarget": "quizine:build:development",
-              "proxyConfig": "proxy.conf.json"
+              "buildTarget": "quizine:build:development"
             }
           },
           "defaultConfiguration": "development",
