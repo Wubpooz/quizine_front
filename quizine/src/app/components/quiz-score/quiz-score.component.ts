@@ -4,6 +4,9 @@ import { User } from '../../models/userModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
+import { SocketService } from '../../services/socket.service';
+import { APIService } from '../../services/api.service';
+import { Session } from '../../models/participationModel';
 
 @Component({
   selector: 'quiz-score',
@@ -21,15 +24,31 @@ export class QuizScoreComponent {
 
   constructor(
     private gameSessionStore: gameSessionStore,
+    private socketService: SocketService,
     private appStore: AppStore,
+    private apiservice: APIService,
     private router: Router
   ) {
     this.appStore.currentUser.subscribe((user) => {
       if (!user) return;
       this.currentUser = user;
 
-      this.gameSessionStore.scores.subscribe((scores) => {
-        this.scores = scores;
+      socketService.listenLeaderboard(async (data:{
+        userId: number;
+        score: number;
+    }[])=>{
+      let scores = new Map<User, number>();
+      let users = await apiservice.getAllUsers().toPromise();
+      if(!users)
+        return
+      for(let i = 0; i<data.length; i++){
+        let u = users.find(u=>u.id === data[i].userId);
+        if(!u)
+          continue
+        scores.set(u, data[i].score)
+      }
+
+      this.scores = scores;
 
         this.sortedScores = Array.from(scores.entries())
           .map(([user, score]) => ({ user, score }))
@@ -40,6 +59,17 @@ export class QuizScoreComponent {
         for (let [u, score] of scores.entries()) {
           if (u.id === this.currentUser.id) {
             this.userScore = score;
+            console.log('userScore', this.userScore);
+            break;
+          }
+        }
+    })
+   
+      this.gameSessionStore.scores.subscribe((scores) => {
+        for (let [u, score] of scores.entries()) {
+          if (u.id === this.currentUser.id) {
+            this.userScore = score;
+            socketService.emitScore(this.userScore, socketService.sessionId||0, u.id)
             console.log('userScore', this.userScore);
             break;
           }
