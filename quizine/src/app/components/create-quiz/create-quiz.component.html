@@ -30,12 +30,12 @@
                             #tagInput
                             type="text"
                             placeholder="Ajouter un tag"
-                            class="border border-blue-200 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                            class="border border-blue-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
                             (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
                         />
                         <button
                             type="button"
-                            class="absolute right-0 top-0 mt-2 mr-2 text-red-500"
+                            class="absolute right-0 top-0 mt-3 mr-2 text-red-500"
                             (click)="showTagInput = false"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@
                     </div>
                     <div class="relative">
                         <button
-                            class="bg-blue-500 text-white px-6 py-1 rounded-lg font-semibold text-base flex items-center gap-2 focus:outline-none"
+                            class="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
                             (click)="showDropdown = !showDropdown"
                             type="button"
                         >
@@ -56,7 +56,7 @@
                         </button>
                         <div
                             *ngIf="showDropdown"
-                            class="absolute left-0 mt-2 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in"
+                            class="absolute left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in"
                         >
                             <button
                                 class="block w-full text-left px-4 py-2 hover:bg-blue-100"
