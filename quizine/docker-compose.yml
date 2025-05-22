@@ -5,5 +5,5 @@ services:
       dockerfile: Dockerfile
     container_name: quizine
     ports:
-      - "80:80"
+      - "4200:80"
     restart: unless-stopped
