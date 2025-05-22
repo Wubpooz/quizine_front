@@ -80,7 +80,8 @@ export class UserInviteComponent {
   }
 
   onSkip() {
-    this.router.navigate(['/waiting-room']);
+    this.submit.emit(this.sessionId);
+    //this.router.navigate(['/waiting-room']);
   }
 
   onClose() {

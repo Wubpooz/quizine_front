@@ -163,6 +163,15 @@ export class APIService {
             );
     }
 
+    getSession(id:number) : Observable<Session> {
+        return this.http.get<Session>(this.endpoint+"/game/session"+id, {}).pipe(
+            map((response: any) => {
+                return response as Session;
+            }),
+            catchError(this.handleError)
+        );
+    }
+
     getNotifications() : Observable<GameRequest[]> {
         return this.http.get<GameRequest[]>(this.endpoint+"/game/myGameRequest", {}).pipe(
             map((response: any) => {

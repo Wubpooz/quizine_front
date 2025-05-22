@@ -7,11 +7,16 @@ import { ButtonComponent } from '../button/button.component';
 import { GameRequest } from '../../models/participationModel';
 import { APIService } from '../../services/api.service';
 import { AppStore } from '../../stores/app.store';
+import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
+import { findIndex } from 'rxjs';
+import { QuizService } from '../../services/quiz.service';
+import { Quiz } from '../../models/quizModel';
+import { gameSessionStore } from '../../stores/gameSession.store';
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule,SidebarComponent,NavbarComponent, ButtonComponent],
+  imports: [CommonModule,SidebarComponent,NavbarComponent, ButtonComponent, WaitingPageComponent],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css'
 })
@@ -19,8 +24,16 @@ import { AppStore } from '../../stores/app.store';
 export class NotificationsComponent {
   // Sample notifications data
   notifications: GameRequest[] = [];
+  isWaitingPageShowing:boolean[] = [];
 
-  constructor(private apiService: APIService, private appStore: AppStore) {
+  isrefus:boolean = false;
+
+
+
+  constructor(private apiService: APIService, 
+    private appStore: AppStore, 
+    private quizService:QuizService,
+  private gamestore:gameSessionStore) {
     console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 
     this.apiService.getNotifications().toPromise().then((grs:GameRequest[]|undefined)=>{
@@ -37,6 +50,7 @@ export class NotificationsComponent {
         id_validator:gr.id_validator,
         username: u?.username || "inconnu"
         })
+        this.isWaitingPageShowing[gr.id_session] = false;
         })
       })
     })
@@ -53,5 +67,21 @@ export class NotificationsComponent {
     return users
   }
 
+  async accepter(notif:GameRequest){
+    this.isrefus = false;
+    this.isWaitingPageShowing[notif.id_session] = true;
+    let s = await this.apiService.getSession(notif.id_session).toPromise()
+    let quizId = s?.id_quiz;
+    this.gamestore.updateQuiz(quizId||7)
+  }
+  refuser(notif:GameRequest){
+    this.isrefus = true;
+    //this.isWaitingPageShowing[notif.id_session] = undefined;
+    console.log("notification suprimée")
+    let i = this.notifications.findIndex((gr)=>gr.datetime === notif.datetime 
+                              && gr.id_session === notif.id_session
+                              && gr.id_requestor === notif.id_requestor);
+    this.notifications.splice(i, 1);
+  }
 
 }

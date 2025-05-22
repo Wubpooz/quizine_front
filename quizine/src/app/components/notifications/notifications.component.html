@@ -12,6 +12,8 @@
     <div class="bg-white rounded-md shadow-md p-4">
         <h2 class="text-xl font-bold mb-4">Notifications</h2>  
             <ng-container *ngFor="let notification of notifications">
+                <waiting-page [refus]="isrefus" [isCreator]="false" *ngIf="isWaitingPageShowing[notification.id_session]" (close)="isWaitingPageShowing[notification.id_session] = false" [sessionId]="notification.id_session"></waiting-page>
+
                 <div class="bg-white p-4 w-full rounded shadow " >
                     <div class="flex items-center items-start">
                         <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white">
@@ -29,11 +31,13 @@
                                     [label]="'Accepter'"
                                     [color]="'primary'"
                                     [size]="'medium'"
+                                    (click)="accepter(notification)"
                                 ></app-button>
                                 <app-button
                                     [label]="'Refuser'"
                                     [color]="'secondary'"
                                     [size]="'medium'"
+                                    (click)="refuser(notification)"
                                 ></app-button>
                             </div>
                             <!-- <button class="bg-green-300 p-3 translate-x-100 rounded shadow hover:bg-green-700" >
@@ -49,3 +53,4 @@
     </div>
 </div>
   </div>
+

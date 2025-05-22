@@ -9,6 +9,7 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 import { NavbarComponent } from "../navbar/navbar.component";
 import { UserInviteComponent } from "../user-invite/user-invite.component";
 import { WaitingPageComponent } from "../waiting-page/waiting-page.component";
+import { gameSessionStore } from '../../stores/gameSession.store';
 
 @Component({
   selector: 'app-quiz-description',
@@ -23,11 +24,14 @@ export class QuizDescriptionComponent {
   isWaitingPageShowing = false;
   sessionId!: number;
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router,
+    private gamestore:gameSessionStore
+  ) {}
 
   ngOnInit(): void {
     let quizId = Number(this.route.snapshot.paramMap.get('id'));
     if (quizId) {
+      this.gamestore.updateQuiz(quizId)
       this.quizService.getQuizById(quizId).then((data: Quiz) => {
         this.quiz = data;
       });
