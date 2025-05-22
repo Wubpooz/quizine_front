@@ -11,6 +11,7 @@ export interface GameRequest {
   id_session: number;
   id_requestor: number;
   id_validator: number;
+  username?: string;
 }
 
 export interface Session {
