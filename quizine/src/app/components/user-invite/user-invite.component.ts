@@ -32,15 +32,15 @@ export class UserInviteComponent {
 
     this.users = [];
 
-    this.appStore.friends.subscribe((friends: User[]) => {
-      this.friends = friends;
+    this.appStore.friends.subscribe((friends: User[] | undefined) => {
+      this.friends = friends||[];
     });
   }
 
   onSearch(event: any) {
     const searchTerm = event.target.value.toLowerCase();
     this.friends = this.friends.filter((friend: User) => {
-      return friend.name.toLowerCase().includes(searchTerm) || friend.email.toLowerCase().includes(searchTerm);
+      return friend.username.toLowerCase().includes(searchTerm);
     });
   }
 
@@ -56,7 +56,7 @@ export class UserInviteComponent {
     if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
       console.log('Inviting:', this.selectedFriends);
       let idsToInvite = this.selectedFriends.concat(this.selectedUsers);
-      //api call idsToInvite
+      //TODO api call idsToInvite
     }
     this.router.navigate(['/waiting-room']);
   }

@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { SidebarComponent } from "../sidebar/sidebar.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-quiz-description',
   standalone: true,
-  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent],
+  imports: [TagListComponent, ButtonComponent, CommonModule, SidebarComponent, NavbarComponent],
   templateUrl: './quiz-description.component.html',
   styleUrl: './quiz-description.component.css'
 })

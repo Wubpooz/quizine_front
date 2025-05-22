@@ -10,28 +10,28 @@
             <div class="flex flex-col mb-8 pr-4">
               <div class="flex flex-col mb-4">
                 <span class="text-2xl font-bold text-primary">Question {{ i + 1 }}/{{ quiz.questions.length }}</span>
-                <span>{{ question.questionText }}</span>
+                <span>{{ question.name }}</span>
               </div>
               
               <div  class="flex flex-col gap-2">
-                <ng-container *ngFor="let answer of question.options; let j = index">
+                <ng-container *ngFor="let answer of question.choices; let j = index">
                   <div class="flex items-center w-full gap-2">
-                    <span *ngIf="question.correctAnswer.id === answer.id" class="text-green-500 text-2xl font-bold">✔</span>
-                    <span *ngIf="answer.id === answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="text-red-500 text-2xl font-bold">✗</span>
-                    <span *ngIf="answer.id !== answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="text-2xl font-bold inline-block w-[1em]">&nbsp;</span>
-                    <ng-container *ngIf="question.correctAnswer.id === answer.id">
+                    <span *ngIf="question.id_answer" class="text-green-500 text-2xl font-bold">✔</span>
+                    <span *ngIf="answer.id === answers.get(question.id)?.id && question.id_answer !== answer.id" class="text-red-500 text-2xl font-bold">✗</span>
+                    <span *ngIf="answer.id !== answers.get(question.id)?.id && question.id_answer !== answer.id" class="text-2xl font-bold inline-block w-[1em]">&nbsp;</span>
+                    <ng-container *ngIf="question.id_answer === answer.id">
                       <div class="w-full bg-green-500 border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
-                        <div class="text-white">{{ j + 1 }}. {{ answer.optionText }}</div>
+                        <div class="text-white">{{ j + 1 }}. {{ answer.content }}</div>
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="answer.id === answers.get(question.id)?.id && question.correctAnswer.id !== answer.id">
+                        <ng-container *ngIf="answer.id === answers.get(question.id)?.id && question.id_answer !== answer.id">
                           <div class="w-full bg-red-500 border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
-                            <div class="text-white">{{ j + 1 }}. {{ answer.optionText }}</div>
+                            <div class="text-white">{{ j + 1 }}. {{ answer.content }}</div>
                           </div>
                         </ng-container>
-                        <ng-container *ngIf="answer.id !== answers.get(question.id)?.id && question.correctAnswer.id !== answer.id" class="flex">
+                        <ng-container *ngIf="answer.id !== answers.get(question.id)?.id && question.id_answer !== answer.id" class="flex">
                           <div class="w-full bg-white border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
-                            <div>{{ j + 1 }}. {{ answer.optionText }}</div>
+                            <div>{{ j + 1 }}. {{ answer.content }}</div>
                           </div>
                         </ng-container>
                       </div>

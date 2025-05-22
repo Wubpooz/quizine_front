@@ -16,6 +16,9 @@ export class QuizCardComponent {
 
   constructor(private router: Router) {}
 
+  ngOnInit(){
+    console.log("pipi caca", this.quiz);
+  }
   goToQuizPreview(quizId: number) {
     this.router.navigate(['/quiz-preview', quizId]);
   }
