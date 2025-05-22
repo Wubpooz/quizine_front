@@ -19,10 +19,7 @@ export class gameSessionStore {
             [ { id: 5, username: "Boby own", picture: "" }, 1100 ],
             [ { id: 6, username: "Johfb Bn", picture: "" }, 600 ]
     ])); //temp
-public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([
-    // [1, { id: 1, optionText: "ParisAute ex ut excepteur ipsum non consectetur reprehenderit ex elit deserunt minim. Aliquip amet anim et incididunt labore id duis anim. Tempor ad ipsum et eu qui officia occaecat pariatur adipisicing exercitation mollit exercitation incididunt." }],
-    // [2, { id: 5, optionText: "Earth" }]
-])); //temp
+    public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([])); //temp
 
 
     constructor(private apiService: APIService) {
