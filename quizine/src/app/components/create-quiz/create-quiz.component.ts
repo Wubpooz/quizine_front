@@ -156,12 +156,9 @@ export class CreateQuizComponent {
       questions: this.questions
     });
 
-    this.apiService.createQuiz(quiz).then((response) => {
-      console.log('Quiz created successfully', response);
-      // Handle success response
-      if (response.success) {
-        this.router.navigate(['/quiz-preview', response.quizId]);
-      }
+    this.apiService.createQuiz(quiz).subscribe((quiz) => {
+      console.log('Quiz created successfully', quiz);
+        this.router.navigate(['/quiz-preview', quiz.id]);
     });
   }
 }

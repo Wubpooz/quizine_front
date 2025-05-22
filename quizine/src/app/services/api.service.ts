@@ -1,15 +1,17 @@
 import { inject, Injectable } from "@angular/core";
 import { catchError, from, map, Observable, of, retry, throwError } from "rxjs";
 import { User } from "../models/userModel";
-import { Quiz } from "../models/quizModel";
+import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Participation } from "../models/participationModel";
+import { Participation, Session } from "../models/participationModel";
+import { GameRequest } from "../models/participationModel";
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class APIService {
+    private endpoint = "/api";
     constructor(private http: HttpClient) {}
 
     private handleError(error: HttpErrorResponse) {
@@ -22,183 +24,266 @@ export class APIService {
     }
 
 
+    //============================================================
+    //=========================== API ============================
+    //============================================================
+
     //========================= Register =========================
     login(username: string, password: string): Observable<User> {
-      const user: User = {
-          id: 1,
-          username: "Joh Doe",
-          picture: "",
-      };
-      
-      return from(this.http.post<{message:string, user:User}>("/api/login", {username, password}, {})
-            .toPromise().then((payload)=>payload?.user||user))
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {}).pipe(
+            map((response: any) => {
+                return response.user;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
     }
 
     signup(username: string, password: string): Observable<User> {
-      const user: User = {
-          id: 1,
-          username: "Joh Doe",
-          picture: ""
-      };
-      
-      return from(this.http.post<{message:string, user:User}>("/api/signup", {username, password}, {})
-            .toPromise().then((payload)=>payload?.user||user))
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/signup", {username, password}, {}).pipe(
+            map((response: any) => {
+                return response.user;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
     }
 
-    logout(): void {
+    logout(): Observable<string> {
+        return this.http.post<{message: string}>(this.endpoint+"/logout", {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
     }
 
 
     //========================= Create =========================
-
-    //========================= Explore =========================
-    //========================= Friends =========================
-    //========================= Game =========================
-    //========================= History =========================
-    //========================= Labels =========================
-    //========================= Profile =========================
-    //========================= Quiz =========================
-    //========================= Rate =========================
-    //========================= Recent =========================
-    //========================= Search =========================
-
-    getAllUsers(): Observable<User[]> {
-        return this.http.get<any>("/api/users", {}).pipe(
-                    map((response: any) => {
-                        return response ? Object.values(response) as User[] : [];
-                    }),
-                    retry(2),
-                    catchError(this.handleError)
+    createEmptyQuiz(emptyQuiz: EmptyQuiz): Observable<Quiz> {
+        return this.http.post<{message: string}>(this.endpoint+"/createQuiz", {emptyQuiz}, {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(1),
+            catchError(this.handleError)
         );
     }
 
-    getQuizById(id: number): Observable<any> {
-        return this.getQuiz(id);
+    //========================= Explore =========================
+    exploreQuiz(): Observable<Quiz[]> {
+        return this.http.get<{message: string}>(this.endpoint+"/explore", {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(3),
+            catchError(this.handleError)
+        );
     }
 
-    getQuizList(userId: number): Observable<Quiz[]> {
 
-      return from(this.http.get<any>("/api/quiz", {})
-            .toPromise().then((payload)=>Object.values(payload)||[])) as Observable<Quiz[]>
-
-        // return new Observable<Quiz[]>((observer) => {
-        //     const quizzes: Quiz[] = this.quizList.filter(quiz => !quiz.private || quiz.createdBy === userId.toString() || quiz.createdBy === "johndoe123");
-        //     observer.next(quizzes);
-        //     observer.complete();
-        // });
+    //========================= Friends =========================
+    inviteFriend(userId: number): Observable<User> {
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/ask/${userId}`, {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(1),
+            catchError(this.handleError)
+            // 200	Demande envoyée
+            // 400	Erreur de paramètre ou déjà demandé
+            // 404	Utilisateur non trouvé
+            // 408	Already Amis
+        );
     }
 
-    getRecentHistory(userId: number): Observable<Quiz[]> {
-        return new Observable<Quiz[]>((observer) => {
-            const quizzes: Quiz[] = [{
-                id: 1,
-                nom: "Sample Quiz",
-                picture:null,
-                createdBy: "John Doe",
-                questions: [],
-                tags: [],
-                private: false
-            }]
-            observer.next(quizzes);
-            observer.complete();
-        });
-        return from(this.http.get<any>("/api/recent", {})
-            .toPromise().then((payload)=>Object.values(payload)||[])) as Observable<Quiz[]>
+    acceptFriend(userId: number): Observable<User> {
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/accept/${userId}`, {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
     }
 
-    createQuiz(quizData: any): Promise<any> {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({ success: true, quizId: 1 });
-            }, 1000);
-        });
+    refuseFriend(userId: number): Observable<User> {
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/refuse/${userId}`, {}).pipe(
+            map((response: any) => {
+                return response.message;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
     }
-        
 
-    search() {
+    getFriends() : Observable<User[]> {
+        return this.http.get<{message: string, friends: User[]}>(this.endpoint+'/friends', {}).pipe(
+            map((response: any) => {
+                console.log(response.message);
+                return response.friends ? Object.values(response.friends) as User[] : [];
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
+    }
+    //TODO handle 404
+
+    //========================= Game =========================
+    requestGame(session: number, players: number[]): Observable<GameRequest[]> {
+            return this.http.post<GameRequest[]>(this.endpoint+"/game/gamerequest", {session, players}, {}).pipe(
+                map((response: any) => {
+                    return response ? Object.values(response) as GameRequest[] : [];
+                }),
+                catchError(this.handleError)
+                // 200	
+                // Users invited successfully, you received a game request
+                // 400	
+                // No game requests created
+                // 404	
+                // Error creating some game requests
+                // 500	
+                // Error creating game request
+            );
+    }
+
+    createSession(quizId: number) : Observable<Session[]> {
+        return this.http.post<Session[]>(this.endpoint+"/game/gamerequest/"+quizId, {}).pipe(
+                map((response: any) => {
+                    return response ? Object.values(response) as Session[] : [];
+                }),
+                catchError(this.handleError)
+            // 400	
+            // Invalid request Missing required fields
+            // 500	
+            // Error creating game session
+            // 501	
+            // Failed to create participation
+            );
+    }
+
+
+    //========================= History =========================
+    getHistory(): Observable<HistoryQuiz[]> {
+        return this.http.get<{message: string, history: HistoryQuiz[]}>(this.endpoint+"/history", {}).pipe(
+            map((response: any) => {
+                console.log(response.message);
+                return response.history ? Object.values(response.history) as HistoryQuiz[] : [];
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
+        // const quizzes: Quiz[] = [{
+        //     id: 1,
+        //     nom: "Sample Quiz",
+        //     picture:null,
+        //     createdBy: "John Doe",
+        //     questions: [],
+        //     tags: [],
+        //     private: false
+        // }]
+    }
+
+
+    //========================= Labels =========================
+    //TODO
+    //create label
+    //addLabel
+
+    //========================= Profile =========================
+    getUserData() : Observable<User> {
+        return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {}).pipe(
+            map((response: any) => {
+                console.log("response dans get user data : ", response)
+                return response.User;
+            }),
+            retry(1),
+            catchError(this.handleError)
+        );
+    }
+
+
+    //========================= Quiz =========================
+    getQuiz(quizId: number): Observable<Quiz> {
+        return this.http.get<any>(this.endpoint+"/quiz"+quizId, {}).pipe(
+            map((response: any) => {
+                return response as Quiz;
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    getQuizList(): Observable<Quiz[]> {
+        return this.http.get<any>(this.endpoint+"/quiz", {}).pipe(
+            map((response: any) => {
+                return response ? Object.values(response) as Quiz[] : [];
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    createQuiz(quizData: any): Observable<Quiz> {
+        return this.http.post<any>(this.endpoint+"/quiz/new",{quizData}, {}).pipe(
+            map((response: any) => {
+                return response as Quiz;
+            }),
+            catchError(this.handleError)
+        );
+        //{ success: true, quizId: 1 }
+    }
+
+    getRecentQuizzes(): Observable<Quiz[]> {
+        return this.http.get<any>(this.endpoint+"/recent", {}).pipe(
+            map((response: any) => {
+                return response ? Object.values(response) as Quiz[] : [];
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    //========================= Rate =========================
+    //TODO getgrate
+    addRate(quizId: number, grade: number) : Observable<number> {
+        return this.http.post<{message: string, newGrade: number}>(this.endpoint+"/recent",{quizId, grade}, {}).pipe(
+            map((response: any) => {
+                console.log(response.message);
+                return response.newGrade as number;
+            }),
+            catchError(this.handleError)
+        );
+    }
+
+    //========================= Search =========================
+    //TODO
+    searchQuiz() {
         return [];
     }
+    searchUser() {
+        return [];
+    }
+    searchTag() {
+        return [];
+    }
+    
+    getAllUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.endpoint+"/search/users", {}).pipe(
+            map((response: any) => {
+                return response ? Object.values(response) as User[] : [];
+            }),
+            retry(2),
+            catchError(this.handleError)
+        );
+    }
 
 
-
+    //==============================================================
+    //========================= Websockets =========================
+    //==============================================================
     getScoreboard() {
         return [];
     }
     sendScore() {
         return [];
-    }
-
-    getQuizzes() {}
-    getQuiz(id: number): Observable<Quiz> {
-        
-            let quiz: Quiz = {
-                id: 1,
-                nom: "Sample Quiz",
-                picture:null,
-                createdBy: "John Doe",
-                questions: [
-                    // {
-                    //     id: 1,
-                    //     quizId: 1,
-                    //     questionText: "What is the capital of France?",
-                    //     options: [
-                    //         { id: 1, optionText: "ParisAute ex ut excepteur ipsum non consectetur reprehenderit ex elit deserunt minim. Aliquip amet anim et incididunt labore id duis anim. Tempor ad ipsum et eu qui officia occaecat pariatur adipisicing exercitation mollit exercitation incididunt." },
-                    //         { id: 2, optionText: "LondonNostrud nostrud ad voluptate et magna aliquip magna est proident eiusmod ipsum. Elit laborum irure reprehenderit tempor ullamco reprehenderit. Minim irure laborum ipsum officia sit exercitation. Consectetur commodo incididunt qui consectetur amet consequat commodo velit tempor labore. Tempor voluptate adipisicing ex minim voluptate eiusmod cupidatat sit est anim aliquip." },
-                    //         { id: 3, optionText: "BerlinUllamco id cillum officia consequat est cillum qui eiusmod adipisicing dolore enim occaecat. Duis nostrud elit aliqua ex. Ea excepteur duis mollit ea amet consequat dolore magna nostrud et sint do. Occaecat reprehenderit laborum deserunt magna excepteur duis deserunt sit fugiat adipisicing adipisicing magna." },
-                    //         { id: 4, optionText: "MadridDo magna cupidatat dolore elit est reprehenderit laboris adipisicing ex adipisicing. Nisi nostrud officia irure nisi et consectetur voluptate aliquip cillum culpa. Cupidatat sunt laboris fugiat in ex qui eiusmod sit incididunt reprehenderit veniam est fugiat reprehenderit. Aute eu minim commodo dolor velit cupidatat ut voluptate aliqua occaecat laboris laborum dolore laborum." }
-                    //     ],
-                    //     correctAnswer: { id: 1, optionText: "Paris" },
-                    //     timer: 10
-                    // },
-                    // {
-                    //     id: 2,
-                    //     quizId: 1,
-                    //     questionText: "What is the largest planet in our solar system?",
-                    //     options: [
-                    //         { id: 5, optionText: "Earth" },
-                    //         { id: 6, optionText: "Jupiter" },
-                    //         // { id: 7, questionId: 2, optionText: "Mars", isCorrect: false },
-                    //         // { id: 8, questionId: 2, optionText: "Saturn", isCorrect: false }
-                    //     ],
-                    //     correctAnswer: { id: 6, optionText: "Jupiter" },
-                    //     timer: 10
-                    // }
-                ],
-                tags: [],
-                private: false
-            };
-            
-        return from(this.http.get<any>("/api/quiz/"+id.toString(), {})
-            .toPromise().then((payload)=>payload||quiz)) as Observable<Quiz>
-    }
-
-    getUserData(userId: string) : Observable<User> {
-        const user: User = {
-          id: 1,
-          username: "Joh Doe",
-          picture: ""
-      };
-      
-      return from(this.http.get<{historique:Participation[], User:User}>("/api/profile", {})
-            .toPromise().then((payload)=>payload?.User||user))
-    }
-
-    getFriends() : Observable<User[]> {
-        return new Observable<User[]>((observer) => {
-            const users: User[] = [
-                {
-                id: 1,
-                username: "John Doe",
-                picture: ""
-                },
-                {
-                id: 2,
-                username: "Jane Smith",
-                picture: ""
-                }
-            ];
-            observer.next(users);
-            observer.complete();
-        });
     }
 }

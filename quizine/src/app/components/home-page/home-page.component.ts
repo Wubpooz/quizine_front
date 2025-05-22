@@ -21,7 +21,7 @@ export class HomePageComponent {
     private appStore: AppStore,
   ) {
     appStore.init()
-    this.appStore.recentHistory.subscribe((quizzes) => {
+    this.appStore.recents.subscribe((quizzes) => {
       this.quizzes = quizzes||[];
     });
   }

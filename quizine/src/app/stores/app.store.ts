@@ -12,47 +12,39 @@ export class AppStore {
     public friends: BehaviorSubject<User[]|undefined> = new BehaviorSubject<User[]|undefined>(undefined);;
     public quizList: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
     private inited = false;
-    public recentHistory: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
+    public recents: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
 
-    constructor(private apiService: APIService) {
-        //TODO remove - update User is called in login component
-        //peut pas faire l'initialisation ici, parce que sinon on fait des trucs
-        //qui peuvent pas être calculés pour qq pas connecté
-    }
+    constructor(private apiService: APIService) {}
 
     init(){
         if(this.inited){
             this.inited = true
             return
         }
-        this.apiService.getUserData("raphaffou").subscribe((user: User) => {
+        this.apiService.getUserData().subscribe((user: User) => {
             if(!this.currentUser){
                 this.currentUser = new BehaviorSubject<User|undefined>(user);
             } else {
-                //this.currentUser = new BehaviorSubject<User>(user);
                 this.currentUser.next(user);
             }
-            this.apiService.getQuizList(user.id).subscribe((quizzes: Quiz[]) => {
+            console.log("INIT FINI", this.currentUser.value, user)
+            this.apiService.getQuizList().subscribe((quizzes: Quiz[]) => {
                 if(!this.quizList){
                     this.quizList = new BehaviorSubject<Quiz[] |undefined>(quizzes);
                 } else {
                     console.log(quizzes)
                     this.quizList.next(quizzes);
-
-                    //this.quizList = new BehaviorSubject<Quiz[]>(quizzes);
                 }
             });
-            this.apiService.getRecentHistory(user.id).subscribe((quizzes: Quiz[]) => {
-                if(!this.recentHistory){
-                    this.recentHistory = new BehaviorSubject<Quiz[]|undefined>(quizzes);
+            this.apiService.getRecentQuizzes().subscribe((quizzes: Quiz[]) => {
+                if(!this.recents){
+                    this.recents = new BehaviorSubject<Quiz[]|undefined>(quizzes);
                 } else {
-                    this.recentHistory.next(quizzes);
+                    this.recents.next(quizzes);
                 }
             });
         });
         this.apiService.getFriends().subscribe((friends: User[]) => {
-            //this.friends = new BehaviorSubject<User[]>(friends);
-            //this.friends.next(friends);
             if(!this.friends){
                 this.friends = new BehaviorSubject<User[]|undefined>(friends);
             }
@@ -80,18 +72,17 @@ export class AppStore {
             this.updateFriends(friends);
         });
 
-        this.apiService.getQuizList(user.id).subscribe((quizzes: Quiz[]) => {
+        this.apiService.getQuizList().subscribe((quizzes: Quiz[]) => {
             this.updateQuizList(quizzes);
         });
 
-        this.apiService.getRecentHistory(user.id).subscribe((quizzes: Quiz[]) => {
-            this.updateRecentHistory(quizzes);
+        this.apiService.getRecentQuizzes().subscribe((quizzes: Quiz[]) => {
+            this.updateRecents(quizzes);
         });
     }
 
     updateFriends(friends: User[]) {
         this.friends = new BehaviorSubject<User[]|undefined>(friends);
-        //this.friends.next(friends);
         if(!this.friends) {
             this.friends = new BehaviorSubject<User[]|undefined>(friends);
         }
@@ -102,7 +93,6 @@ export class AppStore {
 
     updateQuizList(quizList: Quiz[]) {
         this.quizList = new BehaviorSubject<Quiz[]|undefined>(quizList);
-        //this.quizList.next(quizList);
         if(!this.quizList) {
             this.quizList = new BehaviorSubject<Quiz[]|undefined>(quizList);
         }
@@ -111,12 +101,12 @@ export class AppStore {
         }
     }
         
-    updateRecentHistory(recentHistory: Quiz[]) {
-        if(!this.recentHistory) {
-            this.recentHistory = new BehaviorSubject<Quiz[]|undefined>(recentHistory);
+    updateRecents(recents: Quiz[]) {
+        if(!this.recents) {
+            this.recents = new BehaviorSubject<Quiz[]|undefined>(recents);
         }
         else {
-            this.recentHistory.next(recentHistory);
+            this.recents.next(recents);
         }
     }
 } 

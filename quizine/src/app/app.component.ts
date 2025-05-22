@@ -34,7 +34,7 @@ export class AppComponent {
     } else {
       const userId = localStorage.getItem('userId');
       if (userId !== null) {
-        this.apiService.getUserData(userId).subscribe((user: User) => {
+        this.apiService.getUserData().subscribe((user: User) => {
           if (user !== null) {
             this.appStore.updateUser(user);
             localStorage.setItem('userId', userId);

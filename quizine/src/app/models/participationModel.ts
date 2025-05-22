@@ -4,4 +4,16 @@ export interface Participation {
     id_user: number;
     datetime: string;
     score?: number;
-  }
+}
+
+export interface GameRequest {
+  datetime: string;
+  id_session: number;
+  id_requestor: number;
+  id_validator: number;
+}
+
+export interface Session {
+  id: number;
+  id_quiz: number;
+}

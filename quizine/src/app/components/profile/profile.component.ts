@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { AppStore } from '../../stores/app.store';
 import { User } from '../../models/userModel';
-import { Quiz } from '../../models/quizModel';
+import { HistoryQuiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 
@@ -14,14 +14,15 @@ import { APIService } from '../../services/api.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  user!: User;
+  user: User = {id: -1, username: "", picture: ""};
   friends: User[] = [];
-  history: Quiz[] = [];
+  history: HistoryQuiz[] = [];
   showFriends = false;
 
   constructor(private appStore: AppStore,
             private apiService: APIService,
             private router: Router) {
+    console.log(this.appStore.currentUser.value);
     this.appStore.currentUser.subscribe((user) => {
       if (user) {
         this.user = user;
@@ -31,9 +32,8 @@ export class ProfileComponent {
       this.friends = friends||[];
       this.appStore.friends.next(friends);
     });
-    this.appStore.recentHistory.subscribe((history: Quiz[] | undefined) => {
-        this.history = history||[];
-        this.appStore.recentHistory.next(history);
+    this.apiService.getHistory().subscribe((history: HistoryQuiz[]) => {
+        this.history = history;
     });
   }
 
