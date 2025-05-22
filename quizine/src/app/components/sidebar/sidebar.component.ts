@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,5 +18,19 @@ export class SidebarComponent {
 
   toggleSideBar() {
     this.isSideBarOpen=!this.isSideBarOpen;
+  }
+
+  constructor(private router: Router) {}
+  
+  goToHomepage() {
+    this.router.navigate(['/home']);
+  }
+
+  goToLibrary() {
+    this.router.navigate(['/library']);
+  }
+
+  goToExplore() {
+    this.router.navigate(['/explore']);
   }
 }
