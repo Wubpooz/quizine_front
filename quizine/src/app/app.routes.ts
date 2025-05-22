@@ -13,6 +13,7 @@ import { QuizRecapComponent } from './components/quiz-recap/quiz-recap.component
 import { QuizScoreComponent } from './components/quiz-score/quiz-score.component';
 import { QuizQuestionComponent } from './components/quiz-question/quiz-question.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CreateQuizComponent } from './components/create-quiz/create-quiz.component';
 
 export const routes: Routes = [
     {path: "", redirectTo: "landing", pathMatch: "full"},
@@ -24,6 +25,7 @@ export const routes: Routes = [
     {path: "explore", component: ExploreComponent},
     {path: "library", component: LibraryComponent},
     {path: "profile", component: ProfileComponent},
+    {path:'create', component: CreateQuizComponent},
 
     {path: "quiz-preview/:id", component: QuizDescriptionComponent},
     {path: "edit-quiz/:id", component: EditQuizComponent},

@@ -20,7 +20,6 @@ export class HomePageComponent {
   ) {
     this.appStore.recentHistory.subscribe((quizzes) => {
       this.quizzes = quizzes;
-      console.log("quizzes", quizzes);
     });
   }
 
@@ -43,7 +42,7 @@ export class HomePageComponent {
     this.router.navigate(['/explore']);
   }
   gotoCreateQuiz() {
-    this.router.navigate(['/create-quiz']);
+    this.router.navigate(['/create']);
   }
   gotoProfile() {
     this.router.navigate(['/profile']);
