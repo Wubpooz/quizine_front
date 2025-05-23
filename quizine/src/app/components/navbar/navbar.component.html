@@ -1,33 +1,50 @@
-<!-- Header -->
-<div class="flex justify-between items-center sticky top-0 bg-white z-[1000] w-screen">
-    <div class="flex p-4 z-[100] gap-4">
-      <button (click)="toggleSideBar()">
-          <img src="assets/images/SideBar.png" alt="Quiz Blocks" class="w-10 h-12 object-contain hover:bg-primary-tint rounded" />
-      </button>
-      <span class="text-xl font-bold mb-4 text-primary translate-y-2">Quizine</span>
+<div class="flex  justify-between items-center sticky top-0 bg-white z-[1000] w-full px-2 [@media(min-width:1060px)]:px-6 py-2">
+  <!-- Left: Sidebar Toggle and Title -->
+  <div class="flex items-center gap-2 [@media(min-width:1060px)]:gap-4 mt-2">
+    <button (click)="toggleSideBar()" class="[@media(min-width:1060px)]:mr-2">
+      <img src="assets/images/SideBar.png" alt="Menu" class="w-8 h-8 [@media(min-width:1060px)]:w-10 [@media(min-width:1060px)]:h-12 object-contain hover:bg-primary-tint rounded" />
+    </button>
+    <span class="hidden [@media(min-width:1060px)]:inline text-xl font-bold mb-4 text-primary translate-y-2">Quizine</span>
   </div>
-  <div class="flex md:w-1/2">
+
+  <!-- Center: Search (hidden under 440px) -->
+  <div class="w-full h-[40px] [@media(min-width:1060px)]:w-auto flex-1 [@media(min-width:1060px)]:flex-none flex justify-center
+              [@media(max-width:439px)]:hidden">
     <input
       type="text"
       placeholder="Recherche"
-      class="bg-gray-200 translate-x-40 w-[36rem] rounded-lg p-2 focus:outline-none focus:border-blue-500"
+      class="bg-gray-200 h-10 w-[15rem] xs:w-56 [@media(min-width:1060px)]:w-[36rem] rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
       [value]="searchTerm"
       (input)="onSearchChange($event)"
     />
   </div>
-  <div class="flex items-center">
-    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2" (click)="gotoCreateQuiz()">
+
+  <!-- Right: Actions -->
+  <div class="flex items-center justify-end gap-2 mt-2 [@media(min-width:1060px)]:mt-0">
+    <!-- Mobile: round + button, Desktop: full button -->
+    <button
+      class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-2xl [@media(min-width:1060px)]:hidden"
+      (click)="gotoCreateQuiz()"
+      aria-label="Créer un quiz"
+    >
+      +
+    </button>
+    <button
+      class="hidden [@media(min-width:1060px)]:inline-block bg-blue-500 text-white px-4 py-2 rounded-lg mr-2 text-base"
+      (click)="gotoCreateQuiz()"
+    >
       + Créer un quiz
     </button>
     <button (click)="gotoProfile()">
-      <img src="assets/images/ProfileLogo.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
+      <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-14 h-14 object-contain" />
     </button>
   </div>
 
+  <!-- Search Dropdown -->
   <div
     *ngIf="searchTerm"
-    class="absolute left-40 mt-2 w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
-    style="top:2.75rem"
+    class="absolute left-0 [@media(min-width:1060px)]:left-40 right-0 [@media(min-width:1060px)]:right-auto mt-2 w-full [@media(min-width:1060px)]:w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
+    style="top:3.5rem"
   >
     <ul>
       <li
@@ -45,5 +62,4 @@
       </li>
     </ul>
   </div>
-
 </div>

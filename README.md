@@ -5,12 +5,16 @@
 
 ## TODO
 ### P1
-- [ ] User notification handling (room joining)
+- [x] User notification handling (room joining)
+- [ ] overflow sur score
+- [x] mobile friendliness (login, register, landing, waiting) 
+- [ ] TODO : sidebar, navbar, invite, tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
+- [ ] search bars alignement
+- [ ] remove CSS files
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
 
 ### P2
-- [ ] mobile friendliness
 - [ ] quiz descriptions
 - [ ] quiz editing ?
 - [ ] Rating system
