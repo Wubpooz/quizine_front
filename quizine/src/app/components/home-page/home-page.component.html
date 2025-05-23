@@ -19,6 +19,9 @@
             </button>
             </ng-container>
         </div>
+        <div *ngIf="quizzes.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
+          <span class="text-lg text-gray-500 text-center">Vous n'avez pas de sessions récentes.</span>
+        </div>
       </div>
     </div>
   </div>
