@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SidebarService } from '../../services/sidebar.service';
+import { Quiz } from '../../models/quizModel';
+import { AppStore } from '../../stores/app.store';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,14 +13,33 @@ import { SidebarService } from '../../services/sidebar.service';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  isSideBarOpen = true;
+  isSideBarOpen: boolean = true;
+  quizList: Quiz[] = [];
+  filteredQuizList: Quiz[] = [];
+  searchTerm: string = '';
 
-  constructor(private router: Router, private sidebarService: SidebarService) {
+
+  constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
     this.sidebarService.isOpen$.subscribe(open => this.isSideBarOpen = open);
+    this.appStore.init()
+      this.appStore.quizList.subscribe((quizzes) => {
+        this.quizList = quizzes||[];
+        this.filteredQuizList = quizzes||[];
+      });
   }
 
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
+  }
+  
+  onSearchChange(event: Event) {
+    const target = event.target as HTMLInputElement | null;
+    const term = target ? target.value : '';
+    this.searchTerm = term;
+    const lower = term.toLowerCase();
+    this.filteredQuizList = this.quizList.filter(q =>
+      q.nom.toLowerCase().includes(lower)
+    );
   }
   
   goToHomepage() {
@@ -32,7 +53,12 @@ export class SidebarComponent {
   goToExplore() {
     this.router.navigate(['/explore']);
   }
+
   goToNotifications() {
     this.router.navigate(['/notifications']);
+  }
+
+  gotoQuiz(quizId: number) {
+    this.router.navigate(['quiz-preview/'+quizId]);
   }
 }
