@@ -1,22 +1,24 @@
 <layout>
   <div class="mx-40 mt-4">
     <h1 class="text-2xl">Récents</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-      <ng-container *ngFor="let quiz of quizzes">
-        <button class="bg-white p-4 rounded shadow hover:bg-primary-tint" (click)="gotoQuiz(quiz.id)">
-          <div class="flex items-center">
-            <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-            <div class="flex flex-col items-start gap-2">
-              <span class="text-sm font-bold">{{quiz.nom}}</span>
-              <!-- <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}} | {{quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
-              <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}}</span>
+    <div class=" h-[83svh] overflow-y-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 pb-2">
+        <ng-container *ngFor="let quiz of quizzes">
+          <button class="bg-white p-4 rounded drop-shadow-sm shadow hover:bg-primary-tint" (click)="gotoQuiz(quiz.id)">
+            <div class="flex items-center">
+              <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
+              <div class="flex flex-col items-start gap-2">
+                <span class="text-sm font-bold">{{quiz.nom}}</span>
+                <!-- <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}} | {{quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
+                <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}}</span>
+              </div>
             </div>
-          </div>
-        </button>
-        </ng-container>
-    </div>
-    <div *ngIf="quizzes.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
-      <span class="text-lg text-gray-500 text-center">Vous n'avez pas de sessions récentes.</span>
+          </button>
+          </ng-container>
+      </div>
+      <div *ngIf="quizzes.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
+        <span class="text-lg text-gray-500 text-center">Vous n'avez pas de sessions récentes.</span>
+      </div>
     </div>
   </div>
 </layout>
