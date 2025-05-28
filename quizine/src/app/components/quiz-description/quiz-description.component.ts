@@ -29,38 +29,12 @@ export class QuizDescriptionComponent {
 
   ngOnInit(): void {
     let quizId = Number(this.route.snapshot.paramMap.get('id'));
-    // if (quizId) {
-    //   this.gamestore.updateQuiz(quizId)
-    //   this.quizService.getQuizById(quizId).then((data: Quiz) => {
-    //     this.quiz = data;
-    //   });
-    // }
-    this.quiz = {
-    id: 1,
-    nom: 'Quiz de Démo',
-    picture: null,
-    private: false,
-    id_creator: 1,
-    questions: [
-      {
-        id: 1,
-        name: 'Quelle est la capitale de la France ?',
-        id_answer: 2,
-        grade: 1,
-        duration: 30,
-        id_creator: 1,
-        private: false,
-        picture: null,
-        choices: [
-          { id: 1, content: 'Lyon', id_question: 1 },
-          { id: 2, content: 'Paris', id_question: 1 },
-          { id: 3, content: 'Marseille', id_question: 1 }
-        ]
-      }
-    ],
-    tags: ['géographie', 'français'],
-    createdBy: 'Admin'
-  };
+    if (quizId) {
+      this.gamestore.updateQuiz(quizId)
+      this.quizService.getQuizById(quizId).then((data: Quiz) => {
+        this.quiz = data;
+      });
+    }
   }
 
   startQuiz(): void {
