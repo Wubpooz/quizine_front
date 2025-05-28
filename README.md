@@ -17,6 +17,7 @@
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
 - [ ] search bar + pop-up component(s)
+- [ ] home-card component (or just card component for that + library)
 
 ### P2
 - [ ] quiz descriptions
