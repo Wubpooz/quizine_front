@@ -1,4 +1,4 @@
-<div (click)="goToQuizPreview(quiz.id)" class="border-2 border-gray-200 rounded-md w-80 h-48 p-4 relative hover:border-primary-dark hover:cursor-pointer">
+<div (click)="goToQuizPreview(quiz.id)" class="border-2 border-gray-200 rounded-md w-[18rem] sm:w-80 h-48 p-4 relative hover:border-primary-dark hover:cursor-pointer">
     <div class="text-lg">{{ quiz.nom }}</div>
     <app-tag-list [tags]="quiz.tags||[]" [class]="'text-xs mt-2'"></app-tag-list>
     <div class="text-base mt-4">{{ quiz.questions.length }} {{ quiz.questions.length > 1 ? "questions" : "question" }}</div>
