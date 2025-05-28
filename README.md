@@ -12,12 +12,12 @@
 - [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
 - [x] store sidebar toggle valeu between page refresh
-- [ ] search bars alignement
+- [ ] search bars alignement + search working again
+- [ ] search bar + pop-up component(s)
+- [ ] home-card component (or just card component for that + library)
 - [ ] remove CSS files
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
-- [ ] search bar + pop-up component(s)
-- [ ] home-card component (or just card component for that + library)
 
 ### P2
 - [ ] quiz descriptions
