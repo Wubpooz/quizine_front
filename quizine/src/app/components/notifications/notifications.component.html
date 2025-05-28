@@ -1,52 +1,47 @@
-<div class="flex flex-col h-screen bg-gray-100">
-  <app-navbar></app-navbar>
-  <div class="flex flex-1">
-    <app-sidebar></app-sidebar>
-    <div class="flex-1">
-        <div class="bg-gray-100 min-h-screen p-4">
-            <div class="bg-white rounded-md shadow-md p-4">
-                <h2 class="text-xl font-bold mb-4">Notifications</h2>  
-                    <ng-container *ngFor="let notification of notifications">
-                        <waiting-page [refus]="isrefus" [isCreator]="false" *ngIf="isWaitingPageShowing[notification.id_session]" (close)="onWaitClose(notification)" [sessionId]="notification.id_session"></waiting-page>
-    
-                        <div class="bg-white p-4 w-full rounded shadow " >
-                            <div class="flex items-center items-start">
-                                <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.937 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                    </svg>
+<layout>
+    <div class="bg-gray-100 min-h-screen p-4">
+        <div class="bg-white rounded-md shadow-md p-4">
+            <h2 class="text-xl font-bold mb-4">Notifications</h2>  
+                <ng-container *ngFor="let notification of notifications">
+                    <waiting-page [refus]="isrefus" [isCreator]="false" *ngIf="isWaitingPageShowing[notification.id_session]" (close)="onWaitClose(notification)" [sessionId]="notification.id_session"></waiting-page>
+
+                    <div class="bg-white p-4 w-full rounded shadow " >
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-white">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.937 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                            </div>
+            
+                            <div class="flex justify-between w-full items-center ml-2">
+                                <p class="text-sm font-medium text-gray-700">
+                                    Vous avez une nouvelle invitation de {{notification?.username}}
+                                </p>
+                                <div class="flex gap-2">
+                                    <app-button
+                                        [label]="'Accepter'"
+                                        [color]="'primary'"
+                                        [size]="'medium'"
+                                        (click)="accepter(notification)"
+                                    ></app-button>
+                                    <app-button
+                                        [label]="'Refuser'"
+                                        [color]="'secondary'"
+                                        [size]="'medium'"
+                                        (click)="refuser(notification)"
+                                    ></app-button>
                                 </div>
-                
-                                <div class="flex justify-between w-full items-center ml-2">
-                                    <p class="text-sm font-medium text-gray-700">
-                                        Vous avez une nouvelle invitation de {{notification?.username}}
-                                    </p>
-                                    <div class="flex gap-2">
-                                        <app-button
-                                            [label]="'Accepter'"
-                                            [color]="'primary'"
-                                            [size]="'medium'"
-                                            (click)="accepter(notification)"
-                                        ></app-button>
-                                        <app-button
-                                            [label]="'Refuser'"
-                                            [color]="'secondary'"
-                                            [size]="'medium'"
-                                            (click)="refuser(notification)"
-                                        ></app-button>
-                                    </div>
-                                    <!-- <button class="bg-green-300 p-3 translate-x-100 rounded shadow hover:bg-green-700" >
-                                        Accept
-                                    </button>
-                                    <button class="bg-red-300 p-3  rounded shadow hover:bg-red-700" >
-                                        Decline
-                                    </button> -->
-                                </div>
+                                <!-- <button class="bg-green-300 p-3 translate-x-100 rounded shadow hover:bg-green-700" >
+                                    Accept
+                                </button>
+                                <button class="bg-red-300 p-3  rounded shadow hover:bg-red-700" >
+                                    Decline
+                                </button> -->
                             </div>
                         </div>
-                </ng-container>
-            </div>
+                    </div>
+            </ng-container>
         </div>
     </div>
-  </div>
+</layout>
 

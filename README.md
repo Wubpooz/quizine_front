@@ -9,6 +9,8 @@
 - [x] overflow sur score
 - [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar) 
 - [ ] TODO : invite, tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
+- [ ] 404 page
+- [x] wrap navbar + sidebar dans un composant
 - [ ] search bars alignement
 - [ ] remove CSS files
 - [ ] profile/quiz pictures

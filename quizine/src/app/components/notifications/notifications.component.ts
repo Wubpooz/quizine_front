@@ -1,40 +1,28 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { NavbarComponent } from "../navbar/navbar.component";
-import { Notification } from '../../models/userModel';
 import { ButtonComponent } from '../button/button.component';
 import { GameRequest } from '../../models/participationModel';
 import { APIService } from '../../services/api.service';
-import { AppStore } from '../../stores/app.store';
 import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
-import { findIndex } from 'rxjs';
-import { QuizService } from '../../services/quiz.service';
-import { Quiz } from '../../models/quizModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
+import { LayoutComponent } from "../layout/layout.component";
 
 @Component({
   selector: 'app-notifications',
   standalone: true,
-  imports: [CommonModule,SidebarComponent,NavbarComponent, ButtonComponent, WaitingPageComponent],
+  imports: [CommonModule, ButtonComponent, WaitingPageComponent, LayoutComponent],
   templateUrl: './notifications.component.html',
   styleUrl: './notifications.component.css'
 })
 
 export class NotificationsComponent {
-  // Sample notifications data
   notifications: GameRequest[] = [];
   isWaitingPageShowing:boolean[] = [];
-
   isrefus:boolean = false;
 
 
-
-  constructor(private apiService: APIService, 
-    private appStore: AppStore, 
-    private quizService:QuizService,
-  private gamestore:gameSessionStore) {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+  constructor(private apiService: APIService,
+    private gamestore:gameSessionStore) {
 
     this.apiService.getNotifications().toPromise().then((grs:GameRequest[]|undefined)=>{
       if(!grs){
@@ -56,15 +44,12 @@ export class NotificationsComponent {
     })
      
   }
-  
-  // async OnInit(){
-    
-  // }
+
   getUserFromId(id:number){
     let users = this.apiService.getAllUsers().toPromise().then((usrs)=>{
             return usrs?.find((u)=>u.id === id)
     })
-    return users
+    return users;
   }
 
   async accepter(notif:GameRequest){
@@ -72,19 +57,17 @@ export class NotificationsComponent {
     this.isWaitingPageShowing[notif.id_session] = true;
     let s = await this.apiService.getSession(notif.id_session).toPromise()
     let quizId = s?.id_quiz;
-    this.gamestore.updateQuiz(quizId||7)
+    this.gamestore.updateQuiz(quizId||7);
   }
   refuser(notif:GameRequest){
     this.isrefus = true;
     this.isWaitingPageShowing[notif.id_session] = true;
-
     //this.isWaitingPageShowing[notif.id_session] = undefined;
-    
   }
 
   onWaitClose(notif:GameRequest){
     this.isWaitingPageShowing[notif.id_session] = false
-    console.log("notification suprimée")
+    console.log("notification suprimée");
     let i = this.notifications.findIndex((gr)=>gr.datetime === notif.datetime 
                               && gr.id_session === notif.id_session
                               && gr.id_requestor === notif.id_requestor);

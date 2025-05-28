@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, NavbarComponent],
+  imports: [CommonModule, LayoutComponent],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })

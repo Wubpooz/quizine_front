@@ -5,13 +5,12 @@ import { User } from '../../models/userModel';
 import { HistoryQuiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
-import { NavbarComponent } from '../navbar/navbar.component';
-import { SidebarComponent } from '../sidebar/sidebar.component';
+import { LayoutComponent } from "../layout/layout.component";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, SidebarComponent],
+  imports: [CommonModule, LayoutComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -41,5 +40,4 @@ export class ProfileComponent {
   goToQuiz(quizId: number) {
     this.router.navigate(['/quiz-preview', quizId]);
   }
-
 }
