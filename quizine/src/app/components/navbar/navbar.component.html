@@ -7,12 +7,12 @@
     <span class="inline text-xl font-bold mb-4 text-primary translate-y-2">Quizine</span>
   </div>
 
-  <!-- Center: Search (hidden under 440px) -->
-  <div class="w-full lg:w-auto flex-1 lg:flex-none justify-center hidden xs:flex">
+  <!-- Center: Search (hidden for mobile) -->
+  <div class="hidden xs:flex flex-1 justify-center">
     <input
       type="text"
       placeholder="Recherche"
-      class="bg-gray-200 h-10 xs:w-56 md:w-[25rem] lg:w-[36rem] rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
+      class="bg-gray-200 h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
       [value]="searchTerm"
       (input)="onSearchChange($event)"
     />
