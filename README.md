@@ -11,6 +11,7 @@
 - [ ] TODO : tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
 - [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
+- [x] store sidebar toggle valeu between page refresh
 - [ ] search bars alignement
 - [ ] remove CSS files
 - [ ] profile/quiz pictures

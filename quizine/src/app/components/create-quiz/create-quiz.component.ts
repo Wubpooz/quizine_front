@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
-import { SidebarComponent } from "../sidebar/sidebar.component";
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
-import { NavbarComponent } from "../navbar/navbar.component";
 import { LayoutComponent } from "../layout/layout.component";
 
 @Component({
   selector: 'create-quiz',
   standalone: true,
-  imports: [SidebarComponent, CommonModule, FormsModule, NavbarComponent, TagListComponent, LayoutComponent],
+  imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent],
   templateUrl: './create-quiz.component.html',
   styleUrl: './create-quiz.component.css'
 })
 export class CreateQuizComponent {
+  @ViewChild('tagInput') tagInputRef!: ElementRef<HTMLInputElement>;
+
   quizTitle: string = '';
   quizDescription: string = '';
   quizVisibility: string = 'private';
@@ -66,7 +66,6 @@ export class CreateQuizComponent {
   optionMaxLengthReached: boolean[][] = [];
 
   tagInput: string = '';
-
 
   constructor(private apiService: APIService, private router: Router) {}
 
@@ -140,6 +139,17 @@ export class CreateQuizComponent {
 
   setCorrectOption(questionIdx: number, optionIdx: number) {
     this.questions[questionIdx].validAnswer = optionIdx;
+  }
+
+  toggleTagInput() {
+    this.showTagInput = !this.showTagInput;
+    if (this.showTagInput) {
+      setTimeout(() => {
+      if (this.tagInputRef) {
+        this.tagInputRef.nativeElement.focus();
+      }
+    },30);
+    }
   }
 
   addTag(tag: string) {

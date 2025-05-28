@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SidebarService {
-  private _isOpen = new BehaviorSubject<boolean>(!this.isMobile());
+  private _isOpen = new BehaviorSubject<boolean>(this.getInitialState());
   isOpen$ = this._isOpen.asObservable();
 
   constructor() {
@@ -12,10 +12,19 @@ export class SidebarService {
         this.setOpen(false);
       }
     });
+
+    this.isOpen$.subscribe(open => {
+      localStorage.setItem('sidebarOpen', String(open));
+    });
   }
 
   private isMobile(): boolean {
     return window.innerWidth <= 768;
+  }
+
+  private getInitialState(): boolean {
+    const stored = localStorage.getItem('sidebarOpen');
+    return stored === null ? !this.isMobile() : stored === 'true';
   }
 
   toggle() {
