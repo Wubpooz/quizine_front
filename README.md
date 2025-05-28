@@ -7,8 +7,8 @@
 ### P1
 - [x] User notification handling (room joining)
 - [x] overflow sur score
-- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list, profile, description) 
-- [ ] TODO : library, home, explore, edit, create, notif, score, recap, question
+- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list, profile, description, library) 
+- [ ] TODO : home, explore, edit, create, notif, score, recap, question
 - [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
 - [x] store sidebar toggle valeu between page refresh
@@ -16,6 +16,7 @@
 - [ ] remove CSS files
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
+- [ ] search bar + pop-up component(s)
 
 ### P2
 - [ ] quiz descriptions
