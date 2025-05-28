@@ -7,8 +7,8 @@
 ### P1
 - [x] User notification handling (room joining)
 - [x] overflow sur score
-- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite) 
-- [ ] TODO : tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
+- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list) 
+- [ ] TODO : profile, description, library, home, explore, edit, create, notif, score, recap, question
 - [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
 - [x] store sidebar toggle valeu between page refresh
