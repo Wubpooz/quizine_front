@@ -8,14 +8,14 @@
 
   <!-- Sidebar -->
   <div
-    class="border-r-2 w-64 bg-white pt-1 p-4 fixed sm:relative h-full transition-transform duration-300 ease-in-out z-50"
+    class="border-r-2 w-64 bg-white pt-1 p-4 fixed h-full transition-transform duration-300 ease-in-out z-50"
     [ngClass]="{
       'translate-x-0': isSideBarOpen,
       '-translate-x-[100%]': !isSideBarOpen
     }"
   >
     <!-- Show Quizine title and search bar only on mobile (below 1060px) -->
-    <div class="block [@media(min-width:1060px)]:hidden mb-6">
+    <div class="block xs:hidden mb-6">
       <div class="flex items-center gap-2 mb-4">
         <span class="text-xl font-bold text-primary">Quizine</span>
       </div>
@@ -52,7 +52,7 @@
   </div>
   <div
     *ngIf="searchTerm"
-    class="absolute left-0 [@media(min-width:1060px)]:left-40 right-0 [@media(min-width:1060px)]:right-auto mt-2 w-full [@media(min-width:1060px)]:w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
+    class="absolute left-0 xs:left-40 right-0 xs:right-auto mt-2 w-full xs:w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
     style="top:3.5rem"
   >
     <ul>

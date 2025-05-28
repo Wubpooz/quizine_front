@@ -7,7 +7,6 @@ export class SidebarService {
   isOpen$ = this._isOpen.asObservable();
 
   constructor() {
-    // Optionally, listen to window resize events to update sidebar state
     window.addEventListener('resize', () => {
       if (this.isMobile()) {
         this.setOpen(false);
@@ -16,7 +15,7 @@ export class SidebarService {
   }
 
   private isMobile(): boolean {
-    return window.innerWidth <= 768; // Adjust breakpoint as needed
+    return window.innerWidth <= 768;
   }
 
   toggle() {

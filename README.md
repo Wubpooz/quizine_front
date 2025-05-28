@@ -7,8 +7,8 @@
 ### P1
 - [x] User notification handling (room joining)
 - [x] overflow sur score
-- [x] mobile friendliness (login, register, landing, waiting, navbar) 
-- [ ] TODO : sidebar, invite, tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
+- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar) 
+- [ ] TODO : invite, tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
 - [ ] search bars alignement
 - [ ] remove CSS files
 - [ ] profile/quiz pictures
