@@ -1,6 +1,6 @@
 <layout>
     <div class="flex-1 w-full mt-4">
-        <div *ngIf="quiz" class="w-2/3 mx-40">
+        <div class="w-2/3 mx-40">
             <div class="flex justify-between w-148 items-center">
                 <div class="flex items-center gap-2">
                     <h1 class="text-2xl">{{ quiz.nom }}</h1>
@@ -29,10 +29,6 @@
                 [size]="'medium'"
                 [class]="'mt-9'"
             ></app-button>
-        </div>
-    
-        <div *ngIf="!quiz" class="text-lg text-gray-500 w-64 text-wrap text-center mx-auto mt-48">
-            Oups ! Page non trouvée (Erreur 404)
         </div>
     </div>
 </layout>

@@ -7,9 +7,9 @@
 ### P1
 - [x] User notification handling (room joining)
 - [x] overflow sur score
-- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar) 
-- [ ] TODO : invite, tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
-- [ ] 404 page
+- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite) 
+- [ ] TODO : tag-list, score, recap, question, description, profile, notif, library, home, explore, edit, create
+- [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
 - [ ] search bars alignement
 - [ ] remove CSS files
@@ -21,6 +21,7 @@
 - [ ] quiz editing ?
 - [ ] Rating system
 - [ ] use search API
+- [ ] route to 404 or notif when get call fails
 
 ### P3
 - [ ] Search/sort by tags

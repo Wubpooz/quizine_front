@@ -1,5 +1,5 @@
 <layout [ngClass]="{ 'blur-sm pointer-events-none select-none': isInviteShowing }">
-    <div *ngIf="quiz" class="w-2/3 mx-40 mt-4">
+    <div class="w-2/3 mx-40 mt-4">
         <div class="flex justify-between items-center">
             <h1 class="text-2xl">{{ quiz.nom }}</h1>
             <!-- <span class="text-gray-400 text-lg">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
@@ -22,10 +22,6 @@
             </div>
         </div>
         <hr class="border-gray-300 mt-8" />
-    </div>
-
-    <div *ngIf="!quiz" class="text-lg text-gray-500 w-64 text-wrap text-center mx-auto mt-48">
-        Oups ! Page non trouvée (Erreur 404)
     </div>
 </layout>
 

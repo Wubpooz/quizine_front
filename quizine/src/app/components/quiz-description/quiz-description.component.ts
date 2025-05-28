@@ -32,8 +32,16 @@ export class QuizDescriptionComponent {
     if (quizId) {
       this.gamestore.updateQuiz(quizId)
       this.quizService.getQuizById(quizId).then((data: Quiz) => {
-        this.quiz = data;
+        if(data) {
+          this.quiz = data;
+        } else {
+          this.router.navigate(['/404'], { replaceUrl: true });
+        }
+      }).catch(() => {
+        this.router.navigate(['/404'], { replaceUrl: true });
       });
+    } else {
+      this.router.navigate(['/404'], { replaceUrl: true });
     }
   }
 
