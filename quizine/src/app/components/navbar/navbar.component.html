@@ -8,28 +8,49 @@
   </div>
 
   <!-- Center: Search (hidden for mobile) -->
-  <div class="hidden xs:flex flex-1 justify-center">
+  <div class="hidden xs:flex flex-1 justify-center relative">
     <input
       type="text"
       placeholder="Recherche"
-      class="bg-gray-200 h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
+      class="bg-gray-200 h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-primary min-w-0"
       [value]="searchTerm"
       (input)="onSearchChange($event)"
+      (focus)="searchDropdownOpen = true"
+      (keydown.escape)="searchDropdownOpen = false"
     />
+    
+    <!-- Search Dropdown -->
+    <div *ngIf="searchTerm && searchDropdownOpen" (mousedown)="$event.stopPropagation()" class="absolute left-1/2 -translate-x-1/2 w-[75%] top-10 bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]">
+      <ul>
+        <li
+          *ngIf="filteredQuizList.length === 0"
+          class="px-4 py-2 text-gray-400 cursor-default"
+        >
+          Aucun quiz trouvé
+        </li>
+        <li
+          *ngFor="let quiz of filteredQuizList"
+          (click)="gotoQuiz(quiz.id)"
+          class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+        >
+          {{ quiz.nom }}
+        </li>
+      </ul>
+    </div>
   </div>
 
   <!-- Right: Actions -->
   <div class="flex items-center justify-end gap-4">
     <!-- Mobile: round + button, Desktop: full button -->
     <button
-      class="bg-blue-500 text-white rounded-xl w-10 h-10 flex items-center justify-center text-2xl md:hidden"
+      class="bg-primary text-white rounded-xl w-10 h-10 flex items-center justify-center text-2xl md:hidden"
       (click)="gotoCreateQuiz()"
       aria-label="Créer un quiz"
     >
       +
     </button>
     <button
-      class="hidden md:inline-block bg-blue-500 text-white px-4 py-2 rounded-lg text-base"
+      class="hidden md:inline-block bg-primary text-white px-4 py-2 rounded-lg text-base"
       (click)="gotoCreateQuiz()"
     >
       + Créer un quiz
@@ -37,28 +58,5 @@
     <button (click)="gotoProfile()">
       <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
     </button>
-  </div>
-
-  <!-- Search Dropdown -->
-  <div
-    *ngIf="searchTerm"
-    class="absolute left-0 lg:left-40 right-0 lg:right-auto mt-2 w-full lg:w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
-    style="top:3.5rem"
-  >
-    <ul>
-      <li
-        *ngIf="filteredQuizList.length === 0"
-        class="px-4 py-2 text-gray-400 cursor-default"
-      >
-        Aucun quiz trouvé
-      </li>
-      <li
-        *ngFor="let quiz of filteredQuizList"
-        (click)="gotoQuiz(quiz.id)"
-        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-      >
-        {{ quiz.nom }}
-      </li>
-    </ul>
   </div>
 </div>
