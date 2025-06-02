@@ -1,34 +1,55 @@
 <layout>
-    <div class="flex-1 w-full mt-4">
-        <div class="w-2/3 mx-40">
+    <div class="mx-[20px] sm:mx-[50px] mt-4 flex flex-col gap-10">
+        <style>
+            .questions-list-limited{
+                height: 53svh;
+            }
+            @media (max-height: 770px) {
+                .questions-list-limited {
+                    height: 39svh !important;
+                }
+            }
+            @media (min-height: 771px) and (max-height: 840px) {
+                .questions-list-limited {
+                    height: 46svh !important;
+                }
+            }
+            
+        </style>
+        <div class="flex flex-col gap-4">
             <div class="flex justify-between w-148 items-center">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-4">
                     <h1 class="text-2xl">{{ quiz.nom }}</h1>
-                    <span class="text-gray-400 text-sm">{{ quiz.private ? "privé" : "public" }}</span>
+                    <!-- TODO edit title -->
+                    <span class="text-sm rounded-full w-fit px-3 py-1 bg-primary text-primary-tint">{{ quiz.private ? "privé" : "public" }}</span>
                 </div>
                 <!-- <span class="text-gray-400 text-lg">{{ quiz.createdAt | date:'dd/MM/yyyy' }}</span> -->
             </div>
-            <app-tag-list [tags]="quiz.tags" [class]="'mt-3 text-sm'"></app-tag-list>
-            
-            <h2 class="text-xl font-semibold mt-6">Description</h2>
-            <!-- <p class="text-base mt-2 text-wrap">{{ quiz.description }}</p> -->
-            
-            <h2 class="text-xl font-semibold mt-6">Questions dans ce quiz ({{ quiz.questions.length }})</h2>
-            <div class="flex flex-col gap-8 mt-2 h-[53svh] overflow-y-auto">
-                @for (question of quiz.questions; let i = $index; track question) {
-                    <app-edit-quiz-question
-                        [question]="question"
-                        [index]="i"
-                    ></app-edit-quiz-question>
-                }
+            <div class="flex max-sm:flex-col max-sm:gap-4 gap-10">
+                <app-tag-list [tags]="quiz.tags" [class]="'text-sm'"></app-tag-list> 
+                <!-- TODO add/remove tags button -->
+                <h2 class="font-semibold px-2">{{ quiz.questions.length }} questions</h2>
             </div>
-    
-            <app-button
-                [label]="'Ajouter une question'"
-                [color]="'secondary'"
-                [size]="'medium'"
-                [class]="'mt-9'"
-            ></app-button>
         </div>
+        
+        <h2 class="text-xl font-semibold">Description</h2>
+        <!-- <p class="text-base mt-2 text-wrap">{{ quiz.description }}</p> -->
+
+        <div class="flex flex-col gap-8 overflow-y-auto px-2 questions-list-limited">
+            @for (question of quiz.questions; let i = $index; track question) {
+                <app-edit-quiz-question
+                    [question]="question"
+                    [index]="i"
+                ></app-edit-quiz-question>
+                <!-- TODO edit question -->
+            }
+        </div>
+
+        <!--TODO add question -->
+        <app-button
+            [label]="'Ajouter une question'"
+            [color]="'secondary'"
+            [size]="'medium'"
+        ></app-button>
     </div>
 </layout>
