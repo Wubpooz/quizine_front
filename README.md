@@ -10,8 +10,8 @@
 - [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list, profile, description, library, home, explore, edit, create, notifications, score, recap, questions)
 - [x] 404 page
 - [x] wrap navbar + sidebar dans un composant
-- [x] store sidebar toggle valeu between page refresh
-- [ ] search bars alignement + search working again
+- [x] store sidebar toggle value between page refresh
+- [x] search bars alignement + search working again + scroll in dropdown
 - [ ] search bar + pop-up component(s)
 - [ ] home-card component (or just card component for that + library)
 - [ ] remove CSS files

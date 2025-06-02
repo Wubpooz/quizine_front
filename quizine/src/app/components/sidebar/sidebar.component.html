@@ -19,13 +19,35 @@
       <div class="flex items-center gap-2 mb-4">
         <span class="text-xl font-bold text-primary">Quizine</span>
       </div>
-      <input
-        type="text"
-        placeholder="Recherche"
-        class="bg-gray-200 h-10 w-full rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
-        [value]="searchTerm"
-        (input)="onSearchChange($event)"
-      />
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Recherche"
+          class="bg-gray-200 h-10 w-full rounded-lg p-2 focus:outline-none focus:border-blue-500 min-w-0"
+          [value]="searchTerm"
+          (input)="onSearchChange($event)"
+        />
+        <div
+          *ngIf="searchTerm && isSideBarOpen"
+          class="absolute w-full bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
+        >
+          <ul class="max-h-80 overflow-y-auto">
+            <li
+              *ngIf="filteredQuizList.length === 0"
+              class="px-4 py-2 text-gray-400 cursor-default"
+            >
+              Aucun quiz trouvé
+            </li>
+            <li
+              *ngFor="let quiz of filteredQuizList"
+              (click)="gotoQuiz(quiz.id)"
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+            >
+              {{ quiz.nom }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <ul>
       <li (click)="goToHomepage()" class="mb-2">
@@ -47,27 +69,6 @@
         <button class="block px-4 py-2 text-gray-700 hover:bg-primary-tint rounded">
           Notifications
         </button>
-      </li>
-    </ul>
-  </div>
-  <div
-    *ngIf="searchTerm"
-    class="absolute left-0 xs:left-40 right-0 xs:right-auto mt-2 w-full xs:w-[36rem] bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]"
-    style="top:3.5rem"
-  >
-    <ul>
-      <li
-        *ngIf="filteredQuizList.length === 0"
-        class="px-4 py-2 text-gray-400 cursor-default"
-      >
-        Aucun quiz trouvé
-      </li>
-      <li
-        *ngFor="let quiz of filteredQuizList"
-        (click)="gotoQuiz(quiz.id)"
-        class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-      >
-        {{ quiz.nom }}
       </li>
     </ul>
   </div>
