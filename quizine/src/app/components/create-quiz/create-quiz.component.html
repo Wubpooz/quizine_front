@@ -1,41 +1,71 @@
 <layout>
-    <form class="flex-1 flex flex-col items-center mx-40 py-8" (ngSubmit)="onSubmit()" #quizForm="ngForm">
+    <form class="flex-1 flex flex-col items-center mx-[20px] sm:mx-[40px] py-8" (ngSubmit)="onSubmit()" #quizForm="ngForm">
         <div class="w-full">
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold">Créer un nouveau quiz</h1>
+                <h1 class="text-2xl font-bold hidden sm:inline-block">Créer un nouveau quiz</h1>
+                <h1 class="text-2xl font-bold sm:hidden">Créer</h1>
                 <div class="flex items-center gap-4">
                     <app-tag-list [tags]="tags"></app-tag-list>
-                    <button
-                        type="button"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold text-base flex items-center gap-2 focus:outline-none"
-                        (click)="showTagInput = !showTagInput"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                        </svg>
-                        Ajouter un tag
-                    </button>
-                    <div *ngIf="showTagInput" class="relative">
-                        <input
-                            #tagInput
-                            type="text"
-                            placeholder="Ajouter un tag"
-                            class="border border-blue-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                            (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
-                        />
                         <button
+                            class="bg-primary text-white px-4 py-1 rounded-xl text-2xl flex items-center gap-2 focus:outline-none md:hidden"
+                            (click)="showTagInput = !showTagInput"
+                            aria-label="Ajouter un label"
+                            >
+                            +
+                            </button>
+                            <button
+                                type="button"
+                                class="hidden md:flex bg-primary text-white px-4 py-2 rounded-lg font-semibold text-base items-center gap-2 focus:outline-none"
+                                (click)="showTagInput = !showTagInput"
+                            >
+                            + Ajouter un tag
+                            </button>
+                    <div
+                        *ngIf="showTagInput"
+                        class="
+                            fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start
+                        "
+                    >
+                        <div
+                            class="
+                            mt-64 sm:mt-0
+                            w-11/12 max-w-xs bg-white rounded-lg shadow-lg p-8
+                            sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none
+                            relative
+                            "
+                        >
+                            <!-- Close button, visible only on mobile -->
+                            <button
+                                type="button"
+                                class="absolute right-2 top-2 text-gray-400 hover:text-red-500 sm:hidden"
+                                (click)="showTagInput = false"
+                                aria-label="Fermer"
+                            >
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                            <input
+                                #tagInput
+                                type="text"
+                                placeholder="Ajouter un tag"
+                                class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full"
+                                (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
+                            />
+                            <button
                             type="button"
-                            class="absolute right-0 top-0 mt-3 mr-2 text-red-500"
+                            class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-500"
                             (click)="toggleTagInput()"
                         >
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                             </svg>
                         </button>
+                        </div>
                     </div>
                     <div class="relative">
                         <button
-                            class="bg-blue-500 text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
+                            class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
                             (click)="showDropdown = !showDropdown"
                             type="button"
                         >
@@ -76,11 +106,11 @@
                 </div>
             </div>
 
-            <div class="flex flex-col max-h-[65vh] overflow-y-auto">
+            <div class="flex flex-col max-h-[64vh] overflow-y-auto">
                 <input
                     type="text"
                     placeholder="Ajouter un titre"
-                    class="w-full border border-blue-200 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
                     required
                     name="title"
                     [(ngModel)]="quizTitle"
@@ -108,7 +138,7 @@
                 <input
                     type="text"
                     placeholder="Ajouter une description"
-                    class="w-full border border-blue-200 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-tint"
                     name="description"
                     [(ngModel)]="quizDescription"
                     maxlength="{{maxLengthDescription}}"
@@ -140,11 +170,11 @@
 
                 <div class="flex flex-col gap-4 mb-6">
                     <ng-container *ngFor="let question of questions; let i = index">
-                        <div class="bg-blue-50 rounded-lg px-4 py-2 mb-4 font-semibold">Question {{ i + 1 }}</div>
+                        <div class="bg-primary-lighter rounded-lg px-4 py-2 mb-4 font-semibold">Question {{ i + 1 }}</div>
                         <input
                             type="text"
                             placeholder="Ajouter une question"
-                            class="w-full border border-blue-200 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
                             required
                             name="question{{ i }}"
                             [(ngModel)]="question.name"
@@ -185,7 +215,7 @@
                                         <input
                                             type="text"
                                             placeholder="Ajouter une option"
-                                            class="w-full border border-blue-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                            class="w-full border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint"
                                             required
                                             name="option{{ i }}{{ j }}"
                                             [(ngModel)]="option.content"
@@ -216,7 +246,7 @@
                     </ng-container>
                 </div>
 
-                <button type="button" class="bg-primary-dark hover:bg-primary text-white rounded-full w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
+                <button type="button" class="bg-primary hover:bg-primary text-white rounded-xl w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
                     +
                 </button>
             </div>
