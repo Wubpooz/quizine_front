@@ -9,8 +9,7 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'app-explore',
   standalone: true,
   imports: [QuizCardComponent, CommonModule, LayoutComponent],
-  templateUrl: './explore.component.html',
-  styleUrl: './explore.component.css'
+  templateUrl: './explore.component.html'
 })
 export class ExploreComponent {
   quizList: Quiz[] = [];

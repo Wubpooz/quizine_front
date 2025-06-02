@@ -11,8 +11,7 @@ import { LayoutComponent } from "../layout/layout.component";
   selector: 'app-profile',
   standalone: true,
   imports: [CommonModule, LayoutComponent],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
   user: User = {id: -1, username: "", picture: ""};

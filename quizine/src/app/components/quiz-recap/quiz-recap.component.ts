@@ -9,8 +9,7 @@ import { Router } from '@angular/router';
   selector: 'quiz-recap',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quiz-recap.component.html',
-  styleUrl: './quiz-recap.component.css'
+  templateUrl: './quiz-recap.component.html'
 })
 export class QuizRecapComponent {
   quiz!: Quiz;

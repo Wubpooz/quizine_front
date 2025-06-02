@@ -4,8 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-tag-list',
   standalone: true,
   imports: [],
-  templateUrl: './tag-list.component.html',
-  styleUrl: './tag-list.component.css'
+  templateUrl: './tag-list.component.html'
 })
 export class TagListComponent {
     @Input() tags: string[] = [];

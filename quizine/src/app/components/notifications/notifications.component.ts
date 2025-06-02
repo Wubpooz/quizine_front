@@ -11,8 +11,7 @@ import { LayoutComponent } from "../layout/layout.component";
   selector: 'app-notifications',
   standalone: true,
   imports: [CommonModule, ButtonComponent, WaitingPageComponent, LayoutComponent],
-  templateUrl: './notifications.component.html',
-  styleUrl: './notifications.component.css'
+  templateUrl: './notifications.component.html'
 })
 
 export class NotificationsComponent {

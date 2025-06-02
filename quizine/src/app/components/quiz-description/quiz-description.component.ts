@@ -14,8 +14,7 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'app-quiz-description',
   standalone: true,
   imports: [TagListComponent, ButtonComponent, CommonModule, UserInviteComponent, WaitingPageComponent, LayoutComponent],
-  templateUrl: './quiz-description.component.html',
-  styleUrl: './quiz-description.component.css'
+  templateUrl: './quiz-description.component.html'
 })
 export class QuizDescriptionComponent {
   quiz!: Quiz;

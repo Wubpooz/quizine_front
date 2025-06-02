@@ -7,8 +7,7 @@ import { QuizService } from '../../services/quiz.service';
   selector: 'quiz-question',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quiz-question.component.html',
-  styleUrl: './quiz-question.component.css'
+  templateUrl: './quiz-question.component.html'
 })
 export class QuizQuestionComponent {
   questionIndex: number = 0;

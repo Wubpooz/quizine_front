@@ -9,8 +9,7 @@ import { SidebarService } from '../../services/sidebar.service';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   quizList: Quiz[] = [];

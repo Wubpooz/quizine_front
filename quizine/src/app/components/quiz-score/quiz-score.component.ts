@@ -12,8 +12,7 @@ import { Session } from '../../models/participationModel';
   selector: 'quiz-score',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './quiz-score.component.html',
-  styleUrl: './quiz-score.component.css'
+  templateUrl: './quiz-score.component.html'
 })
 export class QuizScoreComponent {
   currentUser!: User;

@@ -10,8 +10,7 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'app-library',
   standalone: true,
   imports: [LibraryQuizCardComponent, CommonModule, LayoutComponent],
-  templateUrl: './library.component.html',
-  styleUrl: './library.component.css'
+  templateUrl: './library.component.html'
 })
 export class LibraryComponent {
   quizList: Quiz[] = [];

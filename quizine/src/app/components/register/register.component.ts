@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
@@ -11,8 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule,CommonModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent {
   showPassword = false;

@@ -9,8 +9,7 @@ import { AppStore } from '../../stores/app.store';
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
   isSideBarOpen: boolean = true;

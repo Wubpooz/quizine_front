@@ -11,8 +11,7 @@ import { APIService } from '../../services/api.service';
   selector: 'user-invite',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './user-invite.component.html',
-  styleUrl: './user-invite.component.css'
+  templateUrl: './user-invite.component.html'
 })
 export class UserInviteComponent {
   @Input() quizId!: number;

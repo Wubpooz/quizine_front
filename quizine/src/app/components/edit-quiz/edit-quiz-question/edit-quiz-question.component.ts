@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-edit-quiz-question',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './edit-quiz-question.component.html',
-  styleUrl: './edit-quiz-question.component.css'
+  templateUrl: './edit-quiz-question.component.html'
 })
 export class EditQuizQuestionComponent {
   @Input() question!: Question;

@@ -9,8 +9,7 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'home-page',
   standalone: true,
   imports: [CommonModule, LayoutComponent],
-  templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css',
+  templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
   isSideBarOpen=true;

@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
   selector: 'app-quiz-card',
   standalone: true,
   imports: [TagListComponent, CommonModule],
-  templateUrl: './quiz-card.component.html',
-  styleUrl: './quiz-card.component.css'
+  templateUrl: './quiz-card.component.html'
 })
 export class QuizCardComponent {
   @Input() quiz!: Quiz;

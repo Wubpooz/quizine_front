@@ -14,7 +14,7 @@
 - [x] search bars alignement + search working again + scroll in dropdown
 - [ ] search bar + pop-up component(s)
 - [ ] home-card component (or just card component for that + library)
-- [ ] remove CSS files
+- [x] remove CSS files
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
 

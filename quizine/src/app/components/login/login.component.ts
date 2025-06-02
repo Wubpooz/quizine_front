@@ -11,8 +11,7 @@ import { APIService } from '../../services/api.service';
   selector: 'login',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   showPassword = false;

@@ -9,8 +9,7 @@ import { SocketService } from '../../services/socket.service';
   selector: 'waiting-page',
   standalone: true,
   imports: [],
-  templateUrl: './waiting-page.component.html',
-  styleUrl: './waiting-page.component.css'
+  templateUrl: './waiting-page.component.html'
 })
 export class WaitingPageComponent {
   @Input() isCreator!: boolean;

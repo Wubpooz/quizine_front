@@ -10,8 +10,7 @@ import { LayoutComponent } from "../layout/layout.component";
   selector: 'create-quiz',
   standalone: true,
   imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent],
-  templateUrl: './create-quiz.component.html',
-  styleUrl: './create-quiz.component.css'
+  templateUrl: './create-quiz.component.html'
 })
 export class CreateQuizComponent {
   @ViewChild('tagInput') tagInputRef!: ElementRef<HTMLInputElement>;

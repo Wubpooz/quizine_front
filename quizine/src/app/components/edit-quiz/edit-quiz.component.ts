@@ -12,8 +12,7 @@ import { LayoutComponent } from '../layout/layout.component';
   selector: 'app-edit-quiz',
   standalone: true,
   imports: [TagListComponent, EditQuizQuestionComponent, ButtonComponent, CommonModule, LayoutComponent],
-  templateUrl: './edit-quiz.component.html',
-  styleUrl: './edit-quiz.component.css'
+  templateUrl: './edit-quiz.component.html'
 })
 export class EditQuizComponent {
   quiz!: Quiz;

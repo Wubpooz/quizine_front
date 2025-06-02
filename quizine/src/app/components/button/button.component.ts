@@ -5,8 +5,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-button',
   standalone: true,
   imports: [NgClass],
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.css'
+  templateUrl: './button.component.html'
 })
 export class ButtonComponent {
   @Input() label: string = "";
