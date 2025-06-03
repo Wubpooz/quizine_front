@@ -17,6 +17,7 @@
 - [x] remove CSS files
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
+- [x] Github Pages deployment
 
 ### P2
 - [ ] quiz descriptions
