@@ -36,7 +36,7 @@ jobs:
         working-directory: quizine
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href /quizine/
+        run: npm run build -- --configuration production --base-href /quizine_front/
         working-directory: quizine
 
       - name: Setup Pages

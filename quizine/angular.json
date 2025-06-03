@@ -28,7 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "baseHref": "/quizine/"
+            "baseHref": "/quizine_front/"
           },
           "configurations": {
             "production": {
@@ -45,7 +45,7 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/quizine/"
+              "baseHref": "/quizine_front/"
             },
             "development": {
               "optimization": false,
