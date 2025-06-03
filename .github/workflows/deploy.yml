@@ -1,32 +1,34 @@
-name: Deploy to production
+name: Deploy Angular to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:  # Permet le déclenchement manuel depuis l'interface GitHub
+    branches:
+      - production
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Setup SSH Configuration
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: quizine
+
+      - name: Build Angular app
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_GENERAL_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H kerboul.me >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-      
-      - name: Deploy to Production
-        run: |
-          echo "Exécution du script de déploiement via SSH..."
-          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && cat ./deploy.sh'"
-          echo "prout"
-          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && ./deploy.sh'"
-          
-          echo "Déploiement terminé avec succès!"
-          
-      - name: Cleanup SSH keys
-        if: always() # S'exécute même en cas d'échec des étapes précédentes
-        run: |
-          rm -f ~/.ssh/id_rsa
+          npm run build -- --configuration production --base-href /quizine/
+        working-directory: quizine
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: quizine/dist/quizine
