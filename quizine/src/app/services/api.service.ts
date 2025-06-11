@@ -5,13 +5,13 @@ import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Participation, Session } from "../models/participationModel";
 import { GameRequest } from "../models/participationModel";
-
+import { environment } from "../../environments/environment";
 
 @Injectable({
     providedIn: 'root'
 })
 export class APIService {
-    private endpoint = "/api";
+    private endpoint = environment.apiEndpoint;
     constructor(private http: HttpClient) {}
 
     //TODO error handling
