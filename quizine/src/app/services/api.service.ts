@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { catchError, map, Observable, of, retry, throwError } from "rxjs";
 import { User } from "../models/userModel";
 import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
 import { Participation, Session } from "../models/participationModel";
 import { GameRequest } from "../models/participationModel";
 import { environment } from "../../environments/environment";
@@ -33,9 +33,11 @@ export class APIService {
 
     //========================= Register =========================
     login(username: string, password: string): Observable<User> {
-        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true}).pipe(
-            map((response: any) => {
-                return response.user;
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
+            map((response: HttpResponse<any>) => {
+                const cookies = response.headers.get('Set-Cookie');
+                console.log('Cookies:', cookies);
+                return response.body.user;
             }),
             retry(1),
             catchError(this.handleError)
