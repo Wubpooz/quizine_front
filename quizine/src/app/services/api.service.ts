@@ -33,7 +33,7 @@ export class APIService {
 
     //========================= Register =========================
     login(username: string, password: string): Observable<User> {
-        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {}).pipe(
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.user;
             }),
@@ -43,7 +43,7 @@ export class APIService {
     }
 
     signup(username: string, password: string): Observable<User> {
-        return this.http.post<{message: string, user:User}>(this.endpoint+"/signup", {username, password}, {}).pipe(
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/signup", {username, password}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.user;
             }),
@@ -53,7 +53,7 @@ export class APIService {
     }
 
     logout(): Observable<string> {
-        return this.http.post<{message: string}>(this.endpoint+"/logout", {}).pipe(
+        return this.http.post<{message: string}>(this.endpoint+"/logout", {}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -65,7 +65,7 @@ export class APIService {
 
     //========================= Create =========================
     createEmptyQuiz(emptyQuiz: EmptyQuiz): Observable<Quiz> {
-        return this.http.post<{message: string}>(this.endpoint+"/createQuiz", {emptyQuiz}, {}).pipe(
+        return this.http.post<{message: string}>(this.endpoint+"/createQuiz", {emptyQuiz}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -76,7 +76,7 @@ export class APIService {
 
     //========================= Explore =========================
     exploreQuiz(): Observable<Quiz[]> {
-        return this.http.get<{message: string}>(this.endpoint+"/explore", {}).pipe(
+        return this.http.get<{message: string}>(this.endpoint+"/explore", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -88,7 +88,7 @@ export class APIService {
 
     //========================= Friends =========================
     inviteFriend(userId: number): Observable<User> {
-        return this.http.post<{message: string}>(`${this.endpoint}/friends/ask/${userId}`, {}).pipe(
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/ask/${userId}`, {}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -102,7 +102,7 @@ export class APIService {
     }
 
     acceptFriend(userId: number): Observable<User> {
-        return this.http.post<{message: string}>(`${this.endpoint}/friends/accept/${userId}`, {}).pipe(
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/accept/${userId}`, {}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -112,7 +112,7 @@ export class APIService {
     }
 
     refuseFriend(userId: number): Observable<User> {
-        return this.http.post<{message: string}>(`${this.endpoint}/friends/refuse/${userId}`, {}).pipe(
+        return this.http.post<{message: string}>(`${this.endpoint}/friends/refuse/${userId}`, {}, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.message;
             }),
@@ -122,7 +122,7 @@ export class APIService {
     }
 
     getFriends() : Observable<User[]> {
-        return this.http.get<{message: string, friends: User[]}>(this.endpoint+'/friends', {}).pipe(
+        return this.http.get<{message: string, friends: User[]}>(this.endpoint+'/friends', {withCredentials: true}).pipe(
             map((response: any) => {
                 console.log(response.message);
                 return response.friends ? Object.values(response.friends) as User[] : [];
@@ -140,7 +140,7 @@ export class APIService {
 
     //========================= Game =========================
     requestGame(session: number, players: number[]): Observable<GameRequest[]> {
-            return this.http.post<GameRequest[]>(this.endpoint+"/game/gamerequest", {session, players}, {}).pipe(
+            return this.http.post<GameRequest[]>(this.endpoint+"/game/gamerequest", {session, players}, {withCredentials: true}).pipe(
                 map((response: any) => {
                     return response ? Object.values(response) as GameRequest[] : [];
                 }),
@@ -153,7 +153,7 @@ export class APIService {
     }
 
     createSession(quizId: number) : Observable<Session[]> {
-        return this.http.post<Session[]>(this.endpoint+"/game/gamerequest/"+quizId, {}).pipe(
+        return this.http.post<Session[]>(this.endpoint+"/game/gamerequest/"+quizId, {}, {withCredentials: true}).pipe(
                 map((response: any) => {
                     return response ? Object.values(response) as Session[] : [];
                 }),
@@ -165,7 +165,7 @@ export class APIService {
     }
 
     getSession(id:number) : Observable<Session> {
-        return this.http.get<Session>(this.endpoint+"/game/session/"+id, {}).pipe(
+        return this.http.get<Session>(this.endpoint+"/game/session/"+id, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response as Session;
             }),
@@ -174,7 +174,7 @@ export class APIService {
     }
 
     getNotifications() : Observable<GameRequest[]> {
-        return this.http.get<GameRequest[]>(this.endpoint+"/game/myGameRequest", {}).pipe(
+        return this.http.get<GameRequest[]>(this.endpoint+"/game/myGameRequest", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response ? Object.values(response) as GameRequest[] : [];
             }),
@@ -185,7 +185,7 @@ export class APIService {
 
     //========================= History =========================
     getHistory(): Observable<HistoryQuiz[]> {
-        return this.http.get<{message: string, history: HistoryQuiz[]}>(this.endpoint+"/history", {}).pipe(
+        return this.http.get<{message: string, history: HistoryQuiz[]}>(this.endpoint+"/history", {withCredentials: true}).pipe(
             map((response: any) => {
                 console.log(response.message);
                 return response.history ? Object.values(response.history) as HistoryQuiz[] : [];
@@ -203,7 +203,7 @@ export class APIService {
 
     //========================= Profile =========================
     getUserData() : Observable<User> {
-        return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {}).pipe(
+        return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response.User;
             }),
@@ -215,7 +215,7 @@ export class APIService {
 
     //========================= Quiz =========================
     getQuiz(quizId: number): Observable<Quiz> {
-        return this.http.get<any>(this.endpoint+"/quiz/"+quizId, {}).pipe(
+        return this.http.get<any>(this.endpoint+"/quiz/"+quizId, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response as Quiz;
             }),
@@ -224,7 +224,7 @@ export class APIService {
     }
 
     getQuizList(): Observable<Quiz[]> {
-        return this.http.get<any>(this.endpoint+"/quiz", {}).pipe(
+        return this.http.get<any>(this.endpoint+"/quiz", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response ? Object.values(response) as Quiz[] : [];
             }),
@@ -233,7 +233,7 @@ export class APIService {
     }
 
     createQuiz(quizData: any): Observable<Quiz> {
-        return this.http.post<any>(this.endpoint+"/quiz/new",quizData, {}).pipe(
+        return this.http.post<any>(this.endpoint+"/quiz/new",quizData, {withCredentials: true}).pipe(
             map((response: any) => {
                 return response as Quiz;
             }),
@@ -242,7 +242,7 @@ export class APIService {
     }
 
     getRecentQuizzes(): Observable<Quiz[]> {
-        return this.http.get<any>(this.endpoint+"/recent", {}).pipe(
+        return this.http.get<any>(this.endpoint+"/recent", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response ? Object.values(response) as Quiz[] : [];
             }),
@@ -253,7 +253,7 @@ export class APIService {
     //========================= Rate =========================
     //TODO getgrate
     addRate(quizId: number, grade: number) : Observable<number> {
-        return this.http.post<{message: string, newGrade: number}>(this.endpoint+"/recent",{quizId, grade}, {}).pipe(
+        return this.http.post<{message: string, newGrade: number}>(this.endpoint+"/recent",{quizId, grade}, {withCredentials: true}).pipe(
             map((response: any) => {
                 console.log(response.message);
                 return response.newGrade as number;
@@ -275,7 +275,7 @@ export class APIService {
     }
     
     getAllUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.endpoint+"/search/users", {}).pipe(
+        return this.http.get<User[]>(this.endpoint+"/search/users", {withCredentials: true}).pipe(
             map((response: any) => {
                 return response ? Object.values(response) as User[] : [];
             }),
