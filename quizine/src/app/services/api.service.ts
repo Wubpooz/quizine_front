@@ -12,7 +12,9 @@ import { environment } from "../../environments/environment";
 })
 export class APIService {
     private endpoint = environment.apiEndpoint;
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        console.log("Environment:", environment.production ? "Production" : "Development");
+    }
 
     //TODO error handling
     private handleError(error: HttpErrorResponse) {
