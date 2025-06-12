@@ -28,7 +28,7 @@
               "src/styles.css"
             ],
             "scripts": [],
-            "baseHref": "/quizine_front/"
+            "baseHref": "/"
           },
           "configurations": {
             "production": {
