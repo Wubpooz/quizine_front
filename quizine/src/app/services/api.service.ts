@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { catchError, map, Observable, of, retry, throwError } from "rxjs";
 import { User } from "../models/userModel";
 import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
-import { HttpClient, HttpErrorResponse, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Participation, Session } from "../models/participationModel";
 import { GameRequest } from "../models/participationModel";
+import { ToastrService } from 'ngx-toastr';
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -12,17 +13,39 @@ import { environment } from "../../environments/environment";
 })
 export class APIService {
     private endpoint = environment.apiEndpoint;
-    constructor(private http: HttpClient) {
-        console.log("Environment:", environment.production ? "Production" : "Development");
+    constructor(private http: HttpClient, private toastr: ToastrService) {
+        // console.log("Environment:", environment.production ? "Production" : "Development");
     }
 
     //TODO error handling
     private handleError(error: HttpErrorResponse) {
+        this.toastr.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', 'Erreur');
         if (error.status === 0) {
             console.error('An error occurred:', error.error);
         } else {
             console.error(`Backend returned code ${error.status}, body was: `, error.error);
         }
+        if (error.status !== 401 && error.status !== 403) {
+            console.error('An error occurred:', error.message);
+            // Command: toastr["warning"]("lmesss", "Notif")
+            // toastr.options = {
+            //   "closeButton": true,
+            //   "debug": false,
+            //   "newestOnTop": false,
+            //   "progressBar": true,
+            //   "positionClass": "toast-top-right",
+            //   "preventDuplicates": true,
+            //   "showDuration": "300",
+            //   "hideDuration": "1000",
+            //   "timeOut": "5000",
+            //   "extendedTimeOut": "1000",
+            //   "showEasing": "swing",
+            //   "hideEasing": "linear",
+            //   "showMethod": "fadeIn",
+            //   "hideMethod": "fadeOut"
+            // }
+        }
+        
         return throwError(() => new Error('Something bad happened; please try again later.'));
     }
 
@@ -38,7 +61,7 @@ export class APIService {
                 console.log("Login response:", response.body.message);
                 return response.body.user;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -47,7 +70,7 @@ export class APIService {
             map((response: any) => {
                 return response.user;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -56,7 +79,7 @@ export class APIService {
             map((response: any) => {
                 return response.message;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -68,7 +91,7 @@ export class APIService {
                 return response.message;
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -79,7 +102,7 @@ export class APIService {
                 return response.message;
             }),
             retry(3),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -91,7 +114,7 @@ export class APIService {
                 return response.message;
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
             // 200	Demande envoyée
             // 400	Erreur de paramètre ou déjà demandé
             // 404	Utilisateur non trouvé
@@ -105,7 +128,7 @@ export class APIService {
                 return response.message;
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -115,7 +138,7 @@ export class APIService {
                 return response.message;
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -144,7 +167,7 @@ export class APIService {
                 map((response: any) => {
                     return response ? Object.values(response) as GameRequest[] : [];
                 }),
-                catchError(this.handleError)
+                catchError(error => this.handleError(error))
                 // 200	Users invited successfully, you received a game request
                 // 400	No game requests created
                 // 404	Error creating some game requests
@@ -157,7 +180,7 @@ export class APIService {
                 map((response: any) => {
                     return response ? Object.values(response) as Session[] : [];
                 }),
-                catchError(this.handleError)
+                catchError(error => this.handleError(error))
             // 400	Invalid request Missing required fields
             // 500	Error creating game session
             // 501	Failed to create participation
@@ -169,7 +192,7 @@ export class APIService {
             map((response: any) => {
                 return response as Session;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -178,7 +201,7 @@ export class APIService {
             map((response: any) => {
                 return response ? Object.values(response) as GameRequest[] : [];
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -191,7 +214,7 @@ export class APIService {
                 return response.history ? Object.values(response.history) as HistoryQuiz[] : [];
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -208,7 +231,7 @@ export class APIService {
                 return response.User;
             }),
             retry(1),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -219,7 +242,7 @@ export class APIService {
             map((response: any) => {
                 return response as Quiz;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -228,7 +251,7 @@ export class APIService {
             map((response: any) => {
                 return response ? Object.values(response) as Quiz[] : [];
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -237,7 +260,7 @@ export class APIService {
             map((response: any) => {
                 return response as Quiz;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -246,7 +269,7 @@ export class APIService {
             map((response: any) => {
                 return response ? Object.values(response) as Quiz[] : [];
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -258,7 +281,7 @@ export class APIService {
                 console.log(response.message);
                 return response.newGrade as number;
             }),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
@@ -280,7 +303,7 @@ export class APIService {
                 return response ? Object.values(response) as User[] : [];
             }),
             retry(2),
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 

@@ -17,6 +17,7 @@
 - [x] Vercel + redis deployment, app works successfully fully
 
 ### P2
+- [x] notif when get call fails
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
 - [ ] add a loading spinner when waiting for API calls
@@ -24,7 +25,7 @@
 - [ ] quiz editing ?
 - [ ] Rating system
 - [ ] use search API
-- [ ] route to 404 or notif when get call fails
+- [ ] use https://sweetalert2.github.io/ for full screen and very customizable pop-ups
 
 ### P3
 - [ ] Search/sort by tags
