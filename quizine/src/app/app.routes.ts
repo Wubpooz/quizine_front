@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { CreateQuizComponent } from './components/create-quiz/create-quiz.component';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { authGuard } from './services/authGard.service';
 
 export const routes: Routes = [
     {path: "", redirectTo: "landing", pathMatch: "full"},
@@ -22,23 +23,23 @@ export const routes: Routes = [
     {path: "login", component: LoginComponent},
     {path: "register", component: RegisterComponent},
 
-    {path: "home", component: HomePageComponent},
-    {path: "explore", component: ExploreComponent},
-    {path: "library", component: LibraryComponent},
-    {path: "profile", component: ProfileComponent},
-    {path:'create', component: CreateQuizComponent},
+    {path: "home", component: HomePageComponent, canActivate: [authGuard]},
+    {path: "explore", component: ExploreComponent, canActivate: [authGuard]},
+    {path: "library", component: LibraryComponent, canActivate: [authGuard]},
+    {path: "profile", component: ProfileComponent, canActivate: [authGuard]},
+    {path:'create', component: CreateQuizComponent, canActivate: [authGuard]},
 
-    {path: "quiz-preview/:id", component: QuizDescriptionComponent},
-    {path: "edit-quiz/:id", component: EditQuizComponent},
+    {path: "quiz-preview/:id", component: QuizDescriptionComponent, canActivate: [authGuard]},
+    {path: "edit-quiz/:id", component: EditQuizComponent, canActivate: [authGuard]},
 
-    {path:'quiz-question', component: QuizQuestionComponent},
-    {path: "quiz-recap", component: QuizRecapComponent},
-    {path: "quiz-score", component: QuizScoreComponent},
+    {path:'quiz-question', component: QuizQuestionComponent, canActivate: [authGuard]},
+    {path: "quiz-recap", component: QuizRecapComponent, canActivate: [authGuard]},
+    {path: "quiz-score", component: QuizScoreComponent, canActivate: [authGuard]},
 
-    {path: 'waiting-room', component: WaitingPageComponent},
+    {path: 'waiting-room', component: WaitingPageComponent, canActivate: [authGuard]},
     
-    {path: 'notifications', component: NotificationsComponent},
+    {path: 'notifications', component: NotificationsComponent, canActivate: [authGuard]},
 
-    { path: '404', component: NotFoundComponent },
-    { path: '**', redirectTo: '404' }
+    {path: '404', component: NotFoundComponent},
+    {path: '**', redirectTo: '404'}
 ];
