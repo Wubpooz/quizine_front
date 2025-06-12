@@ -35,9 +35,9 @@ export class APIService {
     login(username: string, password: string): Observable<User> {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true}).pipe(
             map((response: any) => {
+                console.log("Login response:", response.body.message);
                 return response.body.user;
             }),
-            retry(1),
             catchError(this.handleError)
         );
     }
@@ -47,7 +47,6 @@ export class APIService {
             map((response: any) => {
                 return response.user;
             }),
-            retry(1),
             catchError(this.handleError)
         );
     }
@@ -57,7 +56,6 @@ export class APIService {
             map((response: any) => {
                 return response.message;
             }),
-            retry(1),
             catchError(this.handleError)
         );
     }

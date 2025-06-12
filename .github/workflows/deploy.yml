@@ -39,6 +39,10 @@ jobs:
         run: npm run build -- --configuration production --base-href /quizine_front/
         working-directory: quizine
 
+      - name: Copy index.html to 404.html to handle SPA routing in GitHub Pages
+        run: cp dist/quizine/browser/index.html dist/quizine/browser/404.html
+        working-directory: quizine
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
