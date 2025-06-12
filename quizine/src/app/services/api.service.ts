@@ -67,12 +67,16 @@ export class APIService {
     signup(username: string, password: string): Observable<string> {
         return this.http.post<{message: string}>(this.endpoint+"/signup", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status !== 200) {
+                if( response.status === 409) {
+                    this.toastr.error('Ce nom d\'utilisateur est déjà pris. Veuillez en choisir un autre.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Username already exists');
+                } else if (response.status !== 200) {
                     this.toastr.error('Erreur lors de l\'inscription.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Signup failed');
+                } else {
+                    console.log(response.body.message);
+                    return response.body.message;
                 }
-                console.log(response.body.message);
-                return response.body.message;
             }),
             catchError(error => this.handleError(error))
         );
