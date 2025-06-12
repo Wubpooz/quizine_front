@@ -5,7 +5,7 @@ import { EmptyQuiz, HistoryQuiz, Quiz } from "../models/quizModel";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Participation, Session } from "../models/participationModel";
 import { GameRequest } from "../models/participationModel";
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService, IndividualConfig } from 'ngx-toastr';
 import { environment } from "../../environments/environment";
 
 @Injectable({
@@ -13,41 +13,35 @@ import { environment } from "../../environments/environment";
 })
 export class APIService {
     private endpoint = environment.apiEndpoint;
+
+    readonly NOTIF_STYLE: Partial<IndividualConfig> = {
+        closeButton: true,
+        newestOnTop: false,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        timeOut: 5000,
+        extendedTimeOut: 1000,
+        easing: "swing"
+    };
+
     constructor(private http: HttpClient, private toastr: ToastrService) {
         // console.log("Environment:", environment.production ? "Production" : "Development");
     }
 
     private handleError(error: HttpErrorResponse) {
             if (error.status === 0) {
-                this.toastr.error('Erreur réseau. Veuillez vérifier votre connexion.', 'Erreur');
+                this.toastr.error('Erreur réseau. Veuillez vérifier votre connexion.', 'Erreur', this.NOTIF_STYLE);
             } else if (error.status === 400) {
-                this.toastr.error('Requête invalide.', 'Erreur 400');
+                this.toastr.error('Requête invalide.', 'Erreur 400', this.NOTIF_STYLE);
             } else if (error.status === 404) {
-                this.toastr.error('Ressource non trouvée.', 'Erreur 404');
+                this.toastr.error('Ressource non trouvée.', 'Erreur 404', this.NOTIF_STYLE);
             } else if (error.status === 500) {
-                this.toastr.error('Erreur serveur. Veuillez réessayer plus tard.', 'Erreur 500');
+                this.toastr.error('Erreur serveur. Veuillez réessayer plus tard.', 'Erreur 500', this.NOTIF_STYLE);
             } else if (error.status !== 401 && error.status !== 403) {
-                this.toastr.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', `Erreur ${error.status}`);
+                this.toastr.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', `Erreur ${error.status}`, this.NOTIF_STYLE);
             }
             console.error(`Backend returned code ${error.status}, body was: `, error.error);
             return throwError(() => new Error('Something bad happened; please try again later.'));
-            // Command: toastr["warning"]("lmesss", "Notif")
-            // toastr.options = {
-            //   "closeButton": true,
-            //   "debug": false,
-            //   "newestOnTop": false,
-            //   "progressBar": true,
-            //   "positionClass": "toast-top-right",
-            //   "preventDuplicates": true,
-            //   "showDuration": "300",
-            //   "hideDuration": "1000",
-            //   "timeOut": "5000",
-            //   "extendedTimeOut": "1000",
-            //   "showEasing": "swing",
-            //   "hideEasing": "linear",
-            //   "showMethod": "fadeIn",
-            //   "hideMethod": "fadeOut"
-            // }
         }
 
 
@@ -60,7 +54,7 @@ export class APIService {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if ((response.status !== 200 && response.status !== 204) || !response.body.user) {
-                    this.toastr.error('Erreur lors de la connexion. Veuillez vérifier vos identifiants.', 'Erreur');
+                    this.toastr.error('Erreur lors de la connexion. Veuillez vérifier vos identifiants.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Login failed');
                 } else {
                     return response.body.user;
@@ -74,7 +68,7 @@ export class APIService {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/signup", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status !== 200) {
-                    this.toastr.error('Erreur lors de l\'inscription.', 'Erreur');
+                    this.toastr.error('Erreur lors de l\'inscription.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Signup failed');
                 }
                 return response.body.user;
@@ -87,10 +81,10 @@ export class APIService {
         return this.http.post<{message: string}>(this.endpoint+"/logout", {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
-                    this.toastr.success('Vous avez été déconnecté avec succès.', 'Déconnexion');
+                    this.toastr.info('Vous avez été déconnecté avec succès.', 'Déconnexion', this.NOTIF_STYLE);
                     return response.body.message;
                 } else {
-                    this.toastr.error('Erreur lors de la déconnexion.', 'Erreur');
+                    this.toastr.error('Erreur lors de la déconnexion.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Logout failed');
                 }
             }),
@@ -103,10 +97,10 @@ export class APIService {
         return this.http.post<any>(this.endpoint+"/createQuiz", {emptyQuiz}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
-                    this.toastr.success('Quiz créé avec succès.', 'Succès');
+                    this.toastr.success('Quiz créé avec succès.', 'Succès', this.NOTIF_STYLE);
                     return response.body as Quiz;
                 } else {
-                    this.toastr.error('Erreur lors de la création du quiz.', 'Erreur');
+                    this.toastr.error('Erreur lors de la création du quiz.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la création du quiz.');
                 }
             }),
@@ -123,7 +117,7 @@ export class APIService {
                     // You may want to parse response.body.message if it's not an array
                     return response.body.message;
                 } else {
-                    this.toastr.error('Erreur lors de l\'exploration des quiz.', 'Erreur');
+                    this.toastr.error('Erreur lors de l\'exploration des quiz.', 'Erreur', this.NOTIF_STYLE);
                     return [];
                 }
             }),
@@ -137,13 +131,13 @@ export class APIService {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/ask/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
-                    this.toastr.success('Demande d\'ami envoyée avec succès.', 'Succès');
+                    this.toastr.success('Demande d\'ami envoyée avec succès.', 'Succès', this.NOTIF_STYLE);
                     return response.body.message;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur');
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de l\'envoi de la demande d\'ami.', 'Erreur');
+                    this.toastr.error('Erreur lors de l\'envoi de la demande d\'ami.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de l\'envoi de la demande d\'ami.');
                 }
             }),
@@ -156,13 +150,13 @@ export class APIService {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/accept/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
-                    this.toastr.success('Demande d\'ami acceptée avec succès.', 'Succès');
+                    this.toastr.success('Demande d\'ami acceptée avec succès.', 'Succès', this.NOTIF_STYLE);
                     return response.body.message;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur');
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de l\'acceptation de la demande d\'ami.', 'Erreur');
+                    this.toastr.error('Erreur lors de l\'acceptation de la demande d\'ami.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de l\'acceptation de la demande d\'ami.');
                 }
             }),
@@ -175,13 +169,13 @@ export class APIService {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/refuse/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
-                    this.toastr.success('Demande d\'ami refusée avec succès.', 'Succès');
+                    this.toastr.success('Demande d\'ami refusée avec succès.', 'Succès', this.NOTIF_STYLE);
                     return response.body.message;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur');
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors du refus de la demande d\'ami.', 'Erreur');
+                    this.toastr.error('Erreur lors du refus de la demande d\'ami.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors du refus de la demande d\'ami.');
                 }
             }),
@@ -196,7 +190,7 @@ export class APIService {
                 if (response.status === 200 && response.body.friends) {
                     return Object.values(response.body.friends) as User[];
                 } else if (response.body?.error) {
-                    this.toastr.info(response.body.error, 'Info');
+                    this.toastr.info(response.body.error, 'Info', this.NOTIF_STYLE);
                     return [];
                 } else {
                     return [];
@@ -220,10 +214,10 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as GameRequest[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Aucune demande de jeu créée.', 'Erreur');
+                    this.toastr.error('Aucune demande de jeu créée.', 'Erreur', this.NOTIF_STYLE);
                     return [];
                 }
             }),
@@ -237,10 +231,10 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as Session[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Aucune demande de session créée.', 'Erreur');
+                    this.toastr.error('Aucune demande de session créée.', 'Erreur', this.NOTIF_STYLE);
                     return [];
                 }
             }),
@@ -254,10 +248,10 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return response.body as Session;
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de la récupération de la session.', 'Erreur');
+                    this.toastr.error('Erreur lors de la récupération de la session.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la récupération de la session.');
                 }
             }),
@@ -271,7 +265,7 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as GameRequest[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     return [];
                 } else {
                     return [];
@@ -288,7 +282,7 @@ export class APIService {
                 if (response.status === 200 && response.body.history) {
                     return Object.values(response.body.history) as HistoryQuiz[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     return [];
                 } else {
                     return [];
@@ -324,10 +318,10 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return response.body as Quiz;
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de la récupération du quiz.', 'Erreur');
+                    this.toastr.error('Erreur lors de la récupération du quiz.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la récupération du quiz.');
                 }
             }),
@@ -341,7 +335,7 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as Quiz[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     return [];
                 } else {
                     return [];
@@ -357,7 +351,7 @@ export class APIService {
             if (response.status === 200 && response.body) {
                 return Object.values(response.body) as Quiz[];
             } else if (response.body?.error) {
-                this.toastr.error(response.body.error, 'Erreur');
+                this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                 return [];
             } else {
                 return [];
@@ -371,13 +365,13 @@ export class APIService {
         return this.http.post<any>(this.endpoint+"/quiz/new", quizData, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
-                    this.toastr.success('Quiz créé avec succès.', 'Succès');
+                    this.toastr.success('Quiz créé avec succès.', 'Succès', this.NOTIF_STYLE);
                     return response.body as Quiz;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur');
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de la création du quiz.', 'Erreur');
+                    this.toastr.error('Erreur lors de la création du quiz.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la création du quiz.');
                 }
             }),
@@ -393,10 +387,10 @@ export class APIService {
                 if (response.status === 200 && typeof response.body.newGrade === 'number') {
                     return response.body.newGrade as number;
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
-                    this.toastr.error('Erreur lors de la notation.', 'Erreur');
+                    this.toastr.error('Erreur lors de la notation.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la notation.');
                 }
             }),
@@ -422,7 +416,7 @@ export class APIService {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as User[];
                 } else if (response.body?.error) {
-                    this.toastr.error(response.body.error, 'Erreur');
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     return [];
                 } else {
                     return [];
