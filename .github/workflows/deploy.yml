@@ -1,32 +1,56 @@
-name: Deploy to production
+name: Deploy Angular to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:  # Permet le déclenchement manuel depuis l'interface GitHub
+    branches:
+      - production
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Setup SSH Configuration
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_GENERAL_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H kerboul.me >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-      
-      - name: Deploy to Production
-        run: |
-          echo "Exécution du script de déploiement via SSH..."
-          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && cat ./deploy.sh'"
-          echo "prout"
-          ssh -i ~/.ssh/id_rsa root@kerboul.me "ssh quiz-server 'cd ~/build-deploy && ./deploy.sh'"
-          
-          echo "Déploiement terminé avec succès!"
-          
-      - name: Cleanup SSH keys
-        if: always() # S'exécute même en cas d'échec des étapes précédentes
-        run: |
-          rm -f ~/.ssh/id_rsa
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: quizine
+
+      - name: Build Angular app
+        run: npm run build -- --configuration production --base-href /quizine_front/
+        working-directory: quizine
+
+      - name: Copy index.html to 404.html to handle SPA routing in GitHub Pages
+        run: cp dist/quizine/browser/index.html dist/quizine/browser/404.html
+        working-directory: quizine
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: quizine/dist/quizine/browser
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

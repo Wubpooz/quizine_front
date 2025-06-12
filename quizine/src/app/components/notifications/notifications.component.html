@@ -40,6 +40,9 @@
                             </div>
                         </div>
                 </ng-container>
+                <div *ngIf="notifications.length === 0">
+                    <p class="text-gray-500 text-center mt-10">Aucune notification pour le moment.</p>
+                </div>
             </div>
         </div>
     </div>

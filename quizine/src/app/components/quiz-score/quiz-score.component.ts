@@ -32,49 +32,55 @@ export class QuizScoreComponent {
       if (!user) return;
       this.currentUser = user;
 
-      socketService.listenLeaderboard(async (data:{
-        userId: number;
-        score: number;
-    }[])=>{
-      let scores = new Map<User, number>();
-      let users = await apiservice.getAllUsers().toPromise();
-      if(!users)
-        return
-      for(let i = 0; i<data.length; i++){
-        let u = users.find(u=>u.id === data[i].userId);
-        if(!u)
-          continue
-        scores.set(u, data[i].score)
-      }
-
-      this.scores = scores;
-
-        this.sortedScores = Array.from(scores.entries())
-          .map(([user, score]) => ({ user, score }))
-          .sort((a, b) => b.score - a.score);
-
-        this.topThree = this.sortedScores.slice(0, 3);
-
-        for (let [u, score] of scores.entries()) {
-          if (u.id === this.currentUser.id) {
-            this.userScore = score;
-            console.log('userScore', this.userScore);
-            break;
+      this.socketService.listenLeaderboard(async (data: { userId: number; score: number }[]) => {
+        if (data && data.length > 0) {
+          let scores = new Map<User, number>();
+          let users = await apiservice.getAllUsers().toPromise();
+          if (!users) return;
+          for (let i = 0; i < data.length; i++) {
+            let u = users.find(u => u.id === data[i].userId);
+            if (!u) continue;
+            scores.set(u, data[i].score);
           }
-        }
-    })
-   
-      this.gameSessionStore.scores.subscribe((scores) => {
-        for (let [u, score] of scores.entries()) {
-          if (u.id === this.currentUser.id) {
-            this.userScore = score;
-            socketService.emitScore(this.userScore, socketService.sessionId||0, u.id)
-            console.log('userScore', this.userScore);
-            break;
-          }
+          this.setScores(scores);
+        } else {
+          // Fallback to solo mode
+          this.setSoloScore();
         }
       });
+
+      // Fallback: if no leaderboard received after a short delay, use solo score
+      setTimeout(() => {
+        if (this.sortedScores.length === 0) {
+          this.setSoloScore();
+        }
+      }, 1000);
     });
+  }
+
+  setScores(scores: Map<User, number>) {
+    this.scores = scores;
+    this.sortedScores = Array.from(scores.entries())
+      .map(([user, score]) => ({ user, score }))
+      .sort((a, b) => b.score - a.score);
+    this.topThree = this.sortedScores.slice(0, 3);
+
+    for (let [u, score] of scores.entries()) {
+      if (u.id === this.currentUser.id) {
+        this.userScore = score;
+        this.socketService.emitScore(this.userScore, this.socketService.sessionId || 0, u.id);
+        break;
+      }
+    }
+  }
+
+  setSoloScore() {
+    // Only current user, use local score
+    const score = this.gameSessionStore.score;
+    this.scores = new Map([[this.currentUser, score]]);
+    this.sortedScores = [{ user: this.currentUser, score }];
+    this.topThree = this.sortedScores;
+    this.userScore = score;
   }
 
   selectUser(userId: number): void {

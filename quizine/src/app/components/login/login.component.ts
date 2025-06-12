@@ -20,6 +20,14 @@ export class LoginComponent {
 
   constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
 
+  ngOnInit() {
+    this.appStore.currentUser.subscribe((user) => {
+      if (user) {
+        this.router.navigate(['/home']);
+      }
+    });
+  }
+
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
