@@ -59,7 +59,7 @@ export class APIService {
     login(username: string, password: string): Observable<User> {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status !== 200) {
+                if ((response.status !== 200 && response.status !== 204) || !response.body.user) {
                     this.toastr.error('Erreur lors de la connexion. Veuillez vérifier vos identifiants.', 'Erreur');
                     throw new Error('Login failed');
                 } else {
