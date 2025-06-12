@@ -64,14 +64,15 @@ export class APIService {
         );
     }
 
-    signup(username: string, password: string): Observable<User> {
-        return this.http.post<{message: string, user:User}>(this.endpoint+"/signup", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
+    signup(username: string, password: string): Observable<string> {
+        return this.http.post<{message: string}>(this.endpoint+"/signup", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status !== 200) {
                     this.toastr.error('Erreur lors de l\'inscription.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Signup failed');
                 }
-                return response.body.user;
+                console.log(response.body.message);
+                return response.body.message;
             }),
             catchError(error => this.handleError(error))
         );
