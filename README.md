@@ -18,6 +18,7 @@
 
 ### P2
 - [x] notif when get call fails
+- [ ] add notifications where needed (https://codeseven.github.io/toastr/demo.html)
 - [ ] profile/quiz pictures
 - [ ] handle friends correctly
 - [ ] add a loading spinner when waiting for API calls
@@ -34,6 +35,7 @@
 ### P4
 - [ ] visit other user profiles
 - [ ] home-card component (or just card component for that + library)
+- [ ] use SwPush for notifications on desktop and mobile
 
 
 
