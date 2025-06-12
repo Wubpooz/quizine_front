@@ -33,10 +33,8 @@ export class APIService {
 
     //========================= Register =========================
     login(username: string, password: string): Observable<User> {
-        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
-            map((response: HttpResponse<any>) => {
-                const cookies = response.headers.get('Set-Cookie');
-                console.log('Cookies:', cookies);
+        return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true}).pipe(
+            map((response: any) => {
                 return response.body.user;
             }),
             retry(1),
@@ -126,7 +124,9 @@ export class APIService {
     getFriends() : Observable<User[]> {
         return this.http.get<{message: string, friends: User[]}>(this.endpoint+'/friends', {withCredentials: true}).pipe(
             map((response: any) => {
-                console.log(response.message);
+                if(response.message) {
+                    console.log(response.message);
+                }
                 return response.friends ? Object.values(response.friends) as User[] : [];
             }),
             retry(1),
