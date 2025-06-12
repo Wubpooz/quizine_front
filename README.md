@@ -12,14 +12,14 @@
 - [x] wrap navbar + sidebar dans un composant
 - [x] store sidebar toggle value between page refresh
 - [x] search bars alignement + search working again + scroll in dropdown
-- [ ] search bar + pop-up component(s)
-- [ ] home-card component (or just card component for that + library)
 - [x] remove CSS files
-- [ ] profile/quiz pictures
-- [ ] handle friends correctly
 - [x] Github Pages deployment
+- [x] Vercel + redis deployment, app works successfully fully
 
 ### P2
+- [ ] profile/quiz pictures
+- [ ] handle friends correctly
+- [ ] add a loading spinner when waiting for API calls
 - [ ] quiz descriptions
 - [ ] quiz editing ?
 - [ ] Rating system
@@ -28,9 +28,11 @@
 
 ### P3
 - [ ] Search/sort by tags
+- [ ] search bar + pop-up component(s)
 
 ### P4
 - [ ] visit other user profiles
+- [ ] home-card component (or just card component for that + library)
 
 
 
