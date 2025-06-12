@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "dist/<project-name>/**/*",
+      "src": "dist/quizine/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/dist/<project-name>/index.html"
+      "dest": "/dist/quizine/browser/index.html"
     }
   ]
 }
