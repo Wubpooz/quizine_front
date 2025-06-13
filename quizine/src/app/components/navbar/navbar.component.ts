@@ -4,6 +4,7 @@ import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
+import { APIService } from '../../services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,11 @@ export class NavbarComponent {
   searchTerm: string = '';
   searchDropdownOpen: boolean = false;
   
-  constructor(private router: Router, private appStore: AppStore, private sidebarService: SidebarService) {
+  constructor(private router: Router,
+    private appStore: AppStore,
+    private sidebarService: SidebarService,
+    private apiService: APIService
+    ) {
       this.appStore.init()
       this.appStore.quizList.subscribe((quizzes) => {
         this.quizList = quizzes||[];
@@ -39,6 +44,15 @@ export class NavbarComponent {
   onDocumentClick(event: MouseEvent) {
     this.searchDropdownOpen = false;
   }
+
+  logout() {
+  this.apiService.logout().subscribe({
+    next: () => {
+      this.appStore.updateUser(undefined as any);
+      this.router.navigate(['/landing']);
+    }
+  });
+}
 
   toggleSideBar() {
     this.sidebarService.toggle();
