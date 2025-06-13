@@ -45,6 +45,9 @@ export class NavbarComponent {
   @HostListener('document:mousedown', ['$event'])
   onDocumentClick(event: MouseEvent) {
     this.searchDropdownOpen = false;
+    if(this.profileDropdownOpen && !this.dropdownClicked) {
+      this.closeProfileDropdown();
+    }
   }
 
   get isMobile(): boolean {
