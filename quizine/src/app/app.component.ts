@@ -31,40 +31,59 @@ export class AppComponent {
   ) {}
 
   ngOnInit(): void {
-    const connectSid = this.getCookie('connect.sid');
     this.appStore.init();
-
-    if(connectSid) {
-      this.apiService.getUserData().subscribe({
-        next: (user) => {
-          if (user) {
-            console.log("User retrieved from cookie:", user);
-            this.appStore.updateUser(user);
-            this.router.navigate(['/home']);
-          } else {
-            console.log("Session expired, clear cookie and user data.");
-            this.deleteCookie('connect.sid');
-            this.appStore.updateUser(undefined as any);
-            this.router.navigate(['/landing']);
-          }
-        },
-        error: (err) => {
-
+    this.apiService.getUserData().subscribe({
+      next: (user) => {
+        if (user) {
+          this.appStore.updateUser(user);
+          this.router.navigate(['/home']);
+        } else {
+          this.appStore.updateUser(undefined as any);
           this.router.navigate(['/landing']);
         }
-      });
-    } else {
-      console.log("No cookie found, user not logged in.");
-      this.router.navigate(['/landing']);
-    }
+      },
+      error: () => {
+        this.router.navigate(['/landing']);
+      }
+    });
   }
 
-  getCookie(name: string): string | null {
-    const match = this.document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-  }
+  // Uncomment the following code if you want to use cookies for session management, requires httpOnly: false cookies to be set by the backend.
+  // ngOnInit(): void {
+  //   const connectSid = this.getCookie('connect.sid');
+  //   this.appStore.init();
 
-  deleteCookie(name: string) {
-    this.document.cookie = `${name}=; Max-Age=0; path=/;`;
-  }
+  //   if(connectSid) {
+  //     this.apiService.getUserData().subscribe({
+  //       next: (user) => {
+  //         if (user) {
+  //           console.log("User retrieved from cookie:", user);
+  //           this.appStore.updateUser(user);
+  //           this.router.navigate(['/home']);
+  //         } else {
+  //           console.log("Session expired, clear cookie and user data.");
+  //           this.deleteCookie('connect.sid');
+  //           this.appStore.updateUser(undefined as any);
+  //           this.router.navigate(['/landing']);
+  //         }
+  //       },
+  //       error: (err) => {
+
+  //         this.router.navigate(['/landing']);
+  //       }
+  //     });
+  //   } else {
+  //     console.log("No cookie found, user not logged in.");
+  //     this.router.navigate(['/landing']);
+  //   }
+  // }
+
+  // getCookie(name: string): string | null {
+  //   const match = this.document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  //   return match ? match[2] : null;
+  // }
+
+  // deleteCookie(name: string) {
+  //   this.document.cookie = `${name}=; Max-Age=0; path=/;`;
+  // }
 }
