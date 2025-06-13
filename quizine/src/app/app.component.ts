@@ -14,6 +14,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ThemeService } from './services/theme.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,16 +23,19 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'Quizine';
+  isDarkMode: boolean = false;
 
   constructor(
     private appStore: AppStore,
     private apiService: APIService,
     private router: Router,
+    public theme: ThemeService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit(): void {
     this.appStore.init();
+
     this.apiService.getUserData().subscribe({
       next: (user) => {
         if (user) {

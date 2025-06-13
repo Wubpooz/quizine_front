@@ -1,10 +1,10 @@
-<div class="flex  justify-between items-center sticky top-0 bg-white z-[1000] w-full px-2 max-sm:pr-3 py-4">
+<div class="flex  justify-between items-center sticky top-0 bg-white dark:bg-primary z-[1000] w-full px-2 max-sm:pr-3 py-4">
   <!-- Left: Sidebar Toggle and Title -->
   <div class="flex items-center gap-1.5">
     <button (click)="toggleSideBar()">
       <img src="assets/images/SideBar.png" alt="Menu" class="w-10 h-10 object-contain hover:bg-primary-tint rounded" />
     </button>
-    <span class="inline text-xl font-bold text-primary">Quizine</span>
+    <span class="inline text-xl font-bold text-primary dark:text-primary-lighter">Quizine</span>
   </div>
 
   <!-- Center: Search (hidden for mobile) -->
@@ -56,41 +56,34 @@
       + Créer un quiz
     </button>
 
-    <div class="relative w-10 h-10 flex-shrink-0"
-      [ngClass]="{'pointer-events-none': !isMobile && profileDropdownOpen}"
-    >
+    <div class="relative w-10 h-10 flex-shrink-0">
       <button (click)="toggleProfileDropdown()">
-        <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
+        <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain cursor-pointer" />
       </button>
-      <!-- Transparent Bridge -->
       <div
         *ngIf="profileDropdownOpen"
-        class="absolute right-0"
-        style="top:40px; height:18px; width:190px; background:transparent;"
-        (mousedown)="$event.stopPropagation()"
-        (keydown.escape)="closeProfileDropdown()"
-        ></div>
-      <div
-        *ngIf="profileDropdownOpen"
-        (mousedown)="$event.stopPropagation()"
         (keydown.escape)="closeProfileDropdown()"
         class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
       >
         <button
-          (click)="gotoProfile(); closeProfileDropdown()"
-          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+          (click)="onProfileClick($event)"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer"
         >
           Profil
         </button>
         <button
-          (click)="logout(); closeProfileDropdown()"
-          class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white transition"
+          (click)="onLogoutClick($event)"
+          class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white transition cursor-pointer"
           aria-label="Se déconnecter"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1" />
           </svg>
           <span>Se déconnecter</span>
+        </button>
+        <button (click)="onDarkModeClick($event)" class="block w-full text-left px-4 py-2 hover:bg-gray-100 cursor-pointer">
+          <span *ngIf="!isDarkMode">🌙</span>
+          <span *ngIf="isDarkMode">☀️</span>
         </button>
       </div>
     </div>

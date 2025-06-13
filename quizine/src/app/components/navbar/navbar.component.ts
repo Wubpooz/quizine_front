@@ -5,6 +5,7 @@ import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { APIService } from '../../services/api.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +24,8 @@ export class NavbarComponent {
   constructor(private router: Router,
     private appStore: AppStore,
     private sidebarService: SidebarService,
-    private apiService: APIService
+    private apiService: APIService,
+    public theme: ThemeService
     ) {
       this.appStore.init()
       this.appStore.quizList.subscribe((quizzes) => {
@@ -50,8 +52,39 @@ export class NavbarComponent {
     }
   }
 
+  onProfileClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.dropdownClicked = true;
+    this.gotoProfile();
+    this.closeProfileDropdown();
+  }
+
+  onLogoutClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.dropdownClicked = true;
+    this.logout();
+    this.closeProfileDropdown();
+  }
+
+  onDarkModeClick(event: MouseEvent) {
+    event.stopPropagation();
+    this.dropdownClicked = true;
+    this.toggleDarkMode();
+    this.closeProfileDropdown();
+  }
+
   get isMobile(): boolean {
     return window.innerWidth <= 768;
+  }
+
+  get isDarkMode(): boolean {
+    return this.theme.isDarkMode;
+  }
+
+  toggleDarkMode() {
+    console.log("Toggling dark mode");
+    this.dropdownClicked = true;
+    this.theme.toggleDarkMode();
   }
 
   toggleProfileDropdown() {
@@ -64,13 +97,14 @@ export class NavbarComponent {
   }
 
   logout() {
-  this.apiService.logout().subscribe({
-    next: () => {
-      this.appStore.updateUser(undefined as any);
-      this.router.navigate(['/landing']);
-    }
-  });
-}
+    this.dropdownClicked = true;
+    this.apiService.logout().subscribe({
+      next: () => {
+        this.appStore.updateUser(undefined as any);
+        this.router.navigate(['/landing']);
+      }
+    });
+  }
 
   toggleSideBar() {
     this.sidebarService.toggle();
@@ -81,6 +115,7 @@ export class NavbarComponent {
   }
 
   gotoProfile() {
+    this.dropdownClicked = true;
     this.router.navigate(['/profile']);
   }
 

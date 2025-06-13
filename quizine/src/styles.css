@@ -13,6 +13,24 @@
   --color-primary-border: rgba(47, 128, 237, 0.3);
   --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
   --font-body: 'Poppins', sans-serif;
+
+  --bg-main: #fff;
+  --text-main: #222;
+}
+
+.dark {
+  --color-primary: red;
+  --color-primary-dark: #1366D6;
+  --color-primary-darker: #0C4CB5;
+  --color-primary-light: #63A4F4;
+  --color-primary-lighter: #B3D5FD;
+  --color-primary-tint: #EAF3FE;
+  --color-primary-border: rgba(47, 128, 237, 0.3);
+  --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
+  --font-body: 'Poppins', sans-serif;
+
+  --bg-main: #1a1a1a;
+  --text-main: #f0f0f0;
 }
 
 html, body {

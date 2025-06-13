@@ -31,7 +31,6 @@ export class AppStore {
                 if(!this.quizList){
                     this.quizList = new BehaviorSubject<Quiz[] |undefined>(quizzes);
                 } else {
-                    console.log(quizzes)
                     this.quizList.next(quizzes);
                 }
             });
