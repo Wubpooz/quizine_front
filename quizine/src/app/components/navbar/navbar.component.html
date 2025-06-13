@@ -60,6 +60,15 @@
       <button (click)="profileDropdownOpen = !profileDropdownOpen">
         <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
       </button>
+      <!-- Transparent Bridge -->
+      <div
+        *ngIf="profileDropdownOpen"
+        class="absolute right-0"
+        style="top:40px; height:8px; width:48px; background:transparent;"
+        (mouseenter)="profileDropdownOpen = true"
+        (mouseleave)="profileDropdownOpen = false"
+        ></div>
+        <!-- (mousedown)="$event.stopPropagation()" -->
       <div
         *ngIf="profileDropdownOpen"
         (mousedown)="$event.stopPropagation()"
