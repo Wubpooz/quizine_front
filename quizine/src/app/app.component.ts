@@ -13,6 +13,7 @@ import { APIService } from './services/api.service';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -25,35 +26,37 @@ export class AppComponent {
   constructor(
     private appStore: AppStore,
     private apiService: APIService,
+    private router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngOnInit(): void {
-    // Check if connect.sid cookie exists
     const connectSid = this.getCookie('connect.sid');
     this.appStore.init();
-    // if (!connectSid) {
-    //   this.appStore.updateUser(undefined as any);
-    //   localStorage.removeItem('userId');
-    //   console.log("Not logged in, clear user data.");
-    // } else {
-    //   console.log("Cookie exists, try to restore user.");
-    //   const userId = localStorage.getItem('userId');
-    //   if (userId) {
-    //     this.apiService.getUserData().subscribe((user: User) => {
-    //       if (user) {
-    //         console.log("User retrieved.");
-    //         this.appStore.updateUser(user);
-    //         localStorage.setItem('userId', userId);
-    //       } else {
-    //         console.log("Session expired, clear cookie and user data.")
-    //         this.deleteCookie('connect.sid');
-    //         this.appStore.updateUser(undefined as any);
-    //         localStorage.removeItem('userId');
-    //       }
-    //     });
-    //   }
-    // }
+
+    if(connectSid) {
+      this.apiService.getUserData().subscribe({
+        next: (user) => {
+          if (user) {
+            console.log("User retrieved from cookie:", user);
+            this.appStore.updateUser(user);
+            this.router.navigate(['/home']);
+          } else {
+            console.log("Session expired, clear cookie and user data.");
+            this.deleteCookie('connect.sid');
+            this.appStore.updateUser(undefined as any);
+            this.router.navigate(['/landing']);
+          }
+        },
+        error: (err) => {
+
+          this.router.navigate(['/landing']);
+        }
+      });
+    } else {
+      console.log("No cookie found, user not logged in.");
+      this.router.navigate(['/landing']);
+    }
   }
 
   getCookie(name: string): string | null {
