@@ -31,6 +31,7 @@
 ### P3
 - [ ] Search/sort by tags
 - [ ] search bar + pop-up component(s)
+- [ ] https://animejs.com/documentation/stagger
 
 ### P4
 - [ ] visit other user profiles

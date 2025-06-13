@@ -70,7 +70,7 @@ export class APIService {
                 if( response.status === 409) {
                     this.toastr.error('Ce nom d\'utilisateur est déjà pris. Veuillez en choisir un autre.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Username already exists');
-                } else if (response.status !== 200) {
+                } else if (response.status !== 201) {
                     this.toastr.error('Erreur lors de l\'inscription.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Signup failed');
                 } else {
