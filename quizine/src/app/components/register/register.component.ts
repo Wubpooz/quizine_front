@@ -29,14 +29,19 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.apiService.signup(this.username, this.password).subscribe((message: any) => {
-      this.apiService.login(this.username, this.password).subscribe((loggedUser: any) => {
-        if (loggedUser) {
-          this.appStore.init();
-          this.appStore.updateUser(loggedUser);
-          this.router.navigate(['/home']);
-        }
-      });
+    this.apiService.signup(this.username, this.password).subscribe({
+      next: () => {
+        // Registration successful, now login
+        this.apiService.login(this.username, this.password).subscribe({
+          next: (loggedUser) => {
+            if (loggedUser) {
+              this.appStore.init();
+              this.appStore.updateUser(loggedUser);
+              this.router.navigate(['/home']);
+            }
+          }
+        });
+      }
     });
   }
 
