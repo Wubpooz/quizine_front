@@ -17,6 +17,7 @@ export class NavbarComponent {
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
   searchDropdownOpen: boolean = false;
+  profileDropdownOpen: boolean = false;
   
   constructor(private router: Router,
     private appStore: AppStore,
