@@ -18,6 +18,7 @@ export class NavbarComponent {
   searchTerm: string = '';
   searchDropdownOpen: boolean = false;
   profileDropdownOpen: boolean = false;
+  dropdownClicked: boolean = false;
   
   constructor(private router: Router,
     private appStore: AppStore,
@@ -44,6 +45,19 @@ export class NavbarComponent {
   @HostListener('document:mousedown', ['$event'])
   onDocumentClick(event: MouseEvent) {
     this.searchDropdownOpen = false;
+  }
+
+  get isMobile(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  toggleProfileDropdown() {
+    this.profileDropdownOpen = !this.profileDropdownOpen;
+    this.dropdownClicked = this.profileDropdownOpen && this.isMobile;
+  }
+  closeProfileDropdown() {
+    this.profileDropdownOpen = false;
+    this.dropdownClicked = false;
   }
 
   logout() {

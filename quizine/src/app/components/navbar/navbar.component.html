@@ -56,8 +56,12 @@
       + Créer un quiz
     </button>
 
-    <div class="relative" (mouseleave)="profileDropdownOpen = false" (mouseenter)="profileDropdownOpen = true" class="w-10 h-10">
-      <button (click)="profileDropdownOpen = !profileDropdownOpen">
+    <div class="relative w-10 h-10"
+      [ngClass]="{'pointer-events-none': isMobile}"
+      (mouseleave)="!isMobile && !dropdownClicked && (profileDropdownOpen = false)"
+      (mouseenter)="!isMobile && (profileDropdownOpen = true)"
+    >
+      <button (click)="toggleProfileDropdown()">
         <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
       </button>
       <!-- Transparent Bridge -->
@@ -70,17 +74,17 @@
       <div
         *ngIf="profileDropdownOpen"
         (mousedown)="$event.stopPropagation()"
-        (keydown.escape)="profileDropdownOpen = false"
+        (keydown.escape)="closeProfileDropdown()"
         class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
       >
         <button
-          (click)="gotoProfile(); profileDropdownOpen = false"
+          (click)="gotoProfile(); closeProfileDropdown()"
           class="block w-full text-left px-4 py-2 hover:bg-gray-100"
         >
           Profil
         </button>
         <button
-          (click)="logout(); profileDropdownOpen = false"
+          (click)="logout(); closeProfileDropdown()"
           class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white transition"
           aria-label="Se déconnecter"
         >
