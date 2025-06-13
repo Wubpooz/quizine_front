@@ -56,28 +56,30 @@
       + Créer un quiz
     </button>
 
-    <div class="relative" (mouseleave)="profileDropdownOpen = false">
-  <button (click)="profileDropdownOpen = !profileDropdownOpen">
-    <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
-  </button>
-  <div
-    *ngIf="profileDropdownOpen"
-    class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
-  >
-    <button
-      (click)="gotoProfile(); profileDropdownOpen = false"
-      class="block w-full text-left px-4 py-2 hover:bg-gray-100"
-    >
-      Profil
-    </button>
-    <button
-      (click)="logout(); profileDropdownOpen = false"
-      class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white"
-    >
-      Se déconnecter
-    </button>
-  </div>
-</div>
+    <div class="relative" (mouseleave)="profileDropdownOpen = false" (mouseenter)="profileDropdownOpen = true">
+      <button (click)="profileDropdownOpen = !profileDropdownOpen">
+        <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
+      </button>
+      <div
+        *ngIf="profileDropdownOpen"
+        (mousedown)="$event.stopPropagation()"
+        (keydown.escape)="profileDropdownOpen = false"
+        class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+      >
+        <button
+          (click)="gotoProfile(); profileDropdownOpen = false"
+          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+        >
+          Profil
+        </button>
+        <button
+          (click)="logout(); profileDropdownOpen = false"
+          class="block w-full text-left px-4 py-2 text-red-500 hover:bg-red-500 hover:text-white"
+        >
+          Se déconnecter
+        </button>
+      </div>
+    </div>
     <!-- <button (click)="gotoProfile()">
       <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" />
     </button>
