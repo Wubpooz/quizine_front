@@ -36,7 +36,11 @@ export class AppComponent {
       next: (user) => {
         if (user) {
           this.appStore.updateUser(user);
-          this.router.navigate(['/home']);
+          // Redirect to home if the user is logged in and on a public route
+          const publicRoutes = ['/landing', '/login', '/register', '/'];
+          if(publicRoutes.includes(this.router.url)) {
+            this.router.navigate(['/home']);
+          }
         } else {
           this.appStore.updateUser(undefined as any);
           this.router.navigate(['/landing']);
