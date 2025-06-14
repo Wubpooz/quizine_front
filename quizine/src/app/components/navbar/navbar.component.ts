@@ -49,6 +49,10 @@ export class NavbarComponent {
     this.searchDropdownOpen = false;
   }
 
+  onMenuItemClick($event: MouseEvent) {
+    $event.stopPropagation();
+  }
+
   get isMobile(): boolean {
     return window.innerWidth <= 768;
   }
