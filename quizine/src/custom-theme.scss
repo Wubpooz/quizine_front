@@ -22,7 +22,6 @@ $quizine-theme: mat.define-light-theme((
 
 @include mat.all-component-themes($quizine-theme);
 
-// Set CSS variables globally for Tailwind and custom styles
 :root {
   --color-primary: #2F80ED;
   --color-primary-dark: #1366D6;
@@ -35,37 +34,18 @@ $quizine-theme: mat.define-light-theme((
   --font-body: 'Poppins', sans-serif;
 }
 
-// You can use CSS variables in your custom CSS, but not in Angular Material SCSS palette
-.mat-mdc-raised-button.mat-primary,
-.mat-mdc-unelevated-button.mat-primary,
-.mat-mdc-fab.mat-primary,
-.mat-mdc-mini-fab.mat-primary {
-  background-color: var(--color-primary) !important;
-  color: #fff !important;
-}
-
-.mat-mdc-raised-button.mat-accent,
-.mat-mdc-unelevated-button.mat-accent,
-.mat-mdc-fab.mat-accent,
-.mat-mdc-mini-fab.mat-accent {
+.profile-btn:hover {
   background-color: var(--color-primary-tint) !important;
-  color: #222 !important;
 }
 
-.mat-mdc-raised-button.mat-warn,
-.mat-mdc-unelevated-button.mat-warn,
-.mat-mdc-fab.mat-warn,
-.mat-mdc-mini-fab.mat-warn {
-  background-color: #e53935 !important;
-  color: #fff !important;
+.mat-mdc-menu-content {
+    margin: 0;
+    padding: 0 !important;
+    list-style-type: none;
+    border-radius: 20% !important;
 }
 
-.dark {
-  .mat-mdc-raised-button.mat-primary,
-  .mat-mdc-unelevated-button.mat-primary,
-  .mat-mdc-fab.mat-primary,
-  .mat-mdc-mini-fab.mat-primary {
-    background-color: var(--color-primary) !important;
-    color: #fff !important;
-  }
+.mat-mdc-menu-item:hover {
+    background-color: var(--color-primary-tint) !important;
+    color: var(--color-primary-dark) !important;
 }

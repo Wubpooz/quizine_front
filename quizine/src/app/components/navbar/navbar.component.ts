@@ -20,8 +20,6 @@ export class NavbarComponent {
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
   searchDropdownOpen: boolean = false;
-  profileDropdownOpen: boolean = false;
-  dropdownClicked: boolean = false;
   
   constructor(private router: Router,
     private appStore: AppStore,
@@ -49,30 +47,6 @@ export class NavbarComponent {
   @HostListener('document:mousedown', ['$event'])
   onDocumentClick(event: MouseEvent) {
     this.searchDropdownOpen = false;
-    if(this.profileDropdownOpen && !this.dropdownClicked) {
-      this.closeProfileDropdown();
-    }
-  }
-
-  onProfileClick(event: MouseEvent) {
-    event.stopPropagation();
-    this.dropdownClicked = true;
-    this.gotoProfile();
-    this.closeProfileDropdown();
-  }
-
-  onLogoutClick(event: MouseEvent) {
-    event.stopPropagation();
-    this.dropdownClicked = true;
-    this.logout();
-    this.closeProfileDropdown();
-  }
-
-  onDarkModeClick(event: MouseEvent) {
-    event.stopPropagation();
-    this.dropdownClicked = true;
-    this.toggleDarkMode();
-    this.closeProfileDropdown();
   }
 
   get isMobile(): boolean {
@@ -84,22 +58,10 @@ export class NavbarComponent {
   }
 
   toggleDarkMode() {
-    console.log("Toggling dark mode");
-    this.dropdownClicked = true;
     this.theme.toggleDarkMode();
   }
 
-  toggleProfileDropdown() {
-    this.profileDropdownOpen = !this.profileDropdownOpen;
-    this.dropdownClicked = this.profileDropdownOpen && this.isMobile;
-  }
-  closeProfileDropdown() {
-    this.profileDropdownOpen = false;
-    this.dropdownClicked = false;
-  }
-
   logout() {
-    this.dropdownClicked = true;
     this.apiService.logout().subscribe({
       next: () => {
         this.appStore.updateUser(undefined as any);
@@ -117,7 +79,6 @@ export class NavbarComponent {
   }
 
   gotoProfile() {
-    this.dropdownClicked = true;
     this.router.navigate(['/profile']);
   }
 
