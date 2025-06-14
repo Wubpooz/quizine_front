@@ -1,10 +1,10 @@
-<div class="flex  justify-between items-center sticky top-0 bg-white dark:bg-primary z-[1000] w-full px-2 max-sm:pr-3 py-4">
+<div class="flex  justify-between items-center sticky top-0 bg-bg-surface dark:bg-bg-surface z-[1000] w-full px-2 max-sm:pr-3 py-4">
   <!-- Left: Sidebar Toggle and Title -->
   <div class="flex items-center gap-1.5">
     <button (click)="toggleSideBar()">
       <img src="assets/images/SideBar.png" alt="Menu" class="w-10 h-10 object-contain hover:bg-primary-tint rounded" />
     </button>
-    <span class="inline text-xl font-bold text-primary dark:text-primary-lighter">Quizine</span>
+    <span class="inline text-xl font-bold text-primary dark:text-primary">Quizine</span>
   </div>
 
   <!-- Center: Search (hidden for mobile) -->
@@ -12,7 +12,7 @@
     <input
       type="text"
       placeholder="Recherche"
-      class="bg-gray-200 h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-primary min-w-0"
+      class="bg-bg-gray-200 dark:bg-bg-card h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-primary min-w-0"
       [value]="searchTerm"
       (input)="onSearchChange($event)"
       (focus)="searchDropdownOpen = true"

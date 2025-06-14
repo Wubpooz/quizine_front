@@ -23,6 +23,7 @@
 
   /* backgrounds */
   --bg-main:     #FFFFFF;
+  --bg-gray-200: #e5e7eb; /* Tailwind gray-200 */
   --bg-surface:  #FAFAFA;
   --bg-card:     #FFFFFF;
   --bg-muted:    #F5F5F5;
@@ -35,7 +36,7 @@
 }
 
 /* Dark mode overrides */
-.dark {
+:root.dark {
   --color-primary:        #63A4F4;  /* ↑ swap to light-blue for extra pop */
   --color-primary-dark:   #2F80ED;
   --color-primary-darker: #1366D6;
