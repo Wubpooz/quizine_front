@@ -1,0 +1,71 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$quizine-primary: mat.define-palette(mat.$blue-palette, 500, 100, 900);
+$quizine-accent: mat.define-palette(mat.$blue-grey-palette);
+$quizine-warn: mat.define-palette(mat.$red-palette);
+
+$quizine-typography: mat.define-typography-config(
+  $font-family: 'Poppins, sans‑serif'
+);
+
+$quizine-theme: mat.define-light-theme((
+  color: (
+    primary: $quizine-primary,
+    accent: $quizine-accent,
+    warn: $quizine-warn,
+  ),
+  typography: $quizine-typography,
+  density: 0,
+  ));
+
+@include mat.all-component-themes($quizine-theme);
+
+// Set CSS variables globally for Tailwind and custom styles
+:root {
+  --color-primary: #2F80ED;
+  --color-primary-dark: #1366D6;
+  --color-primary-darker: #0C4CB5;
+  --color-primary-light: #63A4F4;
+  --color-primary-lighter: #B3D5FD;
+  --color-primary-tint: #EAF3FE;
+  --color-primary-border: rgba(47, 128, 237, 0.3);
+  --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
+  --font-body: 'Poppins', sans-serif;
+}
+
+// You can use CSS variables in your custom CSS, but not in Angular Material SCSS palette
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary,
+.mat-mdc-fab.mat-primary,
+.mat-mdc-mini-fab.mat-primary {
+  background-color: var(--color-primary) !important;
+  color: #fff !important;
+}
+
+.mat-mdc-raised-button.mat-accent,
+.mat-mdc-unelevated-button.mat-accent,
+.mat-mdc-fab.mat-accent,
+.mat-mdc-mini-fab.mat-accent {
+  background-color: var(--color-primary-tint) !important;
+  color: #222 !important;
+}
+
+.mat-mdc-raised-button.mat-warn,
+.mat-mdc-unelevated-button.mat-warn,
+.mat-mdc-fab.mat-warn,
+.mat-mdc-mini-fab.mat-warn {
+  background-color: #e53935 !important;
+  color: #fff !important;
+}
+
+.dark {
+  .mat-mdc-raised-button.mat-primary,
+  .mat-mdc-unelevated-button.mat-primary,
+  .mat-mdc-fab.mat-primary,
+  .mat-mdc-mini-fab.mat-primary {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+  }
+}

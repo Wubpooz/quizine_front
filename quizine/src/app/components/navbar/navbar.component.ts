@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { APIService } from '../../services/api.service';
 import { ThemeService } from '../../services/theme.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatMenuModule, MatButtonModule],
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
