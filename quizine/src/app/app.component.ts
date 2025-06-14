@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, RouterOutlet } from '@angular/router';
 import { UserInviteComponent } from "./components/user-invite/user-invite.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LandingComponent } from "./components/landing/landing.component";
@@ -15,6 +15,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService } from './services/theme.service';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -33,28 +34,36 @@ export class AppComponent {
     @Inject(DOCUMENT) private document: Document
   ) {}
 
-  ngOnInit(): void {
-    this.appStore.init();
 
+ngOnInit(): void {
+  this.appStore.init();
+
+  this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd)
+  ).subscribe(() => {
     this.apiService.getUserData().subscribe({
       next: (user) => {
+        this.appStore.updateUser(user);
+        const publicRoutes = ['/landing', '/login', '/register', '/'];
         if (user) {
-          this.appStore.updateUser(user);
-          // Redirect to home if the user is logged in and on a public route
-          const publicRoutes = ['/landing', '/login', '/register', '/'];
-          if(publicRoutes.includes(this.router.url)) {
+          if (publicRoutes.includes(this.router.url)) {
             this.router.navigate(['/home']);
           }
         } else {
-          this.appStore.updateUser(undefined as any);
-          this.router.navigate(['/landing']);
+          if (!publicRoutes.includes(this.router.url)) {
+            this.router.navigate(['/landing']);
+          }
         }
       },
       error: () => {
-        this.router.navigate(['/landing']);
+        const publicRoutes = ['/landing', '/login', '/register', '/'];
+        if (!publicRoutes.includes(this.router.url)) {
+          this.router.navigate(['/landing']);
+        }
       }
     });
-  }
+  });
+}
 
   // Uncomment the following code if you want to use cookies for session management, requires httpOnly: false cookies to be set by the backend.
   // ngOnInit(): void {
