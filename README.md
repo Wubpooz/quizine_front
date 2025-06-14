@@ -20,6 +20,7 @@
 - [x] notif when get call fails
 - [x] profile pop-up menu with dark mode toggle, logout
 - [x] dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
+- [ ] use only specific components (buttons, toggles...)
 - [ ] use only css variables for colors !!
 - [ ] add notifications where needed (https://codeseven.github.io/toastr/demo.html)
 - [ ] profile/quiz pictures
