@@ -61,10 +61,58 @@
     </button>
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item (click)="gotoProfile()" aria-label="Ouvrir le profil"> Profil </button>
-      <button mat-menu-item (click)="toggleDarkMode()" aria-label="Basculer le mode sombre">
-        <span *ngIf="!isDarkMode">🌙</span>
-        <span *ngIf="isDarkMode">☀️</span>
+
+      <button mat-menu-item disableRipple class="px-0 select-none">
+        <!-- https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector -->
+        <!-- https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm -->
+        <div
+          (click)="toggleDarkMode()"
+          class="relative w-24 h-10 dark:bg-bg-card bg-bg-card border border-primary-lighter dark:border-primary-lighter rounded-full p-1 cursor-pointer select-none"
+          aria-label="Basculer le mode sombre"
+        >
+          <!-- Knob -->
+          <div
+            class="absolute top-1 left-1 h-8 w-8 bg-black dark:bg-white rounded-full transition-transform duration-300"
+            [ngStyle]="{ transform: isDarkMode ? 'translateX(3.5rem)' : 'translateX(0)' }"
+          ></div>
+
+          <div class="flex items-center justify-between h-full px-2 dark:text-white text-gray-800">
+            <!-- Moon Icon -->
+            <svg width="24" height="24" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+              <g fill="currentColor" >
+                <g transform="rotate(-38,50,50) translate(5,10)">
+                <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
+                </g>
+                  <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
+                <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
+              </g>
+            </svg>
+
+            <!-- Sun Icon -->
+            <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
+                <circle cx="50" cy="50" r="17"/>
+                
+                <g id="rays">
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(0, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(30, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(60, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(90, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(120, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(150, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(180, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(210, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(240, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(270, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(300, 50, 50)" />
+                  <line x1="50" y1="24" x2="50" y2="14" transform="rotate(330, 50, 50)" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
       </button>
+
       <button mat-menu-item (click)="logout()" class="transition" aria-label="Se déconnecter">
         <div *ngIf="isMobile" class="flex items-center gap-1 w-full h-full">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
