@@ -4,34 +4,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Light mode (default) */
 :root {
-  --color-primary: #2F80ED;
-  --color-primary-dark: #1366D6;
+  --color-primary:        #2F80ED;
+  --color-primary-dark:   #1366D6;
   --color-primary-darker: #0C4CB5;
-  --color-primary-light: #63A4F4;
-  --color-primary-lighter: #B3D5FD;
-  --color-primary-tint: #EAF3FE;
+  --color-primary-light:  #63A4F4;
+  --color-primary-lighter:#B3D5FD;
+  --color-primary-tint:   #EAF3FE;
   --color-primary-border: rgba(47, 128, 237, 0.3);
   --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
+
+  --color-warn:           #E53935;
+  --color-warn-light:     #FF6F60;
+  --color-warn-dark:      #AB000D;
+
   --font-body: 'Poppins', sans-serif;
 
-  --bg-main: #fff;
-  --text-main: #222;
+  /* backgrounds */
+  --bg-main:     #FFFFFF;
+  --bg-surface:  #FAFAFA;
+  --bg-card:     #FFFFFF;
+  --bg-muted:    #F5F5F5;
+
+  /* text */
+  --text-main:       #222222;
+  --text-secondary:  #555555;
+  --text-disabled:   #999999;
+  --text-inverse:    #FFFFFF;
 }
 
+/* Dark mode overrides */
 .dark {
-  --color-primary: red;
-  --color-primary-dark: #1366D6;
-  --color-primary-darker: #0C4CB5;
-  --color-primary-light: #63A4F4;
-  --color-primary-lighter: #B3D5FD;
-  --color-primary-tint: #EAF3FE;
-  --color-primary-border: rgba(47, 128, 237, 0.3);
-  --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
-  --font-body: 'Poppins', sans-serif;
+  --color-primary:        #63A4F4;  /* ↑ swap to light-blue for extra pop */
+  --color-primary-dark:   #2F80ED;
+  --color-primary-darker: #1366D6;
+  --color-primary-light:  #8CBDFE;
+  --color-primary-lighter:#C2DFFF;
+  --color-primary-tint:   #EAF3FE;
+  --color-primary-border: rgba(99, 164, 244, 0.3);
+  --color-primary-focus-ring: rgba(99, 164, 244, 0.5);
 
-  --bg-main: #1a1a1a;
-  --text-main: #f0f0f0;
+  --color-warn:           #FF6F60;
+  --color-warn-light:     #FF8A80;
+  --color-warn-dark:      #E53935;
+
+  /* backgrounds */
+  --bg-main:     #121212;  /* darkest “canvas” */
+  --bg-surface:  #1E1E1E;  /* panels, menus */
+  --bg-card:     #232323;  /* cards, sheets */
+  --bg-muted:    #2C2C2C;  /* disabled-ish surfaces */
+
+  /* text */
+  --text-main:       #E0E0E0;  /* primary text */
+  --text-secondary:  #B3B3B3;  /* secondary text */
+  --text-disabled:   #757575;  /* disabled text */
+  --text-inverse:    #000000;  /* when placed on light backgrounds */
 }
 
 html, body {
