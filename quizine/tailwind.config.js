@@ -30,6 +30,13 @@ module.exports = {
         'text-secondary': 'var(--text-secondary)',
         'text-disabled': 'var(--text-disabled)',
         'text-inverse': 'var(--text-inverse)',
+        //Borders
+        'border-main': 'var(--border-main)',
+        'border-secondary': 'var(--border-secondary)',
+        'border-light': 'var(--border-light)',
+        'border-muted': 'var(--border-muted)',
+        'border-primary': 'var(--border-primary)',
+        'border-warn': 'var(--border-warn)',
       },
       borderColor: {
         primary: 'var(--color-primary-border)',

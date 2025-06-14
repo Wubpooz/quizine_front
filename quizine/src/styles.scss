@@ -33,6 +33,24 @@
   --text-secondary:  #555555;
   --text-disabled:   #999999;
   --text-inverse:    #FFFFFF;
+
+  /* borders */
+  --border-main: #E5E7EB; /* Tailwind gray-200 */
+  --border-secondary: #D1D5DB; /* Tailwind gray-300 */
+  --border-light: #9CA3AF; /* Tailwind gray-400 */
+  --border-muted: #F3F4F6; /* Tailwind gray-200 */
+  --border-primary: var(--color-primary-border);
+  --border-warn: #FF6F60;
+
+  /* hover and focus states */
+  --hover-bg: #F0F0F0; /* Light hover background */
+  --focus-ring: rgba(47, 128, 237, 0.3); /* Light focus ring */
+  --focus-ring-inverse: rgba(255, 255, 255, 0.5); /* Inverse focus ring */
+  --focus-ring-warn: rgba(229, 57, 53, 0.3); /* Warn focus ring */
+  --focus-ring-primary: rgba(47, 128, 237, 0.5); /* Primary focus ring */
+  --focus-ring-secondary: rgba(99, 164, 244, 0.5); /* Secondary focus ring */
+  --focus-ring-muted: rgba(229, 231, 235, 0.5); /* Muted focus ring */
+  --focus-ring-light: rgba(156, 163, 175, 0.5); /* Light focus ring */
 }
 
 /* Dark mode overrides */
@@ -61,6 +79,14 @@
   --text-secondary:  #B3B3B3;  /* secondary text */
   --text-disabled:   #757575;  /* disabled text */
   --text-inverse:    #000000;  /* when placed on light backgrounds */
+
+  /* borders */
+  --border-main: #374151; /* Tailwind gray-700 */
+  --border-secondary: #4B5563; /* Tailwind gray-600 */
+  --border-light: #6B7280; /* Tailwind gray-500 */
+  --border-muted: #111827; /* Tailwind gray-800 */
+  --border-primary: var(--color-primary-border);
+  --border-warn: #FF6F60;
 }
 
 html, body {
