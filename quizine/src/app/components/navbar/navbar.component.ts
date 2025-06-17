@@ -54,7 +54,7 @@ export class NavbarComponent {
   }
 
   get indicatorTransform(): string {
-    const idx: Record<ThemePreference, number> = { light: 0, system: 1, dark: 2 };
+    const idx: Record<ThemePreference, number> = { light: 0, dark: 1, system: 2 };
     return `translateX(${idx[this.theme.preference] * 100}%)`;
   }
 
