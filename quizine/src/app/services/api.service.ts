@@ -202,12 +202,7 @@ export class APIService {
                 }
             }),
             retry(1),
-            catchError((error: HttpErrorResponse) => {
-                if (error.status === 404) {
-                    return of([]);
-                }
-                return this.handleError(error);
-            })
+            catchError(error =>  this.handleError(error))
         );
     }
     
