@@ -5,38 +5,38 @@ export interface EmptyQuiz {
 }
 
 export interface HistoryQuiz {
-  id: number;
+  id: string;
   nom: string;
   picture: Uint8Array | null;
   private: boolean;
-  id_creator?: number;
+  id_creator?: string;
 }
 
 export interface Quiz {
-  id:number;
+  id: string;
   nom: string;
   picture: Uint8Array | null;
   private: boolean;
-  id_creator?: number;
+  id_creator?: string;
   questions: Question[];
-  tags: string[]
-  createdBy:string
+  tags: string[];
+  createdBy: string;
 }
 
 export interface Question {
-  id:number;
+  id: string;
   name: string;
-  id_answer: number;
+  id_answer: string;
   grade?: number;
   picture?: Uint8Array | null;
   duration: number;
-  id_creator?: number;
+  id_creator?: string;
   private: boolean;
-  choices: Option[]
+  choices: Option[];
 }
 
 export interface Option {
-  id: number;
+  id: string;
   content: string;
-  id_question: number;
+  id_question: string;
 }

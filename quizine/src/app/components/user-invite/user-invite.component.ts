@@ -14,17 +14,17 @@ import { APIService } from '../../services/api.service';
   templateUrl: './user-invite.component.html'
 })
 export class UserInviteComponent {
-  @Input() quizId!: number;
+  @Input() quizId!: string;
   @Output() close = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<number>();
+  @Output() submit = new EventEmitter<string>();
   //? ViewChild
   inviteForm: FormGroup;
 
   friends!: User[];
   users: User[];
-  selectedFriends: number[] = [];
-  selectedUsers: number[] = [];
-  sessionId!: number;
+  selectedFriends: string[] = [];
+  selectedUsers: string[] = [];
+  sessionId!: string;
 
   constructor(private fb: FormBuilder,
       private appStore: AppStore,
@@ -39,7 +39,7 @@ export class UserInviteComponent {
     this.users = [];
 
     this.apiservice.getAllUsers().subscribe((friends: User[] | undefined) => {
-      console.log(friends)
+      // console.log(friends)
       this.friends = friends||[];
     });
   }
@@ -63,7 +63,7 @@ export class UserInviteComponent {
     });
   }
 
-  onCheckboxChange(event: any, id: number) {
+  onCheckboxChange(event: any, id: string) {
     if (event.target.checked) {
       this.selectedFriends.push(id);
     } else {
@@ -76,7 +76,7 @@ export class UserInviteComponent {
       const idsToInvite = this.selectedFriends.concat(this.selectedUsers);
       console.log('Inviting:', idsToInvite);
       this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: idsToInvite}, {}).subscribe((payload) => {
-        console.log("Invitation:", payload);
+        // console.log("Invitation:", payload);
       });
     }
     this.submit.emit(this.sessionId);
@@ -90,7 +90,7 @@ export class UserInviteComponent {
   onClose() {
     this.close.emit();
     this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
-      console.log("Deleted participation:", payload);
+      // console.log("Deleted participation:", payload);
     });
   }
 }

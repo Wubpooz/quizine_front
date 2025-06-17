@@ -1,20 +1,20 @@
 export interface Participation {
-    id: number;
-    id_session: number;
-    id_user: number;
-    datetime: string;
-    score?: number;
+  id: string;
+  id_session: string;
+  id_user: string;
+  datetime: string;
+  score?: number;
 }
 
 export interface GameRequest {
   datetime: string;
-  id_session: number;
-  id_requestor: number;
-  id_validator: number;
+  id_session: string;
+  id_requestor: string;
+  id_validator: string;
   username?: string;
 }
 
 export interface Session {
-  id: number;
-  id_quiz: number;
+  id: string;
+  id_quiz: string;
 }

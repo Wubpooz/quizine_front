@@ -11,20 +11,12 @@ export class gameSessionStore {
     private scorePerAnswer: number = 100; // You can adjust the score per correct answer here
     public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
     public score: number = 0;
-    public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map(
-        [
-            [ { id: 1, username: "John Doe", picture: "" }, 1450 ],
-            [ { id: 2, username: "Jane Smith", picture: "" }, 1500 ],
-            [ { id: 3, username: "Alice Johnson", picture: "" }, 1200 ],
-            [ { id: 4, username: "Bob Brown", picture: "" }, 1400 ],
-            [ { id: 5, username: "Boby own", picture: "" }, 1100 ],
-            [ { id: 6, username: "Johfb Bn", picture: "" }, 600 ]
-    ])); //TODO temp
-    public answerList: BehaviorSubject<Map<number, Option>> = new BehaviorSubject<Map<number, Option>>(new Map([]));
+    public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map());
+    public answerList: BehaviorSubject<Map<string, Option>> = new BehaviorSubject<Map<string, Option>>(new Map());
 
 
     constructor(private apiService: APIService) {
-        this.updateQuiz(7); //TODO temp
+        // this.updateQuiz(7); //TODO temp
     }
 
     updateScore(user: User, score: number) {
@@ -32,7 +24,7 @@ export class gameSessionStore {
         currentScores.set(user, score);
         this.scores.next(currentScores);
     }
-    addAnswer(questionId: number, answerId: number) {
+    addAnswer(questionId: string, answerId: string) {
         const currentAnswers = this.answerList.getValue();
         const question = this.quiz.getValue()?.questions.find((q: Question) => q.id === questionId);
         const answer = question?.choices.find((o: Option) => o.id === answerId);
@@ -42,7 +34,7 @@ export class gameSessionStore {
         this.answerList.next(currentAnswers);
     }
 
-    updateQuiz(quizId: number) {
+    updateQuiz(quizId: string) {
         this.apiService.getQuiz(quizId).subscribe((quiz: Quiz) => {
             if (!this.quiz) {
                 this.quiz = new BehaviorSubject<Quiz|undefined>(quiz);

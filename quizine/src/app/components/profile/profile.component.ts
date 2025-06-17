@@ -14,7 +14,7 @@ import { LayoutComponent } from "../layout/layout.component";
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
-  user: User = {id: -1, username: "", picture: ""};
+  user: User = {id: "", username: "", picture: ""};
   friends: User[] = [];
   history: HistoryQuiz[] = [];
   showFriends = false;
@@ -36,7 +36,7 @@ export class ProfileComponent {
     });
   }
 
-  goToQuiz(quizId: number) {
+  goToQuiz(quizId: string) {
     this.router.navigate(['/quiz-preview', quizId]);
   }
 }

@@ -13,7 +13,7 @@ import { SocketService } from '../../services/socket.service';
 })
 export class WaitingPageComponent {
   @Input() isCreator!: boolean;
-  @Input() sessionId!: number;
+  @Input() sessionId!: string;
   @Input() refus?:boolean;
   @Output() close = new EventEmitter<void>();
   timer: number;
@@ -24,7 +24,7 @@ export class WaitingPageComponent {
   }
 
   async ngOnInit() {
-    console.log("SESSION", this.sessionId)
+    // console.log("SESSION", this.sessionId)
     let me = await this.apiService.getUserData().toPromise()
 
     this.intervalId = setInterval(() => {
@@ -34,15 +34,15 @@ export class WaitingPageComponent {
         this.playQuiz();
       }
     }, 1000);
-    console.log("isCreator = " + this.isCreator);
+    // console.log("isCreator = " + this.isCreator);
     if(this.refus === undefined || this.refus === false){
-      console.log("EMIT JOIN STP")
+      // console.log("EMIT JOIN STP")
       this.socketService.listenGameStart((data)=>{
-        console.log(data)
+        // console.log(data)
         clearInterval(this.intervalId);
         this.playQuiz();
       })
-      this.socketService.emitJoin(this.isCreator, this.sessionId, me?.id || 10);
+      this.socketService.emitJoin(this.isCreator, this.sessionId, me?.id || "None");
     }else{
     
       if(me)

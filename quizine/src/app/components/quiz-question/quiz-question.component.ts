@@ -14,7 +14,7 @@ export class QuizQuestionComponent {
   totalQuestions: number = 0;
   quizName: string = '';
   question : Question;
-  selectedAnswer: number | null = null;
+  selectedAnswer: string | null = null;
   timer: number;
   private intervalId: any;
 

@@ -20,14 +20,14 @@ export class QuizDescriptionComponent {
   quiz!: Quiz;
   isInviteShowing = false;
   isWaitingPageShowing = false;
-  sessionId!: number;
+  sessionId!: string;
 
   constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router,
     private gamestore:gameSessionStore
   ) {}
 
   ngOnInit(): void {
-    let quizId = Number(this.route.snapshot.paramMap.get('id'));
+    let quizId = this.route.snapshot.paramMap.get('id');
     if (quizId) {
       this.gamestore.updateQuiz(quizId)
       this.quizService.getQuizById(quizId).then((data: Quiz) => {
@@ -48,7 +48,7 @@ export class QuizDescriptionComponent {
     this.isInviteShowing = true;
   }
 
-  handleInviteSubmit(sessionId: number): void {
+  handleInviteSubmit(sessionId: string): void {
     this.isWaitingPageShowing = true;
     this.isInviteShowing = false;
     this.sessionId = sessionId;

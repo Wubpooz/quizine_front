@@ -45,7 +45,7 @@ export class HomePageComponent {
   gotoProfile() {
     this.router.navigate(['/profile']);
   }
-  gotoQuiz(quizId: number) {
+  gotoQuiz(quizId: string) {
     this.router.navigate(['/quiz-preview', quizId]);
   }
 

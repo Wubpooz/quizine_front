@@ -11,17 +11,17 @@ import { GameRequest } from '../models/participationModel';
 export class MockAPIService {
   // ======= MOCK DATA =======
   private mockUser: User = {
-    id: 1,
+    id: this.generateRandomString(10),
     username: 'devuser',
     picture: 'assets/images/ProfileLogo.png'
   };
 
   private mockQuiz: Quiz = {
-    id: 1,
+    id: this.generateRandomString(10),
     nom: 'Quiz de test',
     picture: null,
     private: false,
-    id_creator: 1,
+    id_creator: this.generateRandomString(10),
     questions: [],
     tags: ['test'],
     createdBy: 'devuser'
@@ -31,26 +31,36 @@ export class MockAPIService {
 
   private mockHistory: HistoryQuiz[] = [
     {
-      id: 1,
+      id: this.generateRandomString(10),
       nom: 'Quiz de test',
       picture: null,
       private: false,
-      id_creator: 1
+      id_creator: this.generateRandomString(10)
     }
   ];
 
   private mockSession: Session = {
-    id: 1,
-    id_quiz: 1
+    id: this.generateRandomString(10),
+    id_quiz: this.generateRandomString(10)
   };
 
   private mockGameRequest: GameRequest = {
     datetime: new Date().toISOString(),
-    id_session: 1,
-    id_requestor: 1,
-    id_validator: 2,
+    id_session: this.generateRandomString(10),
+    id_requestor: this.generateRandomString(10),
+    id_validator: this.generateRandomString(10),
     username: 'devuser'
   };
+
+  private generateRandomString(length: number): string {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+
 
   // ========== AUTH ==========
   login(username: string, password: string): Observable<User> {
@@ -67,14 +77,14 @@ export class MockAPIService {
 
   // ========== QUIZ ==========
   createEmptyQuiz(emptyQuiz: EmptyQuiz): Observable<Quiz> {
-    return of({ ...this.mockQuiz, ...emptyQuiz, id: Math.floor(Math.random() * 1000) });
+    return of({ ...this.mockQuiz, ...emptyQuiz, id: this.generateRandomString(10)});
   }
 
   createQuiz(quizData: any): Observable<Quiz> {
-    return of({ ...this.mockQuiz, ...quizData, id: Math.floor(Math.random() * 1000) });
+    return of({ ...this.mockQuiz, ...quizData, id: this.generateRandomString(10) });
   }
 
-  getQuiz(quizId: number): Observable<Quiz> {
+  getQuiz(quizId: string): Observable<Quiz> {
     return of({ ...this.mockQuiz, id: quizId });
   }
 
@@ -91,15 +101,15 @@ export class MockAPIService {
   }
 
   // ========== FRIENDS ==========
-  inviteFriend(userId: number): Observable<string> {
+  inviteFriend(userId: string): Observable<string> {
     return of('Demande d\'ami envoyée');
   }
 
-  acceptFriend(userId: number): Observable<string> {
+  acceptFriend(userId: string): Observable<string> {
     return of('Demande d\'ami acceptée');
   }
 
-  refuseFriend(userId: number): Observable<string> {
+  refuseFriend(userId: string): Observable<string> {
     return of('Demande d\'ami refusée');
   }
 
@@ -108,15 +118,15 @@ export class MockAPIService {
   }
 
   // ========== GAME ==========
-  requestGame(session: number, players: number[]): Observable<GameRequest[]> {
+  requestGame(session: string, players: string[]): Observable<GameRequest[]> {
     return of([this.mockGameRequest]);
   }
 
-  createSession(quizId: number): Observable<Session[]> {
+  createSession(quizId: string): Observable<Session[]> {
     return of([{ ...this.mockSession, id_quiz: quizId }]);
   }
 
-  getSession(id: number): Observable<Session> {
+  getSession(id: string): Observable<Session> {
     return of({ ...this.mockSession, id });
   }
 
@@ -135,7 +145,7 @@ export class MockAPIService {
   }
 
   // ========== RATE ==========
-  addRate(quizId: number, grade: number): Observable<number> {
+  addRate(quizId: string, grade: number): Observable<number> {
     return of(grade);
   }
 

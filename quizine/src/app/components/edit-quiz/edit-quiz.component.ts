@@ -20,7 +20,7 @@ export class EditQuizComponent {
   constructor(private route: ActivatedRoute, private router: Router, private quizService: QuizService) {}
   
   ngOnInit(): void {
-    let quizId = Number(this.route.snapshot.paramMap.get('id'));
+    let quizId = this.route.snapshot.paramMap.get('id');
     if (quizId) {
       this.quizService.getQuizById(quizId).then((quiz: Quiz) => {
         if(quiz) {

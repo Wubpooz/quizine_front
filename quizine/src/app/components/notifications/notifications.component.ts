@@ -16,16 +16,16 @@ import { LayoutComponent } from "../layout/layout.component";
 
 export class NotificationsComponent {
   notifications: GameRequest[] = [];
-  isWaitingPageShowing:boolean[] = [];
-  isrefus:boolean = false;
+  isWaitingPageShowing: Map<string, boolean> = new Map<string, boolean>();
+  isrefus: boolean = false;
 
 
   constructor(private apiService: APIService,
     private gamestore:gameSessionStore) {
 
-    this.apiService.getNotifications().toPromise().then((grs:GameRequest[]|undefined)=>{
+    this.apiService.getNotifications().toPromise().then((grs: GameRequest[] | undefined) => {
       if(!grs){
-        return
+        return;
       }
 
       grs.forEach((gr)=>{
@@ -37,35 +37,40 @@ export class NotificationsComponent {
         id_validator:gr.id_validator,
         username: u?.username || "inconnu"
         })
-        this.isWaitingPageShowing[gr.id_session] = false;
+        this.isWaitingPageShowing.set(gr.id_session, false);
         })
       })
     })
      
   }
 
-  getUserFromId(id:number){
+  getUserFromId(id: string) {
     let users = this.apiService.getAllUsers().toPromise().then((usrs)=>{
             return usrs?.find((u)=>u.id === id)
     })
     return users;
   }
 
-  async accepter(notif:GameRequest){
+  async accepter(notif: GameRequest) {
     this.isrefus = false;
-    this.isWaitingPageShowing[notif.id_session] = true;
-    let s = await this.apiService.getSession(notif.id_session).toPromise()
-    let quizId = s?.id_quiz;
-    this.gamestore.updateQuiz(quizId||7);
+    this.isWaitingPageShowing.set(notif.id_session, true);
+    let s = await this.apiService.getSession(notif.id_session).toPromise();
+    if(!s) {
+      //TODO notification
+      console.error("Unexepcted error. Can't accept notification.");
+    } else {
+      let quizId = s.id_quiz;
+      this.gamestore.updateQuiz(quizId);
+    }
   }
-  refuser(notif:GameRequest){
+  refuser(notif: GameRequest) {
     this.isrefus = true;
-    this.isWaitingPageShowing[notif.id_session] = true;
+    this.isWaitingPageShowing.set(notif.id_session, true);
     //this.isWaitingPageShowing[notif.id_session] = undefined;
   }
 
-  onWaitClose(notif:GameRequest){
-    this.isWaitingPageShowing[notif.id_session] = false
+  onWaitClose(notif: GameRequest) {
+    this.isWaitingPageShowing.set(notif.id_session,false);
     console.log("notification suprimée");
     let i = this.notifications.findIndex((gr)=>gr.datetime === notif.datetime 
                               && gr.id_session === notif.id_session

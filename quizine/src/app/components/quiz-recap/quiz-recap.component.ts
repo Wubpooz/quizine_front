@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class QuizRecapComponent {
   quiz!: Quiz;
-  answers!: Map<number, Option>;
+  answers!: Map<string, Option>;
 
   constructor(private gameSessionStore: gameSessionStore,
       private appStore: AppStore,
@@ -25,7 +25,7 @@ export class QuizRecapComponent {
       }
       this.quiz = quiz;
     });
-    this.gameSessionStore.answerList.subscribe((answers: Map<number, Option>) => {
+    this.gameSessionStore.answerList.subscribe((answers: Map<string, Option>) => {
       this.answers = answers;
     });
   }

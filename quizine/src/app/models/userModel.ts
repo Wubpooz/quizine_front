@@ -1,11 +1,11 @@
 export interface User {
-  id: number;
+  id: string;
   username: string;
   picture: string;
 }
 export interface Notification {
   dateTime: string;
-  idSession: number;
-  idRequestor: number;
-  idValidator:number;
+  idSession: string;
+  idRequestor: string;
+  idValidator: string;
 }

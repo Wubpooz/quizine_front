@@ -24,10 +24,10 @@ export class CreateQuizComponent {
     grade: number;
     duration: number;
     picture: null;
-    id_creator: number;
+    id_creator: string;
     private: boolean;
     tags: string[];
-    choices: { id: number; content: string }[];
+    choices: { id: string; content: string }[];
     validAnswer: number;
   }[] = [
     {
@@ -35,14 +35,14 @@ export class CreateQuizComponent {
       grade: 0,
       duration: 30,
       picture: null,
-      id_creator: -1,
+      id_creator: "",
       private: false,
       tags: [],
       choices: [
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''}
+        {id: '' ,content: ''},
+        {id: '' ,content: ''},
+        {id: '' ,content: ''},
+        {id: '' ,content: ''}
       ],
       validAnswer: -1
     }
@@ -93,14 +93,14 @@ export class CreateQuizComponent {
       duration: 30,
       grade: 0,
       picture: null,
-      id_creator: -1,
+      id_creator: '',
       private: false,
       tags: [],
       choices: [
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''},
-        {id: -1 ,content: ''}
+        {id: '' ,content: ''},
+        {id: '' ,content: ''},
+        {id: '' ,content: ''},
+        {id: '' ,content: ''}
       ],
       validAnswer : -1
     });
@@ -159,7 +159,7 @@ export class CreateQuizComponent {
   }
 
   addOption(questionIdx: number) {
-    this.questions[questionIdx].choices.push({ content: '', id: -1 });
+    this.questions[questionIdx].choices.push({ content: '', id: '' });
     this.updateOptionStates();
   }
 

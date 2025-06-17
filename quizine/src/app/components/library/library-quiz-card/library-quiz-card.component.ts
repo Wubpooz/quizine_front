@@ -15,11 +15,11 @@ export class LibraryQuizCardComponent {
 
   constructor(private router: Router) {}
   
-  goToQuizPreview(quizId: number) {
+  goToQuizPreview(quizId: string) {
     this.router.navigate(['/quiz-preview', quizId]);
   }
 
-  goToEditQuiz(quizId: number) {
+  goToEditQuiz(quizId: string) {
     this.router.navigate(['/edit-quiz', quizId]);
   }
 }

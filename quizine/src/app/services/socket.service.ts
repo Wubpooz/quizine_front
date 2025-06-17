@@ -7,7 +7,7 @@ import { io, Socket } from 'socket.io-client';
 })
 export class SocketService {
     socket!: Socket;//must call connect socket before use
-    sessionId?:number = undefined;
+    sessionId?: string = undefined;
 
     constructor(){
         this.socket = io(
@@ -22,30 +22,30 @@ export class SocketService {
           });
     }
 
-    listenGameStart(gamestart:(data:any)=>void) {
+    listenGameStart(gamestart:(data: any) => void) {
         this.socket.on('gamestart', gamestart);
     }
-    listenLeaderboard(leaderboard:(data:any)=>void){
+    listenLeaderboard(leaderboard:(data: any) => void) {
         this.socket.on('leaderboard', leaderboard);
     }
 
-    emitJoin(creator:boolean, sessionId:number, userId:number){
-        if(!this.sessionId){
+    emitJoin(creator: boolean, sessionId: string, userId: string) {
+        if(!this.sessionId) {
             this.sessionId = sessionId;
         }
         if (creator) {
             this.socket.emit('eventJoinOrganiser', {sessionId:sessionId, userId:userId});
-        }else{
-            this.socket.emit('eventJoin', {sessionId:sessionId, userId:userId})
+        }else {
+            this.socket.emit('eventJoin', {sessionId:sessionId, userId:userId});
         }
     }
-    emitRefuse(sessionId:number, userId:number){
+    emitRefuse(sessionId: string, userId: string) {
         this.socket.emit('eventRefuse', {sessionId:sessionId, userId:userId})
     }
-    emitLeaveRoom(sessionId:number, userId:number){
+    emitLeaveRoom(sessionId: string, userId: string) {
         this.socket.emit('eventLeave', {sessionId:sessionId, userId:userId})
     }
-    emitScore(score:number, sessionId:number, userId:number){
+    emitScore(score: number, sessionId: string, userId: string) {
         this.socket.emit('sendScore', { score:score, userId:userId, sessionId:sessionId })
     }
 }

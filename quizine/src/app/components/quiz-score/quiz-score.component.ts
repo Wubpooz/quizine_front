@@ -32,7 +32,7 @@ export class QuizScoreComponent {
       if (!user) return;
       this.currentUser = user;
 
-      this.socketService.listenLeaderboard(async (data: { userId: number; score: number }[]) => {
+      this.socketService.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
         if (data && data.length > 0) {
           let scores = new Map<User, number>();
           let users = await apiservice.getAllUsers().toPromise();
@@ -68,7 +68,7 @@ export class QuizScoreComponent {
     for (let [u, score] of scores.entries()) {
       if (u.id === this.currentUser.id) {
         this.userScore = score;
-        this.socketService.emitScore(this.userScore, this.socketService.sessionId || 0, u.id);
+        this.socketService.emitScore(this.userScore, this.socketService.sessionId || "", u.id);
         break;
       }
     }
@@ -83,7 +83,7 @@ export class QuizScoreComponent {
     this.userScore = score;
   }
 
-  selectUser(userId: number): void {
+  selectUser(userId: string): void {
     //TODO optionnal go to other user profile if implemented
   }
 

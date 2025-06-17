@@ -63,11 +63,11 @@ export class QuizService {
     }
   }
 
-  selectAnswer(questionId: number, answer: Option): void {
+  selectAnswer(questionId: string, answer: Option): void {
     this.gameSessionStore.answerList.getValue().set(questionId, answer);
   }
 
-  getQuizById(quizId: number): Promise<Quiz> {
+  getQuizById(quizId: string): Promise<Quiz> {
     return this.apiService.getQuiz(quizId).toPromise().then((quiz) => {
       if (!quiz) {
         throw new Error('Quiz not found');

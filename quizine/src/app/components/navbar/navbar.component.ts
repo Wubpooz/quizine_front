@@ -79,7 +79,7 @@ export class NavbarComponent {
     this.router.navigate(['/profile']);
   }
 
-  gotoQuiz(quizId: number) {
+  gotoQuiz(quizId: string) {
     this.router.navigate(['quiz-preview/'+quizId]);
   }
 }

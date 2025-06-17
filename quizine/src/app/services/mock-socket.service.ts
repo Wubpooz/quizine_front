@@ -23,16 +23,16 @@ export class MockSocketService {
     this.leaderboardSubject.subscribe(callback);
   }
 
-  emitJoin(creator: boolean, sessionId: number, userId: number) {
+  emitJoin(creator: boolean, sessionId: string, userId: string) {
     // No-op or log for dev
   }
-  emitRefuse(sessionId: number, userId: number) {
+  emitRefuse(sessionId: string, userId: string) {
     // No-op or log for dev
   }
-  emitLeaveRoom(sessionId: number, userId: number) {
+  emitLeaveRoom(sessionId: string, userId: string) {
     // No-op or log for dev
   }
-  emitScore(score: number, sessionId: number, userId: number) {
+  emitScore(score: number, sessionId: string, userId: string) {
     // No-op or log for dev
   }
 }

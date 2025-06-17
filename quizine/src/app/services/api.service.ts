@@ -29,20 +29,20 @@ export class APIService {
     }
 
     private handleError(error: HttpErrorResponse) {
-            if (error.status === 0) {
-                this.toastr.error('Erreur réseau. Veuillez vérifier votre connexion.', 'Erreur', this.NOTIF_STYLE);
-            } else if (error.status === 400) {
-                this.toastr.error('Requête invalide.', 'Erreur 400', this.NOTIF_STYLE);
-            } else if (error.status === 404) {
-                this.toastr.error('Ressource non trouvée.', 'Erreur 404', this.NOTIF_STYLE);
-            } else if (error.status === 500) {
-                this.toastr.error('Erreur serveur. Veuillez réessayer plus tard.', 'Erreur 500', this.NOTIF_STYLE);
-            } else if (error.status !== 401 && error.status !== 403) {
-                this.toastr.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', `Erreur ${error.status}`, this.NOTIF_STYLE);
-            }
-            console.error(`Backend returned code ${error.status}, body was: `, error.error);
-            return throwError(() => new Error('Something bad happened; please try again later.'));
+        if (error.status === 0) {
+            this.toastr.error('Erreur réseau. Veuillez vérifier votre connexion.', 'Erreur', this.NOTIF_STYLE);
+        } else if (error.status === 400) {
+            this.toastr.error('Requête invalide.', 'Erreur 400', this.NOTIF_STYLE);
+        } else if (error.status === 404) {
+            this.toastr.error('Ressource non trouvée.', 'Erreur 404', this.NOTIF_STYLE);
+        } else if (error.status === 500) {
+            this.toastr.error('Erreur serveur. Veuillez réessayer plus tard.', 'Erreur 500', this.NOTIF_STYLE);
+        } else if (error.status !== 401 && error.status !== 403) {
+            this.toastr.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', `Erreur ${error.status}`, this.NOTIF_STYLE);
         }
+        console.error(`Backend returned code ${error.status}, body was: `, error.error);
+        return throwError(() => new Error('Something bad happened; please try again later.'));
+    }
 
 
     //============================================================
@@ -136,7 +136,7 @@ export class APIService {
     }
 
     //========================= Friends =========================
-    inviteFriend(userId: number): Observable<string> {
+    inviteFriend(userId: string): Observable<string> {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/ask/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
@@ -155,7 +155,7 @@ export class APIService {
         );
     }
 
-    acceptFriend(userId: number): Observable<string> {
+    acceptFriend(userId: string): Observable<string> {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/accept/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
@@ -174,7 +174,7 @@ export class APIService {
         );
     }
 
-    refuseFriend(userId: number): Observable<string> {
+    refuseFriend(userId: string): Observable<string> {
         return this.http.post<{message: string}>(`${this.endpoint}/friends/refuse/${userId}`, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body.message) {
@@ -229,7 +229,7 @@ export class APIService {
         );
     }
 
-    createSession(quizId: number): Observable<Session[]> {
+    createSession(quizId: string): Observable<Session[]> {
         return this.http.post<any>(this.endpoint+"/game/gamerequest/"+quizId, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
@@ -246,7 +246,7 @@ export class APIService {
         );
     }
 
-    getSession(id: number): Observable<Session> {
+    getSession(id: string): Observable<Session> {
         return this.http.get<any>(this.endpoint+"/game/session/"+id, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
@@ -316,7 +316,7 @@ export class APIService {
 
 
     //========================= Quiz =========================
-    getQuiz(quizId: number): Observable<Quiz> {
+    getQuiz(quizId: string): Observable<Quiz> {
         return this.http.get<any>(this.endpoint+"/quiz/"+quizId, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
@@ -385,7 +385,7 @@ export class APIService {
 
     //========================= Rate =========================
     //TODO getgrate
-    addRate(quizId: number, grade: number): Observable<number> {
+    addRate(quizId: string, grade: number): Observable<number> {
         return this.http.post<any>(this.endpoint+"/recent", {quizId, grade}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && typeof response.body.newGrade === 'number') {

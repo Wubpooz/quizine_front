@@ -64,7 +64,7 @@ export class SidebarComponent {
     this.router.navigate(['/notifications']);
   }
 
-  gotoQuiz(quizId: number) {
+  gotoQuiz(quizId: string) {
     this.router.navigate(['quiz-preview/'+quizId]);
   }
 
