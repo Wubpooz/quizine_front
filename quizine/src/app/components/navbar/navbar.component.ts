@@ -5,7 +5,7 @@ import { Quiz } from '../../models/quizModel';
 import { CommonModule } from '@angular/common';
 import { SidebarService } from '../../services/sidebar.service';
 import { APIService } from '../../services/api.service';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService, ThemePreference } from '../../services/theme.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -49,20 +49,13 @@ export class NavbarComponent {
     this.searchDropdownOpen = false;
   }
 
-  onMenuItemClick($event: MouseEvent) {
-    $event.stopPropagation();
-  }
-
   get isMobile(): boolean {
     return window.innerWidth <= 768;
   }
 
-  get isDarkMode(): boolean {
-    return this.theme.isDarkMode;
-  }
-
-  toggleDarkMode() {
-    this.theme.toggleDarkMode();
+  get indicatorTransform(): string {
+    const idx: Record<ThemePreference, number> = { light: 0, system: 1, dark: 2 };
+    return `translateX(${idx[this.theme.preference] * 100}%)`;
   }
 
   logout() {

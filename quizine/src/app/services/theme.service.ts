@@ -1,32 +1,52 @@
 import { Injectable } from '@angular/core';
 
+export type ThemePreference = 'light' | 'dark' | 'system';
+
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-  private _isDarkMode = false;
+  private readonly STORAGE_KEY = 'themePreference';
+  private mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  private _pref: ThemePreference = 'system';
 
   constructor() {
-    const userTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    this._isDarkMode = userTheme === 'dark' || (!userTheme && systemPrefersDark);
-    this.applyDarkMode();
+    const saved = localStorage.getItem(this.STORAGE_KEY) as ThemePreference | null;
+    this._pref = saved ?? 'system';
+
+    this.applyTheme();
+
+    this.mediaQuery.addEventListener('change', () => {
+      if (this._pref === 'system') {
+        this.applyTheme();
+      }
+    });
   }
 
-  get isDarkMode() {
-    return this._isDarkMode;
+  get preference(): ThemePreference {
+    return this._pref;
   }
 
-  toggleDarkMode() {
-    this._isDarkMode = !this._isDarkMode;
-    localStorage.setItem('theme', this._isDarkMode ? 'dark' : 'light');
-    this.applyDarkMode();
+  setPreference(pref: ThemePreference) {
+    this._pref = pref;
+    localStorage.setItem(this.STORAGE_KEY, pref);
+    this.applyTheme();
   }
 
-  applyDarkMode() {
+  private applyTheme() {
     const html = document.documentElement;
-    if (this._isDarkMode) {
-      html.classList.add('dark');
-    } else {
+
+    if (this._pref === 'light') {
       html.classList.remove('dark');
+    }
+    else if (this._pref === 'dark') {
+      html.classList.add('dark');
+    }
+    else {
+      const isDark = this.mediaQuery.matches;
+      if (isDark) {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
     }
   }
 }
