@@ -45,6 +45,13 @@
 
 
 
+TODO Back
+- [ ] add the type checker for uuid everywhere
+- [ ] use a proper logger instead of console.log everywhere (with methods names, timestamps, etc.)
+
+
+
+
 # Avoid user opening pages from url without being logged in
 ng generate guard auth
 
