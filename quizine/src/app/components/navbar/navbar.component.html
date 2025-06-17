@@ -61,7 +61,6 @@
     </button>
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item (click)="gotoProfile()" aria-label="Ouvrir le profil"> Profil </button>
-
       <!-- https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector -->
       <!-- https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm -->
       <!-- https://snipzy.dev/snippets/liquid-glass-nav.html -->
@@ -91,6 +90,18 @@
                   </g>
                 </g>
               </svg>
+
+              <!-- Dark icon -->
+              <svg *ngSwitchCase="'dark'" width="48" height="48" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
+                <g fill="currentColor">
+                  <g transform="rotate(-38,50,50) translate(5,10)">
+                    <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
+                  </g>
+                  <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
+                  <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
+                </g>
+              </svg>
+
               <!-- System icon - sun/moon -->
               <svg *ngSwitchCase="'system'" width="48" height="48" viewBox="0 10 100 100" xmlns="http://www.w3.org/2000/svg">
                 <g fill="currentColor">
@@ -118,16 +129,6 @@
                   </g>
                 </g>
               </svg>
-              <!-- Dark icon -->
-              <svg *ngSwitchCase="'dark'" width="48" height="48" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-                <g fill="currentColor">
-                  <g transform="rotate(-38,50,50) translate(5,10)">
-                    <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
-                  </g>
-                  <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
-                  <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
-                </g>
-              </svg>
             </ng-container>
           </div>
         </div>
@@ -140,179 +141,21 @@
                   aria-label="Light mode">
             <span class="sr-only">Light</span>
           </button>
-      
           <button class="flex-1 text-center z-10 p-2 rounded transition w-full h-full"
-                  (click)="theme.setPreference('system')"
-                  [class.opacity-50]="theme.preference !== 'system'"
-                  aria-label="System mode">
-            <span class="sr-only">System</span>
-          </button>
-      
-          <button class="flex-1 text-center z-10 p-2 rounded transition w-full h-full"
-                  (click)="theme.setPreference('dark')"
-                  [class.opacity-50]="theme.preference !== 'dark'"
-                  aria-label="Dark mode">
+                (click)="theme.setPreference('dark')"
+                [class.opacity-50]="theme.preference !== 'dark'"
+                aria-label="Dark mode">
             <span class="sr-only">Dark</span>
           </button>
-        </div>
-      </div>
-  
-      <div mat-menu-item (click)="$event.stopPropagation()" disableRipple>
-        <div class="flex items-center">
-        <!-- Light -->
-        <button
-          (click)="theme.setPreference('light')"
-          [class.opacity-50]="theme.preference !== 'light'"
-          class="p-2 rounded transition"
-          aria-label="Light mode">
-          <!-- sun icon SVG -->
-          <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
-              <circle cx="50" cy="50" r="17"/>
-              <g id="rays">
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(0, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(30, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(60, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(90, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(120, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(150, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(180, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(210, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(240, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(270, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(300, 50, 50)" />
-                <line x1="50" y1="24" x2="50" y2="14" transform="rotate(330, 50, 50)" />
-              </g>
-            </g>
-          </svg>
-        </button>
-
-        <!-- Dark -->
-        <button
-          disableRipple
-          (click)="theme.setPreference('dark')"
-          [class.opacity-50]="theme.preference !== 'dark'"
-          class="p-2 rounded transition"
-          aria-label="Dark mode">
-          <!-- moon icon SVG -->
-            <svg width="24" height="24" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-            <g fill="currentColor" >
-              <g transform="rotate(-38,50,50) translate(5,10)">
-              <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
-              </g>
-                <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
-              <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
-            </g>
-          </svg>
-        </button>
-
-        <!-- System -->
-        <button
-          (click)="theme.setPreference('system')"
-          [class.opacity-50]="theme.preference !== 'system'"
-          class="p-2 rounded transition"
-          aria-label="Follow system">
-          <span>Follow</span>
-        </button>
-        </div>
-      </div>
-
-
-
-      <div mat-menu-item class="px-0 select-none hover:bg-white hover:text-text-main cursor-default" (click)="$event.stopPropagation()">
-        <div class="flex w-full h-full items-center justify-center">
-          <button
-            (click)="theme.setPreference('light'); $event.stopPropagation()"
-            [class.opacity-50]="theme.preference !== 'light'"
-            class="relative w-24 h-10 dark:bg-bg-card bg-bg-card border border-primary-lighter dark:border-primary-lighter rounded-full p-1 cursor-pointer select-none"
-            aria-label="Basculer le mode sombre">
-
-            <!-- Knob -->
-            <div
-              class="absolute top left-1 h-8 w-8 rounded-full transition-transform duration-300
-              dark:text-white text-black
-                border dark:border-[#e0e0e0] border-[#23272f]
-                dark:[background:linear-gradient(145deg,_#23272f,_#18181c)]
-                dark:[box-shadow:2px_2px_6px_#18181c,-2px_-2px_6px_#23272f]
-                [background:linear-gradient(145deg,_#f0f0f3,_#cacaca)]
-                [box-shadow:2px_2px_6px_#d1d9e6,-2px_-2px_6px_#ffffff]
-                flex items-center justify-center"
-              [ngStyle]="{ transform: theme.preference === 'dark' ? 'translateX(3.5rem)' : 'translateX(0)' }">
-
-              <ng-container *ngIf="theme.preference === 'dark'; else sunIcon">
-                <!-- Moon Icon -->
-                <svg width="24" height="24" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-                  <g fill="currentColor" >
-                    <g transform="rotate(-38,50,50) translate(5,10)">
-                    <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
-                    </g>
-                      <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
-                    <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
-                  </g>
-                </svg>
-              </ng-container>
-              <ng-template #sunIcon>
-                <!-- Sun Icon -->
-                <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
-                    <circle cx="50" cy="50" r="17"/>
-                    <g id="rays">
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(0, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(30, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(60, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(90, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(120, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(150, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(180, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(210, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(240, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(270, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(300, 50, 50)" />
-                      <line x1="50" y1="24" x2="50" y2="14" transform="rotate(330, 50, 50)" />
-                    </g>
-                  </g>
-                </svg>
-              </ng-template>
-            </div>
-
-            <!-- Background icons -->
-            <div class="flex items-center justify-between h-full px-2 dark:text-white text-gray-800">
-              <!-- Moon Icon -->
-              <svg width="24" height="24" viewBox="0 0 100 110" xmlns="http://www.w3.org/2000/svg">
-                <g fill="currentColor" >
-                  <g transform="rotate(-38,50,50) translate(5,10)">
-                  <path d="M 70 26 A 41 38 0 1 0 35 85 A 33 30 0 1 1 70 26 Z" />
-                  </g>
-                    <polygon points="72,26 75.5,33 83,36 75.5,39 72,46 68.5,39 61,36 68.5,33" />
-                  <polygon points="84,48 86.5,53 92,55 86.5,57 84,62 81.5,57 76,55 81.5,53" />
-                </g>
-              </svg>
-
-              <!-- Sun Icon -->
-              <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
-                  <circle cx="50" cy="50" r="17"/>
-                  
-                  <g id="rays">
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(0, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(30, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(60, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(90, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(120, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(150, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(180, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(210, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(240, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(270, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(300, 50, 50)" />
-                    <line x1="50" y1="24" x2="50" y2="14" transform="rotate(330, 50, 50)" />
-                  </g>
-                </g>
-              </svg>
-            </div>
+          <button class="flex-1 text-center z-10 p-2 rounded transition w-full h-full"
+                (click)="theme.setPreference('system')"
+                [class.opacity-50]="theme.preference !== 'system'"
+                aria-label="System mode">
+            <span class="sr-only">System</span>
           </button>
         </div>
       </div>
+
 
       <button mat-menu-item (click)="logout()" class="transition" aria-label="Se déconnecter">
         <div *ngIf="isMobile" class="flex items-center gap-1 w-full h-full">
