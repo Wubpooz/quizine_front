@@ -53,7 +53,11 @@ export class APIService {
     login(username: string, password: string): Observable<User> {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if ((response.status !== 200 && response.status !== 204) || !response.body.user) {
+                if (response.status === 401) {
+                    this.toastr.error('Utilisateur inconnu ou Identifiants incorrects. Veuillez réessayer.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Invalid credentials');
+                }
+                else if ((response.status !== 200 && response.status !== 204) || !response.body.user) {
                     this.toastr.error('Erreur lors de la connexion. Veuillez vérifier vos identifiants.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Login failed');
                 } else {
