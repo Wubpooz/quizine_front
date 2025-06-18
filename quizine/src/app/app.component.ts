@@ -47,6 +47,7 @@ ngOnInit(): void {
         const publicRoutes = ['/landing', '/login', '/register', '/'];
         if (user) {
           if (publicRoutes.includes(this.router.url)) {
+            console.log("routing home");
             this.router.navigate(['/home']);
           }
         } else {
