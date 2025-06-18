@@ -21,10 +21,14 @@ export class LoginComponent {
   constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
 
   ngOnInit() {
-    this.appStore.currentUser.subscribe((user) => {
-      if (user) {
-        this.router.navigate(['/home']);
-      }
+    this.apiService.getUserData().subscribe({
+      next: (user) => {
+        this.appStore.updateUser(user);
+        if (user) {
+            this.router.navigate(['/home']);
+          }
+      },
+      error: () => {}
     });
   }
 

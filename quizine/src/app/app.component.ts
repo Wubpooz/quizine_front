@@ -38,16 +38,13 @@ export class AppComponent {
 ngOnInit(): void {
   this.appStore.init();
 
-  this.router.events.pipe(
-    filter(event => event instanceof NavigationEnd)
-  ).subscribe(() => {
+  this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
     this.apiService.getUserData().subscribe({
       next: (user) => {
         this.appStore.updateUser(user);
         const publicRoutes = ['/landing', '/login', '/register', '/'];
         if (user) {
           if (publicRoutes.includes(this.router.url)) {
-            console.log("routing home");
             this.router.navigate(['/home']);
           }
         } else {

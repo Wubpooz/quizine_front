@@ -20,6 +20,7 @@
 - [x] notif when get call fails
 - [x] profile pop-up menu with dark mode toggle, logout
 - [x] dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
+- [ ] add dark mode to components
 - [ ] only use constructor for declaration, do everything in ngOnInit
 - [ ] toggle sidebar when clicking inside
 - [ ] use only specific components (buttons, toggles...)
