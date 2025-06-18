@@ -17,7 +17,6 @@ export class UserInviteComponent {
   @Input() quizId!: string;
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<string>();
-  //? ViewChild
   inviteForm: FormGroup;
 
   friends!: User[];
@@ -39,13 +38,13 @@ export class UserInviteComponent {
     this.users = [];
 
     this.apiservice.getAllUsers().subscribe((friends: User[] | undefined) => {
-      // console.log(friends)
       this.friends = friends||[];
     });
   }
 
   ngOnInit(): void {
-    let response = this.http.post<any>(`/api/game/create/session/${this.quizId}`, {}, {});
+    //TODO put in api.service
+    let response = await this.http.post<any>(`/api/game/create/session/${this.quizId}`, {}, {});
     response.subscribe((payload) => {
       this.sessionId = payload.sessionId;
       console.log("Session ID:", this.sessionId);
@@ -72,25 +71,27 @@ export class UserInviteComponent {
   }
 
   onSubmit() {
-    if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) { //useless check in theory
+    //useless check in theory
+    if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) {
       const idsToInvite = this.selectedFriends.concat(this.selectedUsers);
       console.log('Inviting:', idsToInvite);
+      //TODO put in api.service
       this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: idsToInvite}, {}).subscribe((payload) => {
-        // console.log("Invitation:", payload);
+        console.log("Invitation:", payload);
       });
     }
     this.submit.emit(this.sessionId);
   }
-  //commit important
+
   onSkip() {
     this.submit.emit(this.sessionId);
-    //this.router.navigate(['/waiting-room']);
   }
 
   onClose() {
     this.close.emit();
+    //TODO put in api.service
     this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
-      // console.log("Deleted participation:", payload);
+      console.log("Deleted participation:", payload);
     });
   }
 }
