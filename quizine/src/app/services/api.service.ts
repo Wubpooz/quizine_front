@@ -212,7 +212,7 @@ export class APIService {
     
 
     //========================= Game =========================
-    requestGame(sessionId: string, playersIds: strings[]): Observable<GameRequest[]> {
+    requestGame(sessionId: string, playersIds: string[]): Observable<GameRequest[]> {
         return this.http.post<any>(this.endpoint+"/game/gamerequest", {sessionId, playersIds}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
