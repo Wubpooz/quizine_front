@@ -232,7 +232,7 @@ export class APIService {
     createSession(quizId: string): Observable<string> {
         return this.http.post<any>(this.endpoint+"/game/create/session/"+quizId, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status === 200 && response.body) {
+                if (response.status === 201 && response.body) {
                     return response.body.sessionId as string;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);

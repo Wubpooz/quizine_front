@@ -19,8 +19,8 @@ export class UserInviteComponent {
   @Output() submit = new EventEmitter<string>();
   inviteForm!: FormGroup;
 
-  friends!: User[];
-  users!: User[];
+  friends: User[] = [];
+  users: User[] = [];
   selectedFriends: string[] = [];
   selectedUsers: string[] = [];
   sessionId!: string;
