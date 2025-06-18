@@ -17,41 +17,31 @@ export class UserInviteComponent {
   @Input() quizId!: string;
   @Output() close = new EventEmitter<void>();
   @Output() submit = new EventEmitter<string>();
-  inviteForm: FormGroup;
+  inviteForm!: FormGroup;
 
   friends!: User[];
-  users: User[];
+  users!: User[];
   selectedFriends: string[] = [];
   selectedUsers: string[] = [];
   sessionId!: string;
 
-  constructor(private fb: FormBuilder,
-      private appStore: AppStore,
-      private router: Router,
-      private http: HttpClient,
-      private apiservice: APIService
-      ) {
+  constructor(private fb: FormBuilder, private appStore: AppStore, private router: Router, private http: HttpClient, private apiservice: APIService) {}
+      
+  ngOnInit(): void {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
     });
 
-    this.users = [];
-
     this.apiservice.getAllUsers().subscribe((friends: User[] | undefined) => {
-      this.friends = friends||[];
-    });
-  }
-
-  ngOnInit(): void {
-    //TODO put in api.service
-    let response = await this.http.post<any>(`/api/game/create/session/${this.quizId}`, {}, {});
-    response.subscribe((payload) => {
-      this.sessionId = payload.sessionId;
-      console.log("Session ID:", this.sessionId);
-    });
-
-    this.appStore.friends.subscribe((friends: User[] | undefined) => {
       this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
+    });
+    // this.appStore.friends.subscribe((friends: User[] | undefined) => {
+    //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
+    // });
+
+    this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
+      this.sessionId = sessionId;
+      console.log("Created session:", sessionId);
     });
   }
 
@@ -71,12 +61,10 @@ export class UserInviteComponent {
   }
 
   onSubmit() {
-    //useless check in theory
     if (this.selectedFriends.length > 0 || this.selectedUsers.length > 0) {
       const idsToInvite = this.selectedFriends.concat(this.selectedUsers);
       console.log('Inviting:', idsToInvite);
-      //TODO put in api.service
-      this.http.post<any>(`/api/game/gamerequest`, {session: this.sessionId, joueurs: idsToInvite}, {}).subscribe((payload) => {
+      this.apiservice.requestGame(this.sessionId, idsToInvite).subscribe((payload) => {
         console.log("Invitation:", payload);
       });
     }
@@ -89,8 +77,7 @@ export class UserInviteComponent {
 
   onClose() {
     this.close.emit();
-    //TODO put in api.service
-    this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
+    this.apiservice.deleteParticipation(this.sessionId).subscribe((payload) => {
       console.log("Deleted participation:", payload);
     });
   }

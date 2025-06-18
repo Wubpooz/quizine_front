@@ -212,8 +212,8 @@ export class APIService {
     
 
     //========================= Game =========================
-    requestGame(session: number, players: number[]): Observable<GameRequest[]> {
-        return this.http.post<any>(this.endpoint+"/game/gamerequest", {session, players}, {withCredentials: true, observe: 'response'}).pipe(
+    requestGame(sessionId: string, playersIds: strings[]): Observable<GameRequest[]> {
+        return this.http.post<any>(this.endpoint+"/game/gamerequest", {sessionId, playersIds}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
                     return Object.values(response.body) as GameRequest[];
@@ -229,17 +229,17 @@ export class APIService {
         );
     }
 
-    createSession(quizId: string): Observable<Session[]> {
-        return this.http.post<any>(this.endpoint+"/game/gamerequest/"+quizId, {}, {withCredentials: true, observe: 'response'}).pipe(
+    createSession(quizId: string): Observable<string> {
+        return this.http.post<any>(this.endpoint+"/game/create/session/"+quizId, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 200 && response.body) {
-                    return Object.values(response.body) as Session[];
+                    return response.body.sessionId as string;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
                     throw new Error(response.body.error);
                 } else {
                     this.toastr.error('Aucune demande de session créée.', 'Erreur', this.NOTIF_STYLE);
-                    return [];
+                    throw new Error("Didn't create session");
                 }
             }),
             catchError(error => this.handleError(error))
@@ -257,6 +257,23 @@ export class APIService {
                 } else {
                     this.toastr.error('Erreur lors de la récupération de la session.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Erreur lors de la récupération de la session.');
+                }
+            }),
+            catchError(error => this.handleError(error))
+        );
+    }
+
+    deleteParticipation(sessionId: string): Observable<string> {
+        return this.http.post<any>(this.endpoint+"/game/delete/participation/"+sessionId, {}, {}).pipe(
+            map((response: any) => {
+                if (response.status === 200 && response.body) {
+                    return response.body as string;
+                } else if (response.body?.error) {
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
+                    throw new Error(response.body.error);
+                } else {
+                    this.toastr.warning('Erreur lors de la suppression de la session.', 'Warning', this.NOTIF_STYLE);
+                    throw new Error("Didn't delete session");
                 }
             }),
             catchError(error => this.handleError(error))
