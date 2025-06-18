@@ -28,8 +28,11 @@ export class SidebarComponent {
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const stored = localStorage.getItem('sidebarOpen');
-        this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
+        if (this.isMobile()) {
+          this.sidebarService.setOpen(false);
+        }
+        // const stored = localStorage.getItem('sidebarOpen');
+        // this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
       }
     });
   }

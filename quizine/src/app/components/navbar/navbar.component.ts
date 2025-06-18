@@ -67,6 +67,10 @@ export class NavbarComponent {
     });
   }
 
+  closeSideBar(event: Event) {
+    this.sidebarService.setOpen(false);
+  }
+
   toggleSideBar() {
     this.sidebarService.toggle();
   }
