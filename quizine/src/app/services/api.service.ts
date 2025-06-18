@@ -54,6 +54,7 @@ export class APIService {
         return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
                 if (response.status === 401) {
+                    console.error("Login failed");
                     this.toastr.error('Utilisateur inconnu ou Identifiants incorrects. Veuillez réessayer.', 'Erreur', this.NOTIF_STYLE);
                     throw new Error('Invalid credentials');
                 }
