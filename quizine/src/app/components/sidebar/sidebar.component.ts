@@ -26,19 +26,23 @@ export class SidebarComponent {
       this.filteredQuizList = quizzes||[];
     });
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (this.isMobile()) {
-          this.sidebarService.setOpen(false);
-        }
-        // const stored = localStorage.getItem('sidebarOpen');
-        // this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
-      }
-    });
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationEnd) {
+    //     if (this.isMobile()) {
+    //       this.sidebarService.setOpen(false);
+    //     }
+    //     // const stored = localStorage.getItem('sidebarOpen');
+    //     // this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
+    //   }
+    // });
   }
 
   get sideBarState(){
     return this.isSideBarOpen ? 'in' : 'out';
+  }
+
+  closeSideBar() {
+    this.sidebarService.setOpen(false);
   }
   
   onSearchChange(event: Event) {

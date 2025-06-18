@@ -10,10 +10,4 @@ import { SidebarService } from '../../services/sidebar.service';
   imports: [SidebarComponent, NavbarComponent, CommonModule],
   templateUrl: './layout.component.html'
 })
-export class LayoutComponent {
-  constructor(private sidebarService: SidebarService) {}
-
-  handleContentClick(event: MouseEvent) {
-    this.sidebarService.setOpen(false);
-  }
-}
+export class LayoutComponent {}

@@ -1,10 +1,8 @@
 <div class="flex flex-col h-screen">
     <app-navbar></app-navbar>
   <div class="flex flex-1">
-    <div (click)="$event.stopPropagation()">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="flex-1 w-full bg-bg-main dark:bg-bg-main" (click)="handleContentClick($event)">
+    <app-sidebar></app-sidebar>
+    <div class="flex-1 w-full bg-bg-main dark:bg-bg-main">
       <ng-content></ng-content>
     </div>
   </div>

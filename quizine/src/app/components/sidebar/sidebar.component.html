@@ -3,8 +3,8 @@
   <div
     *ngIf="isSideBarOpen"
     class="fixed inset-0 bg-black bg-opacity-20 z-40 transition-opacity duration-300"
-    (click)="isSideBarOpen = false"
-  ></div>
+    (click)="closeSideBar()"
+    ></div>
 
   <!-- Sidebar -->
   <div

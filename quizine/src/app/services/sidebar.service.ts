@@ -13,7 +13,7 @@ export class SidebarService {
       }
     });
 
-    this.isOpen$.subscribe(open => {
+    this.isOpen$.subscribe((open) => {
       localStorage.setItem('sidebarOpen', String(open));
     });
   }

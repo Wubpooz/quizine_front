@@ -22,14 +22,12 @@ export class QuizDescriptionComponent {
   isWaitingPageShowing = false;
   sessionId!: string;
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router,
-    private gamestore:gameSessionStore
-  ) {}
+  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router, private gamestore:gameSessionStore) {}
 
   ngOnInit(): void {
     let quizId = this.route.snapshot.paramMap.get('id');
-    if (quizId) {
-      this.gamestore.updateQuiz(quizId)
+    if(quizId) {
+      this.gamestore.updateQuiz(quizId);
       this.quizService.getQuizById(quizId).then((data: Quiz) => {
         if(data) {
           this.quiz = data;

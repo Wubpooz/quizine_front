@@ -27,7 +27,7 @@ export class NavbarComponent {
     private apiService: APIService,
     public theme: ThemeService
     ) {
-      this.appStore.init()
+      this.appStore.init();
       this.appStore.quizList.subscribe((quizzes) => {
         this.quizList = quizzes||[];
         this.filteredQuizList = quizzes||[];
