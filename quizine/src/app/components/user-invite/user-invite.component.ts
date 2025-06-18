@@ -27,7 +27,7 @@ export class UserInviteComponent {
 
   constructor(private fb: FormBuilder, private appStore: AppStore, private router: Router, private http: HttpClient, private apiservice: APIService) {}
       
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
     });
@@ -39,7 +39,7 @@ export class UserInviteComponent {
     //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     // });
 
-    this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
+    await this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
       console.log("Created session:", sessionId);
     });
@@ -77,8 +77,10 @@ export class UserInviteComponent {
 
   onClose() {
     this.close.emit();
-    this.apiservice.deleteParticipation(this.sessionId).subscribe((payload) => {
-      console.log("Deleted participation:", payload);
-    });
+    if(this.sessionId) {
+      this.apiservice.deleteParticipation(this.sessionId).subscribe((payload) => {
+        console.log("Deleted participation:", payload);
+      });
+    }
   }
 }
