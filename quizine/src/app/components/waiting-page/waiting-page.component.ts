@@ -25,7 +25,8 @@ export class WaitingPageComponent {
 
   async ngOnInit() {
     // console.log("SESSION", this.sessionId)
-    let me = await this.apiService.getUserData().toPromise()
+    let me = await this.apiService.getUserData().toPromise();
+    this.socketService.connect();
 
     this.intervalId = setInterval(() => {
       this.timer -= 1;
@@ -35,9 +36,9 @@ export class WaitingPageComponent {
       }
     }, 1000);
     // console.log("isCreator = " + this.isCreator);
-    if(this.refus === undefined || this.refus === false){
+    if(this.refus === undefined || this.refus === false) {
       // console.log("EMIT JOIN STP")
-      this.socketService.listenGameStart((data)=>{
+      this.socketService.listenGameStart((data) => {
         // console.log(data)
         clearInterval(this.intervalId);
         this.playQuiz();
@@ -55,9 +56,7 @@ export class WaitingPageComponent {
   
   ngOnDestroy() {
     clearInterval(this.intervalId);
-    // if (this.socket) {
-    //   this.socket.disconnect();
-    // }
+      this.socketService.disconnect();
   }
 
   playQuiz() {
@@ -74,8 +73,7 @@ export class WaitingPageComponent {
 
   onClose() {
     this.close.emit();
-    this.http.post<any>(`/api/game/delete/participation/${this.sessionId}`, {}, {}).subscribe((payload) => {
-      console.log("Deleted participation:", payload);
-    });
+    this.apiService.deleteParticipation(this.sessionId);
+    this.socketService.disconnect();
   }
 }

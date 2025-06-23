@@ -8,6 +8,12 @@ export class MockSocketService {
   private gameStartSubject = new Subject<any>();
   private leaderboardSubject = new Subject<any>();
 
+  connect() {
+  }
+
+  disconnect() {
+  }
+
   // Simulate server events
   emitFakeGameStart(data: any) {
     this.gameStartSubject.next(data);

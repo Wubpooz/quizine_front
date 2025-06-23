@@ -25,17 +25,18 @@ export class QuizScoreComponent {
     private gameSessionStore: gameSessionStore,
     private socketService: SocketService,
     private appStore: AppStore,
-    private apiservice: APIService,
+    private apiService: APIService,
     private router: Router
   ) {
     this.appStore.currentUser.subscribe((user) => {
       if (!user) return;
       this.currentUser = user;
+      this.socketService.connect();
 
       this.socketService.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
         if (data && data.length > 0) {
           let scores = new Map<User, number>();
-          let users = await apiservice.getAllUsers().toPromise();
+          let users = await apiService.getAllUsers().toPromise();
           if (!users) return;
           for (let i = 0; i < data.length; i++) {
             let u = users.find(u => u.id === data[i].userId);

@@ -2,10 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
-import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
-import { HttpClient } from "@angular/common/http";
 import { APIService } from '../../services/api.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'user-invite',
@@ -25,7 +24,7 @@ export class UserInviteComponent {
   selectedUsers: string[] = [];
   sessionId!: string;
 
-  constructor(private fb: FormBuilder, private appStore: AppStore, private router: Router, private http: HttpClient, private apiservice: APIService) {}
+  constructor(private fb: FormBuilder, private appStore: AppStore, private apiservice: APIService, private socketService: SocketService) {}
       
   async ngOnInit(): Promise<void> {
     this.inviteForm = this.fb.group({
@@ -36,14 +35,21 @@ export class UserInviteComponent {
       this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     });
     // this.appStore.friends.subscribe((friends: User[] | undefined) => {
-    //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
+      //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     // });
 
+    this.socketService.connect();
+      
     await this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
       console.log("Created session:", sessionId);
     });
   }
+
+  ngOnDestroy() {
+    this.socketService.disconnect();
+  }
+
 
   onSearch(event: any) {
     const searchTerm = event.target.value.toLowerCase();

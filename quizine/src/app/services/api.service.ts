@@ -197,7 +197,7 @@ export class APIService {
     getFriends(): Observable<User[]> {
         return this.http.get<{friends: User[]}>(this.endpoint+'/friends', {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status === 200 && response.body.friends) {
+                if(response.status === 200 && response.body.friends) {
                     return Object.values(response.body.friends) as User[];
                 } else if (response.body?.error) {
                     this.toastr.info(response.body.error, 'Info', this.NOTIF_STYLE);
@@ -216,7 +216,7 @@ export class APIService {
     requestGame(sessionId: string, playersIds: string[]): Observable<GameRequest[]> {
         return this.http.post<any>(this.endpoint+"/game/gamerequest", {sessionId, playersIds}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status === 200 && response.body) {
+                if(response.status === 200 && response.body) {
                     return Object.values(response.body) as GameRequest[];
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
@@ -233,7 +233,7 @@ export class APIService {
     createSession(quizId: string): Observable<string> {
         return this.http.post<any>(this.endpoint+"/game/create/session/"+quizId, {}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status === 201 && response.body) {
+                if(response.status === 201 && response.body) {
                     return response.body.sessionId as string;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
@@ -250,7 +250,7 @@ export class APIService {
     getSession(id: string): Observable<Session> {
         return this.http.get<any>(this.endpoint+"/game/session/"+id, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
-                if (response.status === 200 && response.body) {
+                if(response.status === 200 && response.body) {
                     return response.body as Session;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
@@ -267,7 +267,8 @@ export class APIService {
     deleteParticipation(sessionId: string): Observable<string> {
         return this.http.post<any>(this.endpoint+"/game/delete/participation/"+sessionId, {}, {}).pipe(
             map((response: any) => {
-                if (response.status === 200 && response.body) {
+                if(response.status === 200 && response.body) {
+                    console.log("Deleted participation.");
                     return response.body as string;
                 } else if (response.body?.error) {
                     this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
