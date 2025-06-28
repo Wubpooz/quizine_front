@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
+import { GameConnexionService } from '../gameConnexion.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketService {
+export class SocketService extends GameConnexionService {
     socket!: Socket;//must call connect socket before use
     sessionId?: string = undefined;
 
     constructor() {
+        super();
         this.socket = io(
             'https://quizine-backend.vercel.app',
             // window.location.origin,

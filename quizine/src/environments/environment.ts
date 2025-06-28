@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
   apiEndpoint: '/api', // Local development
-  mockAuth: true
+  mockAuth: true,
+  socket: true
 };
