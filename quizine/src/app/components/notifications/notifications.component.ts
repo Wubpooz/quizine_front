@@ -19,47 +19,45 @@ export class NotificationsComponent {
   isWaitingPageShowing: Map<string, boolean> = new Map<string, boolean>();
   isrefus: boolean = false;
 
-
   constructor(private apiService: APIService,
     private gamestore:gameSessionStore) {
 
-    this.apiService.getNotifications().toPromise().then((grs: GameRequest[] | undefined) => {
-      if(!grs){
+    this.apiService.getNotifications().toPromise().then((gameRequests: GameRequest[] | undefined) => {
+      if(!gameRequests) {
         return;
       }
 
-      grs.forEach((gr)=>{
-        this.getUserFromId(gr.id_requestor).then((u)=>{
+      gameRequests.forEach((gameRequest) => {
+        this.getUserFromId(gameRequest.id_requestor).then((user) => {
         this.notifications.push({
-        datetime: gr.datetime,
-        id_session: gr.id_session,
-        id_requestor: gr.id_requestor,
-        id_validator:gr.id_validator,
-        username: u?.username || "inconnu"
+        datetime: gameRequest.datetime,
+        id_session: gameRequest.id_session,
+        id_requestor: gameRequest.id_requestor,
+        id_validator:gameRequest.id_validator,
+        username: user?.username || "inconnu"
         })
-        this.isWaitingPageShowing.set(gr.id_session, false);
+        this.isWaitingPageShowing.set(gameRequest.id_session, false);
         })
       })
-    })
-     
+    });
   }
 
   getUserFromId(id: string) {
-    let users = this.apiService.getAllUsers().toPromise().then((usrs)=>{
-            return usrs?.find((u)=>u.id === id)
-    })
+    const users = this.apiService.getAllUsers().toPromise().then((users)=>{
+        return users?.find((u)=>u.id === id);
+    });
     return users;
   }
 
   async accepter(notif: GameRequest) {
     this.isrefus = false;
     this.isWaitingPageShowing.set(notif.id_session, true);
-    let s = await this.apiService.getSession(notif.id_session).toPromise();
-    if(!s) {
+    let session = await this.apiService.getSession(notif.id_session).toPromise();
+    if(!session) {
       //TODO notification
       console.error("Unexepcted error. Can't accept notification.");
     } else {
-      let quizId = s.id_quiz;
+      let quizId = session.id_quiz;
       this.gamestore.updateQuiz(quizId);
     }
   }
@@ -72,9 +70,9 @@ export class NotificationsComponent {
   onWaitClose(notif: GameRequest) {
     this.isWaitingPageShowing.set(notif.id_session,false);
     console.log("notification suprimée");
-    let i = this.notifications.findIndex((gr)=>gr.datetime === notif.datetime 
-                              && gr.id_session === notif.id_session
-                              && gr.id_requestor === notif.id_requestor);
+    let i = this.notifications.findIndex((gameRequest) => gameRequest.datetime === notif.datetime 
+                && gameRequest.id_session === notif.id_session
+                && gameRequest.id_requestor === notif.id_requestor);
     this.notifications.splice(i, 1);
   }
 

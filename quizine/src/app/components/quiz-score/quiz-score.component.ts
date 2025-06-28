@@ -33,14 +33,20 @@ export class QuizScoreComponent {
       this.gameConnexion.connect();
 
       this.gameConnexion.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
-        if (data && data.length > 0) {
+        if(data && data.length > 0) {
           let scores = new Map<User, number>();
           let users = await apiService.getAllUsers().toPromise();
-          if (!users) return;
-          for (let i = 0; i < data.length; i++) {
-            let u = users.find(u => u.id === data[i].userId);
-            if (!u) continue;
-            scores.set(u, data[i].score);
+          
+          if(!users){
+            return;
+          }
+          
+          for(let i = 0; i < data.length; i++) {
+            let user = users.find(u => u.id === data[i].userId);
+            if(!user) {
+              continue;
+            } 
+            scores.set(user, data[i].score);
           }
           this.setScores(scores);
         } else {
@@ -51,7 +57,7 @@ export class QuizScoreComponent {
 
       // Fallback: if no leaderboard received after a short delay, use solo score
       setTimeout(() => {
-        if (this.sortedScores.length === 0) {
+        if(this.sortedScores.length === 0) {
           this.setSoloScore();
         }
       }, 1000);
@@ -65,10 +71,10 @@ export class QuizScoreComponent {
       .sort((a, b) => b.score - a.score);
     this.topThree = this.sortedScores.slice(0, 3);
 
-    for (let [u, score] of scores.entries()) {
-      if (u.id === this.currentUser.id) {
+    for(let [user, score] of scores.entries()) {
+      if(user.id === this.currentUser.id) {
         this.userScore = score;
-        this.gameConnexion.emitScore(this.userScore, this.gameConnexion.sessionId || "", u.id);
+        this.gameConnexion.emitScore(this.userScore, this.gameConnexion.sessionId || "", user.id);
         break;
       }
     }

@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from "@angular/common/http";
 import { APIService } from '../../services/api.service';
-import { SocketService } from '../../services/connexionServices/socket.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 
 @Component({
@@ -27,30 +25,30 @@ export class WaitingPageComponent {
 
   async ngOnInit() {
     // console.log("SESSION", this.sessionId)
-    let me = await this.apiService.getUserData().toPromise();
+    const currentUser = await this.apiService.getUserData().toPromise(); //use the sotre
     this.gameConnexion.connect();
 
     this.intervalId = setInterval(() => {
       this.timer -= 1;
-      if (this.timer <= 0) {
+      if(this.timer <= 0) {
         clearInterval(this.intervalId);
         this.playQuiz();
       }
     }, 1000);
     // console.log("isCreator = " + this.isCreator);
-    if(this.refus === undefined || this.refus === false) {
+    if(this.refus === undefined || !this.refus) {
       // console.log("EMIT JOIN STP")
       this.gameConnexion.listenGameStart((data) => {
         // console.log(data)
         clearInterval(this.intervalId);
         this.playQuiz();
       })
-      this.gameConnexion.emitJoin(this.isCreator, this.sessionId, me?.id || "None");
+      this.gameConnexion.emitJoin(this.isCreator, this.sessionId, currentUser?.id || "None");
     }else{
-    
-      if(me)
-        this.gameConnexion.emitRefuse(this.sessionId, me.id)
-      this.close.emit()
+      if(currentUser) {
+        this.gameConnexion.emitRefuse(this.sessionId, currentUser.id);
+      }
+      this.close.emit();
     }
   }
 
@@ -58,7 +56,7 @@ export class WaitingPageComponent {
   
   ngOnDestroy() {
     clearInterval(this.intervalId);
-      this.gameConnexion.disconnect();
+    this.gameConnexion.disconnect();
   }
 
   playQuiz() {
