@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { APIService } from '../../services/api.service';
-import { SocketService } from '../../services/socket.service';
+import { SocketService } from '../../services/connexionServices/socket.service';
 
 @Component({
   selector: 'user-invite',

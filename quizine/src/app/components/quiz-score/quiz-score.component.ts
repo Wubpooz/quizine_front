@@ -4,7 +4,7 @@ import { User } from '../../models/userModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
-import { SocketService } from '../../services/socket.service';
+import { SocketService } from '../../services/connexionServices/socket.service';
 import { APIService } from '../../services/api.service';
 import { Session } from '../../models/participationModel';
 

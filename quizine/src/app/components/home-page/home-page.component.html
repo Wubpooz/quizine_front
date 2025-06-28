@@ -1,6 +1,6 @@
-<layout>
+<layout class="relative">
   <div class="px-6 mt-4">
-    <h1 class="text-2xl">Récents</h1>
+    <h1 class="text-2xl dark:text-text-main">Récents</h1>
     <div class=" h-[83svh] overflow-y-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 pb-6">
         <ng-container *ngFor="let quiz of quizzes">
@@ -21,7 +21,5 @@
       </div>
     </div>
   </div>
-    <div>
-    <a href="https://stats.uptimerobot.com/NLlEuoNSRe">Status</a>
-  </div>
+  <website-status-button></website-status-button>
 </layout>

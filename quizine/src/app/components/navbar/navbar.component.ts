@@ -75,6 +75,10 @@ export class NavbarComponent {
     this.sidebarService.toggle();
   }
 
+  goHome() {
+    this.router.navigate(['/home']);
+  }
+
   gotoCreateQuiz() {
     this.router.navigate(['/create']);
   }

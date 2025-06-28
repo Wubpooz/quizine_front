@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { io, Socket } from 'socket.io-client';
 import { APIService } from '../../services/api.service';
-import { SocketService } from '../../services/socket.service';
+import { SocketService } from '../../services/connexionServices/socket.service';
 
 @Component({
   selector: 'waiting-page',
