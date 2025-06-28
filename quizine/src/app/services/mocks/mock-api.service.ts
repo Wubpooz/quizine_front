@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { User } from '../models/userModel';
-import { EmptyQuiz, HistoryQuiz, Quiz } from '../models/quizModel';
-import { Session } from '../models/participationModel';
-import { GameRequest } from '../models/participationModel';
+import { User } from '../../models/userModel';
+import { EmptyQuiz, HistoryQuiz, Quiz } from '../../models/quizModel';
+import { Session } from '../../models/participationModel';
+import { GameRequest } from '../../models/participationModel';
 
 @Injectable({
   providedIn: 'root'
