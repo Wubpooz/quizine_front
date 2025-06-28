@@ -6,8 +6,8 @@ import { GameConnexionService } from '../gameConnexion.service';
   providedIn: 'root'
 })
 export class SocketService extends GameConnexionService {
-    socket!: Socket;//must call connect socket before use
-    sessionId?: string = undefined;
+    socket!: Socket; //must call connect socket before use
+    sessionId: string = "";
 
     constructor() {
         super();
@@ -43,7 +43,7 @@ export class SocketService extends GameConnexionService {
 
 
     emitJoin(creator: boolean, sessionId: string, userId: string) {
-        if(!this.sessionId) {
+        if(!this.sessionId || this.sessionId === "") {
             this.sessionId = sessionId;
         }
         if(creator) {

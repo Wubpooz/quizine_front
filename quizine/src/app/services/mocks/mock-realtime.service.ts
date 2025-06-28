@@ -7,7 +7,7 @@ import { GameConnexionService } from '../gameConnexion.service';
 })
 export class MockRealtimeService extends GameConnexionService {
     socket!: Socket;//must call connect socket before use
-    sessionId?: string = undefined;
+    sessionId: string = "";
 
     constructor() {
         super();

@@ -1,4 +1,6 @@
 export abstract class GameConnexionService {
+  abstract sessionId: string;
+
   abstract connect(): void;
   abstract disconnect(): void;
 

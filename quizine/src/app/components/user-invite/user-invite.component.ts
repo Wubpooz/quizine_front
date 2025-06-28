@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { APIService } from '../../services/api.service';
-import { SocketService } from '../../services/connexionServices/socket.service';
+import { GameConnexionService } from '../../services/gameConnexion.service';
 
 @Component({
   selector: 'user-invite',
@@ -24,7 +24,9 @@ export class UserInviteComponent {
   selectedUsers: string[] = [];
   sessionId!: string;
 
-  constructor(private fb: FormBuilder, private appStore: AppStore, private apiservice: APIService, private socketService: SocketService) {}
+  constructor(private fb: FormBuilder, private appStore: AppStore,
+    private apiservice: APIService,
+    private gameConnexion: GameConnexionService) {}
       
   async ngOnInit(): Promise<void> {
     this.inviteForm = this.fb.group({
@@ -38,7 +40,7 @@ export class UserInviteComponent {
       //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     // });
 
-    this.socketService.connect();
+    this.gameConnexion.connect();
       
     await this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
@@ -47,7 +49,7 @@ export class UserInviteComponent {
   }
 
   ngOnDestroy() {
-    this.socketService.disconnect();
+    this.gameConnexion.disconnect();
   }
 
 

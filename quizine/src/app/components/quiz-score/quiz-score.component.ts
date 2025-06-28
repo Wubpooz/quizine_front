@@ -4,9 +4,8 @@ import { User } from '../../models/userModel';
 import { gameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
-import { SocketService } from '../../services/connexionServices/socket.service';
+import { GameConnexionService } from '../../services/gameConnexion.service';
 import { APIService } from '../../services/api.service';
-import { Session } from '../../models/participationModel';
 
 @Component({
   selector: 'quiz-score',
@@ -23,7 +22,7 @@ export class QuizScoreComponent {
 
   constructor(
     private gameSessionStore: gameSessionStore,
-    private socketService: SocketService,
+    private gameConnexion: GameConnexionService,
     private appStore: AppStore,
     private apiService: APIService,
     private router: Router
@@ -31,9 +30,9 @@ export class QuizScoreComponent {
     this.appStore.currentUser.subscribe((user) => {
       if (!user) return;
       this.currentUser = user;
-      this.socketService.connect();
+      this.gameConnexion.connect();
 
-      this.socketService.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
+      this.gameConnexion.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
         if (data && data.length > 0) {
           let scores = new Map<User, number>();
           let users = await apiService.getAllUsers().toPromise();
@@ -69,7 +68,7 @@ export class QuizScoreComponent {
     for (let [u, score] of scores.entries()) {
       if (u.id === this.currentUser.id) {
         this.userScore = score;
-        this.socketService.emitScore(this.userScore, this.socketService.sessionId || "", u.id);
+        this.gameConnexion.emitScore(this.userScore, this.gameConnexion.sessionId || "", u.id);
         break;
       }
     }
