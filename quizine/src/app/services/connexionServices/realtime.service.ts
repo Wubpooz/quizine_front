@@ -1,67 +1,74 @@
 import { Injectable } from '@angular/core';
-import { io, Socket } from 'socket.io-client';
-import { GameConnexionService } from '../gameConnexion.service';
+import { GameConnexionService } from "../gameConnexion.service";
+import { createClient, RealtimeChannel } from '@supabase/supabase-js';
+import { environment } from '../../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class RealtimeService extends GameConnexionService {
-    socket!: Socket; //must call connect socket before use
-    sessionId: string = "";
+  sessionId: string = "";
+  private supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+  private activeChannels = new Map<string, RealtimeChannel>();
 
-    constructor() {
-        super();
-        this.socket = io(
-            'https://quizine-backend.vercel.app',
-            // window.location.origin,
-            //"http://localhost:3000",
-            {
-                path: '/api/ws',
-                transports: ['websocket'],
-                autoConnect: false
-        });
-        this.socket.onAny((event, ...args) => {
-            console.log("[Client] Event reçu :", event, args);
-        });
-    }
+  connect(): void {
+    // Optional: you could initialize auth or other Supabase client config here
+  }
 
-    connect() {
-        this.socket.connect();
-    }
+  disconnect(): void {
+    this.activeChannels.forEach(channel => this.supabase.removeChannel(channel));
+    this.activeChannels.clear();
+  }
 
-    disconnect() {
-        this.socket.disconnect();
-    }
+  listenGameStart(callback: (data: any) => void): void {
+    if (!this.sessionId) return;
 
+    const id = `session:${this.sessionId}`;
+    if (this.activeChannels.has(id)) return;
 
-    listenGameStart(gamestart:(data: any) => void) {
-        this.socket.on('gamestart', gamestart);
-    }
-    listenLeaderboard(leaderboard:(data: any) => void) {
-        this.socket.on('leaderboard', leaderboard);
-    }
+    const channel = this.supabase
+      .channel(id)
+      .on('postgres_changes', {
+        schema: 'public',
+        table: 'sessions',
+        event: 'UPDATE',
+        filter: `id=eq.${this.sessionId}`
+      }, payload => callback(payload.new))
+      .subscribe();
 
+    this.activeChannels.set(id, channel);
+  }
 
-    emitJoin(creator: boolean, sessionId: string, userId: string) {
-        if(!this.sessionId || this.sessionId === "") {
-            this.sessionId = sessionId;
-        }
-        if(creator) {
-            this.socket.emit('eventJoinOrganiser', {sessionId:sessionId, userId:userId});
-        }else {
-            this.socket.emit('eventJoin', {sessionId:sessionId, userId:userId});
-        }
-    }
+  listenLeaderboard(callback: (data: any) => void): void {
+    if (!this.sessionId) return;
 
-    emitRefuse(sessionId: string, userId: string) {
-        this.socket.emit('eventRefuse', {sessionId:sessionId, userId:userId})
-    }
+    const id = `leaderboard:${this.sessionId}`;
+    if (this.activeChannels.has(id)) return;
 
-    emitLeaveRoom(sessionId: string, userId: string) {
-        this.socket.emit('eventLeave', {sessionId:sessionId, userId:userId})
-    }
+    const channel = this.supabase
+      .channel(id)
+      .on('postgres_changes', {
+        schema: 'public',
+        table: 'participations',
+        event: '*',
+        filter: `session_id=eq.${this.sessionId}`
+      }, payload => callback(payload.new))
+      .subscribe();
 
-    emitScore(score: number, sessionId: string, userId: string) {
-        this.socket.emit('sendScore', { score:score, userId:userId, sessionId:sessionId })
-    }
+    this.activeChannels.set(id, channel);
+  }
+
+  emitJoin(creator: boolean, sessionId: string, userId: string): void {
+    console.warn("emitJoin not supported in Supabase Realtime");
+  }
+
+  emitRefuse(sessionId: string, userId: string): void {
+    console.warn("emitRefuse not supported in Supabase Realtime");
+  }
+
+  emitLeaveRoom(sessionId: string, userId: string): void {
+    console.warn("emitLeaveRoom not supported in Supabase Realtime");
+  }
+
+  emitScore(score: number, sessionId: string, userId: string): void {
+    console.warn("emitScore not supported in Supabase Realtime");
+  }
 }

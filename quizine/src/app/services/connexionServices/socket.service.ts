@@ -18,7 +18,7 @@ export class SocketService extends GameConnexionService {
             {
                 path: '/api/ws',
                 transports: ['websocket'],
-                autoConnect: false
+                autoConnect: true
         });
         this.socket.onAny((event, ...args) => {
             console.log("[Client] Event reçu :", event, args);
