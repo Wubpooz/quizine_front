@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../src/environments/environment.vercel.ts');
+const filePath = path.join(__dirname, '../environments/environment.vercel.ts');
 
 let content = fs.readFileSync(filePath, 'utf8');
 
