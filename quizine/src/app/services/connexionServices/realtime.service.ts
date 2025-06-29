@@ -46,6 +46,8 @@ export class RealtimeService extends GameConnexionService {
       .on('broadcast', { event: 'leave' }, payload => this._emitFallback('leave', payload))
       .on('broadcast', { event: 'score' }, payload => this._emitFallback('score', payload))
       .subscribe();
+
+    console.log(`Connected on game-session-${this.sessionId} channel.`);
   }
 
   disconnect(): void {
