@@ -12,7 +12,11 @@ export class RealtimeService extends GameConnexionService {
 
   constructor(private gameSessionStore: GameSessionStore) {
     super();
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey, {auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    }});
 
     this.gameSessionStore.sessionId.subscribe((sessionId) => {
       if(sessionId != undefined) {
