@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient, RealtimeChannel } from '@supabase/supabase-js';
 import { GameConnexionService } from '../gameConnexion.service';
 import { environment } from '../../../environments/environment';
+import { GameSessionStore } from '../../stores/gameSession.store';
 
 @Injectable({ providedIn: 'root' })
 export class RealtimeService extends GameConnexionService {
@@ -9,12 +10,15 @@ export class RealtimeService extends GameConnexionService {
   private channel!: RealtimeChannel;
   sessionId: string = '';
 
-  constructor() {
+  constructor(private gameSessionStore: GameSessionStore) {
     super();
-    // initialize your Supabase client (make sure to put these in environment vars)
-    console.log(environment.supabaseUrl);
-    console.log(environment.supabaseKey);
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+
+    this.gameSessionStore.sessionId.subscribe((sessionId) => {
+      if(sessionId != undefined) {
+        this.sessionId = sessionId;
+      }
+    });
   }
 
   connect(): void {

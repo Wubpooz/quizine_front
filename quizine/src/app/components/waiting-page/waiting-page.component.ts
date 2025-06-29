@@ -24,8 +24,7 @@ export class WaitingPageComponent {
   }
 
   async ngOnInit() {
-    // console.log("SESSION", this.sessionId)
-    const currentUser = await this.apiService.getUserData().toPromise(); //use the sotre
+    const currentUser = await this.apiService.getUserData().toPromise(); //TODO use the sotre
     this.gameConnexion.connect();
 
     this.intervalId = setInterval(() => {
@@ -35,11 +34,10 @@ export class WaitingPageComponent {
         this.playQuiz();
       }
     }, 1000);
-    // console.log("isCreator = " + this.isCreator);
+
     if(this.refus === undefined || !this.refus) {
-      // console.log("EMIT JOIN STP")
+
       this.gameConnexion.listenGameStart((data) => {
-        // console.log(data)
         clearInterval(this.intervalId);
         this.playQuiz();
       })

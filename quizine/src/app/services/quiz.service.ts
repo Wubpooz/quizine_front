@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Quiz, Question, Option } from '../models/quizModel';
-import { gameSessionStore } from '../stores/gameSession.store';
+import { GameSessionStore } from '../stores/gameSession.store';
 import { APIService } from './api.service';
 import { Router } from '@angular/router';
 import { AppStore } from '../stores/app.store';
@@ -14,7 +14,7 @@ export class QuizService {
   private currentQuestionIndexSubject = new BehaviorSubject<number>(0);
   currentQuestionIndex$ = this.currentQuestionIndexSubject.asObservable();
 
-  constructor(private gameSessionStore: gameSessionStore,
+  constructor(private gameSessionStore: GameSessionStore,
             private appStore: AppStore,
             private apiService: APIService,
             private router: Router

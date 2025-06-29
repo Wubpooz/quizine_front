@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/userModel';
-import { gameSessionStore } from '../../stores/gameSession.store';
+import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { GameConnexionService } from '../../services/gameConnexion.service';
@@ -21,14 +21,16 @@ export class QuizScoreComponent {
   userScore: number = 0;
 
   constructor(
-    private gameSessionStore: gameSessionStore,
+    private gameSessionStore: GameSessionStore,
     private gameConnexion: GameConnexionService,
     private appStore: AppStore,
     private apiService: APIService,
     private router: Router
   ) {
     this.appStore.currentUser.subscribe((user) => {
-      if (!user) return;
+      if(!user) {
+        return;
+      }
       this.currentUser = user;
       this.gameConnexion.connect();
 

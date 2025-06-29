@@ -7,8 +7,10 @@ import { APIService } from "../services/api.service";
 @Injectable({
     providedIn: 'root'
 })
-export class gameSessionStore {
-    private scorePerAnswer: number = 100; // You can adjust the score per correct answer here
+export class GameSessionStore { //TODO redo completly
+    private scorePerAnswer: number = 100;
+    
+    public sessionId: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
     public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
     public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map());

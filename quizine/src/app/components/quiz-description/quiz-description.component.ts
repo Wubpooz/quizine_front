@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
 import { UserInviteComponent } from "../user-invite/user-invite.component";
 import { WaitingPageComponent } from "../waiting-page/waiting-page.component";
-import { gameSessionStore } from '../../stores/gameSession.store';
+import { GameSessionStore } from '../../stores/gameSession.store';
 import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
@@ -22,12 +22,15 @@ export class QuizDescriptionComponent {
   isWaitingPageShowing = false;
   sessionId!: string;
 
-  constructor(private route: ActivatedRoute, private quizService: QuizService, private router: Router, private gamestore:gameSessionStore) {}
+  constructor(private route: ActivatedRoute,
+    private quizService: QuizService,
+    private router: Router,
+    private gameSessionStore: GameSessionStore) {}
 
   ngOnInit(): void {
     let quizId = this.route.snapshot.paramMap.get('id');
     if(quizId) {
-      this.gamestore.updateQuiz(quizId);
+      this.gameSessionStore.updateQuiz(quizId);
       this.quizService.getQuizById(quizId).then((data: Quiz) => {
         if(data) {
           this.quiz = data;
@@ -50,6 +53,7 @@ export class QuizDescriptionComponent {
     this.isWaitingPageShowing = true;
     this.isInviteShowing = false;
     this.sessionId = sessionId;
+    this.gameSessionStore.sessionId.next(sessionId);
   }
 
 }

@@ -5,6 +5,7 @@ import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
+import { GameSessionStore } from '../../stores/gameSession.store';
 
 @Component({
   selector: 'user-invite',
@@ -24,7 +25,9 @@ export class UserInviteComponent {
   selectedUsers: string[] = [];
   sessionId!: string;
 
-  constructor(private fb: FormBuilder, private appStore: AppStore,
+  constructor(private fb: FormBuilder,
+    private appStore: AppStore,
+    private gameSessionStore: GameSessionStore,
     private apiservice: APIService,
     private gameConnexion: GameConnexionService) {}
       
@@ -40,12 +43,14 @@ export class UserInviteComponent {
       //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     // });
 
-    this.gameConnexion.connect();
-      
+    
     await this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
       console.log("Created session:", sessionId);
+      this.gameSessionStore.sessionId.next(this.sessionId);
     });
+
+    this.gameConnexion.connect();
   }
 
   ngOnDestroy() {

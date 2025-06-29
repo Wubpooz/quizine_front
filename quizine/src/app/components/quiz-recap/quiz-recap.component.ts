@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Quiz, Option } from '../../models/quizModel';
-import { gameSessionStore } from '../../stores/gameSession.store';
+import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ export class QuizRecapComponent {
   quiz!: Quiz;
   answers!: Map<string, Option>;
 
-  constructor(private gameSessionStore: gameSessionStore,
+  constructor(private gameSessionStore: GameSessionStore,
       private appStore: AppStore,
       private router: Router
       ) {

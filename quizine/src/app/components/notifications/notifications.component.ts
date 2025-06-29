@@ -4,7 +4,7 @@ import { ButtonComponent } from '../button/button.component';
 import { GameRequest } from '../../models/participationModel';
 import { APIService } from '../../services/api.service';
 import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
-import { gameSessionStore } from '../../stores/gameSession.store';
+import { GameSessionStore } from '../../stores/gameSession.store';
 import { LayoutComponent } from "../layout/layout.component";
 
 @Component({
@@ -20,7 +20,7 @@ export class NotificationsComponent {
   isrefus: boolean = false;
 
   constructor(private apiService: APIService,
-    private gamestore:gameSessionStore) {
+    private gamestore: GameSessionStore) {
 
     this.apiService.getNotifications().toPromise().then((gameRequests: GameRequest[] | undefined) => {
       if(!gameRequests) {
