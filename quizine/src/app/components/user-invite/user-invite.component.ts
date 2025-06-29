@@ -31,7 +31,7 @@ export class UserInviteComponent {
     private apiservice: APIService,
     private gameConnexion: GameConnexionService) {}
       
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
     });
@@ -43,14 +43,13 @@ export class UserInviteComponent {
       //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
     // });
 
-    
-    await this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
+    //TODO add spinner to avoid them cliking on stuff before session
+    this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
       console.log("Created session:", sessionId);
       this.gameSessionStore.sessionId.next(this.sessionId);
+      this.gameConnexion.connect();
     });
-
-    this.gameConnexion.connect();
   }
 
   ngOnDestroy() {

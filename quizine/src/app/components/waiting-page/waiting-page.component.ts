@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
+import { GameSessionStore } from '../../stores/gameSession.store';
 
 @Component({
   selector: 'waiting-page',
@@ -18,13 +19,15 @@ export class WaitingPageComponent {
   private intervalId: any;
 
   constructor(private router: Router,
+    private gameSessionStore: GameSessionStore,
     private apiService:APIService,
     private gameConnexion: GameConnexionService) {
     this.timer = 60;
   }
 
   async ngOnInit() {
-    const currentUser = await this.apiService.getUserData().toPromise(); //TODO use the sotre
+    const currentUser = await this.apiService.getUserData().toPromise(); //TODO use the store
+    this.gameSessionStore.sessionId.next(this.sessionId);
     this.gameConnexion.connect();
 
     this.intervalId = setInterval(() => {

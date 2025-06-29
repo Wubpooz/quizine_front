@@ -51,7 +51,7 @@ export class QuizQuestionComponent {
     }, 1000);
   }
 
-  selectAnswer(answer: Option) {
+  selectAnswer(answer: Option) { //TODO what if I select nothing !!
     this.selectedAnswer = answer.id;
     this.quizService.selectAnswer(this.question.id, answer);
   }

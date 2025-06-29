@@ -32,7 +32,7 @@ export class QuizScoreComponent {
         return;
       }
       this.currentUser = user;
-      this.gameConnexion.connect();
+      this.gameConnexion.connect(); //TODO sessionId should be in gameSessionStore
 
       this.gameConnexion.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
         if(data && data.length > 0) {
