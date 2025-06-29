@@ -7,7 +7,7 @@
     "dev": "ng serve --configuration development",
     "prod-build": "ng build --configuration production",
     "prod-serve": "ng serve --configuration production --proxy-config proxy.conf.json",
-    "vercel-build": "ts-node scripts/replace-env.ts && ng build --configuration vercel",
+    "vercel-build": "node scripts/replace-env.js && ng build --configuration vercel",
     "vercel-serve:": "ng serve --configuration vercel --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",

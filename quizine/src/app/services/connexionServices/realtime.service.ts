@@ -114,3 +114,100 @@ export class RealtimeService extends GameConnexionService {
     console.log(`[Supabase] received ${eventName}:`, payload);
   }
 }
+
+
+/*
+import { Injectable } from '@angular/core';
+import { SupabaseClient, createClient, PostgrestSingleResponse } from '@supabase/supabase-js';
+import { GameConnexionService } from '../gameConnexion.service';
+import { APIService } from '../api.service';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RealtimeService extends GameConnexionService {
+  sessionId: string = '';
+  private supabase: SupabaseClient;
+
+  constructor(private api: APIService) {
+    super();
+    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+  }
+
+  connect(): void {
+    // no-op, optional if channel already handled on demand
+  }
+
+  disconnect(): void {
+    this.supabase.removeAllChannels();
+  }
+
+  listenGameStart(callback: (data: any) => void): void {
+    this.supabase
+      .channel('game-session-status')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'sessions',
+          filter: `id=eq.${this.sessionId}`
+        },
+        payload => {
+          if (payload.new.status === 'started') {
+            callback(payload.new);
+          }
+        }
+      )
+      .subscribe();
+  }
+
+  listenLeaderboard(callback: (data: any) => void): void {
+    this.supabase
+      .channel('game-leaderboard')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'participations',
+          filter: `session_id=eq.${this.sessionId}`
+        },
+        payload => {
+          callback(payload.new); // score updates
+        }
+      )
+      .subscribe();
+  }
+
+  emitJoin(creator: boolean, sessionId: string, userId: string): void {
+    this.sessionId = sessionId;
+    this.api.joinSession(sessionId).subscribe({
+      next: () => console.log(`[Realtime] Joined session ${sessionId}`),
+      error: err => console.error(`[Realtime] Failed to join session:`, err)
+    });
+  }
+
+  emitRefuse(sessionId: string, userId: string): void {
+    this.api.refuseInvite(sessionId).subscribe({
+      next: () => console.log(`[Realtime] Refused invite for session ${sessionId}`),
+      error: err => console.error(`[Realtime] Failed to refuse invite:`, err)
+    });
+  }
+
+  emitLeaveRoom(sessionId: string, userId: string): void {
+    this.api.leaveSession(sessionId).subscribe({
+      next: () => console.log(`[Realtime] Left session ${sessionId}`),
+      error: err => console.error(`[Realtime] Failed to leave session:`, err)
+    });
+  }
+
+  emitScore(score: number, sessionId: string, userId: string): void {
+    this.api.sendScore(sessionId, score).subscribe({
+      next: () => console.log(`[Realtime] Score ${score} submitted for session ${sessionId}`),
+      error: err => console.error(`[Realtime] Failed to send score:`, err)
+    });
+  }
+}
+*/
