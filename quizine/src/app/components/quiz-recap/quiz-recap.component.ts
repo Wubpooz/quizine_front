@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule],
   templateUrl: './quiz-recap.component.html'
 })
-export class QuizRecapComponent {
+export class QuizRecapComponent { //TODO issue where all answer have green checkmarks
   quiz!: Quiz;
   answers!: Map<string, Option>;
 
@@ -20,7 +20,7 @@ export class QuizRecapComponent {
       private router: Router
       ) {
     this.gameSessionStore.quiz.subscribe((quiz: Quiz | undefined) => {
-      if(quiz === undefined){
+      if(quiz === undefined) {
         return
       }
       this.quiz = quiz;

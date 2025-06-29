@@ -452,12 +452,78 @@ export class APIService {
 
 
     //==============================================================
-    //========================= Websockets =========================
+    //========================== Realtime ==========================
     //==============================================================
-    getScoreboard() {
-        return [];
+    joinSession(sessionId: string): Observable<any> {
+        return this.http.post<any>(`${this.endpoint}/session/${sessionId}/join`, {}, {withCredentials: true, observe: 'response'}).pipe(
+            map(response => {
+                if (response.status === 200 && response.body) {
+                    this.toastr.success('Session rejointe avec succès.', 'Succès', this.NOTIF_STYLE);
+                    return response.body;
+                } else if (response.body?.error) {
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
+                    throw new Error(response.body.error);
+                } else {
+                    this.toastr.error('Erreur lors de la tentative de rejoindre la session.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Erreur lors de la tentative de rejoindre la session.');
+                }
+            }),
+            catchError(error => this.handleError(error))
+        );
     }
-    sendScore() {
-        return [];
+
+    leaveSession(sessionId: string): Observable<any> {
+        return this.http.post<any>(`${this.endpoint}/session/${sessionId}/leave`, {}, {withCredentials: true, observe: 'response'}).pipe(
+            map(response => {
+                if (response.status === 200 && response.body) {
+                    this.toastr.info('Session quittée.', 'Info', this.NOTIF_STYLE);
+                    return response.body;
+                } else if (response.body?.error) {
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
+                    throw new Error(response.body.error);
+                } else {
+                    this.toastr.error('Erreur lors de la tentative de quitter la session.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Erreur lors de la tentative de quitter la session.');
+                }
+            }),
+            catchError(error => this.handleError(error))
+        );
     }
+
+    refuseInvite(sessionId: string): Observable<any> {
+        return this.http.post<any>(`${this.endpoint}/session/${sessionId}/refuse`, {}, {withCredentials: true, observe: 'response'}).pipe(
+            map(response => {
+                if (response.status === 200 && response.body) {
+                    this.toastr.info('Invitation refusée.', 'Info', this.NOTIF_STYLE);
+                    return response.body;
+                } else if (response.body?.error) {
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
+                    throw new Error(response.body.error);
+                } else {
+                    this.toastr.error('Erreur lors du refus de l\'invitation.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Erreur lors du refus de l\'invitation.');
+                }
+            }),
+            catchError(error => this.handleError(error))
+        );
+    }
+
+    submitScore(sessionId: string, score: number): Observable<any> {
+        return this.http.post<any>(`${this.endpoint}/session/${sessionId}/score`, { score }, {withCredentials: true, observe: 'response'}).pipe(
+            map(response => {
+                if (response.status === 200 && response.body) {
+                    this.toastr.success('Score soumis avec succès.', 'Succès', this.NOTIF_STYLE);
+                    return response.body;
+                } else if (response.body?.error) {
+                    this.toastr.error(response.body.error, 'Erreur', this.NOTIF_STYLE);
+                    throw new Error(response.body.error);
+                } else {
+                    this.toastr.error('Erreur lors de la soumission du score.', 'Erreur', this.NOTIF_STYLE);
+                    throw new Error('Erreur lors de la soumission du score.');
+                }
+            }),
+            catchError(error => this.handleError(error))
+        );
+    }
+
 }
