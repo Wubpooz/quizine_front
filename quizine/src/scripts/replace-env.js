@@ -1,7 +1,7 @@
 const fs = require('fs');
 
-const supabaseUrl = process.env["SUPABASE_URL"];
-const supabaseKey = process.env["SUPABASE_ANON_KEY"];
+const supabaseUrl = process.env["SUPABASE_URL"] || '';
+const supabaseKey = process.env["SUPABASE_ANON_KEY"] || '';
 
 const prodEnvPath = 'src/environments/environment.prod.ts';
 

@@ -12,6 +12,8 @@ export class RealtimeService extends GameConnexionService {
   constructor() {
     super();
     // initialize your Supabase client (make sure to put these in environment vars)
+    console.log(environment.supabaseUrl);
+    console.log(environment.supabaseKey);
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
