@@ -1,6 +1,6 @@
 <layout>
-    <form class="flex-1 flex flex-col items-center mx-[20px] sm:mx-[40px] py-8" (ngSubmit)="onSubmit()" #quizForm="ngForm">
-        <div class="w-full">
+  <form class="flex flex-col items-center justify-between mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
+        <div class="w-full h-full max-h-screen overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold hidden sm:inline-block">Créer un nouveau quiz</h1>
                 <h1 class="text-2xl font-bold sm:hidden">Créer</h1>
@@ -21,92 +21,88 @@
                             + Ajouter un tag
                             </button>
                     <div
-                        *ngIf="showTagInput"
-                        class="
-                            fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start
-                        "
+                      *ngIf="showTagInput"
+                      class="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start"
                     >
                         <div
-                            class="
-                            mt-64 sm:mt-0
-                            w-11/12 max-w-xs bg-white rounded-lg shadow-lg p-8
-                            sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none
-                            relative
-                            "
+                          class="mt-64 sm:mt-0
+                          w-11/12 max-w-xs bg-white rounded-lg shadow-lg p-8
+                          sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none
+                          relative"
                         >
                             <!-- Close button, visible only on mobile -->
                             <button
-                                type="button"
-                                class="absolute right-2 top-2 text-gray-400 hover:text-red-500 sm:hidden"
-                                (click)="showTagInput = false"
-                                aria-label="Fermer"
+                              type="button"
+                              class="absolute right-2 top-2 text-gray-400 hover:text-red-500 sm:hidden"
+                              (click)="showTagInput = false"
+                              aria-label="Fermer"
                             >
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
+                              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                              </svg>
                             </button>
                             <input
-                                #tagInput
-                                type="text"
-                                placeholder="Ajouter un tag"
-                                class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full"
-                                (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
+                              #tagInput
+                              type="text"
+                              placeholder="Ajouter un tag"
+                              class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full"
+                              (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
                             />
                             <button
-                            type="button"
-                            class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-500"
-                            (click)="toggleTagInput()"
-                        >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
+                              type="button"
+                              class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-500"
+                              (click)="toggleTagInput()"
+                            >
+                              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                              </svg>
+                            </button>
                         </div>
                     </div>
                     <div class="relative">
                         <button
-                            class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
-                            (click)="showDropdown = !showDropdown"
-                            type="button"
+                          class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
+                          (click)="showDropdown = !showDropdown"
+                          type="button"
                         >
-                            {{ quizVisibility === 'private' ? 'Privé' : 'Public' }}
-                            <svg class="w-4 h-4 ml-1 transition-transform duration-200" [ngClass]="{'rotate-180': showDropdown}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                            </svg>
+                          {{ quizVisibility === 'private' ? 'Privé' : 'Public' }}
+                          <svg class="w-4 h-4 ml-1 transition-transform duration-200" [ngClass]="{'rotate-180': showDropdown}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                          </svg>
                         </button>
                         <div
-                            *ngIf="showDropdown"
-                            class="absolute left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in"
+                          *ngIf="showDropdown"
+                          class="absolute left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in"
                         >
-                            <button
-                                class="block w-full text-left px-4 py-2 hover:bg-blue-100"
-                                (click)="quizVisibility = 'private'; showDropdown = false"
-                                type="button"
-                            >
-                                Privé
-                            </button>
-                            <button
-                                class="block w-full text-left px-4 py-2 hover:bg-blue-100"
-                                (click)="quizVisibility = 'public'; showDropdown = false"
-                                type="button"
-                            >
-                                Public
-                            </button>
+                          <button
+                            class="block w-full text-left px-4 py-2 hover:bg-blue-100"
+                            (click)="quizVisibility = 'private'; showDropdown = false"
+                            type="button"
+                          >
+                            Privé
+                          </button>
+                          <button
+                            class="block w-full text-left px-4 py-2 hover:bg-blue-100"
+                            (click)="quizVisibility = 'public'; showDropdown = false"
+                            type="button"
+                          >
+                            Public
+                          </button>
                         </div>
                         <style>
-                            .animate-fade-in {
-                                animation: fadeInDropdown 0.18s ease;
-                            }
-                            @keyframes fadeInDropdown {
-                                from { opacity: 0; transform: translateY(-8px);}
-                                to { opacity: 1; transform: translateY(0);}
-                            }
+                          .animate-fade-in {
+                            animation: fadeInDropdown 0.18s ease;
+                          }
+                          @keyframes fadeInDropdown {
+                            from { opacity: 0; transform: translateY(-8px);}
+                            to { opacity: 1; transform: translateY(0);}
+                          }
                         </style>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col max-h-[64vh] overflow-y-auto">
+            <div class="flex flex-col max-h-[80vh] overflow-y-auto">
                 <input
                     type="text"
                     placeholder="Ajouter un titre"
@@ -122,17 +118,17 @@
                 />
                 <!-- Tooltip on hover -->
                 <div
-                    *ngIf="showTitleTooltip"
-                    class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
+                  *ngIf="showTitleTooltip"
+                  class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
                 >
-                    Limite: {{maxLengthTitle}} caractères
+                  Limite: {{maxLengthTitle}} caractères
                 </div>
                 <!-- Notification when max length reached -->
                 <div
-                    *ngIf="titleMaxLengthReached"
-                    class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
+                  *ngIf="titleMaxLengthReached"
+                  class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
                 >
-                    Limite de {{maxLengthTitle}} caractères atteinte
+                  Limite de {{maxLengthTitle}} caractères atteinte
                 </div>
 
                 <input
@@ -250,20 +246,20 @@
                     +
                 </button>
             </div>
+          </div>
 
-            <button
-              type="submit"
-              class="mt-6 bg-primary disabled:bg-gray-400 hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base md:mt-6 lg:mt-6 xl:mt-6 2xl:mt-6 sm:mt-4 flex items-center justify-center"
-              [disabled]="quizForm.invalid"
-              [class.scale-110]="quizForm.valid"
-              [class.transition]="quizForm.valid"
-              [class.duration-500]="quizForm.valid"
-            >
-              <svg class="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              Créer le quiz
-            </button>
-        </div>
-    </form>
+          <button
+            type="submit"
+            class="mb-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
+            [disabled]="quizForm.invalid"
+            [class.scale-110]="quizForm.valid"
+            [class.transition]="quizForm.valid"
+            [class.duration-500]="quizForm.valid"
+          >
+            <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            Créer le quiz
+          </button>
+        </form>
 </layout>
