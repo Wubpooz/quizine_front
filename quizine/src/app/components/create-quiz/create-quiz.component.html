@@ -1,6 +1,7 @@
 <layout>
   <form class="flex flex-col items-center justify-between mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
-        <div class="w-full h-full max-h-screen overflow-y-auto">
+        <div class="w-full">
+          <!--  h-full max-h-screen overflow-y-auto -->
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-bold hidden sm:inline-block">Créer un nouveau quiz</h1>
                 <h1 class="text-2xl font-bold sm:hidden">Créer</h1>
@@ -102,7 +103,8 @@
                 </div>
             </div>
 
-            <div class="flex flex-col max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
+            <!-- dvh ? -->
+          <div class="flex flex-col max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
                 <input
                     type="text"
                     placeholder="Ajouter un titre"
@@ -246,11 +248,11 @@
                     +
                 </button>
             </div>
-          </div>
+        </div>
 
           <button
             type="submit"
-            class="my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
+            class="z-4 my-4 pb-16 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
             [disabled]="quizForm.invalid"
             [class.scale-110]="quizForm.valid"
             [class.transition]="quizForm.valid"
