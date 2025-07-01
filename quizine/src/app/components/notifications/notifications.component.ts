@@ -6,6 +6,7 @@ import { APIService } from '../../services/api.service';
 import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { LayoutComponent } from "../layout/layout.component";
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-notifications',
@@ -20,7 +21,8 @@ export class NotificationsComponent {
   isrefus: boolean = false;
 
   constructor(private apiService: APIService,
-    private gamestore: GameSessionStore) {
+    private gamestore: GameSessionStore,
+    private notifService: NotificationsService) {
 
     this.apiService.getNotifications().toPromise().then((gameRequests: GameRequest[] | undefined) => {
       if(!gameRequests) {
@@ -54,8 +56,7 @@ export class NotificationsComponent {
     this.isWaitingPageShowing.set(notif.id_session, true);
     let session = await this.apiService.getSession(notif.id_session).toPromise();
     if(!session) {
-      //TODO notification
-      console.error("Unexepcted error. Can't accept notification.");
+      this.notifService.error("Unexepcted error. Can't accept notification.");
     } else {
       let quizId = session.id_quiz;
       this.gamestore.updateQuiz(quizId);

@@ -57,7 +57,7 @@ export class AppStore {
 
     updateUser(user: User) {
         if(!user) {
-            console.error("User is null");
+            console.error("User is null, can't update.");
             return;
         }
         if (this.currentUser) {

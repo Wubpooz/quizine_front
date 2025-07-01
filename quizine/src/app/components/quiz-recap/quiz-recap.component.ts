@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule],
   templateUrl: './quiz-recap.component.html'
 })
-export class QuizRecapComponent { //TODO issue where all answer have green checkmarks
+export class QuizRecapComponent {
   quiz!: Quiz;
   answers!: Map<string, Option>;
 

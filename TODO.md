@@ -14,7 +14,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components
+- [ ] Add dark mode to components ()
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
@@ -35,7 +35,7 @@
   - [ ] custom radio button component
 - [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
 - [ ] Add OAuth using Supabase
-- [ ] Badge for notifs
+- [ ] Badge for notifications
 - [ ] Search/sort by tags
 - [ ] Rating system
 - [ ] Quizz error reporting like duolingo
@@ -59,12 +59,12 @@
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
-- [ ] Use only specific components (buttons, toggles...)
+- [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
+- [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, ...)
 
 ### P2
 - [x] Remove CSS files
-- [ ] Remove all nulls
-- [ ] Search bar + pop-up component(s)
+- [x] Remove all nulls
 - [ ] Use only css variables for colors
 - [ ] CI/CD Tests
 
