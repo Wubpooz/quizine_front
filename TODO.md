@@ -13,7 +13,7 @@
 - [x] Profile pop-up menu with dark mode toggle, logout
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
-- [ ] Fix create button (position, add checkmark and animation)
+- [x] Fix create button (position, add checkmark and animation)
 - [ ] Add dark mode to components
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
@@ -32,6 +32,7 @@
   - [ ] Menu: Componetize, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>
   - [ ] Tooltips (use group on related button and group-hover to show tooltip)
   - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
+  - [ ] custom radio button component
 - [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
 - [ ] Add OAuth using Supabase
 - [ ] Badge for notifs

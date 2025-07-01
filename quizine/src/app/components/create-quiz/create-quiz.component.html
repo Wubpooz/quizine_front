@@ -1,5 +1,5 @@
-<layout>
-  <form class="flex flex-col items-center mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
+<layout class="relative">
+  <form class="flex flex-col items-center mx-[20px] sm:mx-[40px] pt-8 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
     <div class="w-full h-full max-h-screen overflow-y-auto">
       <div class="flex justify-between items-center mb-6">
         <div>
@@ -71,120 +71,123 @@
         </div>
       </div>
 
-      <!-- Quiz questions -->
+      <!-- Quiz details -->
       <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto">
-        <input
-          type="text"
-          placeholder="Ajouter un titre"
-          class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-          required
-          name="title"
-          [(ngModel)]="quizTitle"
-          maxlength="{{maxLengthTitle}}"
-          (input)="onTitleInput($event)"
-          (mouseenter)="showTitleTooltip = true"
-          (mouseleave)="showTitleTooltip = false"
-          [attr.title]="'Limite: {{maxLengthTitle}} caractères'"
-        />
-        <!-- Tooltip on hover -->
-        <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-          Limite: {{maxLengthTitle}} caractères
-        </div>
-        <!-- Notification when max length reached -->
-        <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-          Limite de {{maxLengthTitle}} caractères atteinte
-        </div>
-
-        <input
-          type="text"
-          placeholder="Ajouter une description"
-          class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-          name="description"
-          [(ngModel)]="quizDescription"
-          maxlength="{{maxLengthDescription}}"
-          (input)="onDescriptionInput($event)"
-          (mouseenter)="showDescriptionTooltip = true"
-          (mouseleave)="showDescriptionTooltip = false"
-          [attr.title]="'Limite: {{maxLengthDescription}} caractères'"
-        />
-        <!-- Tooltip on hover -->
-        <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-          Limite: {{maxLengthTitle}} caractères
-        </div>
-        <div *ngIf="showDescriptionTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-          Limite: {{maxLengthDescription}} caractères
-        </div>
-        <!-- Notification when max length reached -->
-        <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-          Limite de {{maxLengthTitle}} caractères atteinte
-        </div>
-
-
-      <div class="flex flex-col gap-4 mb-6">
-        <ng-container *ngFor="let question of questions; let i = index">
-          <div class="bg-primary-light text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
+        <!-- Title and description -->
+        <div class="flex flex-col border-b-2 border-gray-400 mb-4">
           <input
             type="text"
-            placeholder="Ajouter une question"
-            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+            placeholder="Ajouter un titre"
+            class="w-full semi-bold border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
             required
-            name="question{{ i }}"
-            [(ngModel)]="question.name"
-            maxlength="{{maxLengthQuestion}}"
-            (input)="onQuestionInput($event, i)"
-            (mouseenter)="showQuestionTooltip[i] = true"
-            (mouseleave)="showQuestionTooltip[i] = false"
-            [attr.title]="'Limite: {{maxLengthQuestion}} caractères'"
+            name="title"
+            [(ngModel)]="quizTitle"
+            maxlength="{{maxLengthTitle}}"
+            (input)="onTitleInput($event)"
+            (mouseenter)="showTitleTooltip = true"
+            (mouseleave)="showTitleTooltip = false"
+            [attr.title]="'Limite: {{maxLengthTitle}} caractères'"
           />
           <!-- Tooltip on hover -->
-          <div *ngIf="showQuestionTooltip?.[i]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-            Limite: {{maxLengthQuestion}} caractères
+          <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+            Limite: {{maxLengthTitle}} caractères
           </div>
           <!-- Notification when max length reached -->
-          <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-            Limite de {{maxLengthQuestion}} caractères atteinte
+          <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+            Limite de {{maxLengthTitle}} caractères atteinte
           </div>
-          <div class="flex flex-col gap-2 mb-4">
-            <ng-container *ngFor="let option of question.choices; let j = index">
-              <div class="flex items-center gap-2">
-                <span class="flex text-lg gap-2">
-                  <p> {{ j + 1 }}. </p>
+  
+          <input
+            type="text"
+            placeholder="Ajouter une description"
+            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+            name="description"
+            [(ngModel)]="quizDescription"
+            maxlength="{{maxLengthDescription}}"
+            (input)="onDescriptionInput($event)"
+            (mouseenter)="showDescriptionTooltip = true"
+            (mouseleave)="showDescriptionTooltip = false"
+            [attr.title]="'Limite: {{maxLengthDescription}} caractères'"
+          />
+          <!-- Tooltip on hover -->
+          <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+            Limite: {{maxLengthTitle}} caractères
+          </div>
+          <div *ngIf="showDescriptionTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+            Limite: {{maxLengthDescription}} caractères
+          </div>
+          <!-- Notification when max length reached -->
+          <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+            Limite de {{maxLengthTitle}} caractères atteinte
+          </div>
+        </div>
+
+
+        <div class="flex flex-col gap-4 mb-6">
+          <ng-container *ngFor="let question of questions; let i = index">
+            <div class="bg-primary-light text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
+            <input
+              type="text"
+              placeholder="Ajouter une question"
+              class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+              required
+              name="question{{ i }}"
+              [(ngModel)]="question.name"
+              maxlength="{{maxLengthQuestion}}"
+              (input)="onQuestionInput($event, i)"
+              (mouseenter)="showQuestionTooltip[i] = true"
+              (mouseleave)="showQuestionTooltip[i] = false"
+              [attr.title]="'Limite: {{maxLengthQuestion}} caractères'"
+            />
+            <!-- Tooltip on hover -->
+            <div *ngIf="showQuestionTooltip?.[i]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+              Limite: {{maxLengthQuestion}} caractères
+            </div>
+            <!-- Notification when max length reached -->
+            <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+              Limite de {{maxLengthQuestion}} caractères atteinte
+            </div>
+            <div class="flex flex-col gap-2 mb-4">
+              <ng-container *ngFor="let option of question.choices; let j = index">
+                <div class="flex items-center gap-2">
+                  <span class="flex text-lg gap-2">
+                    <p> {{ j + 1 }}. </p>
+                      <input
+                        type="radio"
+                        [name]="'question{{ i }}'"
+                        [checked]="question.validAnswer === j"
+                        (change)="setCorrectOption(i,j)"
+                        required
+                      />
+                  </span>
+                  <div class="relative w-full">
                     <input
-                      type="radio"
-                      [name]="'question{{ i }}'"
-                      [checked]="question.validAnswer === j"
-                      (change)="setCorrectOption(i,j)"
+                      type="text"
+                      placeholder="Ajouter une option"
+                      class="w-full border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint"
                       required
+                      name="option{{ i }}{{ j }}"
+                      [(ngModel)]="option.content"
+                      maxlength="{{maxLengthOption}}"
+                      (input)="onOptionInput($event, i, j)"
+                      (mouseenter)="showOptionTooltip[i][j] = true"
+                      (mouseleave)="showOptionTooltip[i][j] = false"
+                      [attr.title]="'Limite: {{maxLengthOption}} caractères'"
                     />
-                </span>
-                <div class="relative w-full">
-                  <input
-                    type="text"
-                    placeholder="Ajouter une option"
-                    class="w-full border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-                    required
-                    name="option{{ i }}{{ j }}"
-                    [(ngModel)]="option.content"
-                    maxlength="{{maxLengthOption}}"
-                    (input)="onOptionInput($event, i, j)"
-                    (mouseenter)="showOptionTooltip[i][j] = true"
-                    (mouseleave)="showOptionTooltip[i][j] = false"
-                    [attr.title]="'Limite: {{maxLengthOption}} caractères'"
-                  />
-                  <!-- Tooltip on hover -->
-                  <div *ngIf="showOptionTooltip?.[i]?.[j]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-                    Limite: {{maxLengthOption}} caractères
-                  </div>
-                  <!-- Notification when max length reached -->
-                  <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-                    Limite de {{maxLengthOption}} caractères atteinte
+                    <!-- Tooltip on hover -->
+                    <div *ngIf="showOptionTooltip?.[i]?.[j]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+                      Limite: {{maxLengthOption}} caractères
+                    </div>
+                    <!-- Notification when max length reached -->
+                    <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+                      Limite de {{maxLengthOption}} caractères atteinte
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-container>
-          </div>
-        </ng-container>
-      </div>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
 
         <button type="button" class="bg-primary hover:bg-primary text-white rounded-xl w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
           +
@@ -193,19 +196,21 @@
     </div>
 
     <!-- Create quiz button -->
-    <button
-      type="submit"
-      class="z-4 my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
-      [disabled]="quizForm.invalid"
-      [class.scale-110]="quizForm.valid"
-      [class.transition]="quizForm.valid"
-      [class.duration-500]="quizForm.valid"
-    >
-      <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-      </svg>
-      Créer le quiz
-    </button>
-
+    <div class="z-8 w-full flex items-center justify-center border-t-2"> <!-- shadow-[0_-12px_12px_0_rgba(0,0,0,0.1)] -->
+      <button
+        type="submit"
+        class="z-10 h-10 my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
+        [disabled]="quizForm.invalid"
+        [class.scale-110]="quizForm.valid"
+        [class.transition]="quizForm.valid"
+        [class.duration-500]="quizForm.valid"
+      >
+        <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        Créer le quiz
+      </button>
+    </div>
   </form>
+  <!-- <div class="z-4 absolute bottom-0 left-0 w-full h-[90px] backdrop-blur-sm"></div> -->
 </layout>
