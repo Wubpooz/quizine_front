@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col max-h-[80vh] overflow-y-auto">
+            <div class="flex flex-col max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
                 <input
                     type="text"
                     placeholder="Ajouter un titre"
@@ -250,7 +250,7 @@
 
           <button
             type="submit"
-            class="mb-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
+            class="my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
             [disabled]="quizForm.invalid"
             [class.scale-110]="quizForm.valid"
             [class.transition]="quizForm.valid"
