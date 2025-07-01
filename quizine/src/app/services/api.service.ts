@@ -318,7 +318,6 @@ export class APIService {
 
 
     //========================= Labels =========================
-    //TODO
     //create label
     //addLabel
 
@@ -403,7 +402,6 @@ export class APIService {
     }
 
     //========================= Rate =========================
-    //TODO getgrate
     addRate(quizId: string, grade: number): Observable<number> {
         return this.http.post<any>(this.endpoint+"/recent", {quizId, grade}, {withCredentials: true, observe: 'response'}).pipe(
             map((response: any) => {
@@ -421,8 +419,9 @@ export class APIService {
         );
     }
 
+    getRate(){}
+
     //========================= Search =========================
-    //TODO
     searchQuiz() {
         return [];
     }

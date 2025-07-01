@@ -7,19 +7,16 @@ import { APIService } from "../services/api.service";
 @Injectable({
     providedIn: 'root'
 })
-export class GameSessionStore { //TODO redo completly
+export class GameSessionStore {
     private scorePerAnswer: number = 100;
     
+    public score: number = 0;
     public sessionId: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
     public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
-    public score: number = 0;
     public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map());
     public answerList: BehaviorSubject<Map<string, Option>> = new BehaviorSubject<Map<string, Option>>(new Map());
 
-
-    constructor(private apiService: APIService) {
-        // this.updateQuiz(7); //TODO temp
-    }
+    constructor(private apiService: APIService) {}
 
     updateScore(user: User, score: number) {
         const currentScores = this.scores.getValue();

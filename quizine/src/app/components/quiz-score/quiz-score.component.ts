@@ -32,7 +32,7 @@ export class QuizScoreComponent {
         return;
       }
       this.currentUser = user;
-      this.gameConnexion.connect(); //TODO sessionId should be in gameSessionStore
+      this.gameConnexion.connect(); // sessionId has to already be in gameSessionStore
 
       this.gameConnexion.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
         if(data && data.length > 0) {
@@ -91,9 +91,7 @@ export class QuizScoreComponent {
     this.userScore = score;
   }
 
-  selectUser(userId: string): void {
-    //TODO optionnal go to other user profile if implemented
-  }
+  selectUser(userId: string): void {}
 
   next(): void {
     this.router.navigate(['quiz-recap']);

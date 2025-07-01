@@ -61,8 +61,6 @@ export class WaitingPageComponent {
   }
 
   playQuiz() {
-    //TODO send api call
-    // this.router.navigate(['/quiz']);
     this.router.navigate(['/quiz-question']);
   }
 

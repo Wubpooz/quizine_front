@@ -56,6 +56,7 @@ export class RealtimeService extends GameConnexionService {
     }
   }
 
+  //TODO add api service calls
   listenGameStart(callback: (data: any) => void): void {
     this.channel.on('broadcast', { event: 'gamestart' }, ({ payload }) => {
       callback(payload);

@@ -12,23 +12,29 @@
 - [x] notif when get call fails
 - [x] profile pop-up menu with dark mode toggle, logout
 - [x] dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
+- [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
+- [ ] fix create button (position, add checkmark and animation)
 - [ ] add dark mode to components
-- [ ] add notifications where needed (https://codeseven.github.io/toastr/demo.html)
+- [ ] add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] toggle sidebar when clicking inside
 - [ ] add a loading spinner when waiting for API calls
 - [ ] profile/quiz pictures
 - [ ] quiz editing
 - [ ] quiz descriptions
-- [ ] use https://sweetalert2.github.io/ for full screen and very customizable pop-ups
+- [ ] use <https://sweetalert2.github.io/> for full screen and very customizable pop-ups
 - [ ] friends
-- [ ] animations (gsap, https://animejs.com/documentation/stagger)
+- [ ] animations (gsap, <https://animejs.com/documentation/stagger>)
 
 ### P3
+- [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
+- [ ] Improve flyout menu (put in component, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>)
 - [ ] add OAuth Google
 - [ ] badge for notifs
 - [ ] Search/sort by tags
 - [ ] Rating system
 - [ ] quizz error reporting like duolingo
+- [ ] action when quiz-recap finish is triggered to go back to previous seen page
+- [ ] Number of remaining player in waiting page
 
 ### P4
 - [ ] visit other user profiles
@@ -42,6 +48,7 @@
 ## Dev
 ### P1
 - [ ] Release plan
+- [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] wrap navbar + sidebar dans un composant
@@ -56,6 +63,7 @@
 
 ### P3
 - [ ] use search API
+- [ ] API call to play quizz in waiting page ?
 - [ ] only use constructor for declaration, do everything in ngOnInit
 - [ ] home-card component (or just card component for that + library)
 

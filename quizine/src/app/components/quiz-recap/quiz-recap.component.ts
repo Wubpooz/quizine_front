@@ -35,7 +35,6 @@ export class QuizRecapComponent { //TODO issue where all answer have green check
       this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/quiz-preview', this.quiz.id]);
-    }
-    //! TODO 
+    } 
   }
 }
