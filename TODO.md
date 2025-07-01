@@ -14,7 +14,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components ()
+- [ ] Add dark mode to components (create, edit, explore, home, landing, library, login, navbar, 404, notifications, profile, card, description, question, recap, score, waiting, register, sidebar, tag-list, invite)
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
