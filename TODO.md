@@ -30,9 +30,10 @@
   - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>
   - [ ] Colors: <https://www.iamsajid.com/ui-colors/>
   - [ ] Menu: Componetize, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>
+  - [ ] Tooltips (use group on related button and group-hover to show tooltip)
   - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
 - [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
-- [ ] Add OAuth Google
+- [ ] Add OAuth using Supabase
 - [ ] Badge for notifs
 - [ ] Search/sort by tags
 - [ ] Rating system
@@ -53,6 +54,7 @@
 ### P1
 - [ ] Release plan
 - [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
+- [ ] Create a migration to use Supabase locally
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
@@ -91,6 +93,139 @@
 &nbsp;  
 &nbsp;  
 # Implementations
+## Supabase Auth
+### Data migration
+```js
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(
+  'https://your-project.supabase.co',
+  'YOUR_SERVICE_ROLE_KEY'
+);
+
+async function migrateUser(user) {
+  const { data, error } = await supabase.auth.admin.createUser({
+    email: user.email,
+    password: user.password, // must be plaintext at migration time
+    user_metadata: {
+      // Store extra fields like picture in user_metadata, or sync them to a profiles table.
+      picture: user.picture
+    }
+  });
+  if (error) console.error('Migration failed:', error.message);
+  else console.log('User migrated:', data.user.email);
+}
+```
+
+### Store User metadata
+```sql
+create table profiles (
+  id uuid primary key references auth.users(id),
+  picture text,
+  created_at timestamp default now()
+);
+
+create function handle_new_user()
+returns trigger as $$
+begin
+  insert into public.profiles (id)
+  values (new.id);
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger on_auth_user_created
+after insert on auth.users
+for each row execute procedure handle_new_user();
+```
+
+
+### Front Auth
+```ts
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient('https://your-project.supabase.co', 'public-anon-key');
+
+// Google Sign-In
+async function loginWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + '/callback' // optional
+    }
+  });
+}
+
+
+// Send OTP
+await supabase.auth.signInWithOtp({ phone: '+1234567890' });
+
+// Verify OTP
+await supabase.auth.verifyOtp({ phone: '+1234567890', token: '123456' });
+```
+
+
+### Back Middleware
+```js
+const { createClient } = require('@supabase/supabase-js');
+
+const supabase = createClient(
+  'https://your-project.supabase.co',
+  'your-supabase-service-role-key'
+);
+
+async function authMiddleware(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'No token' });
+
+  const { data: { user }, error } = await supabase.auth.getUser(token);
+  if (error) return res.status(401).json({ error: error.message });
+
+  req.user = user;
+  next();
+}
+```
+
+
+
+&nbsp;  
+&nbsp;  
+## Supabase Local Docker Version
+1) dump data: `SELECT 'pg_dump command here' -- Placeholder only, use CLI method for full dump.`
+2) Docker Setup:
+```bash 
+git clone https://github.com/supabase/supabase.git
+cd supabase/docker
+```
+3) Import Schema and Data into Docker PostgreSQL:
+```bash
+docker cp supabase_dump.dump supabase-db:/tmp/
+
+docker exec -it supabase-db bash
+pg_restore -U postgres -d postgres /tmp/supabase_dump.dump
+```
+OR
+```bash
+docker cp supabase_dump.dump supabase-db:/tmp/
+
+psql -U postgres -d postgres -f /tmp/schema.sql
+psql -U postgres -d postgres -f /tmp/data.sql
+```
+4) Visit: <http://localhost:54323> for Supabase Studio.
+5) Use `supabase init` and `supabase start` (if using CLI-managed local instance) or `docker compose up` (if using repo).
+
+6) Optional: OAuth locally uses
+```bash
+GOTRUE_EXTERNAL_GOOGLE_ENABLED="true"
+GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID="your-google-client-id"
+GOTRUE_EXTERNAL_GOOGLE_SECRET="your-google-secret"
+GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI="http://localhost:8000/auth/v1/callback"
+```
+
+
+
+&nbsp;  
+&nbsp;  
 ## Tests in CI/CD
 
 Security flaws linter : `npm install eslint-plugin-security --save-dev`  

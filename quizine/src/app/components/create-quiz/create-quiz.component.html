@@ -252,11 +252,17 @@
             </div>
 
             <button
-                type="submit"
-                class="mt-6 bg-primary disabled:bg-gray-400 hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base"
-                [disabled]="quizForm.invalid"
+              type="submit"
+              class="mt-6 bg-primary disabled:bg-gray-400 hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base md:mt-6 lg:mt-6 xl:mt-6 2xl:mt-6 sm:mt-4 flex items-center justify-center"
+              [disabled]="quizForm.invalid"
+              [class.scale-110]="quizForm.valid"
+              [class.transition]="quizForm.valid"
+              [class.duration-500]="quizForm.valid"
             >
-                Créer le quiz
+              <svg class="w-4 h-4 mr-2 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              Créer le quiz
             </button>
         </div>
     </form>

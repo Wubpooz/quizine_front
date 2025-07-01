@@ -419,7 +419,7 @@ export class APIService {
         );
     }
 
-    getRate(){}
+    getRate(): void {}
 
     //========================= Search =========================
     searchQuiz() {
