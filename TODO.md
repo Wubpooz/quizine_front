@@ -2,43 +2,47 @@
 ## Features
 ### P1
 - [x] User notification handling (room joining)
-- [x] overflow sur score
-- [x] mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list, profile, description, library, home, explore, edit, create, notifications, score, recap, questions)
+- [x] Overflow sur score
+- [x] Mobile friendliness (login, register, landing, waiting, navbar, sidebar, invite, tag-list, profile, description, library, home, explore, edit, create, notifications, score, recap, questions)
 - [x] 404 page
-- [x] store sidebar toggle value between page refresh
-- [x] search bars alignement + search working again + scroll in dropdown
+- [x] Store sidebar toggle value between page refresh
+- [x] Search bars alignement + search working again + scroll in dropdown
 
 ### P2
-- [x] notif when get call fails
-- [x] profile pop-up menu with dark mode toggle, logout
-- [x] dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
+- [x] Notifications when get call fails
+- [x] Profile pop-up menu with dark mode toggle, logout
+- [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme)
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
-- [ ] fix create button (position, add checkmark and animation)
-- [ ] add dark mode to components
-- [ ] add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
-- [x] toggle sidebar when clicking inside
-- [ ] add a loading spinner when waiting for API calls
-- [ ] profile/quiz pictures
-- [ ] quiz editing
-- [ ] quiz descriptions
-- [ ] use <https://sweetalert2.github.io/> for full screen and very customizable pop-ups
-- [ ] friends
-- [ ] animations (gsap, <https://animejs.com/documentation/stagger>)
+- [ ] Fix create button (position, add checkmark and animation)
+- [ ] Add dark mode to components
+- [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
+- [x] Toggle sidebar when clicking inside
+- [ ] Add a loading spinner when waiting for API calls
+- [ ] Profile/quiz pictures
+- [ ] Quiz editing
+- [ ] Quiz descriptions
+- [ ] Friends
+- [ ] Full screen pop-ups for call waits (<https://sweetalert2.github.io/>)
 
 ### P3
-- [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
-- [ ] Improve flyout menu (put in component, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>)
-- [ ] add OAuth Google
-- [ ] badge for notifs
+- [ ] UI Improvements
+  - [ ] Tailwind components: <https://www.material-tailwind.com/blocks>, <https://flowbite.com/#components>, <https://merakiui.com/components>, <https://daisyui.com/resources/videos/fast-beautiful-uis-angular-daisyui-x5l6lsj6ekw/>, <https://tailwindflex.com/tag/navbar?is_responsive=true>, <https://windytoolbox.com/>, <https://mobbin.com/explore/web>, <https://demos.creative-tim.com/soft-ui-design-system/presentation.html>, <https://lbegey.fr/templates-tailwind.html>
+  - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>
+  - [ ] Colors: <https://www.iamsajid.com/ui-colors/>
+  - [ ] Menu: Componetize, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>
+  - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
+- [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
+- [ ] Add OAuth Google
+- [ ] Badge for notifs
 - [ ] Search/sort by tags
 - [ ] Rating system
-- [ ] quizz error reporting like duolingo
-- [ ] action when quiz-recap finish is triggered to go back to previous seen page
+- [ ] Quizz error reporting like duolingo
+- [ ] Action when quiz-recap finish is triggered to go back to previous seen page
 - [ ] Number of remaining player in waiting page
 
 ### P4
-- [ ] visit other user profiles
-- [ ] random quizz by theme
+- [ ] Visit other user profiles
+- [ ] Random quizz by theme
 
 
 
@@ -51,30 +55,30 @@
 - [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
-- [x] wrap navbar + sidebar dans un composant
-- [ ] use only specific components (buttons, toggles...)
+- [x] Wrap navbar + sidebar dans un composant
+- [ ] Use only specific components (buttons, toggles...)
 
 ### P2
-- [x] remove CSS files
-- [ ] remove all nulls
-- [ ] search bar + pop-up component(s)
-- [ ] use only css variables for colors
+- [x] Remove CSS files
+- [ ] Remove all nulls
+- [ ] Search bar + pop-up component(s)
+- [ ] Use only css variables for colors
 - [ ] CI/CD Tests
 
 ### P3
-- [ ] use search API
+- [ ] Use search API
 - [ ] API call to play quizz in waiting page ?
-- [ ] only use constructor for declaration, do everything in ngOnInit
-- [ ] home-card component (or just card component for that + library)
+- [ ] Only use constructor for declaration, do everything in ngOnInit
+- [ ] Home-card component (or just card component for that + library)
 
 ### P4
-- [ ] use SwPush for notifications on desktop and mobile
+- [ ] Use SwPush for notifications on desktop and mobile
 
 
-- [x] probes
-- [x] keep alive redis
-- [ ] switch to supabase realtime for websockets
-- [ ] tests in CI/CD
+- [x] Probes
+- [x] Keep alive redis
+- [ ] Switch to supabase realtime for websockets
+- [ ] Tests in CI/CD
 - [ ] ChatGPT integration
 
 
