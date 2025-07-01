@@ -1,267 +1,211 @@
 <layout>
   <form class="flex flex-col items-center justify-between mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
-        <div class="w-full">
-          <!--  h-full max-h-screen overflow-y-auto -->
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-bold hidden sm:inline-block">Créer un nouveau quiz</h1>
-                <h1 class="text-2xl font-bold sm:hidden">Créer</h1>
-                <div class="flex items-center gap-4">
-                    <app-tag-list [tags]="tags"></app-tag-list>
-                        <button
-                            class="bg-primary text-white px-4 py-1 rounded-xl text-2xl flex items-center gap-2 focus:outline-none md:hidden"
-                            (click)="showTagInput = !showTagInput"
-                            aria-label="Ajouter un label"
-                            >
-                            +
-                            </button>
-                            <button
-                                type="button"
-                                class="hidden md:flex bg-primary text-white px-4 py-2 rounded-lg font-semibold text-base items-center gap-2 focus:outline-none"
-                                (click)="showTagInput = !showTagInput"
-                            >
-                            + Ajouter un tag
-                            </button>
-                    <div
-                      *ngIf="showTagInput"
-                      class="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start"
-                    >
-                        <div
-                          class="mt-64 sm:mt-0
-                          w-11/12 max-w-xs bg-white rounded-lg shadow-lg p-8
-                          sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none
-                          relative"
-                        >
-                            <!-- Close button, visible only on mobile -->
-                            <button
-                              type="button"
-                              class="absolute right-2 top-2 text-gray-400 hover:text-red-500 sm:hidden"
-                              (click)="showTagInput = false"
-                              aria-label="Fermer"
-                            >
-                              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                              </svg>
-                            </button>
-                            <input
-                              #tagInput
-                              type="text"
-                              placeholder="Ajouter un tag"
-                              class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full"
-                              (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
-                            />
-                            <button
-                              type="button"
-                              class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-500"
-                              (click)="toggleTagInput()"
-                            >
-                              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                              </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="relative">
-                        <button
-                          class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none"
-                          (click)="showDropdown = !showDropdown"
-                          type="button"
-                        >
-                          {{ quizVisibility === 'private' ? 'Privé' : 'Public' }}
-                          <svg class="w-4 h-4 ml-1 transition-transform duration-200" [ngClass]="{'rotate-180': showDropdown}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                          </svg>
-                        </button>
-                        <div
-                          *ngIf="showDropdown"
-                          class="absolute left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in"
-                        >
-                          <button
-                            class="block w-full text-left px-4 py-2 hover:bg-blue-100"
-                            (click)="quizVisibility = 'private'; showDropdown = false"
-                            type="button"
-                          >
-                            Privé
-                          </button>
-                          <button
-                            class="block w-full text-left px-4 py-2 hover:bg-blue-100"
-                            (click)="quizVisibility = 'public'; showDropdown = false"
-                            type="button"
-                          >
-                            Public
-                          </button>
-                        </div>
-                        <style>
-                          .animate-fade-in {
-                            animation: fadeInDropdown 0.18s ease;
-                          }
-                          @keyframes fadeInDropdown {
-                            from { opacity: 0; transform: translateY(-8px);}
-                            to { opacity: 1; transform: translateY(0);}
-                          }
-                        </style>
-                    </div>
-                </div>
-            </div>
-
-            <!-- dvh ? -->
-          <div class="flex flex-col max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
-                <input
-                    type="text"
-                    placeholder="Ajouter un titre"
-                    class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-                    required
-                    name="title"
-                    [(ngModel)]="quizTitle"
-                    maxlength="{{maxLengthTitle}}"
-                    (input)="onTitleInput($event)"
-                    (mouseenter)="showTitleTooltip = true"
-                    (mouseleave)="showTitleTooltip = false"
-                    [attr.title]="'Limite: {{maxLengthTitle}} caractères'"
-                />
-                <!-- Tooltip on hover -->
-                <div
-                  *ngIf="showTitleTooltip"
-                  class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
-                >
-                  Limite: {{maxLengthTitle}} caractères
-                </div>
-                <!-- Notification when max length reached -->
-                <div
-                  *ngIf="titleMaxLengthReached"
-                  class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
-                >
-                  Limite de {{maxLengthTitle}} caractères atteinte
-                </div>
-
-                <input
-                    type="text"
-                    placeholder="Ajouter une description"
-                    class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-                    name="description"
-                    [(ngModel)]="quizDescription"
-                    maxlength="{{maxLengthDescription}}"
-                    (input)="onDescriptionInput($event)"
-                    (mouseenter)="showDescriptionTooltip = true"
-                    (mouseleave)="showDescriptionTooltip = false"
-                    [attr.title]="'Limite: {{maxLengthDescription}} caractères'"
-                />
-                <!-- Tooltip on hover -->
-                <div
-                    *ngIf="showTitleTooltip"
-                    class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
-                >
-                    Limite: {{maxLengthTitle}} caractères
-                </div>
-                <div
-                    *ngIf="showDescriptionTooltip"
-                    class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
-                >
-                    Limite: {{maxLengthDescription}} caractères
-                </div>
-                <!-- Notification when max length reached -->
-                <div
-                    *ngIf="titleMaxLengthReached"
-                    class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
-                >
-                    Limite de {{maxLengthTitle}} caractères atteinte
-                </div>
-
-                <div class="flex flex-col gap-4 mb-6">
-                    <ng-container *ngFor="let question of questions; let i = index">
-                        <div class="bg-primary-lighter rounded-lg px-4 py-2 mb-4 font-semibold">Question {{ i + 1 }}</div>
-                        <input
-                            type="text"
-                            placeholder="Ajouter une question"
-                            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-                            required
-                            name="question{{ i }}"
-                            [(ngModel)]="question.name"
-                            maxlength="{{maxLengthQuestion}}"
-                            (input)="onQuestionInput($event, i)"
-                            (mouseenter)="showQuestionTooltip[i] = true"
-                            (mouseleave)="showQuestionTooltip[i] = false"
-                            [attr.title]="'Limite: {{maxLengthQuestion}} caractères'"
-                        />
-                        <!-- Tooltip on hover -->
-                        <div
-                            *ngIf="showQuestionTooltip?.[i]"
-                            class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
-                        >
-                            Limite: {{maxLengthQuestion}} caractères
-                        </div>
-                        <!-- Notification when max length reached -->
-                        <div
-                            *ngIf="questionMaxLengthReached?.[i]"
-                            class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
-                        >
-                            Limite de {{maxLengthQuestion}} caractères atteinte
-                        </div>
-                        <div class="flex flex-col gap-2 mb-4">
-                            <ng-container *ngFor="let option of question.choices; let j = index">
-                                <div class="flex items-center gap-2">
-                                    <span class="flex text-lg gap-2">
-                                        <p>{{ j + 1 }}. </p>
-                                        <input
-                                            type="radio"
-                                            [name]="'question{{ i }}'"
-                                            [checked]="question.validAnswer === j"
-                                            (change)="setCorrectOption(i,j)"
-                                            required
-                                        />
-                                    </span>
-                                    <div class="relative w-full">
-                                        <input
-                                            type="text"
-                                            placeholder="Ajouter une option"
-                                            class="w-full border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint"
-                                            required
-                                            name="option{{ i }}{{ j }}"
-                                            [(ngModel)]="option.content"
-                                            maxlength="{{maxLengthOption}}"
-                                            (input)="onOptionInput($event, i, j)"
-                                            (mouseenter)="showOptionTooltip[i][j] = true"
-                                            (mouseleave)="showOptionTooltip[i][j] = false"
-                                            [attr.title]="'Limite: {{maxLengthOption}} caractères'"
-                                        />
-                                        <!-- Tooltip on hover -->
-                                        <div
-                                            *ngIf="showOptionTooltip?.[i]?.[j]"
-                                            class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20"
-                                        >
-                                            Limite: {{maxLengthOption}} caractères
-                                        </div>
-                                        <!-- Notification when max length reached -->
-                                        <div
-                                            *ngIf="optionMaxLengthReached?.[i]?.[j]"
-                                            class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200"
-                                        >
-                                            Limite de {{maxLengthOption}} caractères atteinte
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </ng-container>
-                </div>
-
-                <button type="button" class="bg-primary hover:bg-primary text-white rounded-xl w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
-                    +
-                </button>
-            </div>
+    <div class="w-full"> <!--  h-full max-h-screen overflow-y-auto -->
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold hidden sm:inline-block"> Créer un nouveau quiz </h1>
+          <h1 class="text-2xl font-bold sm:hidden"> Créer </h1>
         </div>
 
-          <button
-            type="submit"
-            class="z-4 my-4 pb-16 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
-            [disabled]="quizForm.invalid"
-            [class.scale-110]="quizForm.valid"
-            [class.transition]="quizForm.valid"
-            [class.duration-500]="quizForm.valid"
-          >
-            <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            Créer le quiz
-          </button>
-        </form>
+        <!-- Tags -->
+        <div class="flex items-center gap-4">
+            <app-tag-list [tags]="tags"></app-tag-list>
+            <div>
+              <button class="bg-primary text-white px-4 py-1 rounded-xl text-2xl flex items-center gap-2 focus:outline-none md:hidden" (click)="showTagInput = !showTagInput" aria-label="Ajouter un label">
+                +
+              </button>
+              <button type="button" class="hidden md:flex bg-primary text-white px-4 py-2 rounded-lg font-semibold text-base items-center gap-2 focus:outline-none" (click)="showTagInput = !showTagInput">
+                + Ajouter un tag
+              </button>
+            </div>
+
+            <div *ngIf="showTagInput" class="fixed inset-0 z-50 h-10 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start">
+              <div class="mt-64 sm:mt-0 w-11/12 max-w-xs bg-white rounded-lg shadow-lg p-8 sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none relative">
+                <input
+                  #tagInput
+                  type="text"
+                  placeholder="Ajouter un tag"
+                  class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full"
+                  (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
+                />
+                <button type="button" class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-500" (click)="toggleTagInput()">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+                <!-- Close button, visible only on mobile -->
+                <button type="button" class="absolute sm:hidden right-2 top-2 text-gray-400 hover:text-red-500" (click)="showTagInput = false" aria-label="Fermer">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          <!-- Quiz visibility -->
+          <div class="relative">
+            <button class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none" (click)="showDropdown = !showDropdown" type="button">
+              {{ quizVisibility === 'private' ? 'Privé' : 'Public' }}
+              <svg class="w-4 h-4 ml-1 transition-transform duration-200" [ngClass]="{'rotate-180': showDropdown}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div *ngIf="showDropdown" class="absolute left-0 mt-1 w-32 bg-white border border-gray-200 rounded-lg shadow-lg z-10 animate-fade-in">
+              <button class="block w-full text-left px-4 py-2 hover:bg-blue-100" (click)="quizVisibility = 'private'; showDropdown = false"type="button">
+                Privé
+              </button>
+              <button class="block w-full text-left px-4 py-2 hover:bg-blue-100" (click)="quizVisibility = 'public'; showDropdown = false" type="button">
+                Public
+              </button>
+            </div>
+            <style>
+              .animate-fade-in {
+                animation: fadeInDropdown 0.18s ease;
+              }
+              @keyframes fadeInDropdown {
+                from { opacity: 0; transform: translateY(-8px);}
+                to { opacity: 1; transform: translateY(0);}
+              }
+            </style>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz questions -->
+      <div class="flex flex-col max-h-[calc(100svh-10rem-18rem)] md:max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
+        <input
+          type="text"
+          placeholder="Ajouter un titre"
+          class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+          required
+          name="title"
+          [(ngModel)]="quizTitle"
+          maxlength="{{maxLengthTitle}}"
+          (input)="onTitleInput($event)"
+          (mouseenter)="showTitleTooltip = true"
+          (mouseleave)="showTitleTooltip = false"
+          [attr.title]="'Limite: {{maxLengthTitle}} caractères'"
+        />
+        <!-- Tooltip on hover -->
+        <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+          Limite: {{maxLengthTitle}} caractères
+        </div>
+        <!-- Notification when max length reached -->
+        <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+          Limite de {{maxLengthTitle}} caractères atteinte
+        </div>
+
+        <input
+          type="text"
+          placeholder="Ajouter une description"
+          class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+          name="description"
+          [(ngModel)]="quizDescription"
+          maxlength="{{maxLengthDescription}}"
+          (input)="onDescriptionInput($event)"
+          (mouseenter)="showDescriptionTooltip = true"
+          (mouseleave)="showDescriptionTooltip = false"
+          [attr.title]="'Limite: {{maxLengthDescription}} caractères'"
+        />
+        <!-- Tooltip on hover -->
+        <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+          Limite: {{maxLengthTitle}} caractères
+        </div>
+        <div *ngIf="showDescriptionTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+          Limite: {{maxLengthDescription}} caractères
+        </div>
+        <!-- Notification when max length reached -->
+        <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+          Limite de {{maxLengthTitle}} caractères atteinte
+        </div>
+
+
+      <div class="flex flex-col gap-4 mb-6">
+        <ng-container *ngFor="let question of questions; let i = index">
+          <div class="bg-primary-light text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
+          <input
+            type="text"
+            placeholder="Ajouter une question"
+            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+            required
+            name="question{{ i }}"
+            [(ngModel)]="question.name"
+            maxlength="{{maxLengthQuestion}}"
+            (input)="onQuestionInput($event, i)"
+            (mouseenter)="showQuestionTooltip[i] = true"
+            (mouseleave)="showQuestionTooltip[i] = false"
+            [attr.title]="'Limite: {{maxLengthQuestion}} caractères'"
+          />
+          <!-- Tooltip on hover -->
+          <div *ngIf="showQuestionTooltip?.[i]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+            Limite: {{maxLengthQuestion}} caractères
+          </div>
+          <!-- Notification when max length reached -->
+          <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+            Limite de {{maxLengthQuestion}} caractères atteinte
+          </div>
+          <div class="flex flex-col gap-2 mb-4">
+            <ng-container *ngFor="let option of question.choices; let j = index">
+              <div class="flex items-center gap-2">
+                <span class="flex text-lg gap-2">
+                  <p> {{ j + 1 }}. </p>
+                    <input
+                      type="radio"
+                      [name]="'question{{ i }}'"
+                      [checked]="question.validAnswer === j"
+                      (change)="setCorrectOption(i,j)"
+                      required
+                    />
+                </span>
+                <div class="relative w-full">
+                  <input
+                    type="text"
+                    placeholder="Ajouter une option"
+                    class="w-full border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+                    required
+                    name="option{{ i }}{{ j }}"
+                    [(ngModel)]="option.content"
+                    maxlength="{{maxLengthOption}}"
+                    (input)="onOptionInput($event, i, j)"
+                    (mouseenter)="showOptionTooltip[i][j] = true"
+                    (mouseleave)="showOptionTooltip[i][j] = false"
+                    [attr.title]="'Limite: {{maxLengthOption}} caractères'"
+                  />
+                  <!-- Tooltip on hover -->
+                  <div *ngIf="showOptionTooltip?.[i]?.[j]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
+                    Limite: {{maxLengthOption}} caractères
+                  </div>
+                  <!-- Notification when max length reached -->
+                  <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+                    Limite de {{maxLengthOption}} caractères atteinte
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+
+        <button type="button" class="bg-primary hover:bg-primary text-white rounded-xl w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
+          +
+        </button>
+      </div>
+    </div>
+
+    <!-- Create quiz button -->
+    <button
+      type="submit"
+      class="z-4 my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
+      [disabled]="quizForm.invalid"
+      [class.scale-110]="quizForm.valid"
+      [class.transition]="quizForm.valid"
+      [class.duration-500]="quizForm.valid"
+    >
+      <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+      Créer le quiz
+    </button>
+
+  </form>
 </layout>
