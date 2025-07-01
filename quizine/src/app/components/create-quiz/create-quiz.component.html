@@ -1,6 +1,6 @@
 <layout>
-  <form class="flex flex-col items-center justify-between mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
-    <div class="w-full"> <!--  h-full max-h-screen overflow-y-auto -->
+  <form class="flex flex-col items-center mx-[20px] sm:mx-[40px] pt-8 pb-2 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
+    <div class="w-full h-full max-h-screen overflow-y-auto">
       <div class="flex justify-between items-center mb-6">
         <div>
           <h1 class="text-2xl font-bold hidden sm:inline-block"> Créer un nouveau quiz </h1>
@@ -72,7 +72,7 @@
       </div>
 
       <!-- Quiz questions -->
-      <div class="flex flex-col max-h-[calc(100svh-10rem-18rem)] md:max-h-[calc(100svh-10rem-8rem)] overflow-y-auto">
+      <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto">
         <input
           type="text"
           placeholder="Ajouter un titre"
