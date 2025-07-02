@@ -16,6 +16,8 @@ import { Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService } from './services/theme.service';
 import { filter } from 'rxjs';
+import { injectSpeedInsights } from '@vercel/speed-insights';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -25,7 +27,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'Quizine';
   isDarkMode: boolean = false;
-
+  
   constructor(
     private appStore: AppStore,
     private apiService: APIService,
@@ -35,8 +37,9 @@ export class AppComponent {
   ) {}
 
 
-ngOnInit(): void {
-  this.appStore.init();
+  ngOnInit(): void {
+    injectSpeedInsights();
+    this.appStore.init();
 
   this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
     this.apiService.getUserData().subscribe({
