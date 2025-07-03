@@ -89,6 +89,7 @@
   --border-warn: #FF6F60;
 
   --hover-bg: #333333;
+
 }
 
 html, body {
@@ -101,3 +102,123 @@ html, body {
 .toast-container {
   z-index: 99999 !important;
 }
+
+
+// /* Light mode (default) */
+// :root {
+//   --color-primary:        #2F80ED;
+//   --color-primary-dark:   #1366D6;
+//   --color-primary-darker: #0C4CB5;
+//   --color-primary-light:  #63A4F4;
+//   --color-primary-lighter:#B3D5FD;
+//   --color-primary-tint:   #EAF3FE;
+//   --color-primary-border: rgba(47, 128, 237, 0.3);
+//   --color-primary-focus-ring: rgba(47, 128, 237, 0.5);
+
+//   --color-warn:           #E53935;
+//   --color-warn-light:     #FF6F60;
+//   --color-warn-dark:      #AB000D;
+
+//   --font-body: 'Poppins', sans-serif;
+
+//   /* backgrounds */
+//   --bg-main:     #FFFFFF;
+//   --bg-gray-200: #e5e7eb;
+//   --bg-surface:  #FAFAFA;
+//   --bg-card:     #FFFFFF;
+//   --bg-muted:    #F5F5F5;
+
+//   /* text */
+//   --text-main:       #222222;
+//   --text-secondary:  #555555;
+//   --text-disabled:   #999999;
+//   --text-inverse:    #FFFFFF;
+
+//   /* borders */
+//   --border-main:       #E5E7EB;
+//   --border-secondary:  #D1D5DB;
+//   --border-light:      #9CA3AF;
+//   --border-muted:      #F3F4F6;
+//   --border-primary:    var(--color-primary-border);
+//   --border-warn:       #FF6F60;
+
+//   /* hover and focus states */
+//   --hover-bg:             #F0F0F0;
+//   --focus-ring:           rgba(47, 128, 237, 0.3);
+//   --focus-ring-inverse:   rgba(255, 255, 255, 0.5);
+//   --focus-ring-warn:      rgba(229, 57, 53, 0.3);
+//   --focus-ring-primary:   rgba(47, 128, 237, 0.5);
+//   --focus-ring-secondary: rgba(99, 164, 244, 0.5);
+//   --focus-ring-muted:     rgba(229, 231, 235, 0.5);
+//   --focus-ring-light:     rgba(156, 163, 175, 0.5);
+// }
+
+// /* Dark mode */
+// :root.dark {
+//   --color-primary:        #8CBDFE;     /* Brighter for contrast */
+//   --color-primary-dark:   #63A4F4;
+//   --color-primary-darker: #2F80ED;
+//   --color-primary-light:  #B3D5FD;
+//   --color-primary-lighter:#EAF3FE;
+//   --color-primary-tint:   #1A73E8;     /* Custom highlight */
+//   --color-primary-border: rgba(140, 189, 254, 0.3);
+//   --color-primary-focus-ring: rgba(140, 189, 254, 0.6);
+
+//   --color-warn:           #FF8A80;
+//   --color-warn-light:     #FFB4A9;
+//   --color-warn-dark:      #E53935;
+
+//   --font-body: 'Poppins', sans-serif;
+
+//   /* backgrounds (Material Design spec) */
+//   --bg-main:     #121212;
+//   --bg-surface:  #1E1E1E;
+//   --bg-card:     #232323;
+//   --bg-muted:    #2C2C2C;
+//   --bg-gray-200: #2A2A2A;
+
+//   /* text */
+//   --text-main:       #E0E0E0;
+//   --text-secondary:  #B3B3B3;
+//   --text-disabled:   #757575;
+//   --text-inverse:    #000000;
+
+//   /* borders */
+//   --border-main:       #374151;
+//   --border-secondary:  #4B5563;
+//   --border-light:      #6B7280;
+//   --border-muted:      #1A1A1A;
+//   --border-primary:    var(--color-primary-border);
+//   --border-warn:       #FF8A80;
+
+//   /* hover and focus states */
+//   --hover-bg:             #2A2A2A;
+//   --focus-ring:           rgba(140, 189, 254, 0.4);
+//   --focus-ring-inverse:   rgba(255, 255, 255, 0.2);
+//   --focus-ring-warn:      rgba(255, 138, 128, 0.4);
+//   --focus-ring-primary:   rgba(140, 189, 254, 0.6);
+//   --focus-ring-secondary: rgba(197, 221, 255, 0.5);
+//   --focus-ring-muted:     rgba(38, 38, 38, 0.4);
+//   --focus-ring-light:     rgba(107, 114, 128, 0.3);
+// }
+
+// html, body {
+//   margin: 0;
+//   padding: 0;
+//   overflow: hidden;
+//   height: 100%;
+//   font-family: var(--font-body);
+//   background-color: var(--bg-main);
+//   color: var(--text-main);
+// }
+
+// .toast-container {
+//   z-index: 99999 !important;
+// }
+
+// /* Optional: Elevation overlays for dark mode (Material guideline) */
+// @media (prefers-color-scheme: dark) {
+//   .elevation-1 { background-color: rgba(255, 255, 255, 0.05); }
+//   .elevation-2 { background-color: rgba(255, 255, 255, 0.07); }
+//   .elevation-3 { background-color: rgba(255, 255, 255, 0.08); }
+// }
