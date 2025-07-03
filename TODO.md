@@ -27,7 +27,7 @@
 ### P3
 - [ ] UI Improvements
   - [ ] Tailwind components: <https://www.material-tailwind.com/blocks>, <https://flowbite.com/#components>, <https://merakiui.com/components>, <https://daisyui.com/resources/videos/fast-beautiful-uis-angular-daisyui-x5l6lsj6ekw/>, <https://tailwindflex.com/tag/navbar?is_responsive=true>, <https://windytoolbox.com/>, <https://mobbin.com/explore/web>, <https://demos.creative-tim.com/soft-ui-design-system/presentation.html>, <https://lbegey.fr/templates-tailwind.html>
-  - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>
+  - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>, <https://phosphoricons.com/>, <https://isocons.app>, <https://heroicons.com/>, <https://iconscout.com/>, <https://remixicon.com/>, <https://iconboddy.com>
   - [ ] Colors: <https://www.iamsajid.com/ui-colors/>
   - [ ] Menu: Componetize, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>
   - [ ] Tooltips (use group on related button and group-hover to show tooltip)
@@ -53,7 +53,7 @@
 &nbsp;  
 ## Dev
 ### P1
-- [ ] Release plan
+- [ ] Release plan (<https://excalidraw.com/> ?)
 - [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
 - [ ] Create a migration to use Supabase locally
 - [x] Github Pages deployment
