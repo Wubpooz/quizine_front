@@ -1,24 +1,24 @@
-<div class="flex sm:flex-row h-screen">
+<div class="flex sm:flex-row h-screen bg-bg-surface dark:bg-bg-surface">
   <!-- Left side image (hidden on mobile) -->
-  <div class="hidden md:flex w-1/2 h-full items-center justify-center bg-gray-100">
-    <img src="assets/images/Login.png" alt="Quiz Blocks" class="h-full w-auto object-cover" />
+  <div class="hidden md:flex w-1/2 h-full items-center justify-center">
+    <img src="assets/images/Login.png" alt="Quiz Blocks" class="h-full w-auto object-cover dark:brightness-75" />
   </div>
 
   <!-- Right side form -->
   <div class="w-full md:w-1/2 flex items-center justify-center relative px-4">
     <button
       type="button"
-      class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold z-10"
+      class="absolute top-4 right-4 text-text-secondary hover:text-text-main dark:text-text-secondary dark:hover:text-text-main text-2xl font-bold z-10"
       (click)="onClose()"
       aria-label="Fermer"
     >
       &times;
     </button>
     <form class="w-full max-w-md space-y-6" (ngSubmit)="onSubmit()">
-      <h2 class="text-center text-2xl font-bold text-primary-darker">Se connecter</h2>
+      <h2 class="text-center text-2xl font-bold text-primary-darker dark:text-primary-dark">Se connecter</h2>
 
       <div class="space-y-2">
-        <label for="username" class="block text-primary-dark">Nom d'utilisateur</label>
+        <label for="username" class="block text-primary-dark dark:text-primary">Nom d'utilisateur</label>
         <input
           id="username"
           type="text"
@@ -29,8 +29,8 @@
         />
       </div>
 
-      <div class="relative">
-        <label for="password" class="block text-primary-dark">Mot de passe</label>
+      <div class="relative space-y-2">
+        <label for="password" class="block text-primary-dark dark:text-primary">Mot de passe</label>
         <input
           id="password"
           [type]="showPassword ? 'text' : 'password'"
@@ -41,7 +41,7 @@
         />
         <button
           type="button"
-          class="absolute right-2 top-9 text-gray-500"
+          class="absolute right-3 top-8 text-gray-500"
           (click)="togglePassword()"
         >
           👁
@@ -50,7 +50,7 @@
 
       <button
         type="submit"
-        class="w-full py-2 rounded-md bg-primary hover:bg-primary-dark text-white font-semibold"
+        class="w-full py-2 rounded-md bg-primary hover:bg-primary-dark text-white dark:bg-primary-dark dark:hover:bg-primary-darker font-semibold"
       >
         Se connecter
       </button>
