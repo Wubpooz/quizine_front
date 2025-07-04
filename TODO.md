@@ -14,7 +14,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, notifications, profile, _description_, question, recap, score, waiting, _register_, sidebar, tag-list, invite)
+- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, notifications, profile, _description_, question, recap, score, waiting, _register_, _sidebar_, tag-list, invite)
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
