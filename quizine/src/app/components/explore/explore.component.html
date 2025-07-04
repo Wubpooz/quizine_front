@@ -6,7 +6,7 @@
         <!-- <input type="text" placeholder="Rechercher parmi mes quiz" class="w-full rounded-lg p-2 bg-gray-100 placeholder-gray-500 mt-4"/> -->
         <div class="flex flex-wrap gap-4 mt-6">
           @for (quiz of filteredQuizList; track quiz) {
-            <app-quiz-card [quiz]="quiz"></app-quiz-card>
+            <app-quiz-card [quiz]="quiz"/>
           }
         </div>
       </div>

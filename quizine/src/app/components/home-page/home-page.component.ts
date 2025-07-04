@@ -5,11 +5,12 @@ import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
 import { LayoutComponent } from '../layout/layout.component';
 import { WebsiteStatusButtonComponent } from "../website-status-button/website-status-button.component";
+import { QuizCardComponent } from "../quiz-card/quiz-card.component";
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule, LayoutComponent, WebsiteStatusButtonComponent],
+  imports: [CommonModule, LayoutComponent, WebsiteStatusButtonComponent, QuizCardComponent],
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
