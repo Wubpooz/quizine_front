@@ -11,7 +11,7 @@
           <div class="text-lg mt-6 text-text-secondary dark:text-text-secondary">{{ quiz.questions.length }} {{ quiz.questions.length > 1 ? "questions" : "question" }}</div>
           <!-- <p class="text-base text-wrap mt-8 text-text-secondary dark:text-text-secondary">{{ quiz.description }}</p> -->
           <div class="flex items-center gap-3 mt-6">
-            <span class="text-text-secondary dark:text-text-secondary text-sm">Créé par: <span class="font-semibold" (click)="goToProfile(quiz.id_creator)"> {{ quiz.createdBy }}</span> </span>
+            <span class="text-text-secondary dark:text-text-secondary text-sm">Créé par: <span class="font-semibold cursor-pointer" (click)="goToProfile(quiz.id_creator)"> {{ quiz.createdBy }}</span> </span>
           </div>
         </div>
         <app-button class="self-center text-text-main dark:text-text-main"
