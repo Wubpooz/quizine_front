@@ -16,7 +16,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ThemeService } from './services/theme.service';
-import { filter } from 'rxjs';
+import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 
 @Component({
@@ -44,68 +44,25 @@ export class AppComponent {
     this.appStore.init();
     const publicRoutes = ['/landing', '/login', '/register'];
 
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      this.apiService.getUserData().subscribe({
-        next: (user) => {
-          this.isLoading = false;
-          this.appStore.updateUser(user);
-          if (user) {
-            if (publicRoutes.includes(this.router.url)) {
-              this.router.navigate(['/home']);
-            }
-          } else {
-            // Redirect to /landing if not already there
-            if (this.router.url === '/' || !publicRoutes.includes(this.router.url)) {
-              this.router.navigate(['/landing']);
-            }
-          }
-        },
-        error: () => {
-          this.isLoading = false;
-          if (!publicRoutes.includes(this.router.url)) {
-            this.router.navigate(['/landing']);
-          }
+    this.apiService.getUserData().pipe(
+      finalize(() => {
+        this.isLoading = false;
+      })
+    ).subscribe({
+      next: (user) => {
+        this.appStore.updateUser(user);
+        // If a logged-in user lands on a public page, send them to home.
+        if (user && publicRoutes.includes(this.router.url)) {
+          this.router.navigate(['/home']);
         }
-      });
+      },
+      error: () => {
+        this.appStore.removeUser();
+        // If the API call fails (unauthenticated) AND the user is NOT on a public route...
+        if (!publicRoutes.includes(this.router.url)) {
+          this.router.navigate(['/landing']);
+        }
+      }
     });
   }
-
-  // Uncomment the following code if you want to use cookies for session management, requires httpOnly: false cookies to be set by the backend.
-  // ngOnInit(): void {
-  //   const connectSid = this.getCookie('connect.sid');
-  //   this.appStore.init();
-
-  //   if(connectSid) {
-  //     this.apiService.getUserData().subscribe({
-  //       next: (user) => {
-  //         if (user) {
-  //           console.log("User retrieved from cookie:", user);
-  //           this.appStore.updateUser(user);
-  //           this.router.navigate(['/home']);
-  //         } else {
-  //           console.log("Session expired, clear cookie and user data.");
-  //           this.deleteCookie('connect.sid');
-  //           this.appStore.updateUser(undefined as any);
-  //           this.router.navigate(['/landing']);
-  //         }
-  //       },
-  //       error: (err) => {
-
-  //         this.router.navigate(['/landing']);
-  //       }
-  //     });
-  //   } else {
-  //     console.log("No cookie found, user not logged in.");
-  //     this.router.navigate(['/landing']);
-  //   }
-  // }
-
-  // getCookie(name: string): string | null {
-  //   const match = this.document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-  //   return match ? match[2] : null;
-  // }
-
-  // deleteCookie(name: string) {
-  //   this.document.cookie = `${name}=; Max-Age=0; path=/;`;
-  // }
 }
