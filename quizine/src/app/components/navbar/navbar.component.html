@@ -5,7 +5,7 @@
       <img src="assets/images/SideBar.png" alt="Menu" class="w-10 h-10 object-contain hover:bg-text-main dark:hover:bg-text-main rounded" />
     </button>
     <button (click)="goHome()">
-      <span class="inline text-xl font-bold text-primary dark:text-primary">Quizine</span>
+      <span class="inline text-xl font-bold text-primary dark:text-primary-dark">Quizine</span>
     </button>
   </div>
 
@@ -14,7 +14,7 @@
     <input
       type="text"
       placeholder="Recherche"
-      class="bg-bg-gray-200 dark:bg-bg-card dark:text-white h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-primary min-w-0"
+      class="bg-bg-gray-200 dark:bg-bg-card dark:text-white h-10 w-[75%] rounded-lg p-2 focus:outline-none focus:border-primary min-w-0 dark:shadow-[0_0_10px_0_rgba(234,_243,_254,_0.2)]"
       [value]="searchTerm"
       (input)="onSearchChange($event)"
       (focus)="searchDropdownOpen = true"
@@ -22,18 +22,18 @@
     />
     
     <!-- Search Dropdown -->
-    <div *ngIf="searchTerm && searchDropdownOpen" (mousedown)="$event.stopPropagation()" class="absolute w-[75%] top-10 bg-white border border-gray-300 rounded-lg shadow-lg z-[1100]" (click)="closeSideBar($event)">
+    <div *ngIf="searchTerm && searchDropdownOpen" (mousedown)="$event.stopPropagation()" class="absolute w-[75%] top-10 bg-bg-card dark:bg-bg-card border border-gray-300 rounded-lg shadow-lg z-[1100]" (click)="closeSideBar($event)">
       <ul class="max-h-80 overflow-y-auto">
         <li
           *ngIf="filteredQuizList.length === 0"
-          class="px-4 py-2 text-gray-400 cursor-default"
+          class="px-4 py-2 text-text-secondary dark:text-text-secondary cursor-default"
         >
           Aucun quiz trouvé
         </li>
         <li
           *ngFor="let quiz of filteredQuizList"
           (click)="gotoQuiz(quiz.id)"
-          class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+          class="px-4 py-2 text-text-main dark:text-text-main hover:bg-gray-200 dark:hover:bg-zinc-800 cursor-pointer rounded-lg"
         >
           {{ quiz.nom }}
         </li>
@@ -45,20 +45,20 @@
   <div class="flex items-center justify-end gap-4" (click)="closeSideBar($event)">
     <!-- Mobile: round + button, Desktop: full button -->
     <button
-      class="bg-primary text-white rounded-xl w-10 h-10 flex items-center justify-center text-2xl md:hidden"
+      class="bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary-darker text-white rounded-xl w-10 h-10 flex items-center justify-center text-2xl md:hidden"
       (click)="gotoCreateQuiz()"
       aria-label="Créer un quiz"
     >
       +
     </button>
     <button
-      class="hidden md:inline-block bg-primary text-white px-4 py-2 rounded-lg text-base"
+      class="hidden md:inline-block bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary-darker text-white px-4 py-2 rounded-lg text-base"
       (click)="gotoCreateQuiz()"
     >
       + Créer un quiz
     </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-btn p-0 rounded-full flex items-center justify-center">
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-btn p-0 rounded-full flex items-center justify-center hover:bg-bg-card dark:hover:bg-bg-card">
       <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" aria-label="Profile Dropdown"/>
     </button>
     <mat-menu #profileMenu="matMenu">
