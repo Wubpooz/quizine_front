@@ -1,7 +1,7 @@
 <layout>
-  <div class="max-w-2xl mx-auto mt-20 bg-white rounded-xl shadow-lg overflow-hidden">
+  <div class="max-w-2xl mx-auto mt-20 bg-bg-surface dark:bg-bg-surface rounded-xl shadow-lg overflow-hidden text-text-main dark:text-white">
     <!-- Banner and Edit Button -->
-    <div class="relative bg-blue-700 h-40 flex items-center justify-center rounded-b-xl">
+    <div class="relative bg-primary dark:bg-primary-dark h-40 flex items-center justify-center rounded-b-xl">
       <img
         src="assets/images/ProfileLogo.png"
         alt="Profile"
@@ -24,7 +24,7 @@
       <div *ngIf="user">
         <h2 class="text-2xl font-bold mb-2">{{user.username }}</h2>
         <a
-          class="text-blue-500 font-semibold cursor-pointer hover:underline"
+          class="text-primary dark:text-primary-dark font-semibold cursor-pointer hover:underline"
           (click)="showFriends = true"
         >
           {{friends.length|| 0}} amis
@@ -33,8 +33,8 @@
         <hr class="my-6" />
         <h3 class="text-xl font-bold mb-2">Historique</h3>
     
-        <div *ngIf="history.length <= 0" class="text-gray-500">Aucun historique pour le moment.</div>
-        <div *ngIf="history.length > 0" class="text-gray-500">
+        <div *ngIf="history.length <= 0">Aucun historique pour le moment.</div>
+        <div *ngIf="history.length > 0">
           <ul class="space-y-4">
             <li *ngFor="let session of history" class="flex items-center justify-between">
               <button (click)="goToQuiz(session.id)" class="flex items-center space-x-4">
@@ -56,9 +56,9 @@
           *ngIf="showFriends"
           class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
         >
-          <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+          <div class="bg-bg-card dark:bg-bg-card rounded-lg shadow-lg p-6 w-full max-w-md relative">
             <button
-              class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+              class="absolute top-1 right-3 text-text-secondary hover:text-text-main dark:text-text-secondary dark:hover:text-text-main text-2xl font-bold"
               (click)="showFriends = false"
               aria-label="Fermer"
             >
@@ -67,7 +67,7 @@
             <h4 class="text-lg font-bold mb-4">Liste d'amis</h4>
     
             <ul class="space-y-2">
-              <li *ngFor="let friend of friends" class="text-gray-700">{{ friend.username }}</li>
+              <li *ngFor="let friend of friends" class="text-text-main dark:text-text-main">{{ friend.username }}</li>
             </ul>
           </div>
         </div>
