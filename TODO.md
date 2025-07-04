@@ -14,7 +14,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, notifications, _profile_, _description_, question, recap, score, waiting, _register_, _sidebar_, tag-list, invite)
+- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, question, recap, score, waiting, _register_, _sidebar_, tag-list, invite)
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
@@ -26,6 +26,7 @@
 
 ### P3
 - [ ] UI Improvements
+  - [ ] Make the style consistent between pages (follow the one from notifications maybe)
   - [ ] Tailwind components: <https://www.material-tailwind.com/blocks>, <https://flowbite.com/#components>, <https://merakiui.com/components>, <https://daisyui.com/resources/videos/fast-beautiful-uis-angular-daisyui-x5l6lsj6ekw/>, <https://tailwindflex.com/tag/navbar?is_responsive=true>, <https://windytoolbox.com/>, <https://mobbin.com/explore/web>, <https://demos.creative-tim.com/soft-ui-design-system/presentation.html>, <https://lbegey.fr/templates-tailwind.html>
   - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>, <https://phosphoricons.com/>, <https://isocons.app>, <https://heroicons.com/>, <https://iconscout.com/>, <https://remixicon.com/>, <https://iconboddy.com>
   - [ ] Colors: <https://www.iamsajid.com/ui-colors/>
