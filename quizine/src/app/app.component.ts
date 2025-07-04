@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NavigationEnd, RouterOutlet } from '@angular/router';
 import { UserInviteComponent } from "./components/user-invite/user-invite.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -21,12 +22,13 @@ import { injectSpeedInsights } from '@vercel/speed-insights';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent,NotificationsComponent],
+  imports: [CommonModule, RouterOutlet, UserInviteComponent, WaitingPageComponent, QuizQuestionComponent, QuizScoreComponent, QuizRecapComponent, LoginComponent,LandingComponent,HomePageComponent,NotificationsComponent],
   templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'Quizine';
   isDarkMode: boolean = false;
+  isLoading: boolean = true;
   
   constructor(
     private appStore: AppStore,
@@ -40,31 +42,33 @@ export class AppComponent {
   ngOnInit(): void {
     injectSpeedInsights();
     this.appStore.init();
+    const publicRoutes = ['/landing', '/login', '/register'];
 
-  this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-    this.apiService.getUserData().subscribe({
-      next: (user) => {
-        this.appStore.updateUser(user);
-        const publicRoutes = ['/landing', '/login', '/register', '/'];
-        if (user) {
-          if (publicRoutes.includes(this.router.url)) {
-            this.router.navigate(['/home']);
+    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
+      this.apiService.getUserData().subscribe({
+        next: (user) => {
+          this.isLoading = false;
+          this.appStore.updateUser(user);
+          if (user) {
+            if (publicRoutes.includes(this.router.url)) {
+              this.router.navigate(['/home']);
+            }
+          } else {
+            // Redirect to /landing if not already there
+            if (this.router.url === '/' || !publicRoutes.includes(this.router.url)) {
+              this.router.navigate(['/landing']);
+            }
           }
-        } else {
+        },
+        error: () => {
+          this.isLoading = false;
           if (!publicRoutes.includes(this.router.url)) {
             this.router.navigate(['/landing']);
           }
         }
-      },
-      error: () => {
-        const publicRoutes = ['/landing', '/login', '/register', '/'];
-        if (!publicRoutes.includes(this.router.url)) {
-          this.router.navigate(['/landing']);
-        }
-      }
+      });
     });
-  });
-}
+  }
 
   // Uncomment the following code if you want to use cookies for session management, requires httpOnly: false cookies to be set by the backend.
   // ngOnInit(): void {

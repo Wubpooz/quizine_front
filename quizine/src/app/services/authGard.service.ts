@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AppStore } from '../stores/app.store';
-import { map, filter, take } from 'rxjs';
+import { of } from 'rxjs';
+import { catchError, filter, map, take, timeout } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export const authGuard: CanActivateFn = () => {
@@ -13,9 +14,11 @@ export const authGuard: CanActivateFn = () => {
     return true;
   }
 
+  console.log("[authGard] Looking for user...");
   // Wait until currentUser is not undefined (resolved)
   return appStore.currentUser.pipe(
-    filter(user => user !== undefined), // Wait until user is resolved (either logged in or not)
+    timeout(5000), // wait up to 5 seconds for user to be resolved
+    filter(user => user !== undefined),
     take(1),
     map(user => {
       if (user) {
@@ -24,6 +27,11 @@ export const authGuard: CanActivateFn = () => {
         router.navigate(['/landing']);
         return false;
       }
+    }),
+    catchError(err => {
+      // Timeout or other error occurred
+      router.navigate(['/landing']);
+      return of(false);
     })
   );
 };
