@@ -76,12 +76,8 @@
             (input)="onTitleInput($event)"
             (mouseenter)="showTitleTooltip = true"
             (mouseleave)="showTitleTooltip = false"
-            [attr.title]="'Limite: {{maxLengthTitle}} caractères'"
+            [attr.title]="'Limite: ' + maxLengthTitle + ' caractères'"
           />
-          <!-- Tooltip on hover -->
-          <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-            Limite: {{maxLengthTitle}} caractères
-          </div>
           <!-- Notification when max length reached -->
           <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
             Limite de {{maxLengthTitle}} caractères atteinte
@@ -97,18 +93,11 @@
             (input)="onDescriptionInput($event)"
             (mouseenter)="showDescriptionTooltip = true"
             (mouseleave)="showDescriptionTooltip = false"
-            [attr.title]="'Limite: {{maxLengthDescription}} caractères'"
+            [attr.title]="'Limite: ' + maxLengthDescription + ' caractères'"
           />
-          <!-- Tooltip on hover -->
-          <div *ngIf="showTitleTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-            Limite: {{maxLengthTitle}} caractères
-          </div>
-          <div *ngIf="showDescriptionTooltip" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-            Limite: {{maxLengthDescription}} caractères
-          </div>
           <!-- Notification when max length reached -->
           <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-            Limite de {{maxLengthTitle}} caractères atteinte
+            Limite de {{maxLengthDescription}} caractères atteinte
           </div>
         </div>
 
@@ -126,12 +115,8 @@
               (input)="onQuestionInput($event, i)"
               (mouseenter)="showQuestionTooltip[i] = true"
               (mouseleave)="showQuestionTooltip[i] = false"
-              [attr.title]="'Limite: {{maxLengthQuestion}} caractères'"
+              [attr.title]="'Limite: ' + maxLengthQuestion + ' caractères'"
             />
-            <!-- Tooltip on hover -->
-            <div *ngIf="showQuestionTooltip?.[i]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-              Limite: {{maxLengthQuestion}} caractères
-            </div>
             <!-- Notification when max length reached -->
             <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
               Limite de {{maxLengthQuestion}} caractères atteinte
@@ -161,12 +146,8 @@
                       (input)="onOptionInput($event, i, j)"
                       (mouseenter)="showOptionTooltip[i][j] = true"
                       (mouseleave)="showOptionTooltip[i][j] = false"
-                      [attr.title]="'Limite: {{maxLengthOption}} caractères'"
+                      [attr.title]="'Limite: ' + maxLengthOption + ' caractères'"
                     />
-                    <!-- Tooltip on hover -->
-                    <div *ngIf="showOptionTooltip?.[i]?.[j]" class="absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded px-2 py-1 z-20">
-                      Limite: {{maxLengthOption}} caractères
-                    </div>
                     <!-- Notification when max length reached -->
                     <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
                       Limite de {{maxLengthOption}} caractères atteinte

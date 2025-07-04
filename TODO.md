@@ -66,6 +66,7 @@
 - [x] Remove CSS files
 - [x] Remove all nulls
 - [ ] Use only css variables for colors
+- [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
 
 ### P3
