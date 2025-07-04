@@ -1,26 +1,26 @@
-<div class="min-h-screen flex flex-col items-center justify-center space-y-6 text-center px-4">
+<div class="min-h-screen flex flex-col items-center justify-center space-y-6 text-center px-4 bg-bg-main dark:bg-bg-surface">
   <h1 class="text-4xl font-bold text-primary">Bienvenue à Quizine</h1>
-  <p class="text-lg text-black">Des quiz à consommer sans modération!</p>
+  <p class="text-lg text-text-main dark:text-text-main">Des quiz à consommer sans modération!</p>
 
   <div class="space-y-2">
-    <button class="bg-primary hover:bg-primary-light text-white font-semibold py-2 px-6 rounded-full" (click)="goToRegister()">
+    <button class="bg-primary dark:bg-primary-dark hover:bg-primary-light dark:hover:bg-primary-darker text-white font-semibold py-2 px-6 rounded-full" (click)="goToRegister()">
       S'inscrire
     </button>
     <br />
-    <button class="border border-primary text-primary hover:bg-blue-50 font-semibold py-2 px-6 rounded-full" (click)="goToLogin()">
+    <button class="border border-primary text-primary hover:bg-primary dark:hover:bg-primary-dark dark:hover:text-white font-semibold py-2 px-6 rounded-full" (click)="goToLogin()">
       Se connecter
     </button>
   </div>
 
-  <div class="bg-primary-tint rounded-2xl p-6 mt-10 w-full max-w-3xl text-left shadow-sm">
-    <h2 class="font-bold text-lg mb-2">Qui sommes nous:</h2>
-    <p class="text-gray-700">
+  <div class="bg-primary-tint dark:bg-transparent dark:border-2 dark:border-border-main dark:hover:shadow-[0_0_10px_0_rgba(234,_243,_254,_0.5)] transition ease-in-out rounded-2xl p-6 mt-10 w-full max-w-3xl text-left shadow-sm">
+    <h2 class="font-bold text-lg mb-2 text-text-main dark:text-text-main">Qui sommes nous</h2>
+    <p class="text-text-secondary dark:text-text-secondary">
       Nous sommes une plateforme dédiée aux passionnés de quiz, visant à rendre l'apprentissage ludique et accessible à tous.
     </p>
   </div>
 
   <div>
-    <a href="https://stats.uptimerobot.com/NLlEuoNSRe">Status</a>
+    <a href="https://stats.uptimerobot.com/NLlEuoNSRe" class="text-text-secondary dark:text-text-secondary hover:underline">Status</a>
   </div>
 </div>
   
