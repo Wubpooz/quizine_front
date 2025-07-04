@@ -45,6 +45,11 @@ export class QuizDescriptionComponent {
     }
   }
 
+  goToProfile(id: string): void { //TODO
+    console.warn('Not implemented.');
+    // this.router.navigate(['/profile', id]);
+  }
+
   startQuiz(): void {
     this.isInviteShowing = true;
   }

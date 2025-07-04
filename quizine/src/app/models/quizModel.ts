@@ -9,7 +9,7 @@ export interface HistoryQuiz {
   nom: string;
   picture: Uint8Array | null;
   private: boolean;
-  id_creator?: string;
+  id_creator: string;
 }
 
 export interface Quiz {
@@ -17,7 +17,7 @@ export interface Quiz {
   nom: string;
   picture: Uint8Array | null;
   private: boolean;
-  id_creator?: string;
+  id_creator: string;
   questions: Question[];
   tags: string[];
   createdBy: string;
@@ -30,7 +30,7 @@ export interface Question {
   grade?: number;
   picture?: Uint8Array | null;
   duration: number;
-  id_creator?: string;
+  id_creator: string;
   private: boolean;
   choices: Option[];
 }

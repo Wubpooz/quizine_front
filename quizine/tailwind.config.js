@@ -57,4 +57,10 @@ module.exports = {
     }
   },
   plugins: [],
+  safelist: [
+    'text-text-main',
+    'dark:text-text-main',
+    'text-text-secondary',
+    'dark:text-text-secondary',
+  ],
 }

@@ -14,7 +14,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components (_create_, edit, _explore_, home, landing, _library_, _cards_, login, navbar, 404, notifications, profile, card, description, question, recap, score, waiting, register, sidebar, tag-list, invite)
+- [ ] Add dark mode to components (_create_, edit, _explore_, home, landing, _library_, _cards_, login, navbar, 404, notifications, profile, card, _description_, question, recap, score, waiting, register, sidebar, tag-list, invite)
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
@@ -61,6 +61,7 @@
 - [x] Wrap navbar + sidebar dans un composant
 - [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, ...)
+  - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
 
 ### P2
 - [x] Remove CSS files
