@@ -1,6 +1,6 @@
 <layout class="relative">
   <form class="flex flex-col items-center mx-[20px] sm:mx-[40px] pt-8 h-full max-h-screen overflow-y-auto" (ngSubmit)="onSubmit()" #quizForm="ngForm">
-    <div class="w-full h-full max-h-screen overflow-y-auto text-white">
+    <div class="w-full h-full max-h-screen overflow-y-auto text-text-main dark:text-text-main">
       <div class="flex justify-between items-center mb-6">
         <div>
           <h1 class="text-2xl font-bold hidden sm:inline-block"> Créer un nouveau quiz </h1>
@@ -19,13 +19,13 @@
               </button>
             </div>
 
-            <div *ngIf="showTagInput" class="fixed inset-0 z-50 h-10 flex items-start justify-center bg-black bg-opacity-30 sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start">
-              <div class="mt-64 sm:mt-0 w-11/12 max-w-xs bg-gray-800 rounded-lg shadow-lg p-8 sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none relative">
+            <div *ngIf="showTagInput" class="fixed inset-0 z-50 h-10 flex items-start justify-center sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start">
+              <div class="mt-64 sm:mt-0 w-11/12 max-w-xsrounded-lg h-10 shadow-lg p-8 sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none relative">
                 <input
                   #tagInput
                   type="text"
                   placeholder="Ajouter un tag"
-                  class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-tint w-full bg-gray-700 text-white placeholder-gray-400"
+                  class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary-tint w-full bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400"
                   (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
                 />
                 <button type="button" class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-400" (click)="toggleTagInput()">
@@ -49,11 +49,11 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
               </svg>
             </button>
-            <div *ngIf="showDropdown" class="absolute z-30 left-0 mt-1 w-full bg-gray-800 border border-gray-600 rounded-lg shadow-lg animate-fade-in">
-              <button class="block w-full text-left px-4 py-2 hover:bg-gray-700 text-white" (click)="quizVisibility = 'private'; showDropdown = false"type="button">
+            <div *ngIf="showDropdown" class="absolute z-30 left-0 mt-1 w-full bg-bg-surface dark:bg-bg-surface border border-gray-600 rounded-lg shadow-lg animate-fade-in">
+              <button class=" rounded-t-lg block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'private'; showDropdown = false"type="button">
                 Privé
               </button>
-              <button class="block w-full text-left px-4 py-2 hover:bg-gray-700 text-white" (click)="quizVisibility = 'public'; showDropdown = false" type="button">
+              <button class="block w-full rounded-b-lg text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'public'; showDropdown = false" type="button">
                 Public
               </button>
             </div>
@@ -62,13 +62,13 @@
       </div>
 
       <!-- Quiz details -->
-      <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto">
+      <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto p-2">
         <!-- Title and description -->
         <div class="flex flex-col border-b-2 border-gray-600 mb-4">
           <input
             type="text"
             placeholder="Ajouter un titre"
-            class="w-full semi-bold border border-primary-tint rounded-lg px-4 py-2 mb-4 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+            class="w-full semi-bold border-primary-tint rounded-lg px-4 py-2 mb-4 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
             required
             name="title"
             [(ngModel)]="quizTitle"
@@ -78,15 +78,15 @@
             (mouseleave)="showTitleTooltip = false"
             [attr.title]="'Limite: ' + maxLengthTitle + ' caractères'"
           />
-          <!-- Notification when max length reached -->
-          <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+          <!-- TODO Notification when max length reached -->
+          <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
             Limite de {{maxLengthTitle}} caractères atteinte
-          </div>
+          </div> -->
   
           <input
             type="text"
             placeholder="Ajouter une description"
-            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
             name="description"
             [(ngModel)]="quizDescription"
             maxlength="{{maxLengthDescription}}"
@@ -96,18 +96,18 @@
             [attr.title]="'Limite: ' + maxLengthDescription + ' caractères'"
           />
           <!-- Notification when max length reached -->
-          <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+          <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
             Limite de {{maxLengthDescription}} caractères atteinte
-          </div>
+          </div> -->
         </div>
 
         <div class="flex flex-col gap-4 mb-6">
           <ng-container *ngFor="let question of questions; let i = index">
-            <div class="bg-blue-700 text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
+            <div class="bg-primary text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
             <input
               type="text"
               placeholder="Ajouter une question"
-              class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+              class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
               required
               name="question{{ i }}"
               [(ngModel)]="question.name"
@@ -118,9 +118,10 @@
               [attr.title]="'Limite: ' + maxLengthQuestion + ' caractères'"
             />
             <!-- Notification when max length reached -->
-            <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+            <!-- <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
               Limite de {{maxLengthQuestion}} caractères atteinte
-            </div>
+            </div> -->
+
             <div class="flex flex-col gap-2 mb-4">
               <ng-container *ngFor="let option of question.choices; let j = index">
                 <div class="flex items-center gap-2">
@@ -138,7 +139,7 @@
                     <input
                       type="text"
                       placeholder="Ajouter une option"
-                      class="w-full border border-primary-tint rounded-lg px-4 py-2 bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-tint"
+                      class="w-full border border-primary-tint rounded-lg px-4 py-2 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
                       required
                       name="option{{ i }}{{ j }}"
                       [(ngModel)]="option.content"
@@ -149,9 +150,9 @@
                       [attr.title]="'Limite: ' + maxLengthOption + ' caractères'"
                     />
                     <!-- Notification when max length reached -->
-                    <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
+                    <!-- <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
                       Limite de {{maxLengthOption}} caractères atteinte
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </ng-container>
