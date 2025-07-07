@@ -44,14 +44,94 @@ export class MockAPIService {
     id_quiz: this.generateRandomString(10)
   };
 
-  private mockGameRequest: GameRequest = {
-    datetime: new Date().toISOString(),
-    id_session: this.generateRandomString(10),
-    id_requestor: this.generateRandomString(10),
-    id_validator: this.generateRandomString(10),
-    username: 'devuser'
-  };
+  private mockGameRequestList: GameRequest[] = [
+    {
+      datetime: new Date().toISOString(),
+      id_session: this.generateRandomString(10),
+      id_requestor: this.generateRandomString(10),
+      id_validator: this.generateRandomString(10),
+      username: 'devuser'
+    },
+    {
+      datetime: new Date().toISOString(),
+      id_session: this.generateRandomString(10),
+      id_requestor: this.generateRandomString(10),
+      id_validator: this.generateRandomString(10),
+      username: 'testuser'
+    },
+    {
+      datetime: new Date().toISOString(),
+      id_session: this.generateRandomString(10),
+      id_requestor: this.generateRandomString(10),
+      id_validator: this.generateRandomString(10),
+      username: 'exampleuser'
+    }
+  ];
+  
+  private mockFriends: User[] = [
+    {
+      id: this.generateRandomString(10),
+      username: 'friend1',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'friend2',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'friend3',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'friend4',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'friend5',
+      picture: 'assets/images/ProfileLogo.png'
+    }
+  ];
 
+  private mockUsers: User[] = [
+    {
+      id: this.generateRandomString(10),
+      username: 'devuser',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'testuser',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'exampleuser',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'user1',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'user2',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    {
+      id: this.generateRandomString(10),
+      username: 'user3',
+      picture: 'assets/images/ProfileLogo.png'
+    },
+    ...this.mockFriends
+  ];
+
+
+  // ========== UTILITIES ==========
   private generateRandomString(length: number): string {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
@@ -114,12 +194,12 @@ export class MockAPIService {
   }
 
   getFriends(): Observable<User[]> {
-    return of([this.mockUser]);
+    return of(this.mockFriends);
   }
 
   // ========== GAME ==========
   requestGame(session: string, players: string[]): Observable<GameRequest[]> {
-    return of([this.mockGameRequest]);
+    return of(this.mockGameRequestList);
   }
 
   createSession(quizId: string): Observable<Session[]> {
@@ -131,7 +211,7 @@ export class MockAPIService {
   }
 
   getNotifications(): Observable<GameRequest[]> {
-    return of([this.mockGameRequest]);
+    return of(this.mockGameRequestList);
   }
 
   // ========== HISTORY ==========
@@ -161,7 +241,7 @@ export class MockAPIService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return of([this.mockUser]);
+    return of(this.mockUsers);
   }
 
   // ========== WEBSOCKETS ==========

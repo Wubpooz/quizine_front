@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 import { GameSessionStore } from '../../stores/gameSession.store';
+import { AppStore } from '../../stores/app.store';
 
 @Component({
   selector: 'waiting-page',
@@ -18,15 +19,33 @@ export class WaitingPageComponent {
   timer: number;
   private intervalId: any;
 
+  remainingUsers: number = 0; //TODO This will be updated by the GameConnexionService
+
   constructor(private router: Router,
+    private appStore: AppStore,
     private gameSessionStore: GameSessionStore,
     private apiService:APIService,
     private gameConnexion: GameConnexionService) {
     this.timer = 60;
+
+    this.gameSessionStore.sessionId.next(this.sessionId);
+    this.gameConnexion.sessionId = this.sessionId;
+    this.gameConnexion.connect();
+    this.gameConnexion.listenGameStart((data) => {
+      clearInterval(this.intervalId);
+      this.playQuiz();
+    });
+
+    this.gameSessionStore.invitedUsers.subscribe((users) => {
+      this.remainingUsers = users.length;
+      if(this.remainingUsers === 0) {
+        this.playQuiz();
+      }
+    });
   }
 
   async ngOnInit() {
-    const currentUser = await this.apiService.getUserData().toPromise(); //TODO use the store
+    const currentUser = this.appStore.currentUser.value;
     this.gameSessionStore.sessionId.next(this.sessionId);
     this.gameConnexion.connect();
 
@@ -61,6 +80,8 @@ export class WaitingPageComponent {
   }
 
   playQuiz() {
+    this.timer = 60; // Reset timer
+    clearInterval(this.intervalId);
     this.router.navigate(['/quiz-question']);
   }
 

@@ -8,10 +8,10 @@ import { Quiz } from "../models/quizModel";
   providedIn: 'root'
 })
 export class AppStore {
+  private inited = false;
   public currentUser: BehaviorSubject<User|undefined> = new BehaviorSubject<User|undefined>(undefined);
   public friends: BehaviorSubject<User[]|undefined> = new BehaviorSubject<User[]|undefined>(undefined);;
   public quizList: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
-  private inited = false;
   public recents: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
 
   constructor(private apiService: APIService) {}

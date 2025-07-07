@@ -14,7 +14,8 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, question, recap, score, _waiting_, _register_, _sidebar_, _tag-list_, invite)
+- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, question, recap, score, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
+- [ ] Recheck mobile friendliness
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
@@ -67,12 +68,13 @@
 ### P2
 - [x] Remove CSS files
 - [x] Remove all nulls
+- [ ] Use pipe(takeUntil(this.destroy$)) to avoid memory leaks on subscriptions
 - [ ] Use only css variables for colors
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
 
 ### P3
-- [ ] Use search API
+- [ ] Use search API + search service
 - [ ] API call to play quizz in waiting page ?
 - [ ] Only use constructor for declaration, do everything in ngOnInit
 - [ ] Home-card component (or just card component for that + library)

@@ -1,0 +1,1 @@
+export type SearchType = 'quiz' | 'user' | 'tag' | 'all';

@@ -14,6 +14,9 @@
       </svg>
       <div class="text-xl font-semibold text-text-main dark:text-text-main mb-2">Veuillez patienter…</div>
       <div class="text-lg text-text-secondary dark:text-text-secondary" id="waiting-timer">{{ formatTimer(timer) }}</div>
+      <div class="text-sm text-text-secondary dark:text-text-secondary mt-2">
+        {{ remainingUsers }} utilisateur{{ remainingUsers !== 1 ? 's' : '' }} restant{{ remainingUsers !== 1 ? 's' : '' }}.
+      </div>
     </div>
   </div>
 </div>

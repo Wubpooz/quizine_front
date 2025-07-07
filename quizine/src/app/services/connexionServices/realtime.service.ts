@@ -77,6 +77,7 @@ export class RealtimeService extends GameConnexionService {
       event,
       payload: { sessionId, userId }
     });
+    this.gameSessionStore.invitedUsers.next(this.gameSessionStore.invitedUsers.value.filter(user => user.id !== userId)); // remove self from invited users
   }
 
   emitRefuse(sessionId: string, userId: string): void {
