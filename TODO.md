@@ -7,6 +7,7 @@
 - [x] 404 page
 - [x] Store sidebar toggle value between page refresh
 - [x] Search bars alignement + search working again + scroll in dropdown
+- [ ] FIX HOMEPAGE
 
 ### P2
 - [x] Notifications when get call fails
@@ -14,7 +15,7 @@
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
-- [ ] Add dark mode to components (_create_, edit, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
+- [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
 - [ ] Recheck mobile friendliness
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
@@ -73,6 +74,7 @@
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
 - [ ] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
+- [ ] fix how we indicate what's the correct option
 
 ### P3
 - [ ] Use search API + search service

@@ -1,8 +1,14 @@
 <div class="flex flex-col gap-2 first:mt-2">
-    <h3 class="text-lg font-semibold">Question {{index + 1}}</h3>
-    <div>{{ question.name }}</div>
-    @for (option of question.choices; track option) {
-        <div *ngIf="option.id !== question.id_answer" class="p-4 border border-gray-300 rounded-md text-wrap text-base w-148">{{ option.content }}</div>
-        <div *ngIf="option.id === question.id_answer" class="p-4 border-2 border-primary-dark bg-primary-tint rounded-md text-wrap text-base font-semibold w-148">{{ option.content }}</div>
-    }
+  <h3 class="text-lg font-semibold text-text-main dark:text-text-main">Question {{index + 1}}</h3>
+  <div class="text-text-main dark:text-text-main">{{ question.name }}</div>
+  @for (option of question.choices; track option) {
+    <div *ngIf="option.id !== question.id_answer"
+      class="p-4 border border-gray-300 rounded-md text-wrap text-base text-text-main dark:text-text-main w-full bg-bg-card dark:bg-bg-card hover:bg-bg-card-hover dark:hover:bg-bg-card-hover">
+      {{ option.content }}
+    </div>
+    <div *ngIf="option.id === question.id_answer"
+      class="p-4 border-2 border-primary-dark bg-primary-tint dark:border-0 dark:bg-primary-dark text-text-main dark:text-text-main rounded-md text-wrap text-base font-semibold w-full">
+      {{ option.content }}
+    </div>
+  }
 </div>

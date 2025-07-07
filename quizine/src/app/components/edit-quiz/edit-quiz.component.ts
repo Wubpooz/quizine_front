@@ -35,4 +35,69 @@ export class EditQuizComponent {
       this.router.navigate(['/404'], { replaceUrl: true });
     }
   }
+
+  addQuestion(): void {
+    this.quiz.questions.push({
+      id: '',
+      name: '',
+      choices: [
+        { id: '', content: '', id_question: '' },
+        { id: '', content: '', id_question: '' },
+        { id: '', content: '', id_question: '' },
+        { id: '', content: '', id_question: '' }
+      ],
+      private: false,
+      id_answer: '',
+      duration: 30,
+      id_creator: ''
+      // type: 'text',
+      // points: 1,
+      // order: this.quiz.questions.length + 1
+    });
+  }
+
+  deleteQuestion(questionId: string): void {
+    this.quiz.questions = this.quiz.questions.filter(q => q.id !== questionId);
+  }
+
+  updateQuestion(question: any): void {
+    const index = this.quiz.questions.findIndex(q => q.id === question.id);
+    if (index !== -1) {
+      this.quiz.questions[index] = question;
+    }
+  }
+
+  renameQuiz(newTitle: string): void {
+    if (newTitle && newTitle.trim() !== '') {
+      this.quiz.nom = newTitle.trim();
+    } else {
+      // Handle empty title case (e.g., show a notification)
+    }
+  }
+
+  togglePrivacy(): void {
+    this.quiz.private = !this.quiz.private;
+  }
+
+  addTag(tag: string): void {
+    if (tag && tag.trim() !== '') {
+      this.quiz.tags.push(tag.trim());
+    } else {
+      // Handle empty tag case (e.g., show a notification)
+    }
+  }
+
+  removeTag(tag: string): void {
+    this.quiz.tags = this.quiz.tags.filter(t => t !== tag);
+  }
+
+
+  saveQuiz(): void {
+    //TODO
+    // this.quizService.updateQuiz(this.quiz).then(() => {
+    //   this.router.navigate(['/quiz', this.quiz.id], { replaceUrl: true });
+    // }).catch(() => {
+      // Handle error (e.g., show a notification)
+    // });
+  } 
 }
