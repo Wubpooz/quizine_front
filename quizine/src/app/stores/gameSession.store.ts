@@ -19,6 +19,15 @@ export class GameSessionStore {
 
   constructor(private apiService: APIService) {}
 
+  ngOnInit() {
+    // Initialize the session ID if needed
+    const storedSessionId = localStorage.getItem('sessionId');
+    if (storedSessionId) {
+      this.sessionId.next(storedSessionId);
+    }
+    this.invitedUsers.next([]);
+  }
+
   updateScore(user: User, score: number) {
     const currentScores = this.scores.getValue();
     currentScores.set(user, score);
@@ -26,8 +35,8 @@ export class GameSessionStore {
   }
   addAnswer(questionId: string, answerId: string) {
     const currentAnswers = this.answerList.getValue();
-    const question = this.quiz.getValue()?.questions.find((q: Question) => q.id === questionId);
-    const answer = question?.choices.find((o: Option) => o.id === answerId);
+    const question = this.quiz.getValue()?.questions.find((question: Question) => question.id === questionId);
+    const answer = question?.choices.find((option: Option) => option.id === answerId);
     if(question && answer) {
       currentAnswers.set(questionId, answer);
     }
@@ -47,7 +56,7 @@ export class GameSessionStore {
   calculateScore(): number {
     const quiz = this.quiz.getValue();
     const answers = this.answerList.getValue();
-    if(!quiz){
+    if(!quiz) {
       return 0;
     }
 
@@ -64,5 +73,4 @@ export class GameSessionStore {
     this.score = score;
     return score;
   }
-
 }

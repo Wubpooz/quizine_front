@@ -4,147 +4,15 @@ import { User } from '../../models/userModel';
 import { EmptyQuiz, HistoryQuiz, Quiz } from '../../models/quizModel';
 import { Session } from '../../models/participationModel';
 import { GameRequest } from '../../models/participationModel';
+import { MockData } from './mockData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MockAPIService {
-  // ======= MOCK DATA =======
-  private mockUser: User = {
-    id: this.generateRandomString(10),
-    username: 'devuser',
-    picture: 'assets/images/ProfileLogo.png'
-  };
-
-  private mockQuiz: Quiz = {
-    id: this.generateRandomString(10),
-    nom: 'Quiz de test',
-    picture: null,
-    private: false,
-    id_creator: this.generateRandomString(10),
-    questions: [],
-    tags: ['test'],
-    createdBy: 'devuser'
-  };
-
-  private mockQuizzes: Quiz[] = [this.mockQuiz];
-
-  private mockHistory: HistoryQuiz[] = [
-    {
-      id: this.generateRandomString(10),
-      nom: 'Quiz de test',
-      picture: null,
-      private: false,
-      id_creator: this.generateRandomString(10)
-    }
-  ];
-
-  private mockSession: Session = {
-    id: this.generateRandomString(10),
-    id_quiz: this.generateRandomString(10)
-  };
-
-  private mockGameRequestList: GameRequest[] = [
-    {
-      datetime: new Date().toISOString(),
-      id_session: this.generateRandomString(10),
-      id_requestor: this.generateRandomString(10),
-      id_validator: this.generateRandomString(10),
-      username: 'devuser'
-    },
-    {
-      datetime: new Date().toISOString(),
-      id_session: this.generateRandomString(10),
-      id_requestor: this.generateRandomString(10),
-      id_validator: this.generateRandomString(10),
-      username: 'testuser'
-    },
-    {
-      datetime: new Date().toISOString(),
-      id_session: this.generateRandomString(10),
-      id_requestor: this.generateRandomString(10),
-      id_validator: this.generateRandomString(10),
-      username: 'exampleuser'
-    }
-  ];
-  
-  private mockFriends: User[] = [
-    {
-      id: this.generateRandomString(10),
-      username: 'friend1',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'friend2',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'friend3',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'friend4',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'friend5',
-      picture: 'assets/images/ProfileLogo.png'
-    }
-  ];
-
-  private mockUsers: User[] = [
-    {
-      id: this.generateRandomString(10),
-      username: 'devuser',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'testuser',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'exampleuser',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'user1',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'user2',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    {
-      id: this.generateRandomString(10),
-      username: 'user3',
-      picture: 'assets/images/ProfileLogo.png'
-    },
-    ...this.mockFriends
-  ];
-
-
-  // ========== UTILITIES ==========
-  private generateRandomString(length: number): string {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-  }
-
-
   // ========== AUTH ==========
   login(username: string, password: string): Observable<User> {
-    return of(this.mockUser);
+    return of(MockData.mockUser);
   }
 
   signup(username: string, password: string): Observable<string> {
@@ -157,27 +25,27 @@ export class MockAPIService {
 
   // ========== QUIZ ==========
   createEmptyQuiz(emptyQuiz: EmptyQuiz): Observable<Quiz> {
-    return of({ ...this.mockQuiz, ...emptyQuiz, id: this.generateRandomString(10)});
+    return of({ ...MockData.mockQuiz, ...emptyQuiz, id: MockData.generateRandomString(10)});
   }
 
   createQuiz(quizData: any): Observable<Quiz> {
-    return of({ ...this.mockQuiz, ...quizData, id: this.generateRandomString(10) });
+    return of({ ...MockData.mockQuiz, ...quizData, id: MockData.generateRandomString(10) });
   }
 
   getQuiz(quizId: string): Observable<Quiz> {
-    return of({ ...this.mockQuiz, id: quizId });
+    return of({ ...MockData.mockQuiz, id: quizId });
   }
 
   getQuizList(): Observable<Quiz[]> {
-    return of(this.mockQuizzes);
+    return of(MockData.mockQuizzes.filter((quiz: Quiz) => !quiz.private || quiz.id_creator === MockData.mockUser.id));
   }
 
-  getRecentQuizzes(): Observable<Quiz[]> {
-    return of(this.mockQuizzes);
+  getRecentQuizzes(): Observable<HistoryQuiz[]> {
+    return of(MockData.mockHistory);
   }
 
   exploreQuiz(): Observable<Quiz[]> {
-    return of(this.mockQuizzes);
+    return of(MockData.mockQuizzes);
   }
 
   // ========== FRIENDS ==========
@@ -194,34 +62,34 @@ export class MockAPIService {
   }
 
   getFriends(): Observable<User[]> {
-    return of(this.mockFriends);
+    return of(MockData.mockFriends);
   }
 
   // ========== GAME ==========
   requestGame(session: string, players: string[]): Observable<GameRequest[]> {
-    return of(this.mockGameRequestList);
+    return of(MockData.mockGameRequestList);
   }
 
   createSession(quizId: string): Observable<Session[]> {
-    return of([{ ...this.mockSession, id_quiz: quizId }]);
+    return of([{ ...MockData.mockSession, id_quiz: quizId }]);
   }
 
   getSession(id: string): Observable<Session> {
-    return of({ ...this.mockSession, id });
+    return of({ ...MockData.mockSession, id });
   }
 
   getNotifications(): Observable<GameRequest[]> {
-    return of(this.mockGameRequestList);
+    return of(MockData.mockGameRequestList);
   }
 
   // ========== HISTORY ==========
   getHistory(): Observable<HistoryQuiz[]> {
-    return of(this.mockHistory);
+    return of(MockData.mockHistory);
   }
 
   // ========== PROFILE ==========
   getUserData(): Observable<User> {
-    return of(this.mockUser);
+    return of(MockData.mockUser);
   }
 
   // ========== RATE ==========
@@ -241,7 +109,7 @@ export class MockAPIService {
   }
 
   getAllUsers(): Observable<User[]> {
-    return of(this.mockUsers);
+    return of(MockData.mockUsers);
   }
 
   // ========== WEBSOCKETS ==========

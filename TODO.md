@@ -28,7 +28,7 @@
 ### P3
 - [ ] UI Improvements
   - [ ] Make the style consistent between pages (follow the one from notifications maybe)
-  - [ ] Tailwind components: <https://www.material-tailwind.com/blocks>, <https://flowbite.com/#components>, <https://merakiui.com/components>, <https://daisyui.com/resources/videos/fast-beautiful-uis-angular-daisyui-x5l6lsj6ekw/>, <https://tailwindflex.com/tag/navbar?is_responsive=true>, <https://windytoolbox.com/>, <https://mobbin.com/explore/web>, <https://demos.creative-tim.com/soft-ui-design-system/presentation.html>, <https://lbegey.fr/templates-tailwind.html>
+  - [ ] Tailwind components: <https://www.material-tailwind.com/blocks>, <https://flowbite.com/#components>, <https://merakiui.com/components>, <https://daisyui.com/resources/videos/fast-beautiful-uis-angular-daisyui-x5l6lsj6ekw/>, <https://tailwindflex.com/tag/navbar?is_responsive=true>, <https://windytoolbox.com/>, <https://mobbin.com/explore/web>, <https://demos.creative-tim.com/soft-ui-design-system/presentation.html>, <https://lbegey.fr/templates-tailwind.html>, <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components>
   - [ ] Icons: <https://icons8.com/icons/set/health--style-material>, <https://ionic.io/ionicons>, <https://fonts.google.com/icons>, <https://phosphoricons.com/>, <https://isocons.app>, <https://heroicons.com/>, <https://iconscout.com/>, <https://remixicon.com/>, <https://iconboddy.com>
   - [ ] Colors: <https://www.iamsajid.com/ui-colors/>
   - [ ] Menu: Componetize, <https://tailwindcss.com/plus/ui-blocks/marketing/elements/flyout-menus>, <https://snipzy.dev/snippets/liquid-glass-nav.html>, <https://forum.bubble.io/t/creating-a-three-state-toggle-slider-switch-button/310817>
@@ -72,6 +72,7 @@
 - [ ] Use only css variables for colors
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
+- [ ] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
 
 ### P3
 - [ ] Use search API + search service
@@ -81,13 +82,10 @@
 
 ### P4
 - [ ] Use SwPush for notifications on desktop and mobile
-
-
-- [x] Probes
-- [x] Keep alive redis
 - [ ] Switch to supabase realtime for websockets
-- [ ] Tests in CI/CD
 - [ ] ChatGPT integration
+- [ ] ionic angular <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components>
+- [ ] PWA
 
 
 

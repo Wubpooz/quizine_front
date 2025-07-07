@@ -18,14 +18,16 @@ export class QuizQuestionComponent {
   timer!: number;
   private intervalId: any;
 
-  constructor(public quizService: QuizService) {
+  constructor(private quizService: QuizService) {}
+  
+  ngOnInit() {
     this.quizName = this.quizService.getTitle();
     this.totalQuestions = this.quizService.getTotalQuestions();
-    // this.question = this.quizService.getCurrentQuestion();
-    // this.questionIndex = this.quizService.getQuestionIndex();
-    // this.timer = this.question?.duration;
-    // this.startTimer();
-
+    this.question = this.quizService.getCurrentQuestion();
+    this.questionIndex = this.quizService.getQuestionIndex();
+    this.timer = this.question?.duration;
+    this.startTimer();
+  
     this.quizService.currentQuestionIndex$.subscribe(() => {
       this.question = this.quizService.getCurrentQuestion();
       this.questionIndex = this.quizService.getQuestionIndex();
@@ -33,6 +35,12 @@ export class QuizQuestionComponent {
       this.selectedAnswer = null;
       this.startTimer();
     });
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   private startTimer() {

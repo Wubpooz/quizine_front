@@ -11,8 +11,7 @@
        </div>
 
       <!-- Question & Answers Section -->
-      <div class="mt-10 flex flex-col justify-between">
-
+      <div *ngIf="question" class="mt-10 flex flex-col justify-between">
         <div class="flex flex-col gap-2">
           <div class="w-5/6 max-w-6xl mx-auto text-left">
             <div class="text-2xl font-semibold mt-2 mb-4 break-words">
@@ -42,9 +41,13 @@
         </div>
 
         <!-- Progress -->
-        <div class="mt-6 text-right w-full text-gray-500 text-sm">
+        <div class="mt-6 text-right w-full text-text-secondary dark:text-text-secondary text-sm">
           {{ questionIndex + 1 }}/{{ totalQuestions }}
         </div>
+      </div>
+
+      <div *ngIf="!question" class="flex items-center justify-center h-full">
+        <div class="text-text-secondary dark:text-text-secondary text-lg">Chargement de la question...</div>
       </div>
     </div>
   </div>

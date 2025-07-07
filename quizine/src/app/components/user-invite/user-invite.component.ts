@@ -42,20 +42,7 @@ export class UserInviteComponent {
     this.inviteForm = this.fb.group({
       // email: ['', [Validators.required, Validators.email]]
     });
-
-    // this.apiservice.getAllUsers().pipe(takeUntil(this.destroy$)).subscribe((users: User[]) => {
-    //   this.users = users.filter((user: User) => {return user.id !== this.appStore.currentUser.value?.id})||[];
-    //   this.users.sort((a, b) => a.username.localeCompare(b.username));
-    //   this.filteredUsersList = [...this.users];
-    // });
-    
-    // this.appStore.friends.pipe(takeUntil(this.destroy$)).subscribe((friends: User[] | undefined) => {
-    //   this.friends = friends?.filter((friend: User) => {return friend.id !== this.appStore.currentUser.value?.id})||[];
-    //   this.filteredUsersList = this.filteredUsersList.filter((user: User) => {
-    //     return !this.appStore.friends.value?.some((friend: User) => friend.id === user.id);
-    //   });
-    // });
-          
+   
     //TODO temporary, use search service instead with that
     combineLatest([this.apiservice.getAllUsers(), this.appStore.friends]).pipe(takeUntil(this.destroy$)).subscribe(([users, friends]) => {
       const currentUserId = this.appStore.currentUser.value?.id;
@@ -64,7 +51,6 @@ export class UserInviteComponent {
       this.users.sort((a, b) => a.username.localeCompare(b.username));
       this.updateFilteredUsersList();
     });
-
 
     //TODO add spinner to avoid them cliking on stuff before session
     this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
@@ -137,6 +123,7 @@ export class UserInviteComponent {
   }
 
   onSubmit() {
+    console.log('Submitting invite for session:', this.sessionId);
     const validSelectedFriends = this.selectedFriends.filter(f => f && f.id);
     const validSelectedUsers = this.selectedUsers.filter(u => u && u.id);
 
@@ -156,6 +143,8 @@ export class UserInviteComponent {
 
 
   onSkip() {
+    this.gameSessionStore.invitedUsers.next([]);
+    this.gameSessionStore.quiz.next
     this.submit.emit(this.sessionId);
   }
 

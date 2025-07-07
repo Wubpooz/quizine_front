@@ -51,10 +51,16 @@ export class QuizDescriptionComponent {
   }
 
   startQuiz(): void {
+    if(!this.quiz) {
+      console.error('Quiz not loaded');
+      return;
+    }
+    this.gameSessionStore.quiz.next(this.quiz);
     this.isInviteShowing = true;
   }
 
   handleInviteSubmit(sessionId: string): void {
+    console.log('Invite submitted for session:', sessionId);
     this.isWaitingPageShowing = true;
     this.isInviteShowing = false;
     this.sessionId = sessionId;
