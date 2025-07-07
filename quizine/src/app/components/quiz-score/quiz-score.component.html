@@ -1,7 +1,7 @@
-<div class="min-h-screen bg-primary-lighter flex flex-col">
+<div class="min-h-screen bg-primary-lighter dark:bg-primary flex flex-col">
   <!-- Main content -->
   <div class="flex-1 flex items-center justify-center w-full h-full">
-    <div class="bg-white rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
+    <div class="bg-bg-surface dark:bg-bg-surface rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
 
       <div class="flex w-full h-full flex-col items-center justify-between gap-4">
           <div class="flex w-full items-start justify-center gap-8">
@@ -21,16 +21,15 @@
             <div *ngFor="let entry of sortedScores; let i = index"
               (click)="selectUser(entry.user.id)"
               [ngClass]="
-                i === 0 && entry.user.id === currentUser.id ? 'bg-yellow-300 scale-105 shadow-lg font-bold text-primary transition' :
+                i === 0 && entry.user.id === currentUser.id ? 'bg-yellow-300 scale-105 shadow-lg font-bold' :
                 i === 0 ? 'bg-yellow-300 scale-105 shadow-lg font-bold' :
-                i === 1 && entry.user.id === currentUser.id ? 'bg-gray-200 font-semibold text-primary transition' :
+                i === 1 && entry.user.id === currentUser.id ? 'bg-gray-200 font-semibold' :
                 i === 1 ? 'bg-gray-200 font-semibold' :
-                i === 2 && entry.user.id === currentUser.id ? 'bg-orange-200 font-semibold text-primary transition' :
+                i === 2 && entry.user.id === currentUser.id ? 'bg-orange-200 font-semibold' :
                 i === 2 ? 'bg-orange-200 font-semibold' :
-                i > 2 && entry.user.id === currentUser.id ? 'bg-white text-primary font-bold transition' :
-                'bg-white font-semibold transition'
+                i > 2 && entry.user.id === currentUser.id ? 'bg-bg-card dark:bg-bg-card font-bold' : ''
               "
-              class="w-4/6 max-w-4xl text-black border rounded-lg px-2 py-2 text-left text-base focus:outline-none transition-all duration-150 break-words whitespace-pre-line mb-1"
+              class="w-4/6 max-w-4xl text-primary border rounded-lg px-2 py-2 text-left text-base focus:outline-none transition-all duration-150 break-words whitespace-pre-line mb-1"
             >
               <span class="flex justify-between items-center pr-2">
                 <span>
@@ -50,13 +49,13 @@
 
         <!-- suivant -->
         <div class="w-full flex justify-center pb-6">
-          <button
+          <app-button
+            [label]="'Suivant'"
+            [style]="'primary'"
+            [size]="'medium'"
             (click)="next()"
-            class="bg-primary text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-primary-dark transition duration-300"
-          >
-            Suivant
-          </button>
-
+            class="font-semibold"
+            ></app-button>
     </div>
   </div>
 </div>
