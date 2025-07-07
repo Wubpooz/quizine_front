@@ -1,18 +1,18 @@
-<div class="min-h-screen bg-primary-lighter flex flex-col">
+<div class="min-h-screen bg-primary-lighter dark:bg-primary flex flex-col">
   <div class="flex-1 flex items-center justify-center w-full h-full">
-    <div class="bg-white rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
+    <div class="bg-bg-surface dark:bg-bg-surface rounded shadow-lg lg:w-11/12 w-full max-w-8xl lg:h-11/12 h-[85svh] max-h-4xl p-10 relative">
 
       <div class="flex h-full flex-col">
-        <h1 class="text-3xl font-bold text-left mb-8">Récapitulatif</h1>
+        <h1 class="text-3xl font-bold text-left mb-8 text-text-main dark:text-text-main">Récapitulatif</h1>
   
         <div class="mb-10 overflow-y-auto h-full">
-          <div *ngIf="!quiz"> Chargement... </div>
+          <div *ngIf="!quiz" class="text-text-main"> Chargement... </div>
           <div *ngIf="quiz">
             <ng-container *ngFor="let question of quiz.questions; let i = index" class="flex items-center gap-4">
               <div class="flex flex-col mb-8 pr-4">
                 <div class="flex flex-col mb-4">
                   <span class="text-2xl font-bold text-primary">Question {{ i + 1 }}/{{ quiz.questions.length }}</span>
-                  <span>{{ question.name }}</span>
+                  <span class="text-text-secondary dark:text-text-secondary">{{ question.name }}</span>
                 </div>
                 
                 <div  class="flex flex-col gap-2">
@@ -32,7 +32,7 @@
                             </div>
                           </ng-container>
                           <ng-container *ngIf="answer.id !== answers.get(question.id)?.id && question.id_answer !== answer.id" class="flex">
-                            <div class="w-full bg-white border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
+                            <div class="w-full bg-bg-card dark:bg-bg-card text-text-secondary dark:text-text-secondary border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center">
                               <div>{{ j + 1 }}. {{ answer.content }}</div>
                             </div>
                           </ng-container>
@@ -48,9 +48,13 @@
 
       <div class="absolute left-0 right-0 bottom-0 z-10 flex justify-center items-center w-full h-20 pointer-events-none">
         <div class="backdrop-blur-md bg-primary-lighter/70 w-full max-w-4xl mx-auto rounded-b-lg flex justify-center items-center pointer-events-auto">
-          <button class="bg-primary text-white font-bold py-2 px-8 rounded-lg shadow-md hover:bg-primary-dark transition duration-300" (click)="finish()">
-            Terminer
-          </button>
+          <app-button
+            [label]="'Terminer'"
+            [style]="'primary'"
+            [size]="'medium'"
+            class="shadow-md transition duration-300"
+            (click)="finish()"
+          ></app-button>
         </div>
       </div>
 

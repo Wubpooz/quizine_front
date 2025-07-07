@@ -4,11 +4,12 @@ import { Quiz, Option } from '../../models/quizModel';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'quiz-recap',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonComponent],
   templateUrl: './quiz-recap.component.html'
 })
 export class QuizRecapComponent {
