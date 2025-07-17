@@ -8,6 +8,12 @@
 - [x] Store sidebar toggle value between page refresh
 - [x] Search bars alignement + search working again + scroll in dropdown
 - [ ] FIX HOMEPAGE
+- [ ] Fix checkmark on all recap
+- [ ] Fix dark mode toggle on mobile
+- [ ] Recheck mobile friendliness
+- [ ] reject notifications
+- [ ] disable quiz creation if not questions
+- [ ] edit question time with slider 
 
 ### P2
 - [x] Notifications when get call fails
@@ -16,7 +22,6 @@
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
 - [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
-- [ ] Recheck mobile friendliness
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add a loading spinner when waiting for API calls
