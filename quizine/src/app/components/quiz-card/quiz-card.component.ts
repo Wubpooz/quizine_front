@@ -15,8 +15,6 @@ export class QuizCardComponent {
 
   constructor(private router: Router) {}
 
-  ngOnInit(){
-  }
   goToQuizPreview(quizId: string) {
     this.router.navigate(['/quiz-preview', quizId]);
   }

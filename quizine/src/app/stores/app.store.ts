@@ -35,7 +35,7 @@ export class AppStore {
         }
       });
       this.apiService.getRecentQuizzes().subscribe((quizzes: Quiz[]) => {
-        if(!this.recents){
+        if(!this.recents) {
           this.recents = new BehaviorSubject<Quiz[]|undefined>(quizzes);
         } else {
           this.recents.next(quizzes);

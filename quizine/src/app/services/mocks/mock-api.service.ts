@@ -40,8 +40,8 @@ export class MockAPIService {
     return of(MockData.mockQuizzes.filter((quiz: Quiz) => !quiz.private || quiz.id_creator === MockData.mockUser.id));
   }
 
-  getRecentQuizzes(): Observable<HistoryQuiz[]> {
-    return of(MockData.mockHistory);
+  getRecentQuizzes(): Observable<Quiz[]> {
+    return of(MockData.mockQuizzes);
   }
 
   exploreQuiz(): Observable<Quiz[]> {

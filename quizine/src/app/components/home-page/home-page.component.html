@@ -2,19 +2,10 @@
   <div class="px-6 mt-4">
     <h1 class="text-2xl dark:text-text-main">Récents</h1>
     <div class=" h-[83svh] overflow-y-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 pb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mt-6 pb-6 content-center justify-start items-center justify-items-start">
         <ng-container *ngFor="let quiz of quizzes">
           <app-quiz-card [quiz]="quiz" (click)="gotoQuiz(quiz.id)"/>
-          <!-- <button class="bg-white p-4 rounded drop-shadow-sm shadow hover:bg-primary-tint" >
-            <div class="flex items-center">
-              <img src="assets/images/interrogation.png" alt="Quiz Blocks" class="w-14 h-16 object-contain" />
-              <div class="flex flex-col items-start gap-2">
-                <span class="text-sm font-bold">{{quiz.nom}}</span>
-                <span class="text-xs text-gray-500">{{quiz.questions.length}} Questions · {{quiz.createdBy}}</span>
-              </div>
-            </div>
-          </button> -->
-          </ng-container>
+        </ng-container>
       </div>
       <div *ngIf="quizzes.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
         <span class="text-lg text-text-main dark:text-text-main text-center">Vous n'avez pas de sessions récentes.</span>
