@@ -9,11 +9,11 @@
 - [x] Search bars alignement + search working again + scroll in dropdown
 - [x] FIX HOMEPAGE
 - [x] Fix checkmark on all recap
-- [ ] Fix dark mode toggle on mobile
-- [ ] Recheck mobile friendliness
-- [ ] reject notifications
+- [x] Fix dark mode toggle on mobile
+- [x] Recheck mobile friendliness
 - [ ] disable quiz creation if not questions
 - [ ] edit question time with slider 
+- [ ] reject notifications
 
 ### P2
 - [x] Notifications when get call fails
@@ -68,7 +68,7 @@
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
 - [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
-- [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, ...)
+- [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
 
 ### P2

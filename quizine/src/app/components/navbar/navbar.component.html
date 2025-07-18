@@ -64,11 +64,11 @@
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item (click)="gotoProfile()" aria-label="Ouvrir le profil"> Profil </button>
       <!-- Theme switcher -->
-      <div mat-menu-item disableRipple (click)="$event.stopPropagation()" class="cursor-default select-none hover:bg-white hover:text-text-main px-2 overflow-hidden">
-        <div class="border border-gray-300 w-full h-full rounded-lg">
+      <div mat-menu-item disableRipple (click)="$event.stopPropagation()" class="cursor-default select-none px-2 overflow-hidden">
+        <div class="border border-bg-main dark:border-bg-main w-full h-full rounded-lg">
           <!-- Sliding indicator -->
           <div class="relative h-full">
-            <div class="absolute top left flex items-center justify-center h-full w-1/3 min-h-12 bg-gray-100 dark:bg-gray-100 shadow-md transition-transform duration-300 text-text-main dark:text-black z-20 p-1" 
+            <div class="absolute top left flex items-center justify-center h-full w-1/3 min-h-8 sm:min-h-12 bg-bg-card dark:bg-bg-card shadow-md transition-transform duration-300 text-text-main dark:text-text-main z-20 p-1" 
               [ngStyle]="{'transform': indicatorTransform}" [ngClass]="{'rounded-l-lg': theme.preference === 'light', 'rounded-r-lg': theme.preference === 'system'}">
               <ng-container [ngSwitch]="theme.preference">
                 <!-- Light icon -->
@@ -139,7 +139,7 @@
           </div>
   
           <!-- Buttons -->
-          <div class="flex items-center justify-between w-full text-text-main dark:text-white bg-bg-gray-200 dark:bg-bg-card rounded-lg">
+          <div class="flex items-center justify-between w-full text-text-main dark:text-text-main bg-bg-card dark:bg-bg-card rounded-lg">
             <button class="flex-1 text-center z-0 p-1 rounded transition w-full h-full"
                     (click)="theme.setPreference('light')"
                     [class.opacity-50]="theme.preference !== 'light'"
@@ -166,7 +166,7 @@
               </svg>
             </button>
   
-            <button class="flex-1 text-center z-0 p-1 rounded transition w-full h-full border-x border-gray-300 dark:border-gray-600"
+            <button class="flex-1 text-center z-0 p-1 rounded transition w-full h-full border-x border-gray-300 dark:border-zinc-600"
                   (click)="theme.setPreference('dark')"
                   [class.opacity-50]="theme.preference !== 'dark'"
                   aria-label="Dark mode">

@@ -1,7 +1,7 @@
 <layout [ngClass]="{ 'blur-sm pointer-events-none select-none': isInviteShowing }">
   <div *ngIf="!quiz" class="text-text-main dark:text-text-main mx-[50px] mt-4"> Chargement... </div>
   <div *ngIf="quiz" class="mx-[50px] p-4 mt-4 bg-bg-surface dark:bg-bg-surface rounded-lg shadow-sm">
-      <div class="flex gap-40">
+      <div class="flex gap-8 sm:gap-40 flex-col sm:flex-row">
         <div>
           <div class="flex items-center gap-4">
             <h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>

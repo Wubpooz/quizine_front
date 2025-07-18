@@ -1,20 +1,14 @@
-<div class="flex flex-col gap-[1px] border-2 border-gray-200 dark:border-gray-500 bg-bg-card dark:bg-bg-card dark:text-white hover:border-primary-dark hover:cursor-pointer rounded-md xs:w-[20rem] md:w-[42rem] h-32 pl-4 pt-2"
+<div class="flex flex-col gap-[1px] border-2 border-gray-200 dark:border-gray-500 bg-bg-card dark:bg-bg-card dark:text-white hover:border-primary-dark hover:cursor-pointer rounded-md w-[20rem] md:w-[42rem] h-32 pl-4 pt-2"
   (click)="goToQuizPreview(quiz.id)">
     <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2">
             <span class="text-lg">{{ quiz.nom }}</span>
-            <span class="text-gray-400 text-sm">{{ quiz.private ? "privé" : "public" }}</span>
+            <span class="text-text-secondary dark:text-text-secondary text-sm">{{ quiz.private ? "privé" : "public" }}</span>
         </div>
         <!-- <span class="text-base text-primary">{{ quiz. | date:'dd/MM/yyyy' }}</span> -->
     </div>
     <span class="text-base text-text-secondary dark:text-text-secondary mt-2">{{ quiz.questions.length }} {{ quiz.questions.length > 1 ? "questions" : "question" }}</span>
     <div class="flex gap-2 mt-3">
-        <!-- <app-button
-            (click)="goToQuizPreview(quiz.id)"
-            [label]="'Consulter'"
-            [style]="'tertiary'"
-            [size]="'small'"
-        ></app-button> -->
         <app-button
             (click)="goToEditQuiz(quiz.id); $event.stopPropagation()"
             [label]="'Éditer'"

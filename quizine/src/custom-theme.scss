@@ -85,14 +85,57 @@ $quizine-theme: mat.define-light-theme((
   background-color: var(--color-primary-tint) !important;
 }
 
+.mat-mdc-menu-panel {
+  border-color: var(--bg-card) !important;
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
 .mat-mdc-menu-content {
-    margin: 0;
-    padding: 0 !important;
-    list-style-type: none;
-    border-radius: 20% !important;
+  margin: 0;
+  padding: 0 !important;
+  list-style-type: none;
+  border-radius: 20% !important;
+  border-color: var(--bg-card) !important;
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+.mat-mdc-menu-content:hover {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
 }
 
+.mat-mdc-menu-item {
+  color: var(--text-main) !important;
+  background-color: var(--bg-surface) !important;
+}
 .mat-mdc-menu-item:hover {
-    background-color: var(--color-primary-tint) !important;
-    color: var(--color-primary-dark) !important;
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+
+.dark .mat-mdc-menu-panel {
+  border-color: var(--bg-card) !important;
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+.dark .mat-mdc-menu-item {
+  color: var(--text-main) !important;
+  background-color: var(--bg-surface) !important;
+}
+.dark .mat-mdc-menu-item:hover {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+.dark .mat-mdc-menu-content {
+  margin: 0;
+  padding: 0 !important;
+  list-style-type: none;
+  border-radius: 20% !important;
+  border-color: var(--bg-card) !important;
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+.dark .mat-mdc-menu-content:hover {
+  background-color: var(--bg-card) !important;
+  color: var(--text-main) !important;
 }
