@@ -5,6 +5,8 @@ import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
+import { environment } from '../../../environments/environment';
+import { MockData } from '../../services/mocks/mockData';
 
 @Component({
   selector: 'quiz-recap',
@@ -20,14 +22,26 @@ export class QuizRecapComponent {
       private appStore: AppStore,
       private router: Router
       ) {
+    
+    if(environment.mockAuth) {
+      this.quiz = MockData.mockQuiz;
+      this.gameSessionStore.answerList.next(new Map<string, Option>([
+        ["1", this.quiz.questions[0].choices[0]],
+        ["2", this.quiz.questions[1].choices[0]],
+        ["3", this.quiz.questions[2].choices[0]],
+        ["4", this.quiz.questions[3].choices[0]]
+      ]));
+    }
+
     this.gameSessionStore.quiz.subscribe((quiz: Quiz | undefined) => {
-      if(quiz === undefined) {
-        return
+      if(quiz) {
+        this.quiz = quiz;
       }
-      this.quiz = quiz;
     });
     this.gameSessionStore.answerList.subscribe((answers: Map<string, Option>) => {
-      this.answers = answers;
+      if(answers) {
+        this.answers = answers;
+      }
     });
   }
 

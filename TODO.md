@@ -8,7 +8,7 @@
 - [x] Store sidebar toggle value between page refresh
 - [x] Search bars alignement + search working again + scroll in dropdown
 - [x] FIX HOMEPAGE
-- [ ] Fix checkmark on all recap
+- [x] Fix checkmark on all recap
 - [ ] Fix dark mode toggle on mobile
 - [ ] Recheck mobile friendliness
 - [ ] reject notifications
