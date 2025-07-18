@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
 import { LayoutComponent } from "../layout/layout.component";
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'create-quiz',
@@ -17,7 +18,7 @@ export class CreateQuizComponent {
 
   quizTitle: string = '';
   quizDescription: string = '';
-  quizVisibility: string = 'private';
+  quizVisibility: 'private' | 'public' = 'private';
   tags: string[] = [];
   questions: {
     name: string;
@@ -66,7 +67,7 @@ export class CreateQuizComponent {
 
   tagInput: string = '';
 
-  constructor(private apiService: APIService, private router: Router) {}
+  constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService) {}
 
 
   ngOnInit() {
@@ -170,35 +171,95 @@ export class CreateQuizComponent {
   }
 
   onSubmit() {
-    //Order so that first option in question is the valid one
-    const orderedQuestions = this.questions.map(
-      (q) => {
-      const newChoices = [...q.choices];
-      let newValidAnswer = q.validAnswer;
-      if (q.validAnswer > 0 && q.validAnswer < newChoices.length) {
-        const [valid] = newChoices.splice(q.validAnswer, 1);
-        newChoices.unshift(valid);
-        newValidAnswer = 0;
-      }
-      return {
-        ...q,
-        choices: newChoices,
-        validAnswer: newValidAnswer
-      };
-      }
-    );
-    const quiz = {
-      nom: this.quizTitle,
-      picture: null,
-      private : this.quizVisibility === 'private' ? true : false,
-      tags: this.tags,
-      questions : orderedQuestions,
-    }
-    console.log(quiz);
+    try { 
+      this.validateQuiz(this.quizTitle, this.quizDescription, this.tags, this.quizVisibility, this.questions);
 
-    this.apiService.createQuiz(quiz).subscribe((quiz) => {
-      console.log('Quiz created successfully', quiz);
-      this.router.navigate(['/quiz-preview', quiz.id]);
-    });
+      //Order so that first option in question is the valid one
+      const orderedQuestions = this.questions.map(
+        (q) => {
+        const newChoices = [...q.choices];
+        let newValidAnswer = q.validAnswer;
+        if (q.validAnswer > 0 && q.validAnswer < newChoices.length) {
+          const [valid] = newChoices.splice(q.validAnswer, 1);
+          newChoices.unshift(valid);
+          newValidAnswer = 0;
+        }
+        return {
+          ...q,
+          choices: newChoices,
+          validAnswer: newValidAnswer
+        };
+        }
+      );
+      const quiz = {
+        nom: this.quizTitle,
+        picture: null,
+        private : this.quizVisibility === 'private',
+        tags: this.tags,
+        questions : orderedQuestions,
+      }
+
+      this.apiService.createQuiz(quiz).subscribe((quiz) => {
+        console.log('Quiz created successfully', quiz);
+        this.router.navigate(['/quiz-preview', quiz.id]);
+      });
+    } catch (error: any) {
+      console.error(error);
+      this.notifService.error(error, "Erreur lors de la création du quiz");
+      return;
+    }
+  }
+
+
+  private validateQuiz(quizTitle: string, quizDescription: string, tags: string[], quizVisibility: string, questions: any[]) {
+    if(!quizTitle || typeof quizTitle !== 'string' || quizTitle.trim() === '') {
+      throw new Error('Le titre du quiz est requis.');
+    }
+    if(quizTitle.length > this.maxLengthTitle) {
+      throw new Error('Le titre du quiz doit avoir moins de ' + this.maxLengthTitle + ' caractères.');
+    }
+
+    if(!quizDescription || typeof quizDescription !== 'string' || quizDescription.trim() === '') {
+      throw new Error('La description du quiz est requise.');
+    }
+    if(quizDescription.length > this.maxLengthDescription) {
+      throw new Error('La description du quiz doit avoir moins de ' + this.maxLengthDescription + ' caractères.');
+    }
+
+    if(quizVisibility === '' || !['public', 'private'].includes(quizVisibility)) {
+      throw new Error('La visibilité du quiz est requise.');
+    }
+
+    if(tags && !Array.isArray(tags)) {
+      throw new Error('Les tags du quiz doivent etre un tableau de strings.');
+    }
+
+    if(!questions || !Array.isArray(questions) || questions.length === 0) {
+      throw new Error('Au moins une question est requise.');
+    }
+    for(let i = 0; i < questions.length; i++) {
+      const question = questions[i];
+      if(!question.name || typeof question.name !== 'string' || question.name.trim() === '') {
+        throw new Error('Le titre de la question ' + (i + 1) + ' est requis.');
+      }
+      if(question.name.length > this.maxLengthQuestion) {
+        throw new Error('Le titre de la question ' + (i + 1) + ' doit avoir moins de ' + this.maxLengthQuestion + ' caractères.');
+      }
+      if(!question.choices || !Array.isArray(question.choices) || question.choices.length === 0) {
+        throw new Error('Au moins une option est requise pour la question ' + (i + 1) + '.');
+      }
+      for(let j = 0; j < question.choices.length; j++) {
+        const option = question.choices[j];
+        if(!option.content || typeof option.content !== 'string' || option.content.trim() === '') {
+          throw new Error('L\'option ' + (j + 1) + ' de la question ' + (i + 1) + ' est requise.');
+        }
+        if(option.content.length > this.maxLengthOption) {
+          throw new Error('L\'option ' + (j + 1) + ' de la question ' + (i + 1) + ' doit avoir moins de ' + this.maxLengthOption + ' caractères.');
+        }
+      }
+      if(question.validAnswer < 0 || question.validAnswer >= question.choices.length) {
+        throw new Error('La bonne option de la question ' + (i + 1) + ' est requise.');
+      }
+    }
   }
 }

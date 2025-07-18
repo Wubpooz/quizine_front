@@ -11,7 +11,7 @@
 - [x] Fix checkmark on all recap
 - [x] Fix dark mode toggle on mobile
 - [x] Recheck mobile friendliness
-- [ ] disable quiz creation if not questions
+- [x] disable quiz creation if not questions
 - [ ] edit question time with slider 
 - [ ] reject notifications
 
@@ -68,7 +68,7 @@
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
 - [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
-- [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, ...)
+- [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
 
 ### P2
