@@ -58,13 +58,12 @@ export class WaitingPageComponent {
     }, 1000);
 
     if(this.refus === undefined || !this.refus) {
-
       this.gameConnexion.listenGameStart((data) => {
         clearInterval(this.intervalId);
         this.playQuiz();
       })
       this.gameConnexion.emitJoin(this.isCreator, this.sessionId, currentUser?.id || "None");
-    }else{
+    } else {
       if(currentUser) {
         this.gameConnexion.emitRefuse(this.sessionId, currentUser.id);
       }
@@ -72,8 +71,6 @@ export class WaitingPageComponent {
     }
   }
 
-  
-  
   ngOnDestroy() {
     clearInterval(this.intervalId);
     this.gameConnexion.disconnect();

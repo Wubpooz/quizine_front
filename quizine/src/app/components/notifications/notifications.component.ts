@@ -7,6 +7,9 @@ import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { LayoutComponent } from "../layout/layout.component";
 import { NotificationsService } from '../../services/notifications.service';
+import { AppStore } from '../../stores/app.store';
+import { GameConnexionService } from '../../services/gameConnexion.service';
+import { User } from '../../models/userModel';
 
 @Component({
   selector: 'app-notifications',
@@ -19,13 +22,23 @@ export class NotificationsComponent {
   notifications: GameRequest[] = [];
   isWaitingPageShowing: Map<string, boolean> = new Map<string, boolean>();
   isrefus: boolean = false;
+  currentUser: User | undefined = undefined;
 
   constructor(private apiService: APIService,
     private gamestore: GameSessionStore,
+    private appStore: AppStore,
+    private gameConnexion: GameConnexionService,
     private notifService: NotificationsService) {
 
-    this.apiService.getNotifications().toPromise().then((gameRequests: GameRequest[] | undefined) => {
+    this.appStore.currentUser.subscribe((user) => {
+      this.currentUser = user;
+    });
+
+    this.apiService.getNotifications().subscribe((gameRequests: GameRequest[] | undefined) => {
+      //TODO should remove old notifications
       if(!gameRequests) {
+        this.notifications = [];
+        this.isWaitingPageShowing = new Map<string, boolean>();
         return;
       }
 
@@ -51,21 +64,28 @@ export class NotificationsComponent {
     return users;
   }
 
-  async accepter(notif: GameRequest) {
+  accepter(notif: GameRequest) {
     this.isrefus = false;
     this.isWaitingPageShowing.set(notif.id_session, true);
-    let session = await this.apiService.getSession(notif.id_session).toPromise();
-    if(!session) {
-      this.notifService.error("Unexepcted error. Can't accept notification.");
-    } else {
-      let quizId = session.id_quiz;
-      this.gamestore.updateQuiz(quizId);
-    }
+    this.apiService.getSession(notif.id_session).subscribe((session) => {
+      if(!session) {
+        this.notifService.error("Unexepcted error. Can't accept notification.");
+      } else {
+        let quizId = session.id_quiz;
+        this.gamestore.updateQuiz(quizId);
+      }
+    })
   }
   refuser(notif: GameRequest) {
     this.isrefus = true;
-    this.isWaitingPageShowing.set(notif.id_session, true);
-    //this.isWaitingPageShowing[notif.id_session] = undefined;
+    if(this.currentUser) {
+      //TODO does it truly remove notifs from database?
+      this.gameConnexion.emitRefuse(notif.id_session, this.currentUser.id);
+      this.onWaitClose(notif);
+      this.notifService.info(`Invitation de ${notif.username} refusée.`);
+    } else {
+      this.notifService.error("Unexepcted error. Can't refuse notification.");
+    }
   }
 
   onWaitClose(notif: GameRequest) {

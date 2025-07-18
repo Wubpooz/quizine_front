@@ -12,8 +12,7 @@
 - [x] Fix dark mode toggle on mobile
 - [x] Recheck mobile friendliness
 - [x] disable quiz creation if not questions
-- [ ] edit question time with slider 
-- [ ] reject notifications
+- [x] reject notifications
 
 ### P2
 - [x] Notifications when get call fails
@@ -22,8 +21,8 @@
 - [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
 - [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
-- [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Toggle sidebar when clicking inside
+- [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [ ] Add a loading spinner when waiting for API calls
 - [ ] Profile/quiz pictures
 - [ ] Quiz editing
@@ -44,6 +43,7 @@
 - [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
 - [ ] Add OAuth using Supabase
 - [ ] Badge for notifications
+- [ ] edit question time with slider 
 - [ ] Search/sort by tags
 - [ ] Rating system
 - [ ] Quizz error reporting like duolingo
@@ -53,6 +53,8 @@
 ### P4
 - [ ] Visit other user profiles
 - [ ] Random quizz by theme
+
+
 
 
 
@@ -70,6 +72,7 @@
 - [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
+- [ ] Validate API in backend and frontend
 
 ### P2
 - [x] Remove CSS files
