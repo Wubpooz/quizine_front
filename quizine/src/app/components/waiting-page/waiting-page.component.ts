@@ -4,6 +4,7 @@ import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'waiting-page',
@@ -18,6 +19,7 @@ export class WaitingPageComponent {
   @Output() close = new EventEmitter<void>();
   timer: number;
   private intervalId: any;
+  destroy$ = new Subject<void>();
 
   remainingUsers: number = 0; //TODO This will be updated by the GameConnexionService
 
@@ -36,7 +38,7 @@ export class WaitingPageComponent {
       this.playQuiz();
     });
 
-    this.gameSessionStore.invitedUsers.subscribe((users) => {
+    this.gameSessionStore.invitedUsers.pipe(takeUntil(this.destroy$)).subscribe((users) => {
       this.remainingUsers = users.length;
       if(this.remainingUsers === 0) {
         this.playQuiz();
@@ -74,6 +76,8 @@ export class WaitingPageComponent {
   ngOnDestroy() {
     clearInterval(this.intervalId);
     this.gameConnexion.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   playQuiz() {

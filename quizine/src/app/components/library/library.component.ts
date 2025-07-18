@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { LayoutComponent } from '../layout/layout.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-library',
@@ -13,19 +14,23 @@ import { LayoutComponent } from '../layout/layout.component';
   templateUrl: './library.component.html'
 })
 export class LibraryComponent {
+  private destroy$ = new Subject<void>();
   quizList: Quiz[] = [];
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
 
-  constructor(private router: Router,
-    private apiService: APIService
-    ) {
-      this.apiService.getQuizList().subscribe((quizList: Quiz[]) => {
-        if(quizList) {
-          this.quizList = quizList;
-          this.filteredQuizList = quizList;
-        }
-      });
+  constructor(private router: Router, private apiService: APIService) {
+    this.apiService.getQuizList().pipe(takeUntil(this.destroy$)).subscribe((quizList: Quiz[]) => {
+      if(quizList) {
+        this.quizList = quizList;
+        this.filteredQuizList = quizList;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearchChange(event: Event) {
@@ -33,8 +38,8 @@ export class LibraryComponent {
     const term = target ? target.value : '';
     this.searchTerm = term;
     const lower = term.toLowerCase();
-    this.filteredQuizList = this.quizList.filter(q =>
-      q.nom.toLowerCase().includes(lower)
+    this.filteredQuizList = this.quizList.filter(quiz =>
+      quiz.nom.toLowerCase().includes(lower)
     );
   }
 

@@ -4,7 +4,7 @@ import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
-
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -13,12 +13,18 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
+  private destroy$ = new Subject<void>();
   showPassword = false;
   public username = '';
   public password = '';
   profileImage: string | ArrayBuffer | null = null;
 
   constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -29,10 +35,10 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    this.apiService.signup(this.username, this.password).subscribe({
+    this.apiService.signup(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         // Registration successful, now login
-        this.apiService.login(this.username, this.password).subscribe({
+        this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe({
           next: (loggedUser) => {
             if (loggedUser) {
               this.appStore.init();

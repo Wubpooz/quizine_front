@@ -6,6 +6,7 @@ import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
 import { LayoutComponent } from "../layout/layout.component";
 import { NotificationsService } from '../../services/notifications.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'create-quiz',
@@ -67,11 +68,18 @@ export class CreateQuizComponent {
 
   tagInput: string = '';
 
+  private destroy$ = new Subject<void>();
+
   constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService) {}
 
 
   ngOnInit() {
     this.initializeOptionStates();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initializeOptionStates() {
@@ -199,7 +207,7 @@ export class CreateQuizComponent {
         questions : orderedQuestions,
       }
 
-      this.apiService.createQuiz(quiz).subscribe((quiz) => {
+      this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$)).subscribe((quiz) => {
         console.log('Quiz created successfully', quiz);
         this.router.navigate(['/quiz-preview', quiz.id]);
       });

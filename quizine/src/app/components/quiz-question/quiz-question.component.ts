@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Question, Option } from '../../models/quizModel';
 import { QuizService } from '../../services/quiz.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'quiz-question',
@@ -10,6 +11,7 @@ import { QuizService } from '../../services/quiz.service';
   templateUrl: './quiz-question.component.html'
 })
 export class QuizQuestionComponent {
+  private destroy$ = new Subject<void>();
   questionIndex: number = 0;
   totalQuestions: number = 0;
   quizName: string = '';
@@ -28,7 +30,7 @@ export class QuizQuestionComponent {
     this.timer = this.question?.duration;
     this.startTimer();
   
-    this.quizService.currentQuestionIndex$.subscribe(() => {
+    this.quizService.currentQuestionIndex$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.question = this.quizService.getCurrentQuestion();
       this.questionIndex = this.quizService.getQuestionIndex();
       this.timer = this.question?.duration;
@@ -38,17 +40,19 @@ export class QuizQuestionComponent {
   }
 
   ngOnDestroy() {
-    if (this.intervalId) {
+    if(this.intervalId) {
       clearInterval(this.intervalId);
     }
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private startTimer() {
-    if (this.intervalId) {
+    if(this.intervalId) {
       clearInterval(this.intervalId);
     }
     this.intervalId = setInterval(() => {
-      if (this.timer > 0) {
+      if(this.timer > 0) {
         this.timer--;
       } else {
         clearInterval(this.intervalId);

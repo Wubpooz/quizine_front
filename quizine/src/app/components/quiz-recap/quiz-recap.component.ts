@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 import { environment } from '../../../environments/environment';
 import { MockData } from '../../services/mocks/mockData';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'quiz-recap',
@@ -15,6 +16,7 @@ import { MockData } from '../../services/mocks/mockData';
   templateUrl: './quiz-recap.component.html'
 })
 export class QuizRecapComponent {
+  private destroy$ = new Subject<void>();
   quiz!: Quiz;
   answers!: Map<string, Option>;
 
@@ -33,16 +35,21 @@ export class QuizRecapComponent {
       ]));
     }
 
-    this.gameSessionStore.quiz.subscribe((quiz: Quiz | undefined) => {
+    this.gameSessionStore.quiz.pipe(takeUntil(this.destroy$)).subscribe((quiz: Quiz | undefined) => {
       if(quiz) {
         this.quiz = quiz;
       }
     });
-    this.gameSessionStore.answerList.subscribe((answers: Map<string, Option>) => {
+    this.gameSessionStore.answerList.pipe(takeUntil(this.destroy$)).subscribe((answers: Map<string, Option>) => {
       if(answers) {
         this.answers = answers;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   finish(): void {

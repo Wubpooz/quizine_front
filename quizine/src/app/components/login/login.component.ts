@@ -6,6 +6,8 @@ import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
+import { Subject, takeUntil } from 'rxjs';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'login',
@@ -14,22 +16,28 @@ import { APIService } from '../../services/api.service';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
+  private destroy$ = new Subject<void>();
   showPassword = false;
   public username = '';
   public password = '';
 
-  constructor(private apiService: APIService, private appStore: AppStore, private router: Router) {}
+  constructor(private apiService: APIService, private appStore: AppStore, private router: Router, private notifService: NotificationsService) {}
 
   ngOnInit() {
-    this.apiService.getUserData().subscribe({
+    this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
         this.appStore.updateUser(user);
         if (user) {
-            this.router.navigate(['/home']);
-          }
+          this.router.navigate(['/home']);
+        }
       },
       error: () => {}
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   togglePassword() {
@@ -41,12 +49,13 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.apiService.login(this.username, this.password).subscribe((user:User) => {
+    this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe((user:User) => {
       if (user) {
         this.appStore.init();
         this.appStore.updateUser(user);
         this.router.navigate(['/home']);
       } else {
+        this.notifService.error('Utilisateur inconnu ou Identifiants incorrects. Veuillez réessayer.', 'Login failed');
         console.error('Login failed');
       }
     });

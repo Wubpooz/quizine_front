@@ -8,6 +8,7 @@ import { GameConnexionService } from '../../services/gameConnexion.service';
 import { APIService } from '../../services/api.service';
 import { ButtonComponent } from '../button/button.component';
 import { environment } from '../../../environments/environment';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'quiz-score',
@@ -16,6 +17,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './quiz-score.component.html'
 })
 export class QuizScoreComponent {
+  private destroy$ = new Subject<void>();
   currentUser!: User;
   scores!: Map<User, number>;
   sortedScores: { user: User, score: number }[] = [];
@@ -29,7 +31,7 @@ export class QuizScoreComponent {
     private apiService: APIService,
     private router: Router
   ) {
-    this.appStore.currentUser.subscribe((user) => {
+    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if(!user) {
         return;
       }
@@ -66,6 +68,12 @@ export class QuizScoreComponent {
         }
       }, 1000);
     });
+  }
+
+  ngOnDestroy() {
+    this.gameConnexion.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   setScores(scores: Map<User, number>) {

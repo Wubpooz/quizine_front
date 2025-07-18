@@ -39,19 +39,20 @@
   - [ ] Tooltips (use group on related button and group-hover to show tooltip)
   - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
   - [ ] custom radio button component
-- [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
 - [ ] Add OAuth using Supabase
-- [ ] Badge for notifications
+- [x] Badge for notifications
 - [ ] edit question time with slider 
 - [ ] Search/sort by tags
 - [ ] Rating system
 - [ ] Quizz error reporting like duolingo
-- [ ] Action when quiz-recap finish is triggered to go back to previous seen page
-- [ ] Number of remaining player in waiting page
+- [x] Action when quiz-recap finish is triggered to go back to previous seen page
+- [x] Number of remaining player in waiting page
 
 ### P4
+- [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
 - [ ] Visit other user profiles
 - [ ] Random quizz by theme
+- [ ] ChatGPT integration
 
 
 
@@ -77,25 +78,22 @@
 - [x] Remove CSS files
 - [x] Remove all nulls
 - [ ] Close websocket connection on logout, change page etc
-- [ ] Use pipe(takeUntil(this.destroy$)) to avoid memory leaks on subscriptions
+- [x] Use pipe(takeUntil(this.destroy$)) to avoid memory leaks on subscriptions
 - [ ] Use only css variables for colors
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
-- [ ] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
+- [x] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
 - [ ] fix how we indicate what's the correct option
 
 ### P3
 - [ ] Use search API + search service
-- [ ] API call to play quizz in waiting page ?
 - [ ] Only use constructor for declaration, do everything in ngOnInit
 - [ ] Home-card component (or just card component for that + library)
 
 ### P4
 - [ ] Use SwPush for notifications on desktop and mobile
-- [ ] Switch to supabase realtime for websockets
-- [ ] ChatGPT integration
-- [ ] ionic angular <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components>
-- [ ] PWA
+- [x] Switch to supabase realtime for websockets
+- [ ] ionic angular <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components> +PWA
 
 
 

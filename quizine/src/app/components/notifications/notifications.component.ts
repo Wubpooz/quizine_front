@@ -10,6 +10,7 @@ import { NotificationsService } from '../../services/notifications.service';
 import { AppStore } from '../../stores/app.store';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 import { User } from '../../models/userModel';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
@@ -19,6 +20,7 @@ import { User } from '../../models/userModel';
 })
 
 export class NotificationsComponent {
+  private destroy$ = new Subject<void>();
   notifications: GameRequest[] = [];
   isWaitingPageShowing: Map<string, boolean> = new Map<string, boolean>();
   isrefus: boolean = false;
@@ -30,19 +32,30 @@ export class NotificationsComponent {
     private gameConnexion: GameConnexionService,
     private notifService: NotificationsService) {
 
-    this.appStore.currentUser.subscribe((user) => {
+    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.currentUser = user;
     });
 
-    this.appStore.notifications.subscribe((notifications) => {
+    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
       this.notifications = notifications || [];
     });
+  }
+
+  // ngOnInit() {
+  //   this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
+  //     this.notifications = notifications || [];
+  //   });
+  // }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   accepter(notif: GameRequest) {
     this.isrefus = false;
     this.isWaitingPageShowing.set(notif.id_session, true);
-    this.apiService.getSession(notif.id_session).subscribe((session) => {
+    this.apiService.getSession(notif.id_session).pipe(takeUntil(this.destroy$)).subscribe((session) => {
       if(!session) {
         this.notifService.error("Unexepcted error. Can't accept notification.");
       } else {

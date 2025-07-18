@@ -53,7 +53,7 @@ export class UserInviteComponent {
     });
 
     //TODO add spinner to avoid them cliking on stuff before session
-    this.apiservice.createSession(this.quizId).subscribe((sessionId: string) => {
+    this.apiservice.createSession(this.quizId).pipe(takeUntil(this.destroy$)).subscribe((sessionId: string) => {
       this.sessionId = sessionId;
       console.log("Created session:", sessionId);
       this.gameSessionStore.sessionId.next(this.sessionId);
@@ -133,7 +133,7 @@ export class UserInviteComponent {
         ...validSelectedUsers.map(user => user.id)
       ];
       console.log('Inviting:', idsToInvite);
-      this.apiservice.requestGame(this.sessionId, idsToInvite).subscribe((payload) => {
+      this.apiservice.requestGame(this.sessionId, idsToInvite).pipe(takeUntil(this.destroy$)).subscribe((payload) => {
         console.log("Invitation:", payload);
       });
       this.gameSessionStore.invitedUsers.next([...validSelectedFriends, ...validSelectedUsers]);
@@ -151,7 +151,7 @@ export class UserInviteComponent {
   onClose() {
     this.close.emit();
     if(this.sessionId) {
-      this.apiservice.deleteParticipation(this.sessionId).subscribe((payload) => {
+      this.apiservice.deleteParticipation(this.sessionId).pipe(takeUntil(this.destroy$)).subscribe((payload) => {
         console.log("Deleted participation:", payload);
       });
     }

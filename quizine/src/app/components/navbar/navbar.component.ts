@@ -8,6 +8,7 @@ import { APIService } from '../../services/api.service';
 import { ThemeService, ThemePreference } from '../../services/theme.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -16,6 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
+  private destroy$ = new Subject<void>();
   quizList: Quiz[] = [];
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
@@ -28,10 +30,23 @@ export class NavbarComponent {
     public theme: ThemeService
     ) {
       this.appStore.init();
-      this.appStore.quizList.subscribe((quizzes) => {
+      this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
         this.quizList = quizzes||[];
         this.filteredQuizList = quizzes||[];
       });
+  }
+  
+  // ngOnInit() {
+  //   this.appStore.init();
+  //   this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
+  //     this.quizList = quizzes||[];
+  //     this.filteredQuizList = quizzes||[];
+  //   });
+  // }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearchChange(event: Event) {
@@ -59,7 +74,7 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.apiService.logout().subscribe({
+    this.apiService.logout().pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.appStore.updateUser(undefined as any);
         this.router.navigate(['/landing']);

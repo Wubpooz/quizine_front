@@ -6,6 +6,7 @@ import { HistoryQuiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { LayoutComponent } from "../layout/layout.component";
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -14,26 +15,30 @@ import { LayoutComponent } from "../layout/layout.component";
   templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
+  private destroy$ = new Subject<void>();
   user: User = {id: "", username: "", picture: ""};
   friends: User[] = [];
   history: HistoryQuiz[] = [];
   showFriends = false;
 
-  constructor(private appStore: AppStore,
-            private apiService: APIService,
-            private router: Router) {
-    this.appStore.currentUser.subscribe((user) => {
+  constructor(private appStore: AppStore, private apiService: APIService, private router: Router) {
+    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if (user) {
         this.user = user;
       }
     });
-    this.apiService.getFriends().subscribe((friends: User[] | undefined) => {
+    this.apiService.getFriends().pipe(takeUntil(this.destroy$)).subscribe((friends: User[] | undefined) => {
       this.friends = friends||[];
       this.appStore.friends.next(friends);
     });
-    this.apiService.getHistory().subscribe((history: HistoryQuiz[]) => {
-        this.history = history;
+    this.apiService.getHistory().pipe(takeUntil(this.destroy$)).subscribe((history: HistoryQuiz[]) => {
+      this.history = history;
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   goToQuiz(quizId: string) {

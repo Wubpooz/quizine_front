@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { SidebarService } from '../../services/sidebar.service';
 import { Quiz } from '../../models/quizModel';
 import { AppStore } from '../../stores/app.store';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +13,7 @@ import { AppStore } from '../../stores/app.store';
   templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
+  private destroy$ = new Subject<void>();
   isSideBarOpen: boolean = true;
   quizList: Quiz[] = [];
   filteredQuizList: Quiz[] = [];
@@ -20,9 +22,9 @@ export class SidebarComponent {
 
 
   constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
-    this.sidebarService.isOpen$.subscribe(open => this.isSideBarOpen = open);
+    this.sidebarService.isOpen$.pipe(takeUntil(this.destroy$)).subscribe(open => this.isSideBarOpen = open);
     this.appStore.init()
-    this.appStore.quizList.subscribe((quizzes) => {
+    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });
@@ -37,13 +39,18 @@ export class SidebarComponent {
     //   }
     // });
 
-    this.appStore.notifications.subscribe((notifications) => {
+    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
       if(notifications) {
         this.notificationCount = notifications.length;
       } else {
         this.notificationCount = 0;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get sideBarState(){
