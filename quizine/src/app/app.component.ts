@@ -18,6 +18,8 @@ import { Router } from '@angular/router';
 import { ThemeService } from './services/theme.service';
 import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
+import { NotificationsService } from './services/notifications.service';
+import { GameRequest } from './models/participationModel';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +37,7 @@ export class AppComponent {
     private apiService: APIService,
     private router: Router,
     public theme: ThemeService,
+    private notifService: NotificationsService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -64,5 +67,46 @@ export class AppComponent {
         }
       }
     });
+  }
+
+
+
+  pollNotifications() {
+    setInterval(() => {
+      // Skip polling if on quiz play route
+      const blockRoutes = ['/404', '/quiz-question', '/quiz-recap', '/quiz-score', 'landing', 'login', 'register'];
+      const currentUrl = this.router.url;
+
+      if(blockRoutes.some(blocked => currentUrl.startsWith(blocked))) {
+        return;
+      }
+
+      this.apiService.getNotifications().subscribe((gameRequests: GameRequest[]|undefined) => {
+        let notifs: GameRequest[] = [];
+        if(!gameRequests) {
+          this.appStore.clearNotifications();
+        } else {
+          gameRequests.forEach((gameRequest) => {
+            this.apiService.getUserFromId(gameRequest.id_requestor).subscribe((user) => {
+              notifs.push({
+                datetime: gameRequest.datetime,
+                id_session: gameRequest.id_session,
+                id_requestor: gameRequest.id_requestor,
+                id_validator:gameRequest.id_validator,
+                username: user?.username || "inconnu"
+              })
+            })
+          })
+        }
+
+        const newNotifs = notifs.filter(n => !this.appStore['existingSessions'].has(n.id_session));
+        if(newNotifs.length > 0) {
+          this.appStore.addNewNotifications(newNotifs);
+          for(const notif of newNotifs) {
+            this.notifService.info(`Invitation de ${notif.username}.`);
+          }
+        }
+      });
+    }, 5000);
   }
 }

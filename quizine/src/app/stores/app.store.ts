@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { User } from "../models/userModel";
 import { APIService } from "../services/api.service";
 import { Quiz } from "../models/quizModel";
+import { GameRequest } from "../models/participationModel";
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,12 @@ import { Quiz } from "../models/quizModel";
 export class AppStore {
   private inited = false;
   public currentUser: BehaviorSubject<User|undefined> = new BehaviorSubject<User|undefined>(undefined);
-  public friends: BehaviorSubject<User[]|undefined> = new BehaviorSubject<User[]|undefined>(undefined);;
-  public quizList: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
-  public recents: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined);;
+  public friends: BehaviorSubject<User[]|undefined> = new BehaviorSubject<User[]|undefined>(undefined); //TODO remove undefined
+  public quizList: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined); //TODO remove undefined
+  public recents: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined); //TODO remove undefined
+  public notifications: BehaviorSubject<GameRequest[]> = new BehaviorSubject<GameRequest[]>([]);
+
+  private existingSessions = new Set<string>();
 
   constructor(private apiService: APIService) {}
 
@@ -48,6 +52,13 @@ export class AppStore {
       }
       else {
         this.friends.next(friends);
+      }
+    });
+    this.apiService.getNotifications().subscribe((notifications: GameRequest[]) => {
+      if(!this.notifications) {
+        this.notifications = new BehaviorSubject<GameRequest[]>(notifications);
+      } else {
+        this.notifications.next(notifications);
       }
     });
   }
@@ -111,4 +122,43 @@ export class AppStore {
       this.recents.next(recents);
     }
   }
+
+  updateNotifications(notifications: GameRequest[]) {
+    if(!this.notifications) {
+      this.notifications = new BehaviorSubject<GameRequest[]>(notifications);
+    }
+    else {
+      this.notifications.next(notifications);
+    }
+  }
+
+  addNewNotifications(notifications: GameRequest[]) {
+    const existing = this.notifications.value;
+    const combined = [...existing, ...notifications.filter(n => !this.existingSessions.has(n.id_session))];
+
+    notifications.forEach(n => this.existingSessions.add(n.id_session));
+    this.notifications.next(combined);
+  }
+
+  removeNotification(notification: GameRequest) {
+    let notifications = this.notifications.value;
+    if(notifications && notification) {    
+      let i = notifications.findIndex((gameRequest) => gameRequest.datetime === notification.datetime 
+              && gameRequest.id_session === notification.id_session
+              && gameRequest.id_requestor === notification.id_requestor);
+      notifications.splice(i, 1);
+      this.notifications.next(notifications);
+    }
+  }
+
+  removeNotificationsBySession(sessionId: string) {
+    this.notifications.next(this.notifications.value.filter(n => n.id_session !== sessionId));
+    this.existingSessions.delete(sessionId);
+  }
+
+  clearNotifications() {
+    this.notifications.next([]);
+    this.existingSessions.clear();
+  }
+
 } 

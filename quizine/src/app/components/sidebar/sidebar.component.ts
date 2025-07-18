@@ -16,6 +16,7 @@ export class SidebarComponent {
   quizList: Quiz[] = [];
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
+  notificationCount: number = 0;
 
 
   constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
@@ -35,6 +36,14 @@ export class SidebarComponent {
     //     // this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
     //   }
     // });
+
+    this.appStore.notifications.subscribe((notifications) => {
+      if(notifications) {
+        this.notificationCount = notifications.length;
+      } else {
+        this.notificationCount = 0;
+      }
+    });
   }
 
   get sideBarState(){

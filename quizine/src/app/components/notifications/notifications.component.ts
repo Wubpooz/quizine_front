@@ -34,34 +34,9 @@ export class NotificationsComponent {
       this.currentUser = user;
     });
 
-    this.apiService.getNotifications().subscribe((gameRequests: GameRequest[] | undefined) => {
-      //TODO should remove old notifications
-      if(!gameRequests) {
-        this.notifications = [];
-        this.isWaitingPageShowing = new Map<string, boolean>();
-        return;
-      }
-
-      gameRequests.forEach((gameRequest) => {
-        this.getUserFromId(gameRequest.id_requestor).then((user) => {
-        this.notifications.push({
-        datetime: gameRequest.datetime,
-        id_session: gameRequest.id_session,
-        id_requestor: gameRequest.id_requestor,
-        id_validator:gameRequest.id_validator,
-        username: user?.username || "inconnu"
-        })
-        this.isWaitingPageShowing.set(gameRequest.id_session, false);
-        })
-      })
+    this.appStore.notifications.subscribe((notifications) => {
+      this.notifications = notifications || [];
     });
-  }
-
-  getUserFromId(id: string) {
-    const users = this.apiService.getAllUsers().toPromise().then((users)=>{
-        return users?.find((u)=>u.id === id);
-    });
-    return users;
   }
 
   accepter(notif: GameRequest) {
@@ -82,6 +57,7 @@ export class NotificationsComponent {
       //TODO does it truly remove notifs from database?
       this.gameConnexion.emitRefuse(notif.id_session, this.currentUser.id);
       this.onWaitClose(notif);
+      this.appStore.removeNotificationsBySession(notif.id_session);
       this.notifService.info(`Invitation de ${notif.username} refusée.`);
     } else {
       this.notifService.error("Unexepcted error. Can't refuse notification.");

@@ -18,17 +18,16 @@
 - [x] Notifications when get call fails
 - [x] Profile pop-up menu with dark mode toggle, logout
 - [x] Dark mode (toggle + persist in localStorage + apply to all components + prefered color scheme), <https://m2.material.io/design/color/dark-theme.html#ui-application>
-- [ ] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
+- [x] Profile menu in navbar (<https://fr.freepik.com/vecteurs-premium/slider-jour-nuit_44129227.htm#from_element=cross_selling__vector> <https://fr.freepik.com/vecteurs-premium/bouton-vectoriel-interrupteur-bascule-mode-nuit-jour-luminosite-du-theme-application-element-option-diapositive-clair-sombre_28183375.htm>)
 - [x] Fix create button (position, add checkmark and animation)
 - [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
 - [x] Toggle sidebar when clicking inside
 - [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
-- [ ] Add a loading spinner when waiting for API calls
+- [ ] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
 - [ ] Profile/quiz pictures
 - [ ] Quiz editing
 - [ ] Quiz descriptions
 - [ ] Friends
-- [ ] Full screen pop-ups for call waits (<https://sweetalert2.github.io/>)
 
 ### P3
 - [ ] UI Improvements
@@ -69,14 +68,15 @@
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
-- [ ] fix issues if no selected quiz answer and all answer being green in quiz-recap
+- [ ] fix issues if no selected quiz answer
+- [ ] Validate API in backend and frontend
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
-- [ ] Validate API in backend and frontend
 
 ### P2
 - [x] Remove CSS files
 - [x] Remove all nulls
+- [ ] Close websocket connection on logout, change page etc
 - [ ] Use pipe(takeUntil(this.destroy$)) to avoid memory leaks on subscriptions
 - [ ] Use only css variables for colors
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)

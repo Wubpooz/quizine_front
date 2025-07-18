@@ -437,6 +437,13 @@ export class APIService {
         );
     }
 
+    getUserFromId(id: string): Observable<User | undefined> {
+      return this.getAllUsers().pipe(
+        map((users) => users.find((u) => u.id === id)),
+      );
+    }
+
+
 
     //==============================================================
     //========================== Realtime ==========================

@@ -51,9 +51,13 @@
           Découvrir
         </button>
       </li>
-      <li (click)="goToNotifications()" class="mb-2">
-        <button class="block pl-2 pr-4 py-2 text-text-main dark:text-text-main hover:bg-primary-tint dark:hover:bg-primary-dark rounded">
+      <li (click)="goToNotifications()" class="mb-2 relative">
+        <button class="block pl-2 pr-4 py-2 text-text-main dark:text-text-main hover:bg-primary-tint dark:hover:bg-primary-dark rounded relative">
           Notifications
+          <span *ngIf="notificationCount > 0"
+                class="absolute top-[-2px] right-[-2px] inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+            {{ notificationCount }}
+          </span>
         </button>
       </li>
     </ul>
