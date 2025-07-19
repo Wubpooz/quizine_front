@@ -24,10 +24,10 @@
 - [x] Toggle sidebar when clicking inside
 - [x] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [ ] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
-- [ ] Profile/quiz pictures
 - [ ] Quiz editing
+- [ ] edit question time with slider 
 - [ ] Quiz descriptions
-- [ ] Friends
+- [ ] Visit other user profiles & profile on hover
 
 ### P3
 - [ ] UI Improvements
@@ -40,8 +40,9 @@
   - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
   - [ ] custom radio button component
 - [ ] Add OAuth using Supabase
+- [ ] Profile/quiz pictures
+- [ ] Friends
 - [x] Badge for notifications
-- [ ] edit question time with slider 
 - [ ] Search/sort by tags
 - [ ] Rating system
 - [ ] Quizz error reporting like duolingo
@@ -49,10 +50,11 @@
 - [x] Number of remaining player in waiting page
 
 ### P4
+- [ ] Page transitions
 - [ ] Animations (gsap, <https://animejs.com/documentation/stagger>)
-- [ ] Visit other user profiles
 - [ ] Random quizz by theme
 - [ ] ChatGPT integration
+- [ ] Sounds
 
 
 
@@ -64,12 +66,14 @@
 ## Dev
 ### P1
 - [ ] Release plan (<https://excalidraw.com/> ?)
+- [ ] Switch from serverless to server for the backend ? (websockets, faster, session store etc)
 - [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
 - [ ] Create a migration to use Supabase locally
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
-- [ ] fix issues if no selected quiz answer
+- [ ] SSR ?, hydration ?, prefetch ?
+- [ ] TODO fix issues if no selected quiz answer
 - [ ] Validate API in backend and frontend
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
@@ -83,7 +87,7 @@
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
 - [x] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
-- [ ] fix how we indicate what's the correct option in creation
+- [ ] bun instead of node
 
 ### P3
 - [ ] Use search API + search service
@@ -96,13 +100,6 @@
 - [ ] ionic angular <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components> +PWA
 
 
-***************SSR ?, hydration ?, prefetch
-page transitions
-bun instead of node
-profile recap on hover
-sounds
-switch from serverless to server for the backend ? (websockets, faster, session store etc)
-validate inputs and forms***************
 
 
 -------------------
