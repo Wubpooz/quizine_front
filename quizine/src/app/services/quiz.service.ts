@@ -22,19 +22,19 @@ export class QuizService {
   ) {
     this.gameSessionStore.quiz.subscribe((quiz) => {
       console.debug('QuizService: quiz updated', quiz);
-      if (!quiz) return;
+      if(!quiz) return;
       this.quiz = quiz;
       this.currentQuestionIndexSubject.next(0);
     });
   }
 
   getTitle(): string {
-    if (!this.quiz) return '';
+    if(!this.quiz) return '';
     return this.quiz.nom;
   }
 
   getCurrentQuestion(): Question {
-    if (!this.quiz) {
+    if(!this.quiz) {
       throw new Error('Quiz not loaded');
     }
     return this.quiz.questions[this.currentQuestionIndexSubject.value];
@@ -49,16 +49,16 @@ export class QuizService {
   }
 
   goToNextQuestion(): void {
-    if (!this.quiz) return;
+    if(!this.quiz) return;
 
     const currentIndex = this.currentQuestionIndexSubject.value;
     const totalQuestions = this.quiz.questions.length;
 
-    if (currentIndex < totalQuestions - 1) {
+    if(currentIndex < totalQuestions - 1) {
       this.currentQuestionIndexSubject.next(currentIndex + 1);
-    } else if (currentIndex === totalQuestions - 1) {
+    } else if(currentIndex === totalQuestions - 1) {
       const user = this.appStore.currentUser.value;
-      if (!user) return;
+      if(!user) return;
 
       const finalScore = this.calculateScore();
       this.gameSessionStore.updateScore(user, finalScore);
@@ -68,7 +68,7 @@ export class QuizService {
 
   goToPreviousQuestion(): void {
     const currentIndex = this.currentQuestionIndexSubject.value;
-    if (currentIndex > 0) {
+    if(currentIndex > 0) {
       this.currentQuestionIndexSubject.next(currentIndex - 1);
     }
   }
@@ -81,7 +81,7 @@ export class QuizService {
 
   async getQuizById(quizId: string): Promise<Quiz> {
     const quiz = await this.apiService.getQuiz(quizId).toPromise();
-    if (!quiz) {
+    if(!quiz) {
       throw new Error('Quiz not found');
     }
     return quiz;
@@ -92,14 +92,14 @@ export class QuizService {
     const answerList = this.gameSessionStore.answerList.getValue();
     const quiz = this.quiz ?? this.gameSessionStore.quiz.getValue();
 
-    if (!quiz) {
+    if(!quiz) {
       console.debug('No quiz loaded.');
       return 0;
     }
 
     quiz.questions.forEach((question) => {
       const userAnswer = answerList.get(question.id);
-      if (userAnswer?.id === question.id_answer) {
+      if(userAnswer?.id === question.id_answer) {
         score++;
       }
     });

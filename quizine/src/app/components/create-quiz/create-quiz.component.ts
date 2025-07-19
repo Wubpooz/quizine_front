@@ -183,22 +183,17 @@ export class CreateQuizComponent {
       this.validateQuiz(this.quizTitle, this.quizDescription, this.tags, this.quizVisibility, this.questions);
 
       //Order so that first option in question is the valid one
-      const orderedQuestions = this.questions.map(
-        (q) => {
-        const newChoices = [...q.choices];
-        let newValidAnswer = q.validAnswer;
-        if (q.validAnswer > 0 && q.validAnswer < newChoices.length) {
-          const [valid] = newChoices.splice(q.validAnswer, 1);
+      const orderedQuestions = this.questions.map((question) => {
+        const newChoices = [...question.choices];
+        let newValidAnswer = question.validAnswer;
+        if(question.validAnswer > 0 && question.validAnswer < newChoices.length) {
+          const [valid] = newChoices.splice(question.validAnswer, 1);
           newChoices.unshift(valid);
           newValidAnswer = 0;
         }
-        return {
-          ...q,
-          choices: newChoices,
-          validAnswer: newValidAnswer
-        };
-        }
-      );
+        return {...question, choices: newChoices, validAnswer: newValidAnswer};
+      });
+
       const quiz = {
         nom: this.quizTitle,
         picture: null,
@@ -209,9 +204,10 @@ export class CreateQuizComponent {
 
       this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$)).subscribe((quiz) => {
         console.log('Quiz created successfully', quiz);
+        this.notifService.success("Le quiz a bien été créé");
         this.router.navigate(['/quiz-preview', quiz.id]);
       });
-    } catch (error: any) {
+    } catch(error: any) {
       console.error(error);
       this.notifService.error(error, "Erreur lors de la création du quiz");
       return;
@@ -219,6 +215,7 @@ export class CreateQuizComponent {
   }
 
 
+  //TODO move to validation service and also validate all quizes from api calls
   private validateQuiz(quizTitle: string, quizDescription: string, tags: string[], quizVisibility: string, questions: any[]) {
     if(!quizTitle || typeof quizTitle !== 'string' || quizTitle.trim() === '') {
       throw new Error('Le titre du quiz est requis.');

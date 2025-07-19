@@ -38,7 +38,7 @@ export class LibraryComponent {
     const term = target ? target.value : '';
     this.searchTerm = term;
     const lower = term.toLowerCase();
-    this.filteredQuizList = this.quizList.filter(quiz =>
+    this.filteredQuizList = this.quizList.filter((quiz: Quiz) =>
       quiz.nom.toLowerCase().includes(lower)
     );
   }

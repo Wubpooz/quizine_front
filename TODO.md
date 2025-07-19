@@ -22,7 +22,7 @@
 - [x] Fix create button (position, add checkmark and animation)
 - [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
 - [x] Toggle sidebar when clicking inside
-- [ ] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
+- [x] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [ ] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
 - [ ] Profile/quiz pictures
 - [ ] Quiz editing
@@ -83,7 +83,7 @@
 - [ ] Order tailwind classes (luke display > position > ... > hover > focus)
 - [ ] CI/CD Tests
 - [x] fix reload going to localhost:4200 instead of /home (when not logged in or logged in and on quizz-question for instance)
-- [ ] fix how we indicate what's the correct option
+- [ ] fix how we indicate what's the correct option in creation
 
 ### P3
 - [ ] Use search API + search service
@@ -96,7 +96,13 @@
 - [ ] ionic angular <https://github.com/ionic-team/ionic-framework/tree/main/core/src/components> +PWA
 
 
-
+***************SSR ?, hydration ?, prefetch
+page transitions
+bun instead of node
+profile recap on hover
+sounds
+switch from serverless to server for the backend ? (websockets, faster, session store etc)
+validate inputs and forms***************
 
 
 -------------------

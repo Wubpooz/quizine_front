@@ -21,17 +21,20 @@ export class LoginComponent {
   public username = '';
   public password = '';
 
-  constructor(private apiService: APIService, private appStore: AppStore, private router: Router, private notifService: NotificationsService) {}
+  constructor(private apiService: APIService, private appStore: AppStore,
+    private router: Router, private notifService: NotificationsService) {}
 
   ngOnInit() {
     this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
         this.appStore.updateUser(user);
-        if (user) {
+        if(user) {
           this.router.navigate(['/home']);
         }
       },
-      error: () => {}
+      error: () => {
+        this.notifService.error('Connexion au serveur impossible. Veuillez reafficher la page.', 'Connection error');
+      }
     });
   }
 
@@ -49,8 +52,8 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe((user:User) => {
-      if (user) {
+    this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
+      if(user) {
         this.appStore.init();
         this.appStore.updateUser(user);
         this.router.navigate(['/home']);

@@ -9,6 +9,7 @@ import { ThemeService, ThemePreference } from '../../services/theme.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { Subject, takeUntil } from 'rxjs';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-navbar',
@@ -27,7 +28,8 @@ export class NavbarComponent {
     private appStore: AppStore,
     private sidebarService: SidebarService,
     private apiService: APIService,
-    public theme: ThemeService
+    public theme: ThemeService,
+    private notifService: NotificationsService
     ) {
       this.appStore.init();
       this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
@@ -76,6 +78,7 @@ export class NavbarComponent {
   logout() {
     this.apiService.logout().pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
+        this.notifService.success('Deconnexion reussie', 'Logout');
         this.appStore.updateUser(undefined as any);
         this.router.navigate(['/landing']);
       }

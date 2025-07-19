@@ -20,7 +20,7 @@ export class ExploreComponent {
 
   constructor(private appStore: AppStore) {
     this.appStore.init()
-    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
+    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]|undefined) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });
@@ -36,8 +36,8 @@ export class ExploreComponent {
     const term = target ? target.value : '';
     this.searchTerm = term;
     const lower = term.toLowerCase();
-    this.filteredQuizList = this.quizList.filter(q =>
-      q.nom.toLowerCase().includes(lower)
+    this.filteredQuizList = this.quizList.filter((quiz: Quiz) =>
+      quiz.nom.toLowerCase().includes(lower)
     );
   }
 

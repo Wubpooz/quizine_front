@@ -22,8 +22,7 @@ export class QuizRecapComponent {
 
   constructor(private gameSessionStore: GameSessionStore,
       private appStore: AppStore,
-      private router: Router
-      ) {
+      private router: Router) {
     
     if(environment.mockAuth) {
       this.quiz = MockData.mockQuiz;
@@ -53,7 +52,8 @@ export class QuizRecapComponent {
   }
 
   finish(): void {
-    if(this.quiz.private || this.appStore.currentUser.value === undefined || this.quiz.createdBy !== this.appStore.currentUser.value.username) {
+    if(this.quiz.private || this.appStore.currentUser.value === undefined 
+        || this.quiz.createdBy !== this.appStore.currentUser.value.username) {
       this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/quiz-preview', this.quiz.id]);

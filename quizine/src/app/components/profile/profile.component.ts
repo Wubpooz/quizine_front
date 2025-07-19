@@ -6,7 +6,7 @@ import { HistoryQuiz } from '../../models/quizModel';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { LayoutComponent } from "../layout/layout.component";
-import { Subject, takeUntil } from 'rxjs';
+import { filter, forkJoin, Subject, switchMap, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -22,16 +22,19 @@ export class ProfileComponent {
   showFriends = false;
 
   constructor(private appStore: AppStore, private apiService: APIService, private router: Router) {
-    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
-      if (user) {
+    this.appStore.currentUser.pipe(
+      takeUntil(this.destroy$),
+      filter((user): user is User => !!user), // Type guard to remove nulls
+      switchMap((user) => {
         this.user = user;
-      }
-    });
-    this.apiService.getFriends().pipe(takeUntil(this.destroy$)).subscribe((friends: User[] | undefined) => {
-      this.friends = friends||[];
-      this.appStore.friends.next(friends);
-    });
-    this.apiService.getHistory().pipe(takeUntil(this.destroy$)).subscribe((history: HistoryQuiz[]) => {
+        return forkJoin({
+          friends: this.apiService.getFriends(),
+          history: this.apiService.getHistory()
+        });
+      })
+    ).subscribe(({ friends, history }) => {
+      this.friends = friends || [];
+      this.appStore.friends.next(this.friends);
       this.history = history;
     });
   }

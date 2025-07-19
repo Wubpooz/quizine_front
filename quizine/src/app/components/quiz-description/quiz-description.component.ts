@@ -9,6 +9,7 @@ import { UserInviteComponent } from "../user-invite/user-invite.component";
 import { WaitingPageComponent } from "../waiting-page/waiting-page.component";
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { LayoutComponent } from '../layout/layout.component';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'app-quiz-description',
@@ -24,6 +25,7 @@ export class QuizDescriptionComponent {
 
   constructor(private route: ActivatedRoute,
     private quizService: QuizService,
+    private notifService: NotificationsService,
     private router: Router,
     private gameSessionStore: GameSessionStore) {}
 
@@ -52,7 +54,8 @@ export class QuizDescriptionComponent {
 
   startQuiz(): void {
     if(!this.quiz) {
-      console.error('Quiz not loaded');
+      console.error('Quiz not loaded.');
+      this.notifService.error('Unexpected error. Can\'t start quiz.', 'Quiz not loaded');
       return;
     }
     this.gameSessionStore.quiz.next(this.quiz);

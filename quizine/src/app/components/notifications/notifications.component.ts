@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
-import { GameRequest } from '../../models/participationModel';
+import { GameRequest, Session } from '../../models/participationModel';
 import { APIService } from '../../services/api.service';
 import { WaitingPageComponent } from '../waiting-page/waiting-page.component';
 import { GameSessionStore } from '../../stores/gameSession.store';
@@ -55,11 +55,11 @@ export class NotificationsComponent {
   accepter(notif: GameRequest) {
     this.isrefus = false;
     this.isWaitingPageShowing.set(notif.id_session, true);
-    this.apiService.getSession(notif.id_session).pipe(takeUntil(this.destroy$)).subscribe((session) => {
+    this.apiService.getSession(notif.id_session).pipe(takeUntil(this.destroy$)).subscribe((session: Session) => {
       if(!session) {
-        this.notifService.error("Unexepcted error. Can't accept notification.");
+        this.notifService.error("Un error. Can't accept notification.");
       } else {
-        let quizId = session.id_quiz;
+        const quizId = session.id_quiz;
         this.gamestore.updateQuiz(quizId);
       }
     })
@@ -67,7 +67,7 @@ export class NotificationsComponent {
   refuser(notif: GameRequest) {
     this.isrefus = true;
     if(this.currentUser) {
-      //TODO does it truly remove notifs from database?
+      //TODO does it truly remove notifs from database ?
       this.gameConnexion.emitRefuse(notif.id_session, this.currentUser.id);
       this.onWaitClose(notif);
       this.appStore.removeNotificationsBySession(notif.id_session);
@@ -78,7 +78,7 @@ export class NotificationsComponent {
   }
 
   onWaitClose(notif: GameRequest) {
-    this.isWaitingPageShowing.set(notif.id_session,false);
+    this.isWaitingPageShowing.set(notif.id_session, false);
     console.log("notification suprimée");
     let i = this.notifications.findIndex((gameRequest) => gameRequest.datetime === notif.datetime 
                 && gameRequest.id_session === notif.id_session

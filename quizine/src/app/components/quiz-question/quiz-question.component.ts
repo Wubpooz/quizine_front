@@ -21,21 +21,14 @@ export class QuizQuestionComponent {
   private intervalId: any;
 
   constructor(private quizService: QuizService) {}
-  
+
   ngOnInit() {
     this.quizName = this.quizService.getTitle();
     this.totalQuestions = this.quizService.getTotalQuestions();
-    this.question = this.quizService.getCurrentQuestion();
-    this.questionIndex = this.quizService.getQuestionIndex();
-    this.timer = this.question?.duration;
-    this.startTimer();
-  
+    this.loadCurrentQuestion();
+    
     this.quizService.currentQuestionIndex$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.question = this.quizService.getCurrentQuestion();
-      this.questionIndex = this.quizService.getQuestionIndex();
-      this.timer = this.question?.duration;
-      this.selectedAnswer = null;
-      this.startTimer();
+      this.loadCurrentQuestion();
     });
   }
 
@@ -45,6 +38,14 @@ export class QuizQuestionComponent {
     }
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private loadCurrentQuestion(): void {
+    this.question = this.quizService.getCurrentQuestion();
+    this.questionIndex = this.quizService.getQuestionIndex();
+    this.timer = this.question?.duration;
+    this.selectedAnswer = null;
+    this.startTimer();
   }
 
   private startTimer() {

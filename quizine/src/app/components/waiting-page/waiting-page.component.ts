@@ -46,7 +46,7 @@ export class WaitingPageComponent {
     });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     const currentUser = this.appStore.currentUser.value;
     this.gameSessionStore.sessionId.next(this.sessionId);
     this.gameConnexion.connect();

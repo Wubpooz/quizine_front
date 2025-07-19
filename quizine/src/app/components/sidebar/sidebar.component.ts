@@ -22,9 +22,9 @@ export class SidebarComponent {
 
 
   constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
-    this.sidebarService.isOpen$.pipe(takeUntil(this.destroy$)).subscribe(open => this.isSideBarOpen = open);
+    this.sidebarService.isOpen$.pipe(takeUntil(this.destroy$)).subscribe((open) => this.isSideBarOpen = open);
     this.appStore.init()
-    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
+    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]|undefined) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });
@@ -40,11 +40,7 @@ export class SidebarComponent {
     // });
 
     this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
-      if(notifications) {
-        this.notificationCount = notifications.length;
-      } else {
-        this.notificationCount = 0;
-      }
+      this.notificationCount = notifications ? notifications.length : 0;
     });
   }
 
@@ -66,8 +62,8 @@ export class SidebarComponent {
     const term = target ? target.value : '';
     this.searchTerm = term;
     const lower = term.toLowerCase();
-    this.filteredQuizList = this.quizList.filter(q =>
-      q.nom.toLowerCase().includes(lower)
+    this.filteredQuizList = this.quizList.filter((quiz: Quiz) =>
+      quiz.nom.toLowerCase().includes(lower)
     );
   }
   
@@ -89,9 +85,5 @@ export class SidebarComponent {
 
   gotoQuiz(quizId: string) {
     this.router.navigate(['quiz-preview/'+quizId]);
-  }
-
-  private isMobile(): boolean {
-    return window.innerWidth <= 768;
   }
 }

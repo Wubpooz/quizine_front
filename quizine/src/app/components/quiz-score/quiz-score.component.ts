@@ -9,6 +9,7 @@ import { APIService } from '../../services/api.service';
 import { ButtonComponent } from '../button/button.component';
 import { environment } from '../../../environments/environment';
 import { Subject, takeUntil } from 'rxjs';
+import { NotificationsService } from '../../services/notifications.service';
 
 @Component({
   selector: 'quiz-score',
@@ -25,36 +26,38 @@ export class QuizScoreComponent {
   userScore: number = 0;
 
   constructor(
-    private gameSessionStore: GameSessionStore,
-    private gameConnexion: GameConnexionService,
-    private appStore: AppStore,
-    private apiService: APIService,
-    private router: Router
-  ) {
+      private gameSessionStore: GameSessionStore,
+      private gameConnexion: GameConnexionService,
+      private appStore: AppStore,
+      private apiService: APIService,
+      private notifService: NotificationsService,
+      private router: Router) {
+
     this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if(!user) {
+        // this.router.navigate(['/login']); isn't responsible for that
+        this.notifService.error('Utilisateur non connecté.');
         return;
       }
       this.currentUser = user;
       this.gameConnexion.connect(); // sessionId has to already be in gameSessionStore
 
-      this.gameConnexion.listenLeaderboard(async (data: { userId: string; score: number }[]) => {
+      this.gameConnexion.listenLeaderboard((data: { userId: string; score: number }[]) => {
         if(data && data.length > 0) {
           let scores = new Map<User, number>();
-          let users = await apiService.getAllUsers().toPromise();
-          
-          if(!users){
-            return;
-          }
-          
-          for(let i = 0; i < data.length; i++) {
-            let user = users.find(u => u.id === data[i].userId);
-            if(!user) {
-              continue;
-            } 
-            scores.set(user, data[i].score);
-          }
-          this.setScores(scores);
+          this.apiService.getAllUsers().pipe(takeUntil(this.destroy$)).subscribe((users) => {
+            if(!users) {
+              return;
+            }
+            for(let i = 0; i < data.length; i++) {
+              let user = users.find(u => u.id === data[i].userId);
+              if(!user) {
+                continue;
+              } 
+              scores.set(user, data[i].score);
+            }
+            this.setScores(scores);
+          });
         } else {
           // Fallback to solo mode
           this.setSoloScore();
@@ -128,7 +131,9 @@ export class QuizScoreComponent {
     }
   }
 
-  selectUser(userId: string): void {}
+  selectUser(userId: string): void {
+    //TODO go to profile
+  }
 
   next(): void {
     this.router.navigate(['quiz-recap']);
