@@ -25,6 +25,7 @@
 - [x] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
 - [x] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
   - [ ] Add the spinner everywhere
+- [ ] Fix don't show error notif on landing page for /profile, /friends etc
 - [ ] Quiz editing
 - [ ] edit question time with slider 
 - [ ] Quiz descriptions
@@ -56,6 +57,7 @@
 - [ ] Random quizz by theme
 - [ ] ChatGPT integration
 - [ ] Sounds
+- [ ] Use Swl2 for modal inputs etc ?
 
 
 

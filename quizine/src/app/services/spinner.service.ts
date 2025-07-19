@@ -13,10 +13,15 @@ export class SpinnerService {
     if (!this.isSwalOpen) {
       this.isSwalOpen = true;
       Swal.fire({
+        theme: 'auto',
         title: 'Patientez…',
-        html: message,
+        text: message,
         allowOutsideClick: false,
         showConfirmButton: false,
+        allowEscapeKey: false,
+        topLayer: true,
+        // loaderHtml: '<div class="lds-dual-ring"></div>',
+        // loaderHtml: '<div class="spinner-border text-primary"></div>',
         didOpen: () => {
           Swal.showLoading();
         }
