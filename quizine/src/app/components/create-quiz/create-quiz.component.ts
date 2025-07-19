@@ -6,7 +6,8 @@ import { APIService } from '../../services/api.service';
 import { TagListComponent } from "../tag-list/tag-list.component";
 import { LayoutComponent } from "../layout/layout.component";
 import { NotificationsService } from '../../services/notifications.service';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'create-quiz',
@@ -70,7 +71,8 @@ export class CreateQuizComponent {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService) {}
+  constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService,
+    private spinnerService: SpinnerService) {}
 
 
   ngOnInit() {
@@ -202,7 +204,8 @@ export class CreateQuizComponent {
         questions : orderedQuestions,
       }
 
-      this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$)).subscribe((quiz) => {
+      this.spinnerService.show('Création du quiz en cours…');
+      this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quiz) => {
         console.log('Quiz created successfully', quiz);
         this.notifService.success("Le quiz a bien été créé");
         this.router.navigate(['/quiz-preview', quiz.id]);

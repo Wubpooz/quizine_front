@@ -23,7 +23,8 @@
 - [x] Add dark mode to components (_create_, _edit_, _explore_, _home_, _landing_, _library_, _cards_, _login_, _navbar_, _404_, _notifications_, _profile_, _description_, _question_, _recap_, _score_, _waiting_, _register_, _sidebar_, _tag-list_, _invite_)
 - [x] Toggle sidebar when clicking inside
 - [x] Add notifications where needed (<https://codeseven.github.io/toastr/demo.html>)
-- [ ] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
+- [x] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
+  - [ ] Add the spinner everywhere
 - [ ] Quiz editing
 - [ ] edit question time with slider 
 - [ ] Quiz descriptions
@@ -67,8 +68,7 @@
 ### P1
 - [ ] Release plan (<https://excalidraw.com/> ?)
 - [ ] Switch from serverless to server for the backend ? (websockets, faster, session store etc)
-- [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
-- [ ] Create a migration to use Supabase locally
+- [ ] Remove undefined from appStore
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
@@ -79,6 +79,8 @@
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
 
 ### P2
+- [ ] Vercel use deploy branch and not main, avoid deployments of not working stuff and unvalidated
+- [ ] Create a migration to use Supabase locally
 - [x] Remove CSS files
 - [x] Remove all nulls
 - [ ] Close websocket connection on logout, change page etc
