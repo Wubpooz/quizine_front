@@ -44,6 +44,7 @@
 - [ ] Add OAuth using Supabase
 - [ ] Profile/quiz pictures
 - [ ] Friends
+- [ ] Recents
 - [x] Badge for notifications
 - [ ] Search/sort by tags
 - [ ] Rating system
@@ -70,7 +71,7 @@
 ### P1
 - [ ] Release plan (<https://excalidraw.com/> ?)
 - [ ] Switch from serverless to server for the backend ? (websockets, faster, session store etc)
-- [ ] Remove undefined from appStore
+- [x] Remove undefined from appStore
 - [x] Github Pages deployment
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant

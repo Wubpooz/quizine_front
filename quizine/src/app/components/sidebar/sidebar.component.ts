@@ -24,7 +24,7 @@ export class SidebarComponent {
   constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
     this.sidebarService.isOpen$.pipe(takeUntil(this.destroy$)).subscribe((open) => this.isSideBarOpen = open);
     this.appStore.init()
-    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]|undefined) => {
+    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });

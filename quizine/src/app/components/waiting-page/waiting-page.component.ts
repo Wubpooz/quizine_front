@@ -48,6 +48,10 @@ export class WaitingPageComponent {
 
   ngOnInit() {
     const currentUser = this.appStore.currentUser.value;
+    if(!currentUser) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.gameSessionStore.sessionId.next(this.sessionId);
     this.gameConnexion.connect();
 

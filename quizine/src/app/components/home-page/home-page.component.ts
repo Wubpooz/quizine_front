@@ -20,7 +20,7 @@ export class HomePageComponent {
 
   constructor(private router: Router, private appStore: AppStore) {
     appStore.init()
-    this.appStore.recents.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]|undefined) => {
+    this.appStore.recents.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizzes = quizzes||[];
     });
   }

@@ -35,7 +35,7 @@ export class QuizScoreComponent {
       private router: Router,
       private spinnerService: SpinnerService) {
 
-    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user: User | undefined) => {
       if(!user) {
         // this.router.navigate(['/login']); isn't responsible for that
         this.notifService.error('Utilisateur non connecté.');

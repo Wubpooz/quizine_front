@@ -24,13 +24,13 @@ export class SearchService {
     appStore.currentUser.subscribe((user: User | undefined) => {
       this.currentUser = user;
     });
-    appStore.friends.subscribe((friends: User[] | undefined) => {
+    appStore.friends.subscribe((friends: User[]) => {
       this.friendsList = friends || [];
     });
-    appStore.quizList.subscribe((quizzes: Quiz[] | undefined) => {
+    appStore.quizList.subscribe((quizzes: Quiz[]) => {
       this.quizList = quizzes || [];
     });
-    // appStore.recents.subscribe((quizzes: Quiz[] | undefined) => {
+    // appStore.recents.subscribe((quizzes: Quiz[]) => {
     //   this.recentQuizzes = quizzes || [];
     // });
   }

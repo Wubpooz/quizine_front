@@ -12,9 +12,9 @@ import { SpinnerService } from "../services/spinner.service";
 export class AppStore {
   private inited = false;
   public currentUser: BehaviorSubject<User|undefined> = new BehaviorSubject<User|undefined>(undefined);
-  public friends: BehaviorSubject<User[]|undefined> = new BehaviorSubject<User[]|undefined>(undefined); //TODO remove undefined
-  public quizList: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined); //TODO remove undefined
-  public recents: BehaviorSubject<Quiz[]|undefined> = new BehaviorSubject<Quiz[]|undefined>(undefined); //TODO remove undefined
+  public friends: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
+  public quizList: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
+  public recents: BehaviorSubject<Quiz[]> = new BehaviorSubject<Quiz[]>([]);
   public notifications: BehaviorSubject<GameRequest[]> = new BehaviorSubject<GameRequest[]>([]);
 
   private existingSessions = new Set<string>();
@@ -30,9 +30,9 @@ export class AppStore {
     this.spinnerService.show('Chargement…');
 
     this.currentUser = this.currentUser || new BehaviorSubject<User | undefined>(undefined);
-    this.quizList = this.quizList || new BehaviorSubject<Quiz[] | undefined>(undefined);
-    this.recents = this.recents || new BehaviorSubject<Quiz[] | undefined>(undefined);
-    this.friends = this.friends || new BehaviorSubject<User[] | undefined>(undefined);
+    this.quizList = this.quizList || new BehaviorSubject<Quiz[]>([]);
+    this.recents = this.recents || new BehaviorSubject<Quiz[]>([]);
+    this.friends = this.friends || new BehaviorSubject<User[]>([]);
     this.notifications = this.notifications || new BehaviorSubject<GameRequest[]>([]);
 
     this.apiService.getUserData().pipe(finalize(() => this.spinnerService.hide())).subscribe({
@@ -89,15 +89,15 @@ export class AppStore {
   
   removeUser() {
     this.currentUser = new BehaviorSubject<User|undefined>(undefined);
-    this.friends = new BehaviorSubject<User[]|undefined>(undefined);
-    this.recents = new BehaviorSubject<Quiz[]|undefined>(undefined);
-    this.quizList = new BehaviorSubject<Quiz[]|undefined>(undefined);
+    this.friends = new BehaviorSubject<User[]>([]);
+    this.recents = new BehaviorSubject<Quiz[]>([]);
+    this.quizList = new BehaviorSubject<Quiz[]>([]);
   }
 
   updateFriends(friends: User[]) {
-    this.friends = new BehaviorSubject<User[]|undefined>(friends);
+    this.friends = new BehaviorSubject<User[]>(friends);
     if(!this.friends) {
-      this.friends = new BehaviorSubject<User[]|undefined>(friends);
+      this.friends = new BehaviorSubject<User[]>(friends);
     }
     else {
       this.friends.next(friends);
@@ -105,9 +105,9 @@ export class AppStore {
   }
 
   updateQuizList(quizList: Quiz[]) {
-    this.quizList = new BehaviorSubject<Quiz[]|undefined>(quizList);
+    this.quizList = new BehaviorSubject<Quiz[]>(quizList);
     if(!this.quizList) {
-      this.quizList = new BehaviorSubject<Quiz[]|undefined>(quizList);
+      this.quizList = new BehaviorSubject<Quiz[]>(quizList);
     }
     else {
       this.quizList.next(quizList);
@@ -116,7 +116,7 @@ export class AppStore {
         
   updateRecents(recents: Quiz[]) {
     if(!this.recents) {
-      this.recents = new BehaviorSubject<Quiz[]|undefined>(recents);
+      this.recents = new BehaviorSubject<Quiz[]>(recents);
     }
     else {
       this.recents.next(recents);

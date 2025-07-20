@@ -34,7 +34,7 @@ export class NavbarComponent {
     private spinnerService: SpinnerService
     ) {
       this.appStore.init();
-      this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
+      this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
         this.quizList = quizzes||[];
         this.filteredQuizList = quizzes||[];
       });
@@ -82,7 +82,7 @@ export class NavbarComponent {
     this.apiService.logout().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe({
       next: () => {
         this.notifService.success('Deconnexion reussie', 'Logout');
-        this.appStore.updateUser(undefined as any);
+        this.appStore.removeUser();
         this.router.navigate(['/landing']);
       }
     });

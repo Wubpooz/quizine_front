@@ -20,7 +20,7 @@ export class ExploreComponent {
 
   constructor(private appStore: AppStore) {
     this.appStore.init()
-    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]|undefined) => {
+    this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });
