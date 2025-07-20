@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, finalize, forkJoin } from "rxjs";
 import { User } from "../models/userModel";
 import { APIService } from "../services/api.service";
 import { Quiz } from "../models/quizModel";
 import { GameRequest } from "../models/participationModel";
+import { SpinnerService } from "../services/spinner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,47 +19,45 @@ export class AppStore {
 
   private existingSessions = new Set<string>();
 
-  constructor(private apiService: APIService) {}
+  constructor(private apiService: APIService, private spinnerService: SpinnerService) {}
 
   init() {
     if(this.inited) {
-      return
+      return;
     }
+
     this.inited = true;
-    this.apiService.getUserData().subscribe((user: User) => {
-      if(!this.currentUser){
-        this.currentUser = new BehaviorSubject<User|undefined>(user);
-      } else {
+    this.spinnerService.show('Chargement…');
+
+    this.currentUser = this.currentUser || new BehaviorSubject<User | undefined>(undefined);
+    this.quizList = this.quizList || new BehaviorSubject<Quiz[] | undefined>(undefined);
+    this.recents = this.recents || new BehaviorSubject<Quiz[] | undefined>(undefined);
+    this.friends = this.friends || new BehaviorSubject<User[] | undefined>(undefined);
+    this.notifications = this.notifications || new BehaviorSubject<GameRequest[]>([]);
+
+    this.apiService.getUserData().pipe(finalize(() => this.spinnerService.hide())).subscribe({
+      next: (user: User) => {
         this.currentUser.next(user);
-      }
-      this.apiService.getQuizList().subscribe((quizzes: Quiz[]) => {
-        if(!this.quizList){
-          this.quizList = new BehaviorSubject<Quiz[] |undefined>(quizzes);
-        } else {
-          this.quizList.next(quizzes);
-        }
-      });
-      this.apiService.getRecentQuizzes().subscribe((quizzes: Quiz[]) => {
-        if(!this.recents) {
-          this.recents = new BehaviorSubject<Quiz[]|undefined>(quizzes);
-        } else {
-          this.recents.next(quizzes);
-        }
-      });
-    });
-    this.apiService.getAllUsers().subscribe((friends: User[]) => {
-      if(!this.friends){
-        this.friends = new BehaviorSubject<User[]|undefined>(friends);
-      }
-      else {
-        this.friends.next(friends);
-      }
-    });
-    this.apiService.getNotifications().subscribe((notifications: GameRequest[]) => {
-      if(!this.notifications) {
-        this.notifications = new BehaviorSubject<GameRequest[]>(notifications);
-      } else {
-        this.notifications.next(notifications);
+
+        forkJoin({
+          quizList: this.apiService.getQuizList(),
+          recents: this.apiService.getRecentQuizzes(),
+          friends: this.apiService.getAllUsers(),
+          notifications: this.apiService.getNotifications()
+        }).subscribe({
+          next: ({ quizList, recents, friends, notifications }) => {
+            this.quizList.next(quizList);
+            this.recents.next(recents);
+            this.friends.next(friends);
+            this.notifications.next(notifications);
+          },
+          error: (err) => {
+            console.error('Error while fetching user-related data', err);
+          }
+        });
+      },
+      error: (err) => {
+        console.error('Failed to fetch user data', err);
       }
     });
   }
@@ -68,24 +67,25 @@ export class AppStore {
       console.error("User is null, can't update.");
       return;
     }
-    if (this.currentUser) {
-      this.currentUser.next(user);
-    } else {
-      this.currentUser = new BehaviorSubject<User|undefined>(user);
-    }
 
-    this.apiService.getFriends().subscribe((friends: User[]) => {
-      this.updateFriends(friends);
-    });
+    this.currentUser?.next(user);
 
-    this.apiService.getQuizList().subscribe((quizzes: Quiz[]) => {
-      this.updateQuizList(quizzes);
-    });
-
-    this.apiService.getRecentQuizzes().subscribe((quizzes: Quiz[]) => {
-      this.updateRecents(quizzes);
+    forkJoin({
+      friends: this.apiService.getFriends(),
+      quizList: this.apiService.getQuizList(),
+      recents: this.apiService.getRecentQuizzes()
+    }).subscribe({
+      next: ({ friends, quizList, recents }) => {
+        this.friends?.next(friends);
+        this.quizList?.next(quizList);
+        this.recents?.next(recents);
+      },
+      error: (err) => {
+        console.error('Failed to update user-related data', err);
+      }
     });
   }
+
   
   removeUser() {
     this.currentUser = new BehaviorSubject<User|undefined>(undefined);

@@ -7,7 +7,7 @@ import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { ButtonComponent } from '../button/button.component';
-import { combineLatest, finalize, Subject, takeUntil } from 'rxjs';
+import { combineLatest, finalize, forkJoin, Subject, take, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
 
@@ -48,9 +48,12 @@ export class UserInviteComponent {
     //TODO temporary, use search service instead with that
     this.spinnerService.show('Chargement des utilisateurs…');
 
+    //TODO fix never quits modal
+    this.appStore.friends.subscribe(f => console.log('friends emitted', f));
+
     combineLatest([
       this.apiservice.getAllUsers(),
-      this.appStore.friends,
+      this.appStore.friends.pipe(take(1)),
       this.apiservice.createSession(this.quizId)
     ]).pipe(
       takeUntil(this.destroy$),

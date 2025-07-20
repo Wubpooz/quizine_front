@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, finalize, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { Quiz, Question, Option } from '../models/quizModel';
 import { GameSessionStore } from '../stores/gameSession.store';
 import { APIService } from './api.service';
 import { Router } from '@angular/router';
 import { AppStore } from '../stores/app.store';
+import { SpinnerService } from './spinner.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
+  private destroy$ = new Subject<void>();
   private quiz: Quiz | null = null;
   private currentQuestionIndexSubject = new BehaviorSubject<number>(0);
   currentQuestionIndex$ = this.currentQuestionIndexSubject.asObservable();
@@ -18,8 +20,8 @@ export class QuizService {
     private gameSessionStore: GameSessionStore,
     private appStore: AppStore,
     private apiService: APIService,
-    private router: Router
-  ) {
+    private router: Router,
+    private spinnerService: SpinnerService) {
     this.gameSessionStore.quiz.subscribe((quiz) => {
       console.debug('QuizService: quiz updated', quiz);
       if(!quiz) return;
@@ -80,11 +82,26 @@ export class QuizService {
   }
 
   async getQuizById(quizId: string): Promise<Quiz> {
-    const quiz = await this.apiService.getQuiz(quizId).toPromise();
-    if(!quiz) {
-      throw new Error('Quiz not found');
+    if(!quizId) {
+      throw new Error('No quizId provided');
     }
-    return quiz;
+
+    this.spinnerService.show('Chargement du quiz…');
+
+    try {
+      const quiz = await firstValueFrom(this.apiService.getQuiz(quizId).pipe(takeUntil(this.destroy$)));
+      if(!quiz) {
+        throw new Error('Quiz not found');
+      }
+
+      this.quiz = quiz;
+      return quiz;
+    } catch (error) {
+      console.error('Failed to fetch quiz:', error);
+      throw error;
+    } finally {
+      this.spinnerService.hide();
+    }
   }
 
   calculateScore(): number {
