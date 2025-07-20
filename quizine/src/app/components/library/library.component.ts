@@ -5,7 +5,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { LayoutComponent } from '../layout/layout.component';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, finalize } from 'rxjs';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-library',
@@ -19,8 +20,9 @@ export class LibraryComponent {
   filteredQuizList: Quiz[] = [];
   searchTerm: string = '';
 
-  constructor(private router: Router, private apiService: APIService) {
-    this.apiService.getQuizList().pipe(takeUntil(this.destroy$)).subscribe((quizList: Quiz[]) => {
+  constructor(private router: Router, private apiService: APIService, private spinnerService: SpinnerService) {
+    this.spinnerService.show('Chargement des quizzes…');
+    this.apiService.getQuizList().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quizList: Quiz[]) => {
       if(quizList) {
         this.quizList = quizList;
         this.filteredQuizList = quizList;

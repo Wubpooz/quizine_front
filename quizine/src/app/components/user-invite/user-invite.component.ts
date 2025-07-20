@@ -7,8 +7,9 @@ import { APIService } from '../../services/api.service';
 import { GameConnexionService } from '../../services/gameConnexion.service';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { ButtonComponent } from '../button/button.component';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { combineLatest, finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'user-invite',
@@ -38,26 +39,40 @@ export class UserInviteComponent {
     private gameSessionStore: GameSessionStore,
     private apiservice: APIService,
     private gameConnexion: GameConnexionService,
-    private notifService: NotificationsService) {}
+    private notifService: NotificationsService,
+    private spinnerService: SpinnerService) {}
       
   ngOnInit(): void {
     this.inviteForm = this.fb.group({});
    
     //TODO temporary, use search service instead with that
-    combineLatest([this.apiservice.getAllUsers(), this.appStore.friends]).pipe(takeUntil(this.destroy$)).subscribe(([users, friends]) => {
-      const currentUserId = this.appStore.currentUser.value?.id;
-      this.users = users.filter(u => u.id !== currentUserId);
-      this.friends = (friends || []).filter(f => f.id !== currentUserId);
-      this.users.sort((a, b) => a.username.localeCompare(b.username));
-      this.updateFilteredUsersList();
-    });
+    this.spinnerService.show('Chargement des utilisateurs…');
 
-    //TODO add spinner to avoid them cliking on stuff before session
-    this.apiservice.createSession(this.quizId).pipe(takeUntil(this.destroy$)).subscribe((sessionId: string) => {
-      this.sessionId = sessionId;
-      console.log("Created session:", sessionId);
-      this.gameSessionStore.sessionId.next(this.sessionId);
-      this.gameConnexion.connect();
+    combineLatest([
+      this.apiservice.getAllUsers(),
+      this.appStore.friends,
+      this.apiservice.createSession(this.quizId)
+    ]).pipe(
+      takeUntil(this.destroy$),
+      finalize(() => this.spinnerService.hide())
+    ).subscribe({
+      next: ([users, friends, sessionId]) => {
+        const currentUserId = this.appStore.currentUser.value?.id;
+
+        this.users = users.filter(u => u.id !== currentUserId);
+        this.friends = (friends || []).filter(f => f.id !== currentUserId);
+        this.users.sort((a, b) => a.username.localeCompare(b.username));
+        this.updateFilteredUsersList();
+
+        this.sessionId = sessionId;
+        console.log("Created session:", sessionId);
+        this.gameSessionStore.sessionId.next(sessionId);
+        this.gameConnexion.connect();
+      },
+      error: (err) => {
+        console.error("Error during setup:", err);
+        this.notifService.error("Une erreur est survenue lors du chargement");
+      }
     });
   }
 

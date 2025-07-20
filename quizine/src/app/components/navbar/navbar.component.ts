@@ -8,8 +8,9 @@ import { APIService } from '../../services/api.service';
 import { ThemeService, ThemePreference } from '../../services/theme.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +30,8 @@ export class NavbarComponent {
     private sidebarService: SidebarService,
     private apiService: APIService,
     public theme: ThemeService,
-    private notifService: NotificationsService
+    private notifService: NotificationsService,
+    private spinnerService: SpinnerService
     ) {
       this.appStore.init();
       this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
@@ -76,7 +78,8 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.apiService.logout().pipe(takeUntil(this.destroy$)).subscribe({
+    this.spinnerService.show('Deconnexion…');
+    this.apiService.logout().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe({
       next: () => {
         this.notifService.success('Deconnexion reussie', 'Logout');
         this.appStore.updateUser(undefined as any);

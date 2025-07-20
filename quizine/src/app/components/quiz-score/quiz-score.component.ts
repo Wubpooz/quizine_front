@@ -8,8 +8,9 @@ import { GameConnexionService } from '../../services/gameConnexion.service';
 import { APIService } from '../../services/api.service';
 import { ButtonComponent } from '../button/button.component';
 import { environment } from '../../../environments/environment';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'quiz-score',
@@ -31,7 +32,8 @@ export class QuizScoreComponent {
       private appStore: AppStore,
       private apiService: APIService,
       private notifService: NotificationsService,
-      private router: Router) {
+      private router: Router,
+      private spinnerService: SpinnerService) {
 
     this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       if(!user) {
@@ -39,13 +41,14 @@ export class QuizScoreComponent {
         this.notifService.error('Utilisateur non connecté.');
         return;
       }
+      this.spinnerService.show('Chargement des scores…');
       this.currentUser = user;
       this.gameConnexion.connect(); // sessionId has to already be in gameSessionStore
 
       this.gameConnexion.listenLeaderboard((data: { userId: string; score: number }[]) => {
         if(data && data.length > 0) {
           let scores = new Map<User, number>();
-          this.apiService.getAllUsers().pipe(takeUntil(this.destroy$)).subscribe((users) => {
+          this.apiService.getAllUsers().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((users) => {
             if(!users) {
               return;
             }
@@ -67,6 +70,7 @@ export class QuizScoreComponent {
       // Fallback: if no leaderboard received after a short delay, use solo score
       setTimeout(() => {
         if(this.sortedScores.length === 0) {
+          this.spinnerService.hide();
           this.setSoloScore();
         }
       }, 1000);

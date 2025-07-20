@@ -4,8 +4,9 @@ import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
 import { CommonModule } from '@angular/common';
-import { Subject, switchMap, takeUntil } from 'rxjs';
+import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,8 @@ export class RegisterComponent {
   profileImage: string | ArrayBuffer | null = null;
 
   constructor(private apiService: APIService, private appStore: AppStore, 
-    private notifService: NotificationsService, private router: Router) {}
+    private notifService: NotificationsService, private router: Router,
+    private spinnerService: SpinnerService) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -37,11 +39,13 @@ export class RegisterComponent {
   }
 
   onSubmit() {
+    this.spinnerService.show('Inscription…');
     this.apiService.signup(this.username, this.password).pipe(
       takeUntil(this.destroy$),
       switchMap(() => 
         this.apiService.login(this.username, this.password)
-      )
+      ),
+      finalize(() => this.spinnerService.hide())
     ).subscribe({
       next: (loggedUser) => {
         if(loggedUser) {

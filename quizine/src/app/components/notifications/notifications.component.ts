@@ -57,7 +57,7 @@ export class NotificationsComponent {
     this.isWaitingPageShowing.set(notif.id_session, true);
     this.apiService.getSession(notif.id_session).pipe(takeUntil(this.destroy$)).subscribe((session: Session) => {
       if(!session) {
-        this.notifService.error("Un error. Can't accept notification.");
+        this.notifService.error("Error, can't accept notification.");
       } else {
         const quizId = session.id_quiz;
         this.gamestore.updateQuiz(quizId);
@@ -73,7 +73,7 @@ export class NotificationsComponent {
       this.appStore.removeNotificationsBySession(notif.id_session);
       this.notifService.info(`Invitation de ${notif.username} refusée.`);
     } else {
-      this.notifService.error("Unexepcted error. Can't refuse notification.");
+      this.notifService.error("Unexpected error. Can't refuse notification.");
     }
   }
 

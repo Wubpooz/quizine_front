@@ -6,8 +6,9 @@ import { User } from '../../models/userModel';
 import { AppStore } from '../../stores/app.store';
 import { Router } from '@angular/router';
 import { APIService } from '../../services/api.service';
-import { Subject, takeUntil } from 'rxjs';
+import { finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'login',
@@ -22,7 +23,8 @@ export class LoginComponent {
   public password = '';
 
   constructor(private apiService: APIService, private appStore: AppStore,
-    private router: Router, private notifService: NotificationsService) {}
+    private router: Router, private notifService: NotificationsService,
+    private spinnerService: SpinnerService) {}
 
   ngOnInit() {
     this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
@@ -52,7 +54,8 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
+    this.spinnerService.show('Connexion…');
+    this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((user: User) => {
       if(user) {
         this.appStore.init();
         this.appStore.updateUser(user);
