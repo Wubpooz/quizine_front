@@ -14,7 +14,8 @@ export class SpinnerService {
       this.isSwalOpen = true;
       Swal.fire({
         theme: 'auto',
-        title: 'Patientez…',
+        // title: 'Patientez…',
+        title: '',
         text: message,
         allowOutsideClick: false,
         showConfirmButton: false,

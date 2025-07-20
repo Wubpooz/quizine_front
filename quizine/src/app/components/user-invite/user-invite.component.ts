@@ -45,14 +45,10 @@ export class UserInviteComponent {
   ngOnInit(): void {
     this.inviteForm = this.fb.group({});
    
-    //TODO temporary, use search service instead with that
     this.spinnerService.show('Chargement des utilisateurs…');
 
-    //TODO fix never quits modal
-    this.appStore.friends.subscribe(f => console.log('friends emitted', f));
-
     combineLatest([
-      this.apiservice.getAllUsers(),
+      this.apiservice.getAllUsers(), //TODO temporary, use search service instead with that
       this.appStore.friends.pipe(take(1)),
       this.apiservice.createSession(this.quizId)
     ]).pipe(
