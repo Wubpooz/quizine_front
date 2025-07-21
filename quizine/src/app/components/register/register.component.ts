@@ -8,11 +8,12 @@ import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { User } from '../../models/userModel';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, ButtonComponent],
   templateUrl: './register.component.html'
 })
 export class RegisterComponent {
