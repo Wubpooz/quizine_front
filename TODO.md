@@ -78,7 +78,10 @@
 - [x] Wrap navbar + sidebar dans un composant
 - [ ] SSR ?, hydration ?, prefetch ?
 - [x] TODO fix issues if no selected quiz answer
-- [ ] Validate API in backend and frontend
+- [ ] Validate
+  - [ ] API ouput
+  - [ ] Frontend input
+  - [ ] inputs in Backend
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`
 

@@ -49,6 +49,7 @@ export class AppComponent {
     // this.appStore.init();
     
     if(hasSessionCookie()) {
+      console.log("Session cookie found, attempting connexion...");
       this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
         next: (user) => {
           if(user) {
@@ -68,6 +69,7 @@ export class AppComponent {
         }
       });
     } else {
+      console.log("No session cookie found, logging out...");
       this.isLoading = false;
       this.appStore.removeUser();
       if(!publicRoutes.includes(this.router.url)) {

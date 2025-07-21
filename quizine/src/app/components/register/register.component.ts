@@ -28,6 +28,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     if(hasSessionCookie()) {
+      console.log("Session cookie found, attempting connexion...");
       this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
         next: (user) => {
           if(user) {
@@ -40,6 +41,7 @@ export class RegisterComponent {
         }
       });
     } else {
+      console.log("No session cookie found, logging out...");
       this.appStore.removeUser();
     }
   }
