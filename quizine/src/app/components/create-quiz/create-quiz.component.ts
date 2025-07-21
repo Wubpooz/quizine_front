@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, HostBinding, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,61 +11,47 @@ import { SpinnerService } from '../../services/spinner.service';
 import { QuestionData, Quiz } from '../../models/quizModel';
 import { ButtonComponent } from '../button/button.component';
 
+
+@Directive({ selector: '[tooltip]', standalone: true })
+export class TooltipOnHoverDirective {
+  @Input() tooltip = '';
+  @HostBinding('attr.title') get title() {
+    return this.tooltip;
+  }
+}
+
+
+
 @Component({
   selector: 'create-quiz',
   standalone: true,
-  imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent, ButtonComponent],
+  imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent, ButtonComponent, TooltipOnHoverDirective],
   templateUrl: './create-quiz.component.html'
 })
 export class CreateQuizComponent {
+  private destroy$ = new Subject<void>();
   @ViewChild('tagInput') tagInputRef!: ElementRef<HTMLInputElement>;
-
-  quizTitle: string = '';
-  quizDescription: string = '';
-  quizVisibility: 'private' | 'public' = 'private';
-  tags: string[] = [];
-  questions: QuestionData[] = [
-    {
-      name: '',
-      grade: 0,
-      duration: 30,
-      picture: null,
-      id_creator: "",
-      private: false,
-      tags: [],
-      choices: [
-        {id: '' ,content: ''},
-        {id: '' ,content: ''},
-        {id: '' ,content: ''},
-        {id: '' ,content: ''}
-      ],
-      validAnswer: -1
-    }
-  ];
-  
   maxLengthTitle: number = 100;
   maxLengthDescription: number = 500;
   maxLengthQuestion: number = 500;
   maxLengthOption: number = 500;
 
+  quizTitle: string = '';
+  quizDescription: string = '';
+  quizVisibility: 'private' | 'public' = 'private';
+  tags: string[] = [];
+  tagInput: string = '';
+  questions: QuestionData[] = [this.getEmptyQuestion()];
+
   showTagInput: boolean = false;
   showDropdown: boolean = false;
-  showTitleTooltip: boolean = false;
-  titleMaxLengthReached: boolean = false;
-  showDescriptionTooltip: boolean = false;
-  descriptionMaxLengthReached: boolean = false;
-  showQuestionTooltip: boolean[] = [];
-  questionMaxLengthReached: boolean[] = [];
-  showOptionTooltip: boolean[][] = [];
-  optionMaxLengthReached: boolean[][] = [];
+  titleStates: { showTooltip: boolean, maxLengthReached: boolean } = { showTooltip: false, maxLengthReached: false };
+  descriptionStates: { showTooltip: boolean, maxLengthReached: boolean } = { showTooltip: false, maxLengthReached: false };
+  questionStates: { showTooltip: boolean, maxLengthReached: boolean }[] = [];
+  optionStates: { showTooltip: boolean[][], maxLengthReached: boolean[][] } = { showTooltip: [], maxLengthReached: [] };
 
-  tagInput: string = '';
 
-  private destroy$ = new Subject<void>();
-
-  constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService,
-    private spinnerService: SpinnerService) {}
-
+  constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService, private spinnerService: SpinnerService) {}
 
   ngOnInit() {
     this.initializeOptionStates();
@@ -77,77 +63,49 @@ export class CreateQuizComponent {
   }
 
   initializeOptionStates() {
-    this.showOptionTooltip = this.questions.map((question: QuestionData) =>
+    this.optionStates.showTooltip = this.questions.map((question: QuestionData) =>
       question.choices.map(() => false)
     );
-    this.optionMaxLengthReached = this.questions.map((question: QuestionData) =>
+    this.optionStates.maxLengthReached = this.questions.map((question: QuestionData) =>
       question.choices.map(() => false)
     );
-  }
-
-  updateOptionStates() {
-    this.initializeOptionStates();
   }
 
   addQuestion() {
     const nextNumber = this.questions.length + 1;
-    this.questions.push({
-      name: '',
-      duration: 30,
-      grade: 0,
-      picture: null,
-      id_creator: '',
-      private: false,
-      tags: [],
-      choices: [
-        {id: '' ,content: ''},
-        {id: '' ,content: ''},
-        {id: '' ,content: ''},
-        {id: '' ,content: ''}
-      ],
-      validAnswer : -1
-    });
-    this.updateOptionStates();
+    this.questions.push(this.getEmptyQuestion());
+    this.initializeOptionStates();
   }
 
   onTitleInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (!this.titleMaxLengthReached) this.titleMaxLengthReached = false;
-    this.titleMaxLengthReached = (input.value?.length ?? 0) >= this.maxLengthTitle;
-    this.showTitleTooltip = (input.value?.length ?? 0) >= this.maxLengthTitle;
+    const input = (event.target as HTMLInputElement)?.value;
+    this.titleStates.maxLengthReached = this.checkMaxLength(input, this.maxLengthTitle);
+    this.titleStates.showTooltip = this.titleStates.maxLengthReached;
   }
 
   onDescriptionInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (!this.descriptionMaxLengthReached) this.descriptionMaxLengthReached = false;
-    this.descriptionMaxLengthReached = (input.value?.length ?? 0) >= this.maxLengthDescription;
-    this.showDescriptionTooltip = (input.value?.length ?? 0) >= this.maxLengthDescription;
+    const input = (event.target as HTMLInputElement)?.value;
+    this.descriptionStates.maxLengthReached = this.checkMaxLength(input, this.maxLengthDescription);
+    this.descriptionStates.showTooltip = this.descriptionStates.maxLengthReached;
   }
 
   onQuestionInput(event: Event, i: number) {
-    const input = event.target as HTMLInputElement;
-    if (!this.questionMaxLengthReached) this.questionMaxLengthReached = [];
-    if (!this.questionMaxLengthReached[i]) this.questionMaxLengthReached[i] = false;
-    this.questionMaxLengthReached[i] = (input.value?.length ?? 0) >= this.maxLengthQuestion;
-    this.showQuestionTooltip[i] = (input.value?.length ?? 0) >= this.maxLengthQuestion;
+    const input = (event.target as HTMLInputElement)?.value;
+    this.questionStates[i].maxLengthReached = this.checkMaxLength(input, this.maxLengthQuestion);
+    this.questionStates[i].showTooltip = this.questionStates[i].maxLengthReached;
   }
 
   onOptionInput(event: Event, i: number, j: number) {
-    const input = event.target as HTMLInputElement;
-    if (!this.optionMaxLengthReached) this.optionMaxLengthReached = [];
-    if (!this.optionMaxLengthReached[i]) this.optionMaxLengthReached[i] = [];
-    this.optionMaxLengthReached[i][j] = (input.value?.length ?? 0) >= this.maxLengthOption;
-  }
-
-  setCorrectOption(questionIdx: number, optionIdx: number) {
-    this.questions[questionIdx].validAnswer = optionIdx;
+   const input = (event.target as HTMLInputElement)?.value;
+    this.optionStates.maxLengthReached[i][j] = this.checkMaxLength(input, this.maxLengthOption);
+    this.optionStates.showTooltip[i][j] = this.optionStates.maxLengthReached[i][j];
   }
 
   toggleTagInput() {
     this.showTagInput = !this.showTagInput;
-    if (this.showTagInput) {
+    if(this.showTagInput) {
       setTimeout(() => {
-      if (this.tagInputRef) {
+      if(this.tagInputRef) {
         this.tagInputRef.nativeElement.focus();
       }
     },30);
@@ -155,22 +113,24 @@ export class CreateQuizComponent {
   }
 
   addTag(tag: string) {
-    if (tag && !this.tags.includes(tag)) {
+    if(tag && !this.tags.includes(tag)) {
       this.tags.push(tag);
       this.showTagInput = false;
     }
   }
 
-  addOption(questionIdx: number) {
-    this.questions[questionIdx].choices.push({ content: '', id: '' });
-    this.updateOptionStates();
-  }
+  // TODO use
+  // addOption(questionIdx: number) {
+  //   this.questions[questionIdx].choices.push({ content: '', id: '' });
+  //   this.initializeOptionStates();
+  // }
 
-  removeOption(questionIdx: number, optionIdx: number) {
-    if (this.questions[questionIdx].choices.length > 2) {
-      this.questions[questionIdx].choices.splice(optionIdx, 1);
-    }
-  }
+  // removeOption(questionIdx: number, optionIdx: number) {
+  //   if(this.questions[questionIdx].choices.length > 2) {
+  //     this.questions[questionIdx].choices.splice(optionIdx, 1);
+  //   }
+  // }
+
 
   onSubmit() {
     try { 
@@ -196,6 +156,8 @@ export class CreateQuizComponent {
         questions : orderedQuestions,
       }
 
+      console.log(quiz);
+
       this.spinnerService.show('Création du quiz en cours…');
       this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quiz: Quiz) => {
         console.log('Quiz created successfully', quiz);
@@ -207,6 +169,28 @@ export class CreateQuizComponent {
       this.notifService.error(error, "Erreur lors de la création du quiz");
       return;
     }
+  }
+
+  get isMobile(): boolean {
+    return window.innerWidth <= 768;
+  }
+
+  private getEmptyQuestion(): QuestionData {
+    return {
+      name: '',
+      duration: 30,
+      grade: 0,
+      picture: null,
+      id_creator: '',
+      private: false,
+      tags: [],
+      choices: Array(4).fill({ id: '', content: '' }),
+      validAnswer: -1
+    };
+  }
+
+  private checkMaxLength(input: string, max: number): boolean {
+    return (input?.length ?? 0) >= max;
   }
 
 

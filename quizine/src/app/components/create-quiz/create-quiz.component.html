@@ -13,26 +13,18 @@
             <div>
               <app-button
                 [style]="'primary'"
-                [label]="'+ Tag'"
-                (click)="showTagInput = !showTagInput"
-                [class]="'md:hidden !py-1 !text-2xl !rounded-xl flex items-center justify-center focus:outline-none'"
-                aria-label="Ajouter un tag"
-               >
-              </app-button>
-              <app-button
-                [style]="'primary'"
-                [label]="'Ajouter un tag'"
+                [label]="isMobile ? '+ Tag' : 'Ajouter un tag'"
                 [bold]="'semibold'"
-                (click)="showTagInput = !showTagInput"
-                [class]="'hidden md:flex items-center gap-2focus:outline-none'"
+                (click)="toggleTagInput()"
+                [class]="'flex items-center gap-2 focus:outline-none !md-max:py-1 !md-max:text-2xl !md-max:rounded-xl'"
                 aria-label="Ajouter un tag"
                >
               </app-button>
             </div>
 
-            <!-- TODO Fix tag input on mobile by putting a black overlay -->
+            <div *ngIf="showTagInput && isMobile" class="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm sm:hidden w-screen h-screen" (click)="showTagInput = false"></div>
             <div *ngIf="showTagInput" class="fixed inset-0 z-50 h-10 flex items-start justify-center sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start">
-              <div class="mt-64 sm:mt-0 w-11/12 max-w-xsrounded-lg h-10 shadow-lg p-8 sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none relative">
+              <div class="relative mt-64 sm:mt-0 w-11/12 max-w-xs rounded-lg h-30 bg-bg-surface dark:bg-bg-surface sm:h-10 shadow-lg p-8 sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none">
                 <input
                   #tagInput
                   type="text"
@@ -40,13 +32,8 @@
                   class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary-tint w-full bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400"
                   (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
                 />
-                <button type="button" class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-400" (click)="toggleTagInput()">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                  </svg>
-                </button>
-                <button type="button" class="absolute sm:hidden right-2 top-2 text-gray-400 hover:text-red-400" (click)="showTagInput = false" aria-label="Fermer">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <button type="button" class="absolute sm-max:block right-0 top-0 sm:right-2 sm:top-2 text-text-secondary hover:text-red-400" (click)="showTagInput = false" aria-label="Fermer">
+                  <svg class="w-8 h-8 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
                   </svg>
                 </button>
@@ -86,9 +73,7 @@
             [(ngModel)]="quizTitle"
             maxlength="{{maxLengthTitle}}"
             (input)="onTitleInput($event)"
-            (mouseenter)="showTitleTooltip = true"
-            (mouseleave)="showTitleTooltip = false"
-            [attr.title]="'Limite: ' + maxLengthTitle + ' caractères'"
+            [tooltip]="'Limite: {{ maxLengthTitle }} caractères'"
           />
           <!-- TODO Notification when max length reached -->
           <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
@@ -103,9 +88,7 @@
             [(ngModel)]="quizDescription"
             maxlength="{{maxLengthDescription}}"
             (input)="onDescriptionInput($event)"
-            (mouseenter)="showDescriptionTooltip = true"
-            (mouseleave)="showDescriptionTooltip = false"
-            [attr.title]="'Limite: ' + maxLengthDescription + ' caractères'"
+            [tooltip]="'Limite: {{ maxLengthDescription }} caractères'"
           />
           <!-- Notification when max length reached -->
           <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
@@ -125,9 +108,7 @@
               [(ngModel)]="question.name"
               maxlength="{{maxLengthQuestion}}"
               (input)="onQuestionInput($event, i)"
-              (mouseenter)="showQuestionTooltip[i] = true"
-              (mouseleave)="showQuestionTooltip[i] = false"
-              [attr.title]="'Limite: ' + maxLengthQuestion + ' caractères'"
+              [tooltip]="'Limite: {{ maxLengthQuestion }} caractères'"
             />
             <!-- Notification when max length reached -->
             <!-- <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
@@ -144,8 +125,8 @@
                       <input
                         type="radio"
                         [name]="'question{{ i }}'"
-                        [checked]="question.validAnswer === j"
-                        (change)="setCorrectOption(i,j)"
+                        [(ngModel)]="question.validAnswer"
+                        [value]="j"
                         required
                       />
                   </span>
@@ -159,9 +140,7 @@
                       [(ngModel)]="option.content"
                       maxlength="{{maxLengthOption}}"
                       (input)="onOptionInput($event, i, j)"
-                      (mouseenter)="showOptionTooltip[i][j] = true"
-                      (mouseleave)="showOptionTooltip[i][j] = false"
-                      [attr.title]="'Limite: ' + maxLengthOption + ' caractères'"
+                      [tooltip]="'Limite: {{ maxLengthOption }} caractères'"
                     />
                     <!-- Notification when max length reached -->
                     <!-- <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
@@ -193,7 +172,7 @@
         [size]="'large'"
         [shape]="'rectangle'"
         [bold]="'semibold'"
-        [disabled]="quizForm.invalid ? true : false"
+        [disabled]="quizForm.invalid === null || quizForm.invalid"
         [class.scale-110]="quizForm.valid"
         [class.transition]="quizForm.valid"
         [class.duration-500]="quizForm.valid"
