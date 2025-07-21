@@ -42,21 +42,30 @@
   </div>
 
   <!-- Right: Actions -->
-  <div class="flex items-center justify-end gap-4" (click)="closeSideBar($event)">
+  <div class="flex items-center justify-end gap-1 md:gap-4" (click)="closeSideBar($event)">
     <!-- Mobile: round + button, Desktop: full button -->
-    <button
-      class="bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary-darker text-white rounded-xl w-10 h-10 flex items-center justify-center text-2xl md:hidden"
-      (click)="gotoCreateQuiz()"
-      aria-label="Créer un quiz"
+    <app-button
+     [type]="'button'"
+     [label]="'+'"
+     [style]="'primary'"
+     (click)="gotoCreateQuiz()"
+     [class]="'md:hidden !px-0 !py-0 !text-2xl !rounded-xl !w-10 !h-10 flex items-center justify-center'"
+     aria-label="Créer un quiz"
     >
-      +
-    </button>
-    <button
-      class="hidden md:inline-block bg-primary hover:bg-primary-dark dark:bg-primary-dark dark:hover:bg-primary-darker text-white px-4 py-2 rounded-lg text-base"
-      (click)="gotoCreateQuiz()"
+    </app-button>
+    <app-button
+     [type]="'button'"
+     [label]="'+ Créer un quiz'"
+     [style]="'primary'"
+     [size]="'medium'"
+     [shape]="'rectangle'"
+     [bold]="'semibold'"
+     (click)="gotoCreateQuiz()"
+     [class]="'hidden md:inline-block'"
+     aria-label="Créer un quiz"
     >
-      + Créer un quiz
-    </button>
+    </app-button>
+
 
     <button mat-icon-button [matMenuTriggerFor]="profileMenu" class="profile-btn p-0 rounded-full flex items-center justify-center hover:bg-bg-card dark:hover:bg-bg-card">
       <img src="assets/images/ProfileLogo.png" alt="Profil" class="w-10 h-10 object-contain" aria-label="Profile Dropdown"/>

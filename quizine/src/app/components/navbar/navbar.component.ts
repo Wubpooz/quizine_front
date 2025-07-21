@@ -9,13 +9,13 @@ import { ThemeService, ThemePreference } from '../../services/theme.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { finalize, Subject, takeUntil } from 'rxjs';
-import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, MatMenuModule, MatButtonModule],
+  imports: [CommonModule, MatMenuModule, MatButtonModule, ButtonComponent],
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
@@ -30,7 +30,6 @@ export class NavbarComponent {
     private sidebarService: SidebarService,
     private apiService: APIService,
     public theme: ThemeService,
-    private notifService: NotificationsService,
     private spinnerService: SpinnerService
     ) {
       // this.appStore.init();
