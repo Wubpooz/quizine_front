@@ -20,7 +20,6 @@ import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { NotificationsService } from './services/notifications.service';
 import { GameRequest } from './models/participationModel';
-import th from 'zod/v4/locales/th.cjs';
 
 @Component({
   selector: 'app-root',
