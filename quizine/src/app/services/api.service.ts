@@ -107,7 +107,6 @@ export class APIService {
           throw new APIError('Erreur lors de la création du quiz.');
         }
       }),
-      retry(1),
       catchError(error => this.handleError(error))
     );
   }
@@ -124,7 +123,7 @@ export class APIService {
           return [];
         }
       }),
-      retry(3),
+      retry(2),
       catchError(error => this.handleError(error))
     );
   }
@@ -306,6 +305,7 @@ export class APIService {
   getUserData() : Observable<User> {
     return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true}).pipe(
       map((response: any) => {
+        console.log(JSON.stringify(response));
         if(response.status === 200 && response.User) {
           return response.User;
         } else if(response.status === 401) {
@@ -316,7 +316,6 @@ export class APIService {
           throw new APIError("User data not found");
         }
       }),
-      retry(1),
       catchError(error => this.handleError(error))
     );
   }
