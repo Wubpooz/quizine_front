@@ -73,7 +73,6 @@ export class NavbarComponent {
     this.spinnerService.show('Deconnexion…');
     this.apiService.logout().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe({
       next: () => {
-        this.notifService.success('Deconnexion reussie', 'Logout');
         this.appStore.removeUser();
         this.router.navigate(['/landing']);
       }
