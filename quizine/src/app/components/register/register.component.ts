@@ -7,7 +7,6 @@ import { CommonModule } from '@angular/common';
 import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
-import { hasSessionCookie } from '../../utils/utils';
 
 @Component({
   selector: 'app-register',
@@ -27,23 +26,19 @@ export class RegisterComponent {
     private spinnerService: SpinnerService) {}
 
   ngOnInit() {
-    if(hasSessionCookie()) {
-      console.log("Session cookie found, attempting connexion...");
-      this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
-        next: (user) => {
-          if(user) {
-            this.appStore.updateUser(user);
-            this.router.navigate(['/home']);
-          }
-        },
-        error: () => {
+    this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (user) => {
+        if(user) {
+          this.appStore.updateUser(user);
+          this.router.navigate(['/home']);
+        } else {
           this.appStore.removeUser();
         }
-      });
-    } else {
-      console.log("No session cookie found, logging out...");
-      this.appStore.removeUser();
-    }
+      },
+      error: () => {
+        this.appStore.removeUser();
+      }
+    });
   }
 
 

@@ -20,7 +20,7 @@ import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { NotificationsService } from './services/notifications.service';
 import { GameRequest } from './models/participationModel';
-import { hasSessionCookie } from './utils/utils';
+import th from 'zod/v4/locales/th.cjs';
 
 @Component({
   selector: 'app-root',
@@ -48,34 +48,30 @@ export class AppComponent {
     injectSpeedInsights();
     // this.appStore.init();
     
-    if(hasSessionCookie()) {
-      console.log("Session cookie found, attempting connexion...");
-      this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
-        next: (user) => {
-          if(user) {
-            this.appStore.updateUser(user);
-            // If a logged-in user lands on a public page, send them to home.
-            if(publicRoutes.includes(this.router.url)) {
-              this.router.navigate(['/home']);
-            }
+    this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
+      next: (user) => {
+        if(user) {
+          this.appStore.updateUser(user);
+          // If a logged-in user lands on a public page, send them to home.
+          if(publicRoutes.includes(this.router.url)) {
+            this.router.navigate(['/home']);
           }
-        },
-        error: () => {
+        } else {
           this.appStore.removeUser();
           // If the API call fails (unauthenticated) AND the user is NOT on a public route...
           if(!publicRoutes.includes(this.router.url)) {
             this.router.navigate(['/landing']);
           }
         }
-      });
-    } else {
-      console.log("No session cookie found, logging out...");
-      this.isLoading = false;
-      this.appStore.removeUser();
-      if(!publicRoutes.includes(this.router.url)) {
-        this.router.navigate(['/landing']);
+      },
+      error: () => {
+        this.appStore.removeUser();
+        // If the API call fails (unauthenticated) AND the user is NOT on a public route...
+        if(!publicRoutes.includes(this.router.url)) {
+          this.router.navigate(['/landing']);
+        }
       }
-    }
+    });
   }
 
 

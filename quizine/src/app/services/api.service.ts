@@ -308,6 +308,10 @@ export class APIService {
       map((response: any) => {
         if(response.status === 200 && response.User) {
           return response.User;
+        } else if(response.status === 401) {
+          return null;
+        } else if(response.error) {
+          throw new APIError(response.error);
         } else {
           throw new APIError("User data not found");
         }
