@@ -303,16 +303,16 @@ export class APIService {
 
   //========================= Profile =========================
   getUserData() : Observable<User> {
-    return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true}).pipe(
-      map((response: any) => {
+    return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true, observe: 'response'}).pipe(
+      map((response: HttpResponse<any>) => {
         console.log(JSON.stringify(response));
         console.log(response.status);
-        if(response.status === 200 && response.User) {
-          return response.User;
+        if(response.status === 200 && response.body?.User) {
+          return response.body.User;
         } else if(response.status === 401) {
           return null;
-        } else if(response.error) {
-          throw new APIError(response.error);
+        } else if(response.body.error) {
+          throw new APIError(response.body.error);
         } else {
           throw new APIError("User data not found");
         }
