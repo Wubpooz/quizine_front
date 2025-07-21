@@ -2,7 +2,7 @@
   <h1 class="text-4xl font-bold text-primary">Bienvenue à Quizine</h1>
   <p class="text-lg text-text-main dark:text-text-main">Des quiz à consommer sans modération!</p>
 
-  <div class="flex flex-col gap-1.5">
+  <div class="flex flex-col gap-1.5 w-40">
     <app-button
       [label]="'S\'inscrire'"
       [style]="'primary'"
@@ -10,7 +10,7 @@
       [bold]="'semibold'"
       [shape]="'circle'"
       (click)="goToRegister()"
-      [class]="'w-[157px] px-8 py-2 text-base'"
+      [class]="'w-full px-8 py-2 text-base'"
     ></app-button>
     <app-button
       [label]="'Se connecter'"
@@ -19,7 +19,7 @@
       [shape]="'circle'"
       [bold]="'semibold'"
       (click)="goToLogin()"
-      [class]="'w-[157px] px-8 py-2 text-base'"
+      [class]="'w-full px-8 py-2 text-base'"
     ></app-button>
   </div>
 
