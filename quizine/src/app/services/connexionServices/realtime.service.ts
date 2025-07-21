@@ -18,7 +18,7 @@ export class RealtimeService extends GameConnexionService {
       detectSessionInUrl: true
     }});
 
-    this.gameSessionStore.sessionId.subscribe((sessionId) => {
+    this.gameSessionStore.sessionId.subscribe((sessionId: string|undefined) => {
       if(sessionId != undefined) {
         this.sessionId = sessionId;
       }

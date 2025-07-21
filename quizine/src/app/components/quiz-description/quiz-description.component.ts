@@ -33,9 +33,9 @@ export class QuizDescriptionComponent {
     let quizId = this.route.snapshot.paramMap.get('id');
     if(quizId) {
       this.gameSessionStore.updateQuiz(quizId);
-      this.quizService.getQuizById(quizId).then((data: Quiz) => {
-        if(data) {
-          this.quiz = data;
+      this.quizService.getQuizById(quizId).then((quiz: Quiz) => {
+        if(quiz) {
+          this.quiz = quiz;
         } else {
           this.router.navigate(['/404'], { replaceUrl: true });
         }

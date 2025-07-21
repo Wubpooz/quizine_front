@@ -22,7 +22,7 @@ export class QuizService {
     private apiService: APIService,
     private router: Router,
     private spinnerService: SpinnerService) {
-    this.gameSessionStore.quiz.subscribe((quiz) => {
+    this.gameSessionStore.quiz.subscribe((quiz: Quiz|undefined) => {
       console.debug('QuizService: quiz updated', quiz);
       if(!quiz) return;
       this.quiz = quiz;

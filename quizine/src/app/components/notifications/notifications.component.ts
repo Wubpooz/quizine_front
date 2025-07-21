@@ -32,20 +32,14 @@ export class NotificationsComponent {
     private gameConnexion: GameConnexionService,
     private notifService: NotificationsService) {
 
-    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+    this.appStore.currentUser.pipe(takeUntil(this.destroy$)).subscribe((user: User|undefined) => {
       this.currentUser = user;
     });
 
-    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
+    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications: GameRequest[]) => {
       this.notifications = notifications || [];
     });
   }
-
-  // ngOnInit() {
-  //   this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
-  //     this.notifications = notifications || [];
-  //   });
-  // }
 
   ngOnDestroy() {
     this.destroy$.next();

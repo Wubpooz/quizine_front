@@ -48,7 +48,7 @@ export class QuizScoreComponent {
       this.gameConnexion.listenLeaderboard((data: { userId: string; score: number }[]) => {
         if(data && data.length > 0) {
           let scores = new Map<User, number>();
-          this.apiService.getAllUsers().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((users) => {
+          this.apiService.getAllUsers().pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((users: User[]) => {
             if(!users) {
               return;
             }

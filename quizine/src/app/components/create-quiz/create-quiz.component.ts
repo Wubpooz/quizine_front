@@ -8,6 +8,7 @@ import { LayoutComponent } from "../layout/layout.component";
 import { NotificationsService } from '../../services/notifications.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { SpinnerService } from '../../services/spinner.service';
+import { QuestionData, Quiz } from '../../models/quizModel';
 
 @Component({
   selector: 'create-quiz',
@@ -22,17 +23,7 @@ export class CreateQuizComponent {
   quizDescription: string = '';
   quizVisibility: 'private' | 'public' = 'private';
   tags: string[] = [];
-  questions: {
-    name: string;
-    grade: number;
-    duration: number;
-    picture: null;
-    id_creator: string;
-    private: boolean;
-    tags: string[];
-    choices: { id: string; content: string }[];
-    validAnswer: number;
-  }[] = [
+  questions: QuestionData[] = [
     {
       name: '',
       grade: 0,
@@ -85,11 +76,11 @@ export class CreateQuizComponent {
   }
 
   initializeOptionStates() {
-    this.showOptionTooltip = this.questions.map(q =>
-      q.choices.map(() => false)
+    this.showOptionTooltip = this.questions.map((question: QuestionData) =>
+      question.choices.map(() => false)
     );
-    this.optionMaxLengthReached = this.questions.map(q =>
-      q.choices.map(() => false)
+    this.optionMaxLengthReached = this.questions.map((question: QuestionData) =>
+      question.choices.map(() => false)
     );
   }
 
@@ -185,7 +176,7 @@ export class CreateQuizComponent {
       this.validateQuiz(this.quizTitle, this.quizDescription, this.tags, this.quizVisibility, this.questions);
 
       //Order so that first option in question is the valid one
-      const orderedQuestions = this.questions.map((question) => {
+      const orderedQuestions = this.questions.map((question: QuestionData) => {
         const newChoices = [...question.choices];
         let newValidAnswer = question.validAnswer;
         if(question.validAnswer > 0 && question.validAnswer < newChoices.length) {
@@ -205,7 +196,7 @@ export class CreateQuizComponent {
       }
 
       this.spinnerService.show('Création du quiz en cours…');
-      this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quiz) => {
+      this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quiz: Quiz) => {
         console.log('Quiz created successfully', quiz);
         this.notifService.success("Le quiz a bien été créé");
         this.router.navigate(['/quiz-preview', quiz.id]);
@@ -219,7 +210,7 @@ export class CreateQuizComponent {
 
 
   //TODO move to validation service and also validate all quizes from api calls
-  private validateQuiz(quizTitle: string, quizDescription: string, tags: string[], quizVisibility: string, questions: any[]) {
+  private validateQuiz(quizTitle: string, quizDescription: string, tags: string[], quizVisibility: string, questions: QuestionData[]) {
     if(!quizTitle || typeof quizTitle !== 'string' || quizTitle.trim() === '') {
       throw new Error('Le titre du quiz est requis.');
     }

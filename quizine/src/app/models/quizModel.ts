@@ -35,8 +35,26 @@ export interface Question {
   choices: Option[];
 }
 
+export interface QuestionData {
+  name: string;
+  grade?: number;
+  duration: number;
+  picture?: Uint8Array | null;
+  id_creator: string;
+  private: boolean;
+  tags: string[];
+  choices: OptionData[];
+  validAnswer: number;
+}
+
+
 export interface Option {
   id: string;
   content: string;
   id_question: string;
+}
+
+export interface OptionData {
+  id: string;
+  content: string;
 }

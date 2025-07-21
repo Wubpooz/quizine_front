@@ -87,7 +87,7 @@ export class EditQuizComponent {
   }
 
   removeTag(tag: string): void {
-    this.quiz.tags = this.quiz.tags.filter(t => t !== tag);
+    this.quiz.tags = this.quiz.tags.filter(tag => tag !== tag);
   }
 
 

@@ -5,6 +5,7 @@ import { GameConnexionService } from '../../services/gameConnexion.service';
 import { GameSessionStore } from '../../stores/gameSession.store';
 import { AppStore } from '../../stores/app.store';
 import { Subject, takeUntil } from 'rxjs';
+import { User } from '../../models/userModel';
 
 @Component({
   selector: 'waiting-page',
@@ -38,7 +39,7 @@ export class WaitingPageComponent {
       this.playQuiz();
     });
 
-    this.gameSessionStore.invitedUsers.pipe(takeUntil(this.destroy$)).subscribe((users) => {
+    this.gameSessionStore.invitedUsers.pipe(takeUntil(this.destroy$)).subscribe((users: User[]) => {
       this.remainingUsers = users.length;
       if(this.remainingUsers === 0) {
         this.playQuiz();

@@ -5,6 +5,7 @@ import { SidebarService } from '../../services/sidebar.service';
 import { Quiz } from '../../models/quizModel';
 import { AppStore } from '../../stores/app.store';
 import { Subject, takeUntil } from 'rxjs';
+import { GameRequest } from '../../models/participationModel';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,7 +30,7 @@ export class SidebarComponent {
       this.filteredQuizList = quizzes||[];
     });
 
-    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
+    this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications: GameRequest[]) => {
       this.notificationCount = notifications ? notifications.length : 0;
     });
   }

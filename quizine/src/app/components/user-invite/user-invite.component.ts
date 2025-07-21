@@ -10,6 +10,7 @@ import { ButtonComponent } from '../button/button.component';
 import { combineLatest, finalize, forkJoin, Subject, take, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
+import { GameRequest } from '../../models/participationModel';
 
 @Component({
   selector: 'user-invite',
@@ -148,8 +149,8 @@ export class UserInviteComponent {
       ];
       console.log('Inviting:', idsToInvite);
       this.notifService.info("Invitations envoyées.");
-      this.apiservice.requestGame(this.sessionId, idsToInvite).pipe(takeUntil(this.destroy$)).subscribe((payload) => {
-        console.log("Invitation:", payload);
+      this.apiservice.requestGame(this.sessionId, idsToInvite).pipe(takeUntil(this.destroy$)).subscribe((gameRequests: GameRequest[]) => {
+        console.log("Invitation:", gameRequests);
       });
       this.gameSessionStore.invitedUsers.next([...validSelectedFriends, ...validSelectedUsers]);
     }
@@ -166,8 +167,8 @@ export class UserInviteComponent {
   onClose() {
     this.close.emit();
     if(this.sessionId) {
-      this.apiservice.deleteParticipation(this.sessionId).pipe(takeUntil(this.destroy$)).subscribe((payload) => {
-        console.log("Deleted participation:", payload);
+      this.apiservice.deleteParticipation(this.sessionId).pipe(takeUntil(this.destroy$)).subscribe((info: string) => {
+        console.log("Deleted participation:", info);
       });
     }
   }
