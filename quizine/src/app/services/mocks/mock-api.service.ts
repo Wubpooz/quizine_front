@@ -88,7 +88,7 @@ export class MockAPIService {
   }
 
   // ========== PROFILE ==========
-  getUserData(): Observable<User> {
+  getUserData(): Observable<User|null> {
     return of(MockData.mockUser);
   }
 

@@ -302,22 +302,27 @@ export class APIService {
   //addLabel
 
   //========================= Profile =========================
-  getUserData() : Observable<User> {
+  getUserData() : Observable<User|null> {
     return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true, observe: 'response'}).pipe(
       map((response: HttpResponse<any>) => {
-        console.log(JSON.stringify(response));
-        console.log(response.status);
         if(response.status === 200 && response.body?.User) {
           return response.body.User;
-        } else if(response.status === 401) {
-          return null;
         } else if(response.body.error) {
           throw new APIError(response.body.error);
         } else {
           throw new APIError("User data not found");
         }
       }),
-      catchError(error => this.handleError(error))
+      catchError(error => {    
+      if (error.status === 401) {
+        // ✅ gracefully return null on unauthorized
+        return of(null);
+      } else if (error.error) {
+        // Forward specific backend error
+        return throwError(() => new APIError(error.error));
+      } else {
+        return throwError(() => new APIError("Unknown error"));
+      }})
     );
   }
 

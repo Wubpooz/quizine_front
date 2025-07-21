@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
+import { User } from '../../models/userModel';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,7 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (user) => {
+      next: (user: User|null) => {
         if(user) {
           this.appStore.updateUser(user);
           this.router.navigate(['/home']);

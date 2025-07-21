@@ -26,7 +26,7 @@ export class LoginComponent {
 
   ngOnInit() {
     this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (user) => {
+      next: (user: User|null) => {
         if(user) {
           this.appStore.updateUser(user);
           this.router.navigate(['/home']);

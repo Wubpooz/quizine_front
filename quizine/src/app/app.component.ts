@@ -20,6 +20,7 @@ import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { NotificationsService } from './services/notifications.service';
 import { GameRequest } from './models/participationModel';
+import { User } from './models/userModel';
 
 @Component({
   selector: 'app-root',
@@ -48,7 +49,7 @@ export class AppComponent {
     // this.appStore.init();
     
     this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
-      next: (user) => {
+      next: (user: User|null) => {
         if(user) {
           this.appStore.updateUser(user);
           // If a logged-in user lands on a public page, send them to home.

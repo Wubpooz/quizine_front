@@ -37,7 +37,11 @@ export class AppStore {
     this.notifications = this.notifications || new BehaviorSubject<GameRequest[]>([]);
 
     this.apiService.getUserData().pipe(finalize(() => this.spinnerService.hide())).subscribe({
-      next: (user: User) => {
+      next: (user: User|null) => {
+        if(!user) {
+          this.removeUser();
+          return;
+        }
         this.currentUser.next(user);
         forkJoin({
           quizList: this.apiService.getQuizList(),
