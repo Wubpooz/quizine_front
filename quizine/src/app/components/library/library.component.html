@@ -1,27 +1,35 @@
 <layout>
   <div class="flex flex-col items-center mt-4 px-6 h-[calc(100vh-8rem)] overflow-hidden w-full">
+    <div *ngIf="quizList.length > 0" class="w-full md:w-fit md:min-w-[44rem] flex flex-col gap-6">
       <h1 class="text-2xl text-text-main dark:text-text-main">Mes quiz</h1>
-      <div *ngIf="quizList.length > 0" class="w-full md:w-fit">
-        <input
-          type="text"
-          placeholder="Rechercher un quiz"
-          class="w-full rounded-lg p-2 bg-gray-100 dark:bg-bg-surface dark:text-gray-300 placeholder-gray-500 mt-4"
-          [value]="searchTerm"
-          (input)="onSearchChange($event)"
-        />
-        <div class="flex flex-col gap-4 mt-6 overflow-y-auto h-[calc(100vh-16rem)] pr-4 items-center">
-          @for (quiz of filteredQuizList; track quiz) {
-            <app-library-quiz-card [quiz]="quiz"></app-library-quiz-card>
-          }
-        </div>
+      <input
+        type="text"
+        placeholder="Rechercher un quiz"
+        class="w-full rounded-lg p-2 bg-gray-100 dark:bg-bg-surface dark:text-gray-300 placeholder-text-secondary"
+        [value]="searchTerm"
+        (input)="onSearchChange($event)"
+      />
+      <div *ngIf="filteredQuizList.length > 0" class="flex flex-col gap-4 overflow-y-auto h-[calc(100vh-16rem)] pr-4 items-center">
+        @for (quiz of filteredQuizList; track quiz) {
+          <app-library-quiz-card [quiz]="quiz"></app-library-quiz-card>
+        }
       </div>
-      <div *ngIf="quizList.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
-        <span class="text-lg text-gray-500 text-center">Vous n'avez encore créé aucun quiz.</span>
-        <button (click)="goToCreateQuiz()" class="text-base text-primary text-center hover:underline">Créer mon premier quiz</button>
-      </div>
-      <div *ngIf="filteredQuizList.length === 0 && quizList.length > 0" class="flex flex-col gap-6 mx-auto mt-48">
-        <span class="text-lg text-gray-500 text-center">Vous n'avez encore créé aucun quiz contenant ce terme de recherche.</span>
-        <button (click)="goToCreateQuiz()" class="text-base text-primary text-center hover:underline">Créer mon premier quiz</button>
-      </div>
+      <span *ngIf="filteredQuizList.length === 0" class="mt-8 text-lg text-text-secondary text-center">
+        Vous n'avez encore créé aucun quiz contenant ce terme de recherche.
+      </span>
+    </div>
+    <div *ngIf="quizList.length === 0" class="flex flex-col gap-6 mx-auto mt-48">
+      <span class="text-lg text-text-secondary text-center">Vous n'avez encore créé aucun quiz.</span>
+       <div class="w-full flex justify-center">
+         <app-button
+          [type]="'button'"
+          [style]="'text'"
+          [label]="'Créer mon premier quiz'"
+          [bold]="'bold'"
+          (click)="goToCreateQuiz()"
+         >
+         </app-button>
+       </div>
+    </div>
   </div>
 </layout>

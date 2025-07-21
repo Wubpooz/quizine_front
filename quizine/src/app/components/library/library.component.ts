@@ -7,11 +7,12 @@ import { APIService } from '../../services/api.service';
 import { LayoutComponent } from '../layout/layout.component';
 import { Subject, takeUntil, finalize } from 'rxjs';
 import { SpinnerService } from '../../services/spinner.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-library',
   standalone: true,
-  imports: [LibraryQuizCardComponent, CommonModule, LayoutComponent],
+  imports: [LibraryQuizCardComponent, CommonModule, LayoutComponent, ButtonComponent],
   templateUrl: './library.component.html'
 })
 export class LibraryComponent {
