@@ -5,7 +5,6 @@ import { APIService } from "../services/api.service";
 import { Quiz } from "../models/quizModel";
 import { GameRequest } from "../models/participationModel";
 import { SpinnerService } from "../services/spinner.service";
-import { hasSessionCookie } from "../utils/utils";
 import { NotificationsService } from "../services/notifications.service";
 
 @Injectable({
@@ -37,21 +36,6 @@ export class AppStore {
     this.friends = this.friends || new BehaviorSubject<User[]>([]);
     this.notifications = this.notifications || new BehaviorSubject<GameRequest[]>([]);
 
-    // Check if a session cookie exists, wait 5s max with retry every 300ms
-    if(!hasSessionCookie()) {
-      const intervalId = setInterval(() => {
-        if (!hasSessionCookie()) {
-          console.error('No session cookie found');
-          this.spinnerService.hide();
-          this.notifService.error('Impossible de se connecter, rechargez la page.');
-        } else {
-          clearInterval(intervalId); // clear the interval when condition is met
-        }
-      }, 300);
-
-      setTimeout(() => { clearInterval(intervalId); }, 5000);
-    }
-
     this.apiService.getUserData().pipe(finalize(() => this.spinnerService.hide())).subscribe({
       next: (user: User) => {
         this.currentUser.next(user);
@@ -69,6 +53,9 @@ export class AppStore {
           },
           error: (err) => {
             console.error('Error while fetching user-related data', err);
+            this.notifService.error('Une erreur est survenue lors du chargement');
+            this.spinnerService.hide();
+            this.removeUser();
           }
         });
       },
