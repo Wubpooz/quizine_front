@@ -2,13 +2,13 @@
     type="{{ type }}"
     (click)="onClick()"
     [ngClass]="{
-        'bg-primary text-white hover:bg-primary-dark dark:bg-primary-dark dark:text-text-main dark:hover:bg-primary-darker': style === 'primary',
-        'bg-primary-tint text-primary-darker hover:bg-primary-lighter dark:bg-primary dark:text-white dark:hover:bg-primary-dark': style === 'secondary',
-        'text-primary-light border-2 hover:text-gray-100 hover:bg-primary-light border-border-secondary dark:text-primary-tint dark:border-border-secondary dark:hover:bg-primary-dark': style === 'tertiary',
-        'text-primary-dark dark:text-primary-dakr hover:text-primary dark:hover:text-primary cursor-pointer underline': style === 'text',
-        'border border-primary text-primary hover:text-white dark:hover:text-white hover:bg-primary dark:hover:bg-primary-dark' : style === 'border',
+        'bg-primary text-white hover:bg-primary-dark dark:bg-primary-dark dark:text-text-main hover:dark:bg-primary-darker disabled:hover:bg-primary disabled:dark:hover:bg-primary-dark': style === 'primary',
+        'bg-primary-tint text-primary-darker hover:bg-primary-lighter dark:bg-primary dark:text-white !hover:dark:bg-primary-dark': style === 'secondary',
+        'text-primary-light border-2 hover:text-gray-100 hover:bg-primary-light border-border-secondary dark:text-primary-tint dark:border-border-secondary hover:dark:bg-primary-dark': style === 'tertiary',
+        'text-primary-dark dark:text-primary-dakr hover:text-primary hover:dark:text-primary cursor-pointer underline': style === 'text',
+        'border border-primary text-primary hover:text-white hover:dark:text-white hover:bg-primary dark:hover:bg-primary-dark' : style === 'border',
         'bg-error text-text-main hover:bg-error-light dark:bg-error-dark dark:text-text-main dark:hover:bg-error': style === 'error',
-        'bg-warn text-text-main hover:bg-warn-light dark:bg-warn-dark dark:text-text-main dark:hover:bg-warn': style === 'warn',
+        'bg-warn text-text-main hover:bg-warn-light dark:bg-warn-dark dark:text-text-main hover:dark:bg-warn': style === 'warn',
 
         'px-16 py-10 text-xl': size === 'xxlarge',
         'px-8 py-4 text-lg': size === 'xlarge',
@@ -33,6 +33,9 @@
         'cursor-not-allowed': disabled,
         'cursor-wait': loading
     }"
-    class="select-none {{ class }}">
+    [class]="class"
+    class="select-none"
+    [disabled]="disabled">
     {{ label }}
+    <ng-content></ng-content>
 </button>

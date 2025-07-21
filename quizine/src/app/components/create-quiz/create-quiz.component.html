@@ -11,21 +11,33 @@
         <div class="flex items-center gap-4">
             <app-tag-list [tags]="tags"></app-tag-list>
             <div>
-              <button class="bg-primary text-white px-4 py-1 rounded-xl text-2xl flex items-center gap-2 focus:outline-none md:hidden" (click)="showTagInput = !showTagInput" aria-label="Ajouter un label">
-                +
-              </button>
-              <button type="button" class="hidden md:flex bg-primary text-white px-4 py-2 rounded-lg font-semibold text-base items-center gap-2 focus:outline-none" (click)="showTagInput = !showTagInput">
-                + Ajouter un tag
-              </button>
+              <app-button
+                [style]="'primary'"
+                [label]="'+ Tag'"
+                (click)="showTagInput = !showTagInput"
+                [class]="'md:hidden !py-1 !text-2xl !rounded-xl flex items-center justify-center focus:outline-none'"
+                aria-label="Ajouter un tag"
+               >
+              </app-button>
+              <app-button
+                [style]="'primary'"
+                [label]="'Ajouter un tag'"
+                [bold]="'semibold'"
+                (click)="showTagInput = !showTagInput"
+                [class]="'hidden md:flex items-center gap-2focus:outline-none'"
+                aria-label="Ajouter un tag"
+               >
+              </app-button>
             </div>
 
+            <!-- TODO Fix tag input on mobile by putting a black overlay -->
             <div *ngIf="showTagInput" class="fixed inset-0 z-50 h-10 flex items-start justify-center sm:static sm:bg-transparent sm:z-auto sm:items-center sm:justify-start">
               <div class="mt-64 sm:mt-0 w-11/12 max-w-xsrounded-lg h-10 shadow-lg p-8 sm:relative sm:w-auto sm:max-w-none sm:shadow-none sm:p-0 sm:bg-transparent sm:rounded-none relative">
                 <input
                   #tagInput
                   type="text"
                   placeholder="Ajouter un tag"
-                  class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary-tint w-full bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400"
+                  class="border border-primary-tint rounded-lg px-4 py-2 focus:outline-none focus:ring-1 focus:ring-primary-tint w-full bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400"
                   (keydown.enter)="addTag(tagInput.value); $event.preventDefault()"
                 />
                 <button type="button" class="hidden sm:block absolute right-0 top-0 mt-3 mr-2 text-red-400" (click)="toggleTagInput()">
@@ -43,17 +55,17 @@
 
           <!-- Quiz visibility -->
           <div class="relative w-fit">
-            <button class="bg-primary text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none" (click)="showDropdown = !showDropdown" type="button">
+            <button class="bg-primary dark:bg-primary-dark text-white rounded-lg px-4 py-2 font-semibold text-base flex items-center gap-2 focus:outline-none" (click)="showDropdown = !showDropdown" type="button">
               {{ quizVisibility === 'private' ? 'Privé' : 'Public' }}
               <svg class="w-4 h-4 ml-1 transition-transform duration-200" [ngClass]="{'rotate-180': showDropdown}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
               </svg>
             </button>
-            <div *ngIf="showDropdown" class="absolute z-30 left-0 mt-1 w-full bg-bg-surface dark:bg-bg-surface border border-gray-600 rounded-lg shadow-lg animate-fade-in">
-              <button class=" rounded-t-lg block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'private'; showDropdown = false"type="button">
+            <div *ngIf="showDropdown" class="absolute z-30 left-0 mt-1 w-full bg-bg-card dark:bg-bg-card border border-gray-600 rounded-lg shadow-lg animate-fade-in">
+              <button class=" rounded-t-lg block w-full text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-zinc-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'private'; showDropdown = false"type="button">
                 Privé
               </button>
-              <button class="block w-full rounded-b-lg text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'public'; showDropdown = false" type="button">
+              <button class="block w-full rounded-b-lg text-left px-4 py-2 hover:bg-gray-200 dark:hover:bg-zinc-700 text-text-main dark:text-text-main" (click)="quizVisibility = 'public'; showDropdown = false" type="button">
                 Public
               </button>
             </div>
@@ -62,13 +74,13 @@
       </div>
 
       <!-- Quiz details -->
-      <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto p-2">
+      <div class="flex flex-col max-h-[calc(100svh-16rem)] overflow-y-auto pt-1 px-2">
         <!-- Title and description -->
         <div class="flex flex-col border-b-2 border-gray-600 mb-4">
           <input
             type="text"
             placeholder="Ajouter un titre"
-            class="w-full semi-bold border-primary-tint rounded-lg px-4 py-2 mb-4 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
+            class="w-full semi-bold border-primary-tint rounded-lg px-4 py-2 mb-4 bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
             required
             name="title"
             [(ngModel)]="quizTitle"
@@ -86,7 +98,7 @@
           <input
             type="text"
             placeholder="Ajouter une description"
-            class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-6 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
+            class="w-full rounded-lg px-4 py-2 mb-6 bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
             name="description"
             [(ngModel)]="quizDescription"
             maxlength="{{maxLengthDescription}}"
@@ -103,11 +115,11 @@
 
         <div class="flex flex-col gap-4 mb-6">
           <ng-container *ngFor="let question of questions; let i = index">
-            <div class="bg-primary text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
+            <div class="bg-primary dark:bg-primary-dark text-white rounded-lg px-4 py-2 mb-4 font-semibold"> Question {{ i + 1 }} </div>
             <input
               type="text"
               placeholder="Ajouter une question"
-              class="w-full border border-primary-tint rounded-lg px-4 py-2 mb-4 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
+              class="w-full rounded-lg px-4 py-2 mb-4 bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
               required
               name="question{{ i }}"
               [(ngModel)]="question.name"
@@ -127,7 +139,7 @@
             <div class="flex flex-col gap-2 mb-4">
               <ng-container *ngFor="let option of question.choices; let j = index">
                 <div class="flex items-center gap-2">
-                  <span class="flex text-lg gap-2">
+                  <span class="flex text-lg gap-1 justify-between content-start w-10">
                     <p> {{ j + 1 }}. </p>
                       <input
                         type="radio"
@@ -141,7 +153,7 @@
                     <input
                       type="text"
                       placeholder="Ajouter une option"
-                      class="w-full border border-primary-tint rounded-lg px-4 py-2 bg-bg-surface dark:bg-bg-surface text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
+                      class="w-full rounded-lg px-4 py-2 bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
                       required
                       name="option{{ i }}{{ j }}"
                       [(ngModel)]="option.content"
@@ -162,26 +174,36 @@
           </ng-container>
         </div>
 
-        <button type="button" class="bg-primary hover:bg-primary-light text-white rounded-xl w-8 h-8 flex items-center justify-center text-xl" (click)="addQuestion()">
-          +
-        </button>
+        <app-button
+          [type]="'button'"
+          [label]="'+ Ajouter une question'"
+          [style]="'primary'"
+          [class]="'!text-xl flex items-center justify-center focus:outline-none'"
+          (click)="addQuestion()"
+          aria-label="Ajouter une question"
+        >
+        </app-button>
       </div>
     </div>
 
     <!-- Create quiz button -->
-    <div class="z-8 w-full flex items-center justify-center border-t-2 border-gray-700">
-      <button
-        type="submit"
-        class="z-10 h-10 my-4 bg-primary disabled:bg-primary-lighter hover:bg-primary-light text-white px-6 py-2 rounded-lg font-semibold text-base flex items-center justify-center"
-        [disabled]="quizForm.invalid"
+    <div class="z-8 w-full flex items-center justify-center border-t-2 border-zinc-800">
+      <app-button
+        [type]="'submit'"
+        [size]="'large'"
+        [shape]="'rectangle'"
+        [bold]="'semibold'"
+        [disabled]="quizForm.invalid ? true : false"
         [class.scale-110]="quizForm.valid"
         [class.transition]="quizForm.valid"
-        [class.duration-500]="quizForm.valid">
-        <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-        </svg>
-        Créer le quiz
-      </button>
+        [class.duration-500]="quizForm.valid"
+        [class]="'z-10 !h-10 my-4 flex items-center justify-center'"
+        aria-label="Créer le quiz">
+          <svg class="w-4 h-4 mr-2 text-white font-bold" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" v-if="quizForm.valid">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+          Créer le quiz
+      </app-button>
     </div>
   </form>
 </layout>

@@ -9,11 +9,12 @@ import { NotificationsService } from '../../services/notifications.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { SpinnerService } from '../../services/spinner.service';
 import { QuestionData, Quiz } from '../../models/quizModel';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'create-quiz',
   standalone: true,
-  imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent],
+  imports: [CommonModule, FormsModule, TagListComponent, LayoutComponent, ButtonComponent],
   templateUrl: './create-quiz.component.html'
 })
 export class CreateQuizComponent {
