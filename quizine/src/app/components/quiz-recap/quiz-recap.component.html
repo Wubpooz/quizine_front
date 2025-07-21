@@ -18,7 +18,30 @@
 
               <div class="flex flex-col gap-2">
                 <div *ngFor="let answer of question.choices; let j = index" class="flex items-center w-full gap-2">
-                  <span *ngIf="question.id_answer === answer.id" class="text-green-500 text-2xl font-bold">✔</span>
+                  <ng-container *ngIf="answers.get(question.id) as selectedAnswer">
+                    <span *ngIf="question.id_answer === answer.id" class="text-green-500 text-2xl font-bold"> ✔ </span>
+                    <span *ngIf="answer.id === selectedAnswer.id && question.id_answer !== answer.id" class="text-red-500 text-2xl font-bold"> ✗ </span>
+                    <span *ngIf="answer.id !== selectedAnswer.id && question.id_answer !== answer.id" class="text-2xl font-bold inline-block w-[1em]"> &nbsp; </span>
+                  </ng-container>
+
+                  <!-- If no answer was selected at all -->
+                  <ng-container *ngIf="!answers.get(question.id)">
+                    <span *ngIf="question.id_answer === answer.id" class="text-green-500 text-2xl font-bold"> ✔ </span>
+                    <span *ngIf="question.id_answer !== answer.id" class="text-2xl font-bold inline-block w-[1em]"> &nbsp; </span>
+                  </ng-container>
+
+                  <div
+                    [ngClass]="{
+                      'bg-green-500': question.id_answer === answer.id,
+                      'bg-red-500': answers.get(question.id)?.id === answer.id && question.id_answer !== answer.id,
+                      'bg-bg-card dark:bg-bg-card': answers.get(question.id)?.id !== answer.id && question.id_answer !== answer.id
+                    }"
+                    class="w-full border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center text-text-main dark:text-text-main"
+                  >
+                    {{ j + 1 }}. {{ answer.content }}
+                  </div>
+                </div>
+                  <!-- <span *ngIf="question.id_answer === answer.id" class="text-green-500 text-2xl font-bold">✔</span>
                   <span *ngIf="answer.id === answers.get(question.id)?.id && question.id_answer !== answer.id" class="text-red-500 text-2xl font-bold">✗</span>
                   <span *ngIf="answer.id !== answers.get(question.id)?.id && question.id_answer !== answer.id" class="text-2xl font-bold inline-block w-[1em]">&nbsp;</span>
 
@@ -31,8 +54,7 @@
                     class="w-full border border-blue-100 rounded px-6 py-3 shadow-sm font-medium flex items-center text-text-main dark:text-text-main"
                   >
                     {{ j + 1 }}. {{ answer.content }}
-                  </div>
-                </div>
+                  </div> -->
               </div>
             </div>
           </ng-container>

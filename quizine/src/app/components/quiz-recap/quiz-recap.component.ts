@@ -18,7 +18,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class QuizRecapComponent {
   private destroy$ = new Subject<void>();
   quiz!: Quiz;
-  answers!: Map<string, Option>;
+  answers!: Map<string, Option|null>;
 
   constructor(private gameSessionStore: GameSessionStore,
       private appStore: AppStore,
@@ -26,7 +26,7 @@ export class QuizRecapComponent {
     
     if(environment.mockAuth) {
       this.quiz = MockData.mockQuiz;
-      this.gameSessionStore.answerList.next(new Map<string, Option>([
+      this.gameSessionStore.answerList.next(new Map<string, Option|null>([
         ["1", this.quiz.questions[0].choices[0]],
         ["2", this.quiz.questions[1].choices[0]],
         ["3", this.quiz.questions[2].choices[0]],
@@ -39,7 +39,7 @@ export class QuizRecapComponent {
         this.quiz = quiz;
       }
     });
-    this.gameSessionStore.answerList.pipe(takeUntil(this.destroy$)).subscribe((answers: Map<string, Option>) => {
+    this.gameSessionStore.answerList.pipe(takeUntil(this.destroy$)).subscribe((answers: Map<string, Option|null>) => {
       if(answers) {
         this.answers = answers;
       }
