@@ -306,6 +306,7 @@ export class APIService {
     return this.http.get<{User: User, history: Participation[]}>(this.endpoint+"/profile", {withCredentials: true}).pipe(
       map((response: any) => {
         console.log(JSON.stringify(response));
+        console.log(response.status);
         if(response.status === 200 && response.User) {
           return response.User;
         } else if(response.status === 401) {
