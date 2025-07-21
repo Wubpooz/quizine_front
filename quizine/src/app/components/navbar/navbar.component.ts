@@ -33,20 +33,12 @@ export class NavbarComponent {
     private notifService: NotificationsService,
     private spinnerService: SpinnerService
     ) {
-      this.appStore.init();
+      // this.appStore.init();
       this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
         this.quizList = quizzes||[];
         this.filteredQuizList = quizzes||[];
       });
   }
-  
-  // ngOnInit() {
-  //   this.appStore.init();
-  //   this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes) => {
-  //     this.quizList = quizzes||[];
-  //     this.filteredQuizList = quizzes||[];
-  //   });
-  // }
 
   ngOnDestroy() {
     this.destroy$.next();

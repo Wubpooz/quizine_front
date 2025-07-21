@@ -29,13 +29,13 @@ export class LoginComponent {
   ngOnInit() {
     this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
-        this.appStore.updateUser(user);
         if(user) {
+          this.appStore.updateUser(user);
           this.router.navigate(['/home']);
         }
       },
       error: () => {
-        this.notifService.error('Connexion au serveur impossible. Veuillez reafficher la page.', 'Connection error');
+        this.appStore.removeUser();
       }
     });
   }
@@ -57,7 +57,7 @@ export class LoginComponent {
     this.spinnerService.show('Connexion…');
     this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((user: User) => {
       if(user) {
-        this.appStore.init();
+        // this.appStore.init();
         this.appStore.updateUser(user);
         this.router.navigate(['/home']);
       } else {

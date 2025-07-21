@@ -25,6 +25,21 @@ export class RegisterComponent {
     private notifService: NotificationsService, private router: Router,
     private spinnerService: SpinnerService) {}
 
+  ngOnInit() {
+    this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (user) => {
+        if(user) {
+          this.appStore.updateUser(user);
+          this.router.navigate(['/home']);
+        }
+      },
+      error: () => {
+        this.appStore.removeUser();
+      }
+    });
+  }
+
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -49,7 +64,7 @@ export class RegisterComponent {
     ).subscribe({
       next: (loggedUser) => {
         if(loggedUser) {
-          this.appStore.init();
+          // this.appStore.init();
           this.appStore.updateUser(loggedUser);
           this.router.navigate(['/home']);
         } else {

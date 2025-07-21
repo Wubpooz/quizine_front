@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SidebarService } from '../../services/sidebar.service';
 import { Quiz } from '../../models/quizModel';
 import { AppStore } from '../../stores/app.store';
@@ -23,21 +23,11 @@ export class SidebarComponent {
 
   constructor(private router: Router, private sidebarService: SidebarService, private appStore: AppStore) {
     this.sidebarService.isOpen$.pipe(takeUntil(this.destroy$)).subscribe((open) => this.isSideBarOpen = open);
-    this.appStore.init()
+    // this.appStore.init()
     this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];
     });
-
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     if (this.isMobile()) {
-    //       this.sidebarService.setOpen(false);
-    //     }
-    //     // const stored = localStorage.getItem('sidebarOpen');
-    //     // this.sidebarService.setOpen(stored === null ? !this.isMobile() : stored === 'true');
-    //   }
-    // });
 
     this.appStore.notifications.pipe(takeUntil(this.destroy$)).subscribe((notifications) => {
       this.notificationCount = notifications ? notifications.length : 0;

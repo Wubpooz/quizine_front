@@ -43,26 +43,24 @@ export class AppComponent {
 
 
   ngOnInit(): void {
-    injectSpeedInsights();
-    this.appStore.init();
     const publicRoutes = ['/landing', '/login', '/register'];
+    injectSpeedInsights();
+    // this.appStore.init();
 
-    this.apiService.getUserData().pipe(
-      finalize(() => {
-        this.isLoading = false;
-      })
-    ).subscribe({
+    this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
       next: (user) => {
-        this.appStore.updateUser(user);
-        // If a logged-in user lands on a public page, send them to home.
-        if (user && publicRoutes.includes(this.router.url)) {
-          this.router.navigate(['/home']);
+        if(user) {
+          this.appStore.updateUser(user);
+          // If a logged-in user lands on a public page, send them to home.
+          if(publicRoutes.includes(this.router.url)) {
+            this.router.navigate(['/home']);
+          }
         }
       },
       error: () => {
         this.appStore.removeUser();
         // If the API call fails (unauthenticated) AND the user is NOT on a public route...
-        if (!publicRoutes.includes(this.router.url)) {
+        if(!publicRoutes.includes(this.router.url)) {
           this.router.navigate(['/landing']);
         }
       }
@@ -81,7 +79,7 @@ export class AppComponent {
         return;
       }
 
-      this.apiService.getNotifications().subscribe((gameRequests: GameRequest[]|undefined) => {
+      this.apiService.getNotifications().subscribe((gameRequests: GameRequest[] | undefined) => {
         let notifs: GameRequest[] = [];
         if(!gameRequests) {
           this.appStore.clearNotifications();
@@ -99,7 +97,7 @@ export class AppComponent {
           })
         }
 
-        const newNotifs = notifs.filter(n => !this.appStore['existingSessions'].has(n.id_session));
+        const newNotifs = notifs.filter(notif => !this.appStore['existingSessions'].has(notif.id_session));
         if(newNotifs.length > 0) {
           this.appStore.addNewNotifications(newNotifs);
           for(const notif of newNotifs) {
