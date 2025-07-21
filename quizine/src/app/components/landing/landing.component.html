@@ -2,14 +2,25 @@
   <h1 class="text-4xl font-bold text-primary">Bienvenue à Quizine</h1>
   <p class="text-lg text-text-main dark:text-text-main">Des quiz à consommer sans modération!</p>
 
-  <div class="space-y-2">
-    <button class="bg-primary dark:bg-primary-dark hover:bg-primary-light dark:hover:bg-primary-darker text-white font-semibold py-2 px-6 rounded-full" (click)="goToRegister()">
-      S'inscrire
-    </button>
-    <br />
-    <button class="border border-primary text-primary hover:bg-primary dark:hover:bg-primary-dark dark:hover:text-white font-semibold py-2 px-6 rounded-full" (click)="goToLogin()">
-      Se connecter
-    </button>
+  <div class="flex flex-col gap-1.5">
+    <app-button
+      [label]="'S\'inscrire'"
+      [style]="'primary'"
+      [size]="'large'"
+      [bold]="'semibold'"
+      [shape]="'circle'"
+      (click)="goToRegister()"
+      [class]="'w-[157px] px-8 py-2 text-base'"
+    ></app-button>
+    <app-button
+      [label]="'Se connecter'"
+      [style]="'border'"
+      [size]="'large'"
+      [shape]="'circle'"
+      [bold]="'semibold'"
+      (click)="goToLogin()"
+      [class]="'w-[157px] px-8 py-2 text-base'"
+    ></app-button>
   </div>
 
   <div class="bg-primary-tint dark:bg-transparent dark:border-2 dark:border-border-main dark:hover:shadow-[0_0_10px_0_rgba(234,_243,_254,_0.5)] transition ease-in-out rounded-2xl p-6 mt-10 w-full max-w-3xl text-left shadow-sm">
