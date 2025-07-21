@@ -19,7 +19,8 @@ export class HomePageComponent {
   quizzes: Quiz[] = [];
 
   constructor(private router: Router, private appStore: AppStore) {
-    appStore.init()
+    //TODO remove all of them since it should be "updateUser" at login, register or at page reload (in appComponent)
+    // appStore.init();
     this.appStore.recents.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizzes = quizzes||[];
     });

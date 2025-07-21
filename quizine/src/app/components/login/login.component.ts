@@ -1,5 +1,3 @@
-// login.component.ts
-
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../models/userModel';
@@ -9,6 +7,7 @@ import { APIService } from '../../services/api.service';
 import { finalize, Subject, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
+import { hasSessionCookie } from '../../utils/utils';
 
 @Component({
   selector: 'login',
@@ -27,17 +26,21 @@ export class LoginComponent {
     private spinnerService: SpinnerService) {}
 
   ngOnInit() {
-    this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (user) => {
-        if(user) {
-          this.appStore.updateUser(user);
-          this.router.navigate(['/home']);
+    if(hasSessionCookie()) {
+      this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
+        next: (user) => {
+          if(user) {
+            this.appStore.updateUser(user);
+            this.router.navigate(['/home']);
+          }
+        },
+        error: () => {
+          this.appStore.removeUser();
         }
-      },
-      error: () => {
-        this.appStore.removeUser();
-      }
-    });
+      });
+    } else {
+      this.appStore.removeUser();
+    }
   }
 
   ngOnDestroy() {
@@ -58,9 +61,11 @@ export class LoginComponent {
     this.apiService.login(this.username, this.password).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((user: User) => {
       if(user) {
         // this.appStore.init();
+        this.password = '';
         this.appStore.updateUser(user);
         this.router.navigate(['/home']);
       } else {
+        this.password = '';
         this.notifService.error('Utilisateur inconnu ou Identifiants incorrects. Veuillez réessayer.', 'Login failed');
         console.error('Login failed');
       }

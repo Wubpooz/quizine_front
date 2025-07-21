@@ -19,7 +19,7 @@ export class ExploreComponent {
   searchTerm: string = '';
 
   constructor(private appStore: AppStore) {
-    this.appStore.init()
+    // this.appStore.init()
     this.appStore.quizList.pipe(takeUntil(this.destroy$)).subscribe((quizzes: Quiz[]) => {
       this.quizList = quizzes||[];
       this.filteredQuizList = quizzes||[];

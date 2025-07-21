@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { UserInviteComponent } from "./components/user-invite/user-invite.component";
 import { LoginComponent } from "./components/login/login.component";
 import { LandingComponent } from "./components/landing/landing.component";
@@ -20,6 +20,7 @@ import { finalize } from 'rxjs';
 import { injectSpeedInsights } from '@vercel/speed-insights';
 import { NotificationsService } from './services/notifications.service';
 import { GameRequest } from './models/participationModel';
+import { hasSessionCookie } from './utils/utils';
 
 @Component({
   selector: 'app-root',
@@ -46,25 +47,33 @@ export class AppComponent {
     const publicRoutes = ['/landing', '/login', '/register'];
     injectSpeedInsights();
     // this.appStore.init();
-
-    this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
-      next: (user) => {
-        if(user) {
-          this.appStore.updateUser(user);
-          // If a logged-in user lands on a public page, send them to home.
-          if(publicRoutes.includes(this.router.url)) {
-            this.router.navigate(['/home']);
+    
+    if(hasSessionCookie()) {
+      this.apiService.getUserData().pipe(finalize(() => { this.isLoading = false; })).subscribe({
+        next: (user) => {
+          if(user) {
+            this.appStore.updateUser(user);
+            // If a logged-in user lands on a public page, send them to home.
+            if(publicRoutes.includes(this.router.url)) {
+              this.router.navigate(['/home']);
+            }
+          }
+        },
+        error: () => {
+          this.appStore.removeUser();
+          // If the API call fails (unauthenticated) AND the user is NOT on a public route...
+          if(!publicRoutes.includes(this.router.url)) {
+            this.router.navigate(['/landing']);
           }
         }
-      },
-      error: () => {
-        this.appStore.removeUser();
-        // If the API call fails (unauthenticated) AND the user is NOT on a public route...
-        if(!publicRoutes.includes(this.router.url)) {
-          this.router.navigate(['/landing']);
-        }
+      });
+    } else {
+      this.isLoading = false;
+      this.appStore.removeUser();
+      if(!publicRoutes.includes(this.router.url)) {
+        this.router.navigate(['/landing']);
       }
-    });
+    }
   }
 
 

@@ -25,6 +25,7 @@ export class APIService {
       this.notifService.error(error.message);
       return throwError(() => error);
     } else {
+      console.error(`Backend returned code ${error.status}, body was: `, error.error);
       if(error.status === 0) {
         this.notifService.error('Erreur réseau. Veuillez vérifier votre connexion.');
       } else if(error.status === 400) {
@@ -35,8 +36,9 @@ export class APIService {
         this.notifService.error('Erreur serveur. Veuillez réessayer plus tard.', 'Erreur 500');
       } else if(error.status !== 401 && error.status !== 403) {
         this.notifService.error('Erreur lors de la récupération des données. Veuillez réessayer plus tard.', `Erreur ${error.status}`);
+      } else {
+        this.notifService.error('Erreur lors de la connexion. Veuillez réessayer plus tard.', `Erreur ${error.status}`);
       }
-      console.error(`Backend returned code ${error.status}, body was: `, error.error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     }
   }
@@ -47,7 +49,7 @@ export class APIService {
   //============================================================
 
   //========================= Connexion =========================
-  login(username: string, password: string): Observable<User> { //TODO secure
+  login(username: string, password: string): Observable<User> {
     return this.http.post<{message: string, user:User}>(this.endpoint+"/login", {username, password}, {withCredentials: true, observe: 'response'}).pipe(
       map((response: HttpResponse<any>) => {
         if(response.status === 401) {

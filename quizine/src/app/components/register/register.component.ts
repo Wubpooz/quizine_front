@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { finalize, Subject, switchMap, takeUntil } from 'rxjs';
 import { NotificationsService } from '../../services/notifications.service';
 import { SpinnerService } from '../../services/spinner.service';
+import { hasSessionCookie } from '../../utils/utils';
 
 @Component({
   selector: 'app-register',
@@ -26,17 +27,21 @@ export class RegisterComponent {
     private spinnerService: SpinnerService) {}
 
   ngOnInit() {
-    this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
-      next: (user) => {
-        if(user) {
-          this.appStore.updateUser(user);
-          this.router.navigate(['/home']);
+    if(hasSessionCookie()) {
+      this.apiService.getUserData().pipe(takeUntil(this.destroy$)).subscribe({
+        next: (user) => {
+          if(user) {
+            this.appStore.updateUser(user);
+            this.router.navigate(['/home']);
+          }
+        },
+        error: () => {
+          this.appStore.removeUser();
         }
-      },
-      error: () => {
-        this.appStore.removeUser();
-      }
-    });
+      });
+    } else {
+      this.appStore.removeUser();
+    }
   }
 
 
