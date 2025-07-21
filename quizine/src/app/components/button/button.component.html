@@ -26,7 +26,13 @@
         'font-thin': bold === 'thin',
         'font-extralight': bold === 'extralight',
         'font-light': bold === 'light',
+
+        'w-fit': !fullWidth,
+        'w-full': fullWidth,
+
+        'cursor-not-allowed': disabled,
+        'cursor-wait': loading
     }"
-    class="w-fit select-none {{ class }}">
+    class="select-none {{ class }}">
     {{ label }}
 </button>

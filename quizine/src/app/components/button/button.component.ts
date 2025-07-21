@@ -16,7 +16,7 @@ export class ButtonComponent {
   @Input() class: string = "";
   @Input() disabled: boolean = false; //TODO
   @Input() loading: boolean = false; //TODO
-  @Input() fullWidth: boolean = false; //TODO
+  @Input() fullWidth: boolean = false;
   @Input() shape: "circle" | "rectangle" = "rectangle";
   @Input() bold: "bold" | "semibold" | "medium" | "normal" | "thin" | "extralight" | "light" = "normal";
   @Input() onClick: () => void = () => { console.log("Button clicked!"); };
