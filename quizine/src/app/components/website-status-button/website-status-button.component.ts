@@ -10,6 +10,5 @@ import { CommonModule } from '@angular/common';
 })
 export class WebsiteStatusButtonComponent {
 
-
   constructor(public theme: ThemeService) {}
 }

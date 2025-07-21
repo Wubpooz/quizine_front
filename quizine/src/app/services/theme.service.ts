@@ -49,4 +49,8 @@ export class ThemeService {
       }
     }
   }
+
+  get isDark() {
+    return this._pref === 'dark' || (this._pref === 'system' && this.mediaQuery.matches);
+  }
 }
