@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { Quiz, Question, Option } from '../models/quizModel';
 import { GameSessionStore } from '../stores/gameSession.store';
 import { APIService } from './api.service';
 import { Router } from '@angular/router';
 import { AppStore } from '../stores/app.store';
 import { SpinnerService } from './spinner.service';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
   private destroy$ = new Subject<void>();
+  private scorePerAnswer: number = 100;
   private quiz: Quiz | null = null;
   private currentQuestionIndexSubject = new BehaviorSubject<number>(0);
   currentQuestionIndex$ = this.currentQuestionIndexSubject.asObservable();
@@ -21,9 +23,9 @@ export class QuizService {
     private appStore: AppStore,
     private apiService: APIService,
     private router: Router,
+    private notifService: NotificationsService,
     private spinnerService: SpinnerService) {
     this.gameSessionStore.quiz.subscribe((quiz: Quiz|undefined) => {
-      console.debug('QuizService: quiz updated', quiz);
       if(!quiz) return;
       this.quiz = quiz;
       this.currentQuestionIndexSubject.next(0);
@@ -75,28 +77,30 @@ export class QuizService {
     }
   }
 
-  selectAnswer(questionId: string, answer: Option): void {
-    const answerMap = this.gameSessionStore.answerList.getValue();
-    answerMap.set(questionId, answer);
-    this.gameSessionStore.answerList.next(answerMap); // Ensure change is propagated
+    selectAnswer(questionId: string, answer: Option|null): void {
+      if(!this.quiz) return;
+      if(!questionId || typeof questionId !== 'string') return;
+      const answerMap = this.gameSessionStore.answerList.getValue();
+      answerMap.set(questionId, answer);
+      this.gameSessionStore.answerList.next(answerMap);
   }
 
   async getQuizById(quizId: string): Promise<Quiz> {
     if(!quizId) {
+      this.notifService.error('No quizId provided');
       throw new Error('No quizId provided');
     }
-
-    this.spinnerService.show('Chargement du quiz…');
-
     try {
+      this.spinnerService.show('Chargement du quiz…');
       const quiz = await firstValueFrom(this.apiService.getQuiz(quizId).pipe(takeUntil(this.destroy$)));
       if(!quiz) {
+        this.notifService.error('Quiz not found');
         throw new Error('Quiz not found');
       }
-
       this.quiz = quiz;
       return quiz;
     } catch (error) {
+      this.notifService.error('Failed to fetch quiz');
       console.error('Failed to fetch quiz:', error);
       throw error;
     } finally {
@@ -116,8 +120,9 @@ export class QuizService {
 
     quiz.questions.forEach((question) => {
       const userAnswer = answerList.get(question.id);
+      if(!userAnswer) return;
       if(userAnswer?.id === question.id_answer) {
-        score++;
+        score += this.scorePerAnswer;
       }
     });
 

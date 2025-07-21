@@ -26,7 +26,7 @@
 - [x] Add a loading spinner when waiting for API calls (Full screen pop-ups for call waits <https://sweetalert2.github.io/>)
   - [x] Add the spinner everywhere
 - [x] Fix don't show error notif on landing page for /profile, /friends etc
-- [ ] Fix duplicate notif on call error
+- [x] Fix duplicate notif on call error
 - [ ] Quiz editing
 - [ ] edit question time with slider 
 - [ ] Quiz descriptions
@@ -77,7 +77,7 @@
 - [x] Vercel + redis deployment, app works successfully fully
 - [x] Wrap navbar + sidebar dans un composant
 - [ ] SSR ?, hydration ?, prefetch ?
-- [ ] TODO fix issues if no selected quiz answer
+- [x] TODO fix issues if no selected quiz answer
 - [ ] Validate API in backend and frontend
 - [ ] Use only specific components (buttons, toggles, search bar, pop-up, menu, radio buttons, notifs, input with notifs etc, ...)
   - For instance use a title component like `<h1 class="text-2xl text-text-main dark:text-text-main">{{ quiz.nom }}</h1>`

@@ -14,7 +14,7 @@ export class GameSessionStore {
   public sessionId: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
   public quiz: BehaviorSubject<Quiz | undefined> = new BehaviorSubject<Quiz | undefined>(undefined);
   public scores: BehaviorSubject<Map<User, number>> = new BehaviorSubject<Map<User, number>>(new Map());
-  public answerList: BehaviorSubject<Map<string, Option>> = new BehaviorSubject<Map<string, Option>>(new Map());
+  public answerList: BehaviorSubject<Map<string, Option|null>> = new BehaviorSubject<Map<string, Option|null>>(new Map());
   public invitedUsers: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([]);
 
   constructor(private apiService: APIService) {}
@@ -32,15 +32,6 @@ export class GameSessionStore {
     const currentScores = this.scores.getValue();
     currentScores.set(user, score);
     this.scores.next(currentScores);
-  }
-  addAnswer(questionId: string, answerId: string) {
-    const currentAnswers = this.answerList.getValue();
-    const question = this.quiz.getValue()?.questions.find((question: Question) => question.id === questionId);
-    const answer = question?.choices.find((option: Option) => option.id === answerId);
-    if(question && answer) {
-      currentAnswers.set(questionId, answer);
-    }
-    this.answerList.next(currentAnswers);
   }
 
   updateQuiz(quizId: string) {
@@ -63,6 +54,9 @@ export class GameSessionStore {
     let score = 0;
     for(const question of quiz.questions) {
       const selectedOption = answers.get(question.id);
+      if(!selectedOption) {
+        continue;
+      }
       const correctOption = question.choices.find((choice) => choice.id === question.id_answer);
   
       if(selectedOption && correctOption && selectedOption.id === correctOption.id) {

@@ -57,6 +57,9 @@ export class QuizQuestionComponent {
         this.timer--;
       } else {
         clearInterval(this.intervalId);
+        if(!this.selectedAnswer) {
+          this.quizService.selectAnswer(this.question.id, null);
+        }
         this.quizService.goToNextQuestion();
         this.selectedAnswer = null;
       }
