@@ -4,14 +4,13 @@ import { Router } from '@angular/router';
 import { AppStore } from '../../stores/app.store';
 import { Quiz } from '../../models/quizModel';
 import { LayoutComponent } from '../layout/layout.component';
-import { WebsiteStatusButtonComponent } from "../website-status-button/website-status-button.component";
 import { QuizCardComponent } from "../quiz-card/quiz-card.component";
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'home-page',
   standalone: true,
-  imports: [CommonModule, LayoutComponent, WebsiteStatusButtonComponent, QuizCardComponent],
+  imports: [CommonModule, LayoutComponent, QuizCardComponent],
   templateUrl: './home-page.component.html'
 })
 export class HomePageComponent {
