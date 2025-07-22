@@ -54,7 +54,7 @@ export class CreateQuizComponent {
   constructor(private apiService: APIService, private router: Router, private notifService: NotificationsService, private spinnerService: SpinnerService) {}
 
   ngOnInit() {
-    this.initializeOptionStates();
+    this.loadFromStorage();
   }
 
   ngOnDestroy() {
@@ -76,30 +76,35 @@ export class CreateQuizComponent {
     this.questions.push(this.getEmptyQuestion());
     this.questionStates.push({ showTooltip: false, maxLengthReached: false });
     this.initializeOptionStates();
+    this.saveToStorage();
   }
 
   onTitleInput(event: Event) {
     const input = (event.target as HTMLInputElement)?.value;
     this.titleStates.maxLengthReached = this.checkMaxLength(input, this.maxLengthTitle);
     this.titleStates.showTooltip = this.titleStates.maxLengthReached;
+    this.saveToStorage();
   }
 
   onDescriptionInput(event: Event) {
     const input = (event.target as HTMLInputElement)?.value;
     this.descriptionStates.maxLengthReached = this.checkMaxLength(input, this.maxLengthDescription);
     this.descriptionStates.showTooltip = this.descriptionStates.maxLengthReached;
+    this.saveToStorage();
   }
 
   onQuestionInput(event: Event, i: number) {
     const input = (event.target as HTMLInputElement)?.value;
     this.questionStates[i].maxLengthReached = this.checkMaxLength(input, this.maxLengthQuestion);
     this.questionStates[i].showTooltip = this.questionStates[i].maxLengthReached;
+    this.saveToStorage();
   }
 
   onOptionInput(event: Event, i: number, j: number) {
    const input = (event.target as HTMLInputElement)?.value;
     this.optionStates.maxLengthReached[i][j] = this.checkMaxLength(input, this.maxLengthOption);
     this.optionStates.showTooltip[i][j] = this.optionStates.maxLengthReached[i][j];
+    this.saveToStorage();
   }
 
   toggleTagInput() {
@@ -117,20 +122,22 @@ export class CreateQuizComponent {
     if(tag && !this.tags.includes(tag)) {
       this.tags.push(tag);
       this.showTagInput = false;
+      this.saveToStorage();
     }
   }
 
   addOption(questionIdx: number) {
     const choices = this.questions[questionIdx].choices;
-    if (choices.length < 4) {
+    if(choices.length < 4) {
       choices.push({ id: '', content: '' });
       this.initializeOptionStates(); // update tooltips states
     }
+    this.saveToStorage();
   }
 
   removeOption(questionIdx: number, optionIdx: number) {
     const choices = this.questions[questionIdx].choices;
-    if (choices.length > 2) {
+    if(choices.length > 2) {
       choices.splice(optionIdx, 1);
       // If validAnswer points outside new choices array, reset it
       if (this.questions[questionIdx].validAnswer >= choices.length) {
@@ -138,6 +145,7 @@ export class CreateQuizComponent {
       }
       this.initializeOptionStates();
     }
+    this.saveToStorage();
   }
 
 
@@ -171,6 +179,7 @@ export class CreateQuizComponent {
       this.apiService.createQuiz(quiz).pipe(takeUntil(this.destroy$), finalize(() => this.spinnerService.hide())).subscribe((quiz: Quiz) => {
         console.log('Quiz created successfully', quiz);
         this.notifService.success("Le quiz a bien été créé");
+        localStorage.removeItem('createQuizData');
         this.router.navigate(['/quiz-preview', quiz.id]);
       });
     } catch(error: any) {
@@ -253,6 +262,40 @@ export class CreateQuizComponent {
       if(question.validAnswer < 0 || question.validAnswer >= question.choices.length) {
         throw new Error('La bonne option de la question ' + (i + 1) + ' est requise.');
       }
+    }
+  }
+
+  private saveToStorage() {
+    const quizData = {
+      quizTitle: this.quizTitle,
+      quizDescription: this.quizDescription,
+      quizVisibility: this.quizVisibility,
+      tags: this.tags,
+      questions: this.questions
+    };
+    localStorage.setItem('createQuizData', JSON.stringify(quizData));
+  }
+
+  private loadFromStorage() {
+    const saved = localStorage.getItem('createQuizData');
+    if(saved) {
+      try {
+        const data = JSON.parse(saved);
+        this.quizTitle = data.quizTitle || '';
+        this.quizDescription = data.quizDescription || '';
+        this.quizVisibility = data.quizVisibility || 'private';
+        this.tags = data.tags || [];
+        this.questions = data.questions || [this.getEmptyQuestion()];
+        
+        // Important: reset questionStates and optionStates to match loaded data
+        this.questionStates = this.questions.map(() => ({ showTooltip: false, maxLengthReached: false }));
+        this.initializeOptionStates();
+      } catch (err) {
+        console.error('Failed to load saved quiz data', err);
+      }
+    } else {
+      this.questions = [this.getEmptyQuestion()];
+      this.initializeOptionStates();
     }
   }
 }
