@@ -73,12 +73,8 @@
             [(ngModel)]="quizTitle"
             maxlength="{{maxLengthTitle}}"
             (input)="onTitleInput($event)"
-            [tooltip]="'Limite: {{ maxLengthTitle }} caractères'"
+            [tooltip]="titleStates.maxLengthReached ? 'Limite: ' + maxLengthTitle + ' caractères atteinte' : ''"
           />
-          <!-- TODO Notification when max length reached -->
-          <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-            Limite de {{maxLengthTitle}} caractères atteinte
-          </div> -->
   
           <input
             type="text"
@@ -88,12 +84,8 @@
             [(ngModel)]="quizDescription"
             maxlength="{{maxLengthDescription}}"
             (input)="onDescriptionInput($event)"
-            [tooltip]="'Limite: {{ maxLengthDescription }} caractères'"
+            [tooltip]="descriptionStates.maxLengthReached ? 'Limite: ' + maxLengthDescription + ' caractères atteinte' : ''"
           />
-          <!-- Notification when max length reached -->
-          <!-- <div *ngIf="titleMaxLengthReached" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-            Limite de {{maxLengthDescription}} caractères atteinte
-          </div> -->
         </div>
 
         <div class="flex flex-col gap-4 mb-6">
@@ -104,31 +96,26 @@
               placeholder="Ajouter une question"
               class="w-full rounded-lg px-4 py-2 mb-4 bg-bg-card dark:bg-bg-card text-text-main dark:text-text-main placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-primary-tint"
               required
-              name="question{{ i }}"
+              name="question {{ i }}"
               [(ngModel)]="question.name"
               maxlength="{{maxLengthQuestion}}"
               (input)="onQuestionInput($event, i)"
-              [tooltip]="'Limite: {{ maxLengthQuestion }} caractères'"
+              [tooltip]="questionStates[i].maxLengthReached ? 'Limite: ' + maxLengthQuestion + ' caractères atteinte' : ''"
             />
-            <!-- Notification when max length reached -->
-            <!-- <div *ngIf="questionMaxLengthReached?.[i]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-              Limite de {{maxLengthQuestion}} caractères atteinte
-            </div> -->
 
             <!-- TODO question time with slider -->
-
             <div class="flex flex-col gap-2 mb-4">
               <ng-container *ngFor="let option of question.choices; let j = index">
                 <div class="flex items-center gap-2">
                   <span class="flex text-lg gap-1 justify-between content-start w-10">
-                    <p> {{ j + 1 }}. </p>
-                      <input
-                        type="radio"
-                        [name]="'question{{ i }}'"
-                        [(ngModel)]="question.validAnswer"
-                        [value]="j"
-                        required
-                      />
+                    <p>{{ j + 1 }}.</p>
+                    <input
+                      type="radio"
+                      [name]="'question {{ i }} option {{ j }}'"
+                      [(ngModel)]="question.validAnswer"
+                      [value]="j"
+                      required
+                    />
                   </span>
                   <div class="relative w-full">
                     <input
@@ -140,15 +127,33 @@
                       [(ngModel)]="option.content"
                       maxlength="{{maxLengthOption}}"
                       (input)="onOptionInput($event, i, j)"
-                      [tooltip]="'Limite: {{ maxLengthOption }} caractères'"
+                      [tooltip]="optionStates.maxLengthReached[i][j] ? 'Limite: ' + maxLengthOption + ' caractères atteinte' : ''"
                     />
-                    <!-- Notification when max length reached -->
-                    <!-- <div *ngIf="optionMaxLengthReached?.[i]?.[j]" class="absolute left-0 top-full mt-7 text-red-500 text-xs z-50 bg-white rounded px-2 py-1 border border-gray-200">
-                      Limite de {{maxLengthOption}} caractères atteinte
-                    </div> -->
                   </div>
+                  <app-button
+                    *ngIf="question.choices.length > 2"
+                    [type]="'button'"
+                    [style]="'primary'"
+                    (click)="removeOption(i, j)"
+                    [class]="'!w-10 h-10 flex items-center justify-center focus:outline-none'"
+                    aria-label="Supprimer option"
+                  >
+                    <span class="text-2xl"> &times;</span>
+                  </app-button>
+                  <span *ngIf="question.choices.length <= 2" class="w-10 h-10"> &nbsp; </span>
                 </div>
               </ng-container>
+              <app-button
+                *ngIf="question.choices.length < 4"
+                [type]="'button'"
+                [style]="'text'"
+                [bold]="'semibold'"
+                (click)="addOption(i)"
+                aria-label="Ajouter une option"
+                [class]="'!no-underline'"
+              >
+                + Ajouter une option
+              </app-button>
             </div>
           </ng-container>
         </div>
@@ -157,7 +162,7 @@
           [type]="'button'"
           [label]="'+ Ajouter une question'"
           [style]="'primary'"
-          [class]="'!text-xl flex items-center justify-center focus:outline-none'"
+          [class]="'flex items-center justify-center focus:outline-none'"
           (click)="addQuestion()"
           aria-label="Ajouter une question"
         >
@@ -165,7 +170,6 @@
       </div>
     </div>
 
-    <!-- Create quiz button -->
     <div class="z-8 w-full flex items-center justify-center border-t-2 border-zinc-800">
       <app-button
         [type]="'submit'"

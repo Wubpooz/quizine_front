@@ -47,7 +47,7 @@ export class CreateQuizComponent {
   showDropdown: boolean = false;
   titleStates: { showTooltip: boolean, maxLengthReached: boolean } = { showTooltip: false, maxLengthReached: false };
   descriptionStates: { showTooltip: boolean, maxLengthReached: boolean } = { showTooltip: false, maxLengthReached: false };
-  questionStates: { showTooltip: boolean, maxLengthReached: boolean }[] = [];
+  questionStates: { showTooltip: boolean, maxLengthReached: boolean }[] = [ { showTooltip: false, maxLengthReached: false } ];
   optionStates: { showTooltip: boolean[][], maxLengthReached: boolean[][] } = { showTooltip: [], maxLengthReached: [] };
 
 
@@ -74,6 +74,7 @@ export class CreateQuizComponent {
   addQuestion() {
     const nextNumber = this.questions.length + 1;
     this.questions.push(this.getEmptyQuestion());
+    this.questionStates.push({ showTooltip: false, maxLengthReached: false });
     this.initializeOptionStates();
   }
 
@@ -119,17 +120,25 @@ export class CreateQuizComponent {
     }
   }
 
-  // TODO use
-  // addOption(questionIdx: number) {
-  //   this.questions[questionIdx].choices.push({ content: '', id: '' });
-  //   this.initializeOptionStates();
-  // }
+  addOption(questionIdx: number) {
+    const choices = this.questions[questionIdx].choices;
+    if (choices.length < 4) {
+      choices.push({ id: '', content: '' });
+      this.initializeOptionStates(); // update tooltips states
+    }
+  }
 
-  // removeOption(questionIdx: number, optionIdx: number) {
-  //   if(this.questions[questionIdx].choices.length > 2) {
-  //     this.questions[questionIdx].choices.splice(optionIdx, 1);
-  //   }
-  // }
+  removeOption(questionIdx: number, optionIdx: number) {
+    const choices = this.questions[questionIdx].choices;
+    if (choices.length > 2) {
+      choices.splice(optionIdx, 1);
+      // If validAnswer points outside new choices array, reset it
+      if (this.questions[questionIdx].validAnswer >= choices.length) {
+        this.questions[questionIdx].validAnswer = -1;
+      }
+      this.initializeOptionStates();
+    }
+  }
 
 
   onSubmit() {
