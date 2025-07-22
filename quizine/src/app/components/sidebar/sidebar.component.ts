@@ -40,7 +40,7 @@ export class SidebarComponent {
     this.destroy$.complete();
   }
 
-  get sideBarState(){
+  get sideBarState() {
     return this.isSideBarOpen ? 'in' : 'out';
   }
 
@@ -59,22 +59,27 @@ export class SidebarComponent {
   }
   
   goToHomepage() {
+    this.sidebarService.setOpen(false);
     this.router.navigate(['/home']);
   }
-
+  
   goToLibrary() {
+    this.sidebarService.setOpen(false);
     this.router.navigate(['/library']);
   }
-
+  
   goToExplore() {
+    this.sidebarService.setOpen(false);
     this.router.navigate(['/explore']);
   }
-
+  
   goToNotifications() {
+    this.sidebarService.setOpen(false);
     this.router.navigate(['/notifications']);
   }
-
+  
   gotoQuiz(quizId: string) {
+    this.sidebarService.setOpen(false);
     this.router.navigate(['quiz-preview/'+quizId]);
   }
 }

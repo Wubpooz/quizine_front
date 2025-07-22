@@ -27,9 +27,11 @@
   - [x] Add the spinner everywhere
 - [x] Fix don't show error notif on landing page for /profile, /friends etc
 - [x] Fix duplicate notif on call error
-- [ ] Quiz editing
 - [ ] edit question time with slider 
+- [ ] Quiz editing
+- [ ] Recents
 - [ ] Quiz descriptions
+- [ ] Profile/quiz pictures
 - [ ] Visit other user profiles & profile on hover
 
 ### P3
@@ -43,9 +45,7 @@
   - [ ] Improve 404 (<https://tailwindcss.com/plus/ui-blocks/marketing/feedback/404-pages>)
   - [ ] custom radio button component
 - [ ] Add OAuth using Supabase
-- [ ] Profile/quiz pictures
 - [ ] Friends
-- [ ] Recents
 - [x] Badge for notifications
 - [ ] Search/sort by tags
 - [ ] Rating system
